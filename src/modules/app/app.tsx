@@ -5,7 +5,7 @@ export default function App(): JSX.Element {
         <section className="section">
             <span className="icon-text">
                 <span className="icon">
-                    <i className="fas fa-home"></i>
+                    <i className="gg-feed"></i>
                 </span>
                 <span>Home</span>
             </span>
