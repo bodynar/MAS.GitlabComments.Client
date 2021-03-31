@@ -3,12 +3,13 @@ import webpack, { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const webpackConfig = (env: any): Configuration => ({
     entry: "./src/index.tsx",
     ...(env.production || !env.development ? {} : { devtool: "eval-source-map" }),
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".scss", ".css"],
+        extensions: [".ts", ".tsx", ".js", ".scss", ".css", ".sass"],
         //TODO waiting on https://github.com/dividab/tsconfig-paths-webpack-plugin/issues/61
         //@ts-ignore
         plugins: [new TsconfigPathsPlugin()]
@@ -28,8 +29,18 @@ const webpackConfig = (env: any): Configuration => ({
                 exclude: /dist/
             },
             {
-                test: /\.(scss|css)$/,
-                use: ['style-loader', 'css-loader', 'sass-loader'],
+                test: /\.(scss|css|sass)$/,
+                use: [
+                    // 'style-loader', // replaced by MiniCssExtractPlugin.loader
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                ],
             },
         ]
     },
@@ -46,7 +57,10 @@ const webpackConfig = (env: any): Configuration => ({
             eslint: {
                 files: "./src/**/*.{ts,tsx,js,jsx}" // required - same as command `eslint ./src/**/*.{ts,tsx,js,jsx} --ext .ts,.tsx,.js,.jsx`
             }
-        })
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'css/mystyles.css'
+        }),
     ]
 });
 
