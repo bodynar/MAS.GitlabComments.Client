@@ -1,10 +1,12 @@
 import { Action } from "redux/types";
 
+import { Comment } from "models/comment";
+
 import { isNullOrUndefined, isStringEmpty } from "utils/common";
-import { ensurePropertyDefined } from "utils/object";
+import { getPropertyValueWithCheck } from "utils/object";
 
 import { CommentsState } from "./types";
-import { deleteComment, increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
+import { addComment, deleteComment, increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
 
 const initialState: CommentsState = {
     isLoading: false,
@@ -15,57 +17,83 @@ export default function (state = initialState, action: Action): CommentsState {
 
     switch (action.type) {
         case setIsLoading: {
-            ensurePropertyDefined(action.payload, 'isLoading');
+            const isLoading: boolean = getPropertyValueWithCheck(action.payload, 'isLoading', false);
+
             return {
                 ...state,
-                isLoading: action.payload.isLoading
+                isLoading: isLoading
             };
         }
         case setError: {
-            ensurePropertyDefined(action.payload, 'error');
+            const error: string = getPropertyValueWithCheck(action.payload, 'error', false);
+
+            if (isNullOrUndefined(error) || isStringEmpty(error)) {
+                return state;
+            }
+
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload.error
+                error: error
             };
         }
-        case setComment: {
-            ensurePropertyDefined(action.payload, 'comment');
-            if (isNullOrUndefined(action.payload.comment)) {
+        case addComment: {
+            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
+
+            if (isNullOrUndefined(comment) || isNullOrUndefined(comment.id)) {
                 // log warning
                 return state;
             }
+
             return {
                 ...state,
                 isLoading: false,
-                comment: action.payload.comment
+                comments: [...state.comments, comment]
             };
         }
         case setComments: {
-            ensurePropertyDefined(action.payload, 'comments');
-            if (isNullOrUndefined(action.payload.comments)) {
+            const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, 'comments', false);
+
+            if (isNullOrUndefined(comments)) {
                 // log warning
                 return state;
             }
+
             return {
                 ...state,
                 isLoading: false,
-                comments: action.payload.comments
+                comments: comments
             };
         }
-        case increment: {
-            ensurePropertyDefined(action.payload, 'commentId');
-            if (isNullOrUndefined(action.payload.commentId) || isStringEmpty(action.payload.commentId)) {
+        case setComment: {
+            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
+
+            if (isNullOrUndefined(comment)) {
                 // log warning
                 return state;
             }
+
+            return {
+                ...state,
+                isLoading: false,
+                comment: comment
+            };
+        }
+        case increment: {
+            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+
+            if (isNullOrUndefined(commentId) || isStringEmpty(commentId)) {
+                // log warning
+                return state;
+            }
+
             return {
                 ...state,
                 isLoading: false,
                 comments: state.comments.map(comment => {
                     let appearanceCount: number = comment.appearanceCount;
 
-                    if (comment.id === action.payload.commentId) {
+                    if (comment.id === commentId) {
                         ++appearanceCount;
                     }
 
@@ -74,31 +102,34 @@ export default function (state = initialState, action: Action): CommentsState {
             };
         }
         case updateComment: {
-            ensurePropertyDefined(action.payload, 'comment');
-            if (isNullOrUndefined(action.payload.comment)) {
+            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
+
+            if (isNullOrUndefined(comment)) {
                 // log warning
                 return state;
             }
             return {
                 ...state,
                 isLoading: false,
-                comments: state.comments.map(comment =>
-                    comment.id === action.payload.comment.id
-                        ? { ...comment, ...action.payload.comment }
-                        : comment
+                comments: state.comments.map(x =>
+                    x.id === comment.id
+                        ? { ...x, ...comment }
+                        : x
                 )
             };
         }
         case deleteComment: {
-            ensurePropertyDefined(action.payload, 'commentId');
-            if (isNullOrUndefined(action.payload.commentId) || isStringEmpty(action.payload.commentId)) {
+            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+
+            if (isNullOrUndefined(commentId) || isStringEmpty(commentId)) {
                 // log warning
                 return state;
             }
+
             return {
                 ...state,
                 isLoading: false,
-                comments: state.comments.filter(comment => comment.id !== action.payload.commentId)
+                comments: state.comments.filter(comment => comment.id !== commentId)
             };
         }
         default:
