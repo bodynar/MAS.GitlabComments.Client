@@ -1,4 +1,4 @@
-import { BaseResponse, BaseResponseWithResult } from "models/response/baseResponse";
+import { BaseResponseWithResult } from "models/response/baseResponse";
 
 import { isNullOrUndefined } from "./common";
 
@@ -14,7 +14,7 @@ type RequestData = {
  * @param requestData Request data
  * @returns {Promise<void>} Promise with api processing result
  */
-export const post = async (uri: string, requestData: RequestData): Promise<void> => {
+export const post = async <TResult>(uri: string, requestData: RequestData): Promise<TResult> => {
     const response: Response = await fetch(uri, {
         method: 'POST',
         headers: {
@@ -23,11 +23,11 @@ export const post = async (uri: string, requestData: RequestData): Promise<void>
         body: JSON.stringify(requestData)
     });
 
-    const baseResponse: BaseResponse = await response.json()
+    const baseResponse: BaseResponseWithResult<TResult> = await response.json()
 
     if (response.ok) {
         if (baseResponse.success) {
-            return Promise.resolve();
+            return Promise.resolve(baseResponse.result);
         } else {
             return Promise.reject(new Error(baseResponse.erorr));
         }
