@@ -10,21 +10,8 @@ const initialState: CommentsState = {
     isLoading: false,
     comments: [],
 };
-
-/**
- * API:
-    comments/add
-    comments/getAll
-    comments/setDescription
-    comments/increment
-    comments/update
-    comments/delete
- * 
- */
-
 // TODO: fix type and handle ensurePropertyDefined calls
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function (state = initialState, action: Action<any>): CommentsState {
+export default function (state = initialState, action: Action): CommentsState {
 
     switch (action.type) {
         case setIsLoadingActionType: {
@@ -38,10 +25,11 @@ export default function (state = initialState, action: Action<any>): CommentsSta
             ensurePropertyDefined(action.payload, 'error');
             return {
                 ...state,
+                isLoading: false,
                 error: action.payload.error
             };
         }
-        case setCommentsActionType: {
+        case setCommentActionType: {
             ensurePropertyDefined(action.payload, 'comment');
             if (isNullOrUndefined(action.payload.comment)) {
                 // log warning
@@ -49,10 +37,11 @@ export default function (state = initialState, action: Action<any>): CommentsSta
             }
             return {
                 ...state,
+                isLoading: false,
                 comment: action.payload.comment
             };
         }
-        case setCommentActionType: {
+        case setCommentsActionType: {
             ensurePropertyDefined(action.payload, 'comments');
             if (isNullOrUndefined(action.payload.comments)) {
                 // log warning
@@ -60,6 +49,7 @@ export default function (state = initialState, action: Action<any>): CommentsSta
             }
             return {
                 ...state,
+                isLoading: false,
                 comments: action.payload.comments
             };
         }

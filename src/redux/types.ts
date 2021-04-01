@@ -1,4 +1,6 @@
-export type Action<TPayload> = {
+export type Action = {
     type: string;
-    payload: TPayload;
+    // TODO: fix type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any;
 };
