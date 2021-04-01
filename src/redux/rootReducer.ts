@@ -1,3 +1,5 @@
 import { combineReducers } from "redux";
 
-export default combineReducers({});
+import commentsReducer from "./comments/reducer";
+
+export default combineReducers({ commentsReducer })
