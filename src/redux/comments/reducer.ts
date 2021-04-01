@@ -4,7 +4,7 @@ import { isNullOrUndefined, isStringEmpty } from "utils/common";
 import { ensurePropertyDefined } from "utils/object";
 
 import { CommentsState } from "./types";
-import { increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
+import { deleteComment, increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
 
 const initialState: CommentsState = {
     isLoading: false,
@@ -87,6 +87,18 @@ export default function (state = initialState, action: Action): CommentsState {
                         ? { ...comment, ...action.payload.comment }
                         : comment
                 )
+            };
+        }
+        case deleteComment: {
+            ensurePropertyDefined(action.payload, 'commentId');
+            if (isNullOrUndefined(action.payload.commentId) || isStringEmpty(action.payload.commentId)) {
+                // log warning
+                return state;
+            }
+            return {
+                ...state,
+                isLoading: false,
+                comments: state.comments.filter(comment => comment.id !== action.payload.commentId)
             };
         }
         default:
