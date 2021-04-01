@@ -1,10 +1,10 @@
 import { Action } from "redux/types";
 
-import { isNullOrUndefined } from "utils/common";
+import { isNullOrUndefined, isStringEmpty } from "utils/common";
 import { ensurePropertyDefined } from "utils/object";
 
 import { CommentsState } from "./types";
-import { setCommentActionType, setCommentsActionType, setErrorActionType, setIsLoadingActionType } from "./actions";
+import { increment, setComment, setComments, setError, setIsLoading } from "./actions";
 
 const initialState: CommentsState = {
     isLoading: false,
@@ -14,14 +14,14 @@ const initialState: CommentsState = {
 export default function (state = initialState, action: Action): CommentsState {
 
     switch (action.type) {
-        case setIsLoadingActionType: {
+        case setIsLoading: {
             ensurePropertyDefined(action.payload, 'isLoading');
             return {
                 ...state,
                 isLoading: action.payload.isLoading
             };
         }
-        case setErrorActionType: {
+        case setError: {
             ensurePropertyDefined(action.payload, 'error');
             return {
                 ...state,
@@ -29,7 +29,7 @@ export default function (state = initialState, action: Action): CommentsState {
                 error: action.payload.error
             };
         }
-        case setCommentActionType: {
+        case setComment: {
             ensurePropertyDefined(action.payload, 'comment');
             if (isNullOrUndefined(action.payload.comment)) {
                 // log warning
@@ -41,7 +41,7 @@ export default function (state = initialState, action: Action): CommentsState {
                 comment: action.payload.comment
             };
         }
-        case setCommentsActionType: {
+        case setComments: {
             ensurePropertyDefined(action.payload, 'comments');
             if (isNullOrUndefined(action.payload.comments)) {
                 // log warning
@@ -51,6 +51,26 @@ export default function (state = initialState, action: Action): CommentsState {
                 ...state,
                 isLoading: false,
                 comments: action.payload.comments
+            };
+        }
+        case increment: {
+            ensurePropertyDefined(action.payload, 'commentId');
+            if (isNullOrUndefined(action.payload.commentId) || isStringEmpty(action.payload.commentId)) {
+                // log warning
+                return state;
+            }
+            return {
+                ...state,
+                isLoading: false,
+                comments: state.comments.map(comment => {
+                    let appearanceCount: number = comment.appearanceCount;
+
+                    if (comment.id === action.payload.commentId) {
+                        ++appearanceCount;
+                    }
+
+                    return { ...comment, appearanceCount: appearanceCount };
+                })
             };
         }
         default:
