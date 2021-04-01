@@ -4,7 +4,7 @@ import { isNullOrUndefined, isStringEmpty } from "utils/common";
 import { ensurePropertyDefined } from "utils/object";
 
 import { CommentsState } from "./types";
-import { increment, setComment, setComments, setError, setIsLoading } from "./actions";
+import { increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
 
 const initialState: CommentsState = {
     isLoading: false,
@@ -71,6 +71,22 @@ export default function (state = initialState, action: Action): CommentsState {
 
                     return { ...comment, appearanceCount: appearanceCount };
                 })
+            };
+        }
+        case updateComment: {
+            ensurePropertyDefined(action.payload, 'comment');
+            if (isNullOrUndefined(action.payload.comment)) {
+                // log warning
+                return state;
+            }
+            return {
+                ...state,
+                isLoading: false,
+                comments: state.comments.map(comment =>
+                    comment.id === action.payload.comment.id
+                        ? { ...comment, ...action.payload.comment }
+                        : comment
+                )
             };
         }
         default:
