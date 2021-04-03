@@ -1,3 +1,5 @@
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+
 import { AddComment } from "models/request/addComment";
 import { UpdateComment } from "models/request/updateComment";
 
@@ -13,6 +15,7 @@ import {
     updateComment as updateCommentAction,
     deleteComment as deleteCommentAction
 } from "./actions";
+import { CommentsState } from "./types";
 
 const getSetIsLoadingAction = (isLoading: boolean): Action => {
     return {
@@ -37,8 +40,8 @@ const getSetErrorAction = (error: string): Action => {
  * @param addComment Model for adding comment
  * @returns Add comment function that can be called with redux dispatcher
  */
-export const addComment = (addComment: AddComment): (dispatch: (action: Action) => void) => Promise<void> => {
-    return async (dispatch: (action: Action) => void): Promise<void> => {
+export const addComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post<string>(`api/comments/add`, addComment)
@@ -53,14 +56,13 @@ export const addComment = (addComment: AddComment): (dispatch: (action: Action) 
             }))
             .catch((error: string) => dispatch(getSetErrorAction(error)));
     };
-};
 
 /**
  * Get all comments from api
  * @returns Get all comments function that can be called with redux dispatcher
  */
-export const getAllComments = (): (dispatch: (action: Action) => void) => Promise<void> => {
-    return async (dispatch: (action: Action) => void): Promise<void> => {
+export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<Array<Comment>>(`api/comments/getAll`)
@@ -76,7 +78,6 @@ export const getAllComments = (): (dispatch: (action: Action) => void) => Promis
             })
             .catch((error: string) => dispatch(getSetErrorAction(error)));
     };
-};
 
 /**
  * Get description for specified comment from api
@@ -84,8 +85,8 @@ export const getAllComments = (): (dispatch: (action: Action) => void) => Promis
  * @param commentMessage Comment message
  * @returns Get description function that can be called with redux dispatcher
  */
-export const getDescription = (commentId: string, commentMessage: string): (dispatch: (action: Action) => void) => Promise<void> => {
-    return async (dispatch: (action: Action) => void): Promise<void> => {
+export const getDescription = (commentId: string, commentMessage: string): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<string>(`api/comments/description?commentId=${commentId}`)
@@ -103,15 +104,14 @@ export const getDescription = (commentId: string, commentMessage: string): (disp
             })
             .catch((error: string) => dispatch(getSetErrorAction(error)));
     };
-};
 
 /**
  * Increment appearance count in specified comment
  * @param commentId Comment identifier value
  * @returns Increment appearance count function that can be called with redux dispatcher
  */
-export const increment = (commentId: string): (dispatch: (action: Action) => void) => Promise<void> => {
-    return async (dispatch: (action: Action) => void): Promise<void> => {
+export const increment = (commentId: string): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/increment`, { commentId: commentId })
@@ -125,15 +125,14 @@ export const increment = (commentId: string): (dispatch: (action: Action) => voi
             })
             .catch((error: string) => dispatch(getSetErrorAction(error)));
     };
-};
 
 /**
  * Update specified comment
  * @param updateComment Model with updated comment values
  * @returns Update comment function that can be called with redux dispatcher
  */
-export const updateComment = (updateComment: UpdateComment): (dispatch: (action: Action) => void) => Promise<void> => {
-    return async (dispatch: (action: Action) => void): Promise<void> => {
+export const updateComment = (updateComment: UpdateComment): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/update`, updateComment)
@@ -145,15 +144,14 @@ export const updateComment = (updateComment: UpdateComment): (dispatch: (action:
             }))
             .catch((error: string) => dispatch(getSetErrorAction(error)));
     };
-};
 
 /**
  * Delete specified comment
  * @param commentId Comment identifier value
  * @returns Delete comment function that can be called with redux dispatcher
  */
-export const deleteComment = (commentId: string): (dispatch: (action: Action) => void) => Promise<void> => {
-    return async (dispatch: (action: Action) => void): Promise<void> => {
+export const deleteComment = (commentId: string): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/delete`, { commentId: commentId })
@@ -165,4 +163,3 @@ export const deleteComment = (commentId: string): (dispatch: (action: Action) =>
             }))
             .catch((error: string) => dispatch(getSetErrorAction(error)));
     };
-};
