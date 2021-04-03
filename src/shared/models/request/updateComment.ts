@@ -1,5 +1,5 @@
 /**Model represents container for data to update comment */
-export type UpdateComment = {
+export interface UpdateComment {
     /** Comment identifier value */
     id: string;
 
@@ -8,4 +8,4 @@ export type UpdateComment = {
 
     /** Description: updated or old */
     description?: string;
-};
+}
