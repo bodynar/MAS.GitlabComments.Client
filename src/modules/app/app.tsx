@@ -1,4 +1,5 @@
 import React from "react";
+import Comments from "../comments/comments";
 
 export default function App(): JSX.Element {
     return (<>
@@ -17,6 +18,10 @@ export default function App(): JSX.Element {
                     My first website with <strong>Bulma</strong>!
                 </p>
             </div>
+        </section>
+        <hr />
+        <section>
+            <Comments />
         </section>
     </>);
 }
