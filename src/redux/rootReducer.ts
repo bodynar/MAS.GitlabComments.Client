@@ -1,3 +1,16 @@
-import commentsReducer from "./comments/reducer";
+import { combineReducers } from 'redux';
 
-export default commentsReducer;
+import commentsReducer from "./comments/reducer";
+import { CommentsState } from './comments/types';
+import modalBoxReducer from "./modal/reducer";
+import { ModalState } from './modal/types';
+
+export type AppState = {
+    comments: CommentsState;
+    modal: ModalState;
+}
+
+export default combineReducers<AppState>({
+    comments: commentsReducer,
+    modal: modalBoxReducer
+});

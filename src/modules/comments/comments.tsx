@@ -3,12 +3,10 @@ import { connect } from "react-redux";
 
 import { Comment } from "models/comment";
 import { AddComment } from "models/request";
-import {
-    getAllComments,
-    onAddComment as addCommentAction,
-    addComment
-} from 'redux/comments/thunks';
-import { CommentModuleState, CommentsState } from "redux/comments/types";
+
+import { AppState } from "redux/rootReducer";
+import { getAllComments, onAddComment as addCommentAction, addComment } from 'redux/comments/thunks';
+import { CommentModuleState } from "redux/comments/types";
 
 type CommentsProps = {
     comments: Array<Comment>;
@@ -44,7 +42,7 @@ function Comments(props: CommentsProps): JSX.Element {
 }
 
 export default connect(
-    ({ comments, state, error }: CommentsState) => ({ comments, state, error }),
+    ({ comments }: AppState) => ({ ...comments }),
     {
         addComment: addCommentAction,
         getComments: getAllComments,
