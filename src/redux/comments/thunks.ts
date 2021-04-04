@@ -3,7 +3,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AddComment } from "models/request/addComment";
 import { UpdateComment } from "models/request/updateComment";
 
-import { Action } from "redux/types";
+import { Action, ActionWithPayload } from "redux/types";
 import { get, post } from "utils/api";
 
 import {
@@ -21,7 +21,7 @@ import { CommentModuleState, CommentsState } from "./types";
 import { OpenModal } from "redux/modal/actions";
 import { ModalAction } from "redux/modal/types";
 
-const getSetIsLoadingAction = (isLoading: boolean): Action => {
+const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => {
     const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
 
     return {
@@ -30,7 +30,7 @@ const getSetIsLoadingAction = (isLoading: boolean): Action => {
     };
 };
 
-const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (error: string): void => {
+const setError = (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>) => (error: string): void => {
     dispatch({
         type: setErrorAction,
         payload: {
@@ -48,8 +48,8 @@ const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (e
     }, 5 * 1000); // TODO: configure this with error display message timeout
 };
 
-export const addComment = (): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action | ActionWithPayload>): void => {
         dispatch({
             type: setModuleState,
             payload: { nextState: 'showModal' }
@@ -62,7 +62,7 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, Action> 
                 // todo: add new comment
                 // subscribe to add comment
                 validateFields: ['message'],
-                
+                // onSave: onAddComment
             }
         } as ModalAction);
     };
@@ -72,8 +72,8 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, Action> 
  * @param addComment Model for adding comment
  * @returns Add comment function that can be called with redux dispatcher
  */
-export const onAddComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const onAddComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post<string>(`api/comments/add`, addComment)
@@ -94,8 +94,8 @@ export const onAddComment = (addComment: AddComment): ThunkAction<void, Comments
  * Get all comments from api
  * @returns Get all comments function that can be called with redux dispatcher
  */
-export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const getAllComments = (): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<Array<Comment>>(`api/comments/getAll`)
@@ -105,7 +105,7 @@ export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Acti
                     payload: {
                         comments: comments
                     }
-                } as Action);
+                });
 
                 dispatch(getSetIsLoadingAction(false));
             })
@@ -118,8 +118,8 @@ export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Acti
  * @param commentMessage Comment message
  * @returns Get description function that can be called with redux dispatcher
  */
-export const getDescription = (commentId: string, commentMessage: string): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const getDescription = (commentId: string, commentMessage: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<string>(`api/comments/description?commentId=${commentId}`)
@@ -143,8 +143,8 @@ export const getDescription = (commentId: string, commentMessage: string): Thunk
  * @param commentId Comment identifier value
  * @returns Increment appearance count function that can be called with redux dispatcher
  */
-export const increment = (commentId: string): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const increment = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/increment`, { commentId: commentId })
@@ -164,8 +164,8 @@ export const increment = (commentId: string): ThunkAction<void, CommentsState, u
  * @param updateComment Model with updated comment values
  * @returns Update comment function that can be called with redux dispatcher
  */
-export const updateComment = (updateComment: UpdateComment): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const updateComment = (updateComment: UpdateComment): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/update`, updateComment)
@@ -183,8 +183,8 @@ export const updateComment = (updateComment: UpdateComment): ThunkAction<void, C
  * @param commentId Comment identifier value
  * @returns Delete comment function that can be called with redux dispatcher
  */
-export const deleteComment = (commentId: string): ThunkAction<void, CommentsState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+export const deleteComment = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/delete`, { commentId: commentId })

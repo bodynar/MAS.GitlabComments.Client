@@ -1,4 +1,4 @@
-import { Action } from "redux/types";
+import { ActionWithPayload } from "redux/types";
 
 import { Comment } from "models/comment";
 
@@ -15,7 +15,7 @@ const initialState: CommentsState = {
 
 // TODO: add manual setting state to each case
 // depending on flow-chart
-export default function (state = initialState, action: Action): CommentsState {
+export default function (state = initialState, action: ActionWithPayload): CommentsState {
     switch (action.type) {
         case setModuleState: {
             const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, 'nextState', false);
