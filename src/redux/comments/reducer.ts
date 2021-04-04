@@ -14,7 +14,6 @@ const initialState: CommentsState = {
 };
 
 export default function (state = initialState, action: Action): CommentsState {
-
     switch (action.type) {
         case setIsLoading: {
             const isLoading: boolean = getPropertyValueWithCheck(action.payload, 'isLoading', false);
