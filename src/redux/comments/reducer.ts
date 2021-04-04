@@ -73,6 +73,7 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
+                state: 'showModal',
                 comment: comment
             };
         }
