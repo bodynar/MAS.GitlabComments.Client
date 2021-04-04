@@ -1,3 +1,8 @@
 @charset "utf-8";
 @import "~bulma/bulma";
-@import "~css.gg/icons/all"
+
+.modal-card {
+    overflow: auto;
+}
+
+@import "~css.gg/icons/all";
