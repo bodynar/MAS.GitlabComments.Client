@@ -9,7 +9,7 @@ import { CommentsState } from "./types";
 import { addComment, deleteComment, increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
 
 const initialState: CommentsState = {
-    isLoading: false,
+    state: 'init',
     comments: [],
 };
 
@@ -21,7 +21,7 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: isLoading
+                state: isLoading ? 'loading' : 'idle' // TODO: confirm this desicion
             };
         }
         case setError: {
@@ -33,7 +33,7 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: false,
+                state: 'error',
                 error: error
             };
         }
@@ -47,7 +47,6 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: false,
                 comments: [...state.comments, comment]
             };
         }
@@ -61,7 +60,6 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: false,
                 comments: comments
             };
         }
@@ -75,7 +73,6 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: false,
                 comment: comment
             };
         }
@@ -89,7 +86,6 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: false,
                 comments: state.comments.map(comment => {
                     let appearanceCount: number = comment.appearanceCount;
 
@@ -110,7 +106,6 @@ export default function (state = initialState, action: Action): CommentsState {
             }
             return {
                 ...state,
-                isLoading: false,
                 comments: state.comments.map(x =>
                     x.id === comment.id
                         ? { ...x, ...comment }
@@ -128,7 +123,6 @@ export default function (state = initialState, action: Action): CommentsState {
 
             return {
                 ...state,
-                isLoading: false,
                 comments: state.comments.filter(comment => comment.id !== commentId)
             };
         }

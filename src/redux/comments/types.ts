@@ -1,9 +1,17 @@
-import { Comment } from "models/comment"
+import { Comment } from "models/comment";
+
+export type CommentModuleState =
+    'init' /** Comment module initialized */
+    | 'loading' /** Something is loading */
+    | 'error' /** Some error occurs */
+    | 'idle' /** Comment module is waiting for user action  */
+    | 'showModal' /** Some content is displaying in modal */
+    ;
 
 /** Model representing comment module state */
 export type CommentsState = {
-    /** Flag determines that module is currently loading something */
-    isLoading: boolean;
+    /** Current module state */
+    state: CommentModuleState;
 
     /** Loaded comments */
     comments: Array<Comment>;
