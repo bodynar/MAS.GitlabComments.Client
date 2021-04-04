@@ -19,11 +19,11 @@ import {
 import { CommentModuleState, CommentsState } from "./types";
 
 const getSetIsLoadingAction = (isLoading: boolean): Action => {
+    const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
+
     return {
-        type: setIsLoading,
-        payload: {
-            isLoading: isLoading
-        }
+        type: setModuleState,
+        payload: { nextState }
     };
 };
 

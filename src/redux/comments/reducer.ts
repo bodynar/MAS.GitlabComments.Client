@@ -5,22 +5,29 @@ import { Comment } from "models/comment";
 import { isNullOrUndefined, isStringEmpty } from "utils/common";
 import { getPropertyValueWithCheck } from "utils/object";
 
-import { CommentsState } from "./types";
-import { addComment, deleteComment, increment, setComment, setComments, setError, setIsLoading, updateComment } from "./actions";
+import { CommentModuleState, CommentsState } from "./types";
+import { addComment, deleteComment, increment, setComment, setComments, setError, setModuleState, updateComment } from "./actions";
 
 const initialState: CommentsState = {
     state: 'init',
     comments: [],
 };
 
+// TODO: add manual setting state to each case
+// depending on flow-chart
 export default function (state = initialState, action: Action): CommentsState {
     switch (action.type) {
-        case setIsLoading: {
-            const isLoading: boolean = getPropertyValueWithCheck(action.payload, 'isLoading', false);
+        case setModuleState: {
+            const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, 'nextState', false);
+
+            if (isNullOrUndefined(nextState)) {
+                // log warning
+                return state;
+            }
 
             return {
                 ...state,
-                state: isLoading ? 'loading' : 'idle' // TODO: confirm this desicion
+                state: nextState,
             };
         }
         case setError: {
