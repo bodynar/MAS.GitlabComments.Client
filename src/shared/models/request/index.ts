@@ -4,4 +4,4 @@ import { UpdateComment } from './updateComment';
 export {
     AddComment,
     UpdateComment,
-}
+};

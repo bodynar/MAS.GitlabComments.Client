@@ -23,7 +23,7 @@ export const post = async <TResult>(uri: string, requestData: RequestData): Prom
         body: JSON.stringify(requestData)
     });
 
-    const baseResponse: BaseResponseWithResult<TResult> = await response.json()
+    const baseResponse: BaseResponseWithResult<TResult> = await response.json();
 
     if (response.ok) {
         if (baseResponse.success) {

@@ -10,10 +10,10 @@ import { isStringEmpty, isNullOrUndefined } from "./common";
  */
 export const ensurePropertyDefined = <T>(object: T, propertyName: string): void => {
     if (isNullOrUndefined(object)) {
-        throw new Error("Parameter \"object\" is not defined.")
+        throw new Error("Parameter \"object\" is not defined.");
     }
     if (isNullOrUndefined(propertyName) || isStringEmpty(propertyName)) {
-        throw new Error("Parameter \"propertyName\" is not defined")
+        throw new Error("Parameter \"propertyName\" is not defined");
     }
 
     const isKeyDefined: boolean = Object.keys(object).includes(propertyName);

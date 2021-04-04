@@ -32,4 +32,4 @@ export const isUndefined = <T>(value: T): boolean => {
  */
 export const isStringEmpty = (value: string): boolean => {
     return value.length === 0;
-}
+};
