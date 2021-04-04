@@ -8,14 +8,15 @@ import { get, post } from "utils/api";
 
 import {
     setComment,
-    setError,
+    setError as setErrorAction,
     setIsLoading,
     increment as incrementAction,
     addComment as addCommentAction,
     updateComment as updateCommentAction,
-    deleteComment as deleteCommentAction
+    deleteComment as deleteCommentAction,
+    setModuleState
 } from "./actions";
-import { CommentsState } from "./types";
+import { CommentModuleState, CommentsState } from "./types";
 
 const getSetIsLoadingAction = (isLoading: boolean): Action => {
     return {
@@ -26,13 +27,22 @@ const getSetIsLoadingAction = (isLoading: boolean): Action => {
     };
 };
 
-const getSetErrorAction = (error: string): Action => {
-    return {
-        type: setError,
+const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (error: string): void => {
+    dispatch({
+        type: setErrorAction,
         payload: {
             error: error
         }
-    };
+    });
+
+    setTimeout(() => {
+        dispatch({
+            type: setModuleState,
+            payload: {
+                nextState: 'idle' as CommentModuleState
+            }
+        });
+    }, 5 * 1000); // TODO: configure this with error display message timeout
 };
 
 /**
@@ -54,7 +64,7 @@ export const addComment = (addComment: AddComment): ThunkAction<void, CommentsSt
                     }
                 }
             }))
-            .catch((error: string) => dispatch(getSetErrorAction(error)));
+            .catch(setError(dispatch));
     };
 
 /**
@@ -76,7 +86,7 @@ export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Acti
 
                 dispatch(getSetIsLoadingAction(false));
             })
-            .catch((error: string) => dispatch(getSetErrorAction(error)));
+            .catch(setError(dispatch));
     };
 
 /**
@@ -100,9 +110,9 @@ export const getDescription = (commentId: string, commentMessage: string): Thunk
                             description: description
                         }
                     }
-                })
+                });
             })
-            .catch((error: string) => dispatch(getSetErrorAction(error)));
+            .catch(setError(dispatch));
     };
 
 /**
@@ -123,7 +133,7 @@ export const increment = (commentId: string): ThunkAction<void, CommentsState, u
                     }
                 });
             })
-            .catch((error: string) => dispatch(getSetErrorAction(error)));
+            .catch(setError(dispatch));
     };
 
 /**
@@ -142,7 +152,7 @@ export const updateComment = (updateComment: UpdateComment): ThunkAction<void, C
                     comment: updateComment
                 }
             }))
-            .catch((error: string) => dispatch(getSetErrorAction(error)));
+            .catch(setError(dispatch));
     };
 
 /**
@@ -161,5 +171,5 @@ export const deleteComment = (commentId: string): ThunkAction<void, CommentsStat
                     commentId: commentId
                 }
             }))
-            .catch((error: string) => dispatch(getSetErrorAction(error)));
+            .catch(setError(dispatch));
     };
