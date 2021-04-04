@@ -9,14 +9,17 @@ import { get, post } from "utils/api";
 import {
     setComment,
     setError as setErrorAction,
-    setIsLoading,
     increment as incrementAction,
     addComment as addCommentAction,
     updateComment as updateCommentAction,
     deleteComment as deleteCommentAction,
-    setModuleState
+    setModuleState,
+    setComments
 } from "./actions";
 import { CommentModuleState, CommentsState } from "./types";
+
+import { OpenModal } from "redux/modal/actions";
+import { ModalAction } from "redux/modal/types";
 
 const getSetIsLoadingAction = (isLoading: boolean): Action => {
     const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
@@ -45,25 +48,45 @@ const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (e
     }, 5 * 1000); // TODO: configure this with error display message timeout
 };
 
+export const addComment = (): ThunkAction<void, CommentsState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
+        dispatch({
+            type: setModuleState,
+            payload: { nextState: 'showModal' }
+        });
+
+        dispatch({
+            type: OpenModal,
+            modalType: 'form',
+            payload: {
+                // todo: add new comment
+                // subscribe to add comment
+                validateFields: ['message'],
+                
+            }
+        } as ModalAction);
+    };
+
 /**
  * Add comment via api
  * @param addComment Model for adding comment
  * @returns Add comment function that can be called with redux dispatcher
  */
-export const addComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, Action> =>
+export const onAddComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, Action> =>
     (dispatch: ThunkDispatch<CommentsState, unknown, Action>): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post<string>(`api/comments/add`, addComment)
-            .then((id: string) => dispatch({
-                type: addCommentAction,
-                payload: {
-                    comment: {
-                        ...addComment,
-                        id: id
+            .then((id: string) =>
+                dispatch({
+                    type: addCommentAction,
+                    payload: {
+                        comment: {
+                            ...addComment,
+                            id: id
+                        }
                     }
-                }
-            }))
+                }))
             .catch(setError(dispatch));
     };
 
@@ -78,7 +101,7 @@ export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Acti
         get<Array<Comment>>(`api/comments/getAll`)
             .then((comments: Array<Comment>) => {
                 dispatch({
-                    type: setIsLoading,
+                    type: setComments,
                     payload: {
                         comments: comments
                     }
