@@ -38,7 +38,8 @@
 		"react/prop-types": "warn",
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
-		"eol-last": "warn"
+		"eol-last": "warn",
+		"semi": "error"
 	},
 	"settings": {
 		"react": {
