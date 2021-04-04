@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import Button from "src/components/button/button";
+
 import { Comment } from "models/comment";
 import { AddComment } from "models/request";
 
@@ -35,7 +37,13 @@ function Comments(props: CommentsProps): JSX.Element {
             <span>State: {props.state}</span>
             <br />
             {props.state !== 'showModal'
-                && <button className="button is-primary" onClick={props.testAdd}>Add comment</button>
+                && <Button
+                    caption='Add comment'
+                    type='primary'
+                    isLoading={props.state === 'error'}
+                    disabled={props.state === 'error'}
+                    onClick={props.testAdd}
+                />
             }
         </section>
     );
