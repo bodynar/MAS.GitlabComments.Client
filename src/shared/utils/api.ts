@@ -12,7 +12,7 @@ type RequestData = {
  * Send data to api to process
  * @param uri Api endpoint address
  * @param requestData Request data
- * @returns {Promise<void>} Promise with api processing result
+ * @returns {Promise<TResult>} Promise with api processing result
  */
 export const post = async <TResult>(uri: string, requestData: RequestData): Promise<TResult> => {
     const response: Response = await fetch(uri, {
@@ -23,16 +23,16 @@ export const post = async <TResult>(uri: string, requestData: RequestData): Prom
         body: JSON.stringify(requestData)
     });
 
-    const baseResponse: BaseResponseWithResult<TResult> = await response.json();
-
     if (response.ok) {
+        const baseResponse: BaseResponseWithResult<TResult> = await response.json();
+
         if (baseResponse.success) {
             return Promise.resolve(baseResponse.result);
         } else {
-            return Promise.reject(new Error(baseResponse.erorr));
+            return Promise.reject(baseResponse.erorr);
         }
     } else {
-        return Promise.reject(new Error(response.statusText));
+        return Promise.reject(response.statusText);
     }
 };
 
@@ -46,9 +46,8 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
     const requestParams: RequestInit = {
         method: 'GET',
         headers: {
-            'content-type': 'application/json;charset=UTF-8',
-        },
-        body: undefined
+            'content-type': 'application/json',
+        }
     };
 
     if (!isNullOrUndefined(requestData)) {
@@ -56,15 +55,15 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
     }
 
     const response: Response = await fetch(uri, requestParams);
-    const baseResponse: BaseResponseWithResult<TResult> = await response.json();
 
     if (response.ok) {
+        const baseResponse: BaseResponseWithResult<TResult> = await response.json();
         if (baseResponse.success) {
             return Promise.resolve(baseResponse.result);
         } else {
             return Promise.reject(new Error(baseResponse.erorr));
         }
     } else {
-        return Promise.reject(new Error(response.statusText));
+        return Promise.reject(response.statusText);
     }
 };
