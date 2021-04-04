@@ -12,7 +12,7 @@ const initialState: CommentsState = {
     isLoading: false,
     comments: [],
 };
-// TODO: fix type and handle ensurePropertyDefined calls
+
 export default function (state = initialState, action: Action): CommentsState {
 
     switch (action.type) {
