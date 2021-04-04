@@ -1,5 +1,7 @@
 import React from "react";
+
 import Comments from "../comments/comments";
+import ModalBox from '../modalBox/modalBox';
 
 export default function App(): JSX.Element {
     return (<>
@@ -22,6 +24,7 @@ export default function App(): JSX.Element {
         <hr />
         <section>
             <Comments />
+            <ModalBox />
         </section>
     </>);
 }
