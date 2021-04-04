@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { AppState } from "redux/rootReducer";
+import { isNullOrUndefined } from "utils/common";
 
+import { AppState } from "redux/rootReducer";
 import { closeModal } from "redux/modal/actions";
 
 type ModalBoxProps = {
@@ -17,6 +18,19 @@ function ModalBox(props: ModalBoxProps): JSX.Element {
     const onCloseClick = React.useCallback(() => {
         props.closeModal("CLOSE CLICK");
     }, [props]);
+
+    React.useEffect(() => {
+        const htmlElement: HTMLElement | null =
+            document.body.parentElement;
+
+        if (!isNullOrUndefined(htmlElement)) {
+            if (props.isOpen) {
+                htmlElement?.classList.add('is-clipped');
+            } else {
+                htmlElement?.classList.remove('is-clipped');
+            }
+        }
+    }, [props.isOpen]);
 
     return (
         <div className={classNames}>
