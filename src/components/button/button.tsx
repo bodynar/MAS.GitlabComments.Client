@@ -4,31 +4,32 @@ import { isNullOrUndefined } from 'utils/common';
 
 import { ButtonSize, ButtonType } from './types';
 
-type ButtonProps = {
-    /**  */
+export type ButtonProps = {
+    /** Button displaying text */
     caption: string;
 
-    /**  */
+    /** Type of button (color)  */
     type: ButtonType;
 
-    /**  */
+    /** Button size  */
     size?: ButtonSize;
 
-    /**  */
+    /** Is button uses light version of color  */
     light?: boolean;
 
-    /**  */
+    /** Is button outlined */
     outlined?: boolean;
 
-    /**  */
+    /** Should button corners be rounded  */
     rounded?: boolean;
 
-    /** */
+    /** Display loading icon */
     isLoading?: boolean;
 
-    /** */
+    /** Is button disabled */
     disabled?: boolean;
-    /** */
+
+    /** Click action handler */
     onClick?: () => void;
 };
 
