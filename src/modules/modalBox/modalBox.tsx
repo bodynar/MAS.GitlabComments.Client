@@ -5,39 +5,60 @@ import { isNullOrUndefined } from "utils/common";
 
 import { AppState } from "redux/rootReducer";
 import { closeModal } from "redux/modal/actions";
+import { ModalCallback, ModalData, ModalParams } from "redux/modal/types";
+
+import Button from "components/button/button";
+
+import { getButtonCaptions } from "./utils";
 
 type ModalBoxProps = {
+    /** Is modal currently shown */
     isOpen: boolean;
-    closeModal: (reason?: string) => void;
+
+    /** Modal window configuration */
+    params: ModalParams;
+
+    /** Close modal handler */
+    closeModal: (closeModalData: ModalData, modalCallback?: ModalCallback) => void;
 };
 
-function ModalBox(props: ModalBoxProps): JSX.Element {
+function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
     const classNames: string =
-        'modal' + (props.isOpen ? ' is-active' : '');
+        'modal' + (isOpen ? ' is-active' : '');
 
     const onCloseClick = React.useCallback(() => {
-        props.closeModal("CLOSE CLICK");
-    }, [props]);
+        closeModal({ closeCode: 'cancel', }, params.callback);
+    }, [closeModal, params]);
+
+    const onSaveClick = React.useCallback(() => {
+        closeModal({ closeCode: 'save' }, params.callback);
+    }, [closeModal, params]);
 
     React.useEffect(() => {
         const htmlElement: HTMLElement | null =
             document.body.parentElement;
 
         if (!isNullOrUndefined(htmlElement)) {
-            if (props.isOpen) {
+            if (isOpen) {
                 htmlElement?.classList.add('is-clipped');
             } else {
                 htmlElement?.classList.remove('is-clipped');
             }
         }
-    }, [props.isOpen]);
+    }, [isOpen]);
+
+    if (!isOpen) {
+        return <></>;
+    }
+
+    const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(params);
 
     return (
         <div className={classNames}>
             <div className="modal-background"></div>
             <div className="modal-card">
                 <header className="modal-card-head">
-                    <p className="modal-card-title">Modal title</p>
+                    <p className="modal-card-title">{params.title}</p>
                     <button
                         className="delete"
                         aria-label="close"
@@ -45,11 +66,20 @@ function ModalBox(props: ModalBoxProps): JSX.Element {
                     ></button>
                 </header>
                 <section className="modal-card-body">
-                    Some content
+                    {params.message}
                 </section>
                 <footer className="modal-card-foot">
-                    <button className="button is-success">Save changes</button>
-                    <button className="button" onClick={onCloseClick}>Cancel</button>
+                    <Button
+                        caption={saveBtnCaption}
+                        type="success"
+                        onClick={onSaveClick}
+                        key="modal-success-btn"
+                    />
+                    <Button
+                        caption={cancelBtnCaption}
+                        type="default"
+                        onClick={onCloseClick}
+                    />
                 </footer>
             </div>
         </div>
@@ -57,7 +87,10 @@ function ModalBox(props: ModalBoxProps): JSX.Element {
 }
 
 export default connect(
-    ({ modal }: AppState) => ({ ...modal }),
+    ({ modal }: AppState) => ({
+        isOpen: modal.isOpen,
+        params: modal.modalParams as ModalParams
+    }),
     {
         closeModal: closeModal
     }

@@ -3,7 +3,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AddComment } from "models/request/addComment";
 import { UpdateComment } from "models/request/updateComment";
 
-import { Action, ActionWithPayload } from "redux/types";
+import { ActionWithPayload } from "redux/types";
 import { get, post } from "utils/api";
 
 import {
@@ -19,7 +19,7 @@ import {
 import { CommentModuleState, CommentsState } from "./types";
 
 import { OpenModal } from "redux/modal/actions";
-import { ModalAction } from "redux/modal/types";
+import { ModalAction, ModalData } from "redux/modal/types";
 
 const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => {
     const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
@@ -49,20 +49,37 @@ const setError = (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayl
 };
 
 export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, Action | ActionWithPayload>): void => {
+    (dispatch: ThunkDispatch<CommentsState, unknown, ModalAction | ActionWithPayload>): void => {
         dispatch({
             type: setModuleState,
             payload: { nextState: 'showModal' }
-        });
+        } as ActionWithPayload);
 
         dispatch({
             type: OpenModal,
-            modalType: 'form',
-            payload: {
-                // todo: add new comment
-                // subscribe to add comment
-                validateFields: ['message'],
-                // onSave: onAddComment
+            params: {
+                modalType: 'form',
+                title: 'Add comment',
+                message: 'Add comment form will be added below',
+                callback: {
+                    // TODO: tested modal callbacks
+                    saveCallback: (modalData: ModalData): void => {
+                        console.warn(modalData.closeCode);
+
+                        dispatch({
+                            type: setModuleState,
+                            payload: { nextState: 'idle' }
+                        } as ActionWithPayload);
+                    },
+                    cancelCallback: (modalData: ModalData): void => {
+                        console.warn(modalData.closeCode);
+
+                        dispatch({
+                            type: setModuleState,
+                            payload: { nextState: 'idle' }
+                        } as ActionWithPayload);
+                    },
+                }
             }
         } as ModalAction);
     };
