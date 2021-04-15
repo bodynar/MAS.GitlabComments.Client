@@ -1,11 +1,8 @@
-import { ModalForm } from './component/modalForm';
-import { ModalFormConfiguration, ModalFormItem, ModalFormItemData, ModalFormItemType, ModalFormItemValidation } from "./types";
-
+export { ModalForm } from './component/modalForm';
 export {
-    ModalForm,
     ModalFormConfiguration,
-    ModalFormItemType,
-    ModalFormItemData,
     ModalFormItem,
+    ModalFormItemData,
+    ModalFormItemType,
     ModalFormItemValidation,
-};
+} from "./types";
