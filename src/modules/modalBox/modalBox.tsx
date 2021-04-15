@@ -34,13 +34,12 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
         throw new Error(validationError);
     }
 
-    // const initIsSaveButtonDisabled: boolean = getInitIsSaveButtonDisabled(params);
     const [isSaveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
 
-    // TODO: fix this hack
     useEffect(() => {
         if (isOpen) {
-            setSaveButtonDisabled(getInitIsSaveButtonDisabled(params));
+            const initIsSaveButtonDisabled: boolean = getInitIsSaveButtonDisabled(params);
+            setSaveButtonDisabled(initIsSaveButtonDisabled);
         }
     }, [isOpen, params]);
 
