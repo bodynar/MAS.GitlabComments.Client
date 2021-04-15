@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
-import { isNullOrUndefined, isStringEmpty } from 'utils/common';
+import { isNullOrUndefined } from 'utils/common';
 
 import { ModalFormItem, ModalFormItemValidation } from '../../types';
+import { getFieldValueValidationError } from '../../utils';
 
 type TextProps = {
 	fieldConfig: ModalFormItem;
@@ -30,21 +31,8 @@ export default function Text({ fieldConfig }: TextProps): JSX.Element {
 			const validationCfg: ModalFormItemValidation =
 				fieldConfig.validationConfiguration as ModalFormItemValidation;
 
-			if (validationCfg.isRequired) {
-				const validationError: string =
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-					!isNullOrUndefined(validationCfg.customRequiredvalidationError) && !isStringEmpty(validationCfg.customRequiredvalidationError!)
-						? validationCfg.customRequiredvalidationError as string
-						: 'Value is required';
-
-				const validator: (value: string) => string | undefined =
-					!isNullOrUndefined(validationCfg.customValidation)
-						? validationCfg.customValidation as (value: string) => string | undefined
-						: (value: string): string | undefined => value === '' ? validationError : undefined;
-
-				const error: string | undefined = validator(value);
-				setValidationError(error);
-			}
+			const error: string | undefined = getFieldValueValidationError(validationCfg, value);
+			setValidationError(error);
 		}
 	}, [fieldConfig.validationConfiguration, isDirty, value]);
 
@@ -52,20 +40,27 @@ export default function Text({ fieldConfig }: TextProps): JSX.Element {
 		(isNullOrUndefined(validationError)
 			? '' : ' is-danger');
 
+	const labelClassName: string = 'label' +
+		(!isNullOrUndefined(fieldConfig.validationConfiguration)
+			&& fieldConfig.validationConfiguration?.isRequired === true
+			? ' is-required'
+			: '');
+
 	return (
-		<div>
+		<div className="field">
 			<label
 				htmlFor={fieldConfig.name}
-				className="label"
+				className={labelClassName}
 			>
 				{fieldConfig.caption || fieldConfig.name}
 			</label>
 			<div className="control">
 				<input
 					type="text"
-					className={controlClassName}
 					id={fieldConfig.name}
 					name={fieldConfig.name}
+					disabled={fieldConfig.disabled}
+					className={controlClassName}
 					placeholder={fieldConfig.name}
 					onChange={onInputChange}
 					onBlur={validate}
