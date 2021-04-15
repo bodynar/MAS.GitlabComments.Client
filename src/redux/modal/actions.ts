@@ -21,10 +21,18 @@ export const closeModal = (closeModalData: ModalData, modalCallback?: ModalCallb
             type: CloseModal,
         });
 
-        if (!isNullOrUndefined(modalCallback) && !isNullOrUndefined(modalCallback?.saveCallback)) {
-            const customCallback: (modalData: ModalData) => void =
-                modalCallback?.saveCallback as (modalData: ModalData) => void;
+        if (!isNullOrUndefined(modalCallback)) {
+            if (closeModalData.closeCode === 'cancel' && !isNullOrUndefined(modalCallback?.cancelCallback)) {
+                const customCallback: (modalData: ModalData) => void =
+                    modalCallback?.cancelCallback as (modalData: ModalData) => void;
 
-            customCallback(closeModalData);
+                customCallback(closeModalData);
+            }
+            else if (closeModalData.closeCode === 'save' && !isNullOrUndefined(modalCallback?.saveCallback)) {
+                const customCallback: (modalData: ModalData) => void =
+                    modalCallback?.saveCallback as (modalData: ModalData) => void;
+
+                customCallback(closeModalData);
+            }
         }
     };
