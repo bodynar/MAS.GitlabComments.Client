@@ -10,6 +10,7 @@ interface ModalFormConfiguration {
 /** Types of available form fields */
 type ModalFormItemType =
     | 'text'
+    | 'multiline'
     | 'date'
     | 'number'
     ;
