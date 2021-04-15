@@ -1,10 +1,15 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
+import { ActionWithPayload } from "redux/types";
+
+import { OpenModal } from "redux/modal/actions";
+import { ModalAction, ModalData } from "redux/modal/types";
+
+import { isNullOrUndefined } from "utils/common";
+import { get, post } from "utils/api";
+
 import { AddComment } from "models/request/addComment";
 import { UpdateComment } from "models/request/updateComment";
-
-import { ActionWithPayload } from "redux/types";
-import { get, post } from "utils/api";
 
 import {
     setComment,
@@ -17,9 +22,6 @@ import {
     setComments
 } from "./actions";
 import { CommentModuleState, CommentsState } from "./types";
-
-import { OpenModal } from "redux/modal/actions";
-import { ModalAction, ModalData } from "redux/modal/types";
 
 const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => {
     const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
@@ -63,17 +65,28 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
                 formData: {
                     fields: [
                         { name: 'Comment', type: 'text', caption: 'Comment', validationConfiguration: { isRequired: true } },
-                        { name: 'Description', disabled: true, type: 'multiline', caption: 'Description' },
+                        { name: 'Description', type: 'multiline', caption: 'Description' },
                     ]
                 },
                 callback: {
                     saveCallback: (modalData: ModalData): void => {
-                        console.warn(modalData.formData);
-
                         dispatch({
                             type: setModuleState,
                             payload: { nextState: 'idle' }
                         } as ActionWithPayload);
+
+                        const message: string | undefined = modalData.formData?.fields.find(x => x.name === 'Comment')?.value;
+
+                        if (isNullOrUndefined(message)) {
+                            throw new Error('Comment message is empty after modal form with required flag');
+                        }
+
+                        const addComment: AddComment = {
+                            message: message as string,
+                            description: modalData.formData?.fields.find(x => x.name === 'Description')?.value
+                        };
+
+                        dispatch(onAddComment(addComment));
                     },
                     cancelCallback: (): void => {
                         dispatch({
