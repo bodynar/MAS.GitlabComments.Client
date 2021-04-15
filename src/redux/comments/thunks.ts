@@ -60,20 +60,23 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
             params: {
                 modalType: 'form',
                 title: 'Add comment',
-                message: 'Add comment form will be added below',
+                formData: {
+                    caption: '',
+                    fields: [
+                        { name: 'Comment', type: 'text', caption: 'Comment', validationConfiguration: { isRequired: true } },
+                        { name: 'Description', type: 'text', caption: 'Description' },
+                    ]
+                },
                 callback: {
-                    // TODO: tested modal callbacks
                     saveCallback: (modalData: ModalData): void => {
-                        console.warn(modalData.closeCode);
+                        console.warn(modalData.formData);
 
                         dispatch({
                             type: setModuleState,
                             payload: { nextState: 'idle' }
                         } as ActionWithPayload);
                     },
-                    cancelCallback: (modalData: ModalData): void => {
-                        console.warn(modalData.closeCode);
-
+                    cancelCallback: (): void => {
                         dispatch({
                             type: setModuleState,
                             payload: { nextState: 'idle' }
