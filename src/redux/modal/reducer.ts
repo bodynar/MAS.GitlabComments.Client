@@ -26,6 +26,7 @@ export default function (state = initialState, action: ModalAction): ModalState 
         }
         case CloseModal: {
             return {
+                ...state,
                 isOpen: false
             };
         }
