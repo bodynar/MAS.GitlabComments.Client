@@ -9,7 +9,10 @@ import { ModalCallback, ModalData, ModalParams } from "redux/modal/types";
 
 import Button from "components/button/button";
 
-import { getButtonCaptions } from "./utils";
+import { getButtonCaptions, validateModalParams } from "./utils";
+
+import { ModalForm } from "./modalForm/modalForm";
+import { ModalFormConfiguration } from "./modalForm/types";
 
 type ModalBoxProps = {
     /** Is modal currently shown */
@@ -27,11 +30,24 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
         'modal' + (isOpen ? ' is-active' : '');
 
     const onCloseClick = React.useCallback(() => {
-        closeModal({ closeCode: 'cancel', }, params.callback);
+        closeModal({ closeCode: 'cancel' }, params.callback);
     }, [closeModal, params]);
 
     const onSaveClick = React.useCallback(() => {
-        closeModal({ closeCode: 'save' }, params.callback);
+        const closeConfig: ModalData = {
+            closeCode: 'save'
+        };
+
+        if (params.modalType === 'form') {
+            const modalFormData: ModalFormConfiguration =
+                params.formData as ModalFormConfiguration;
+
+            closeConfig.formData = {
+                fields: modalFormData.fields.map(x => ({ name: x.name, value: x.value }))
+            };
+        }
+
+        closeModal(closeConfig, params.callback);
     }, [closeModal, params]);
 
     React.useEffect(() => {
@@ -51,6 +67,12 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
         return <></>;
     }
 
+    const validationError = validateModalParams(params);
+
+    if (!isNullOrUndefined(validationError)) {
+        throw new Error(validationError);
+    }
+
     const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(params);
 
     return (
@@ -66,15 +88,20 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
                     ></button>
                 </header>
                 <section className="modal-card-body">
-                    {params.message}
+                    {params.modalType === 'form'
+                        ? <ModalForm formConfig={params.formData as ModalFormConfiguration} />
+                        : <p>{params.message}</p>}
                 </section>
                 <footer className="modal-card-foot">
-                    <Button
-                        caption={saveBtnCaption}
-                        type="success"
-                        onClick={onSaveClick}
-                        key="modal-success-btn"
-                    />
+                    {params.modalType !== 'info'
+                        &&
+                        <Button
+                            caption={saveBtnCaption}
+                            type="success"
+                            onClick={onSaveClick}
+                            key="modal-success-btn"
+                        />
+                    }
                     <Button
                         caption={cancelBtnCaption}
                         type="default"
@@ -85,6 +112,7 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
         </div>
     );
 }
+
 
 export default connect(
     ({ modal }: AppState) => ({
