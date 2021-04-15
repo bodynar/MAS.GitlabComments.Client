@@ -61,10 +61,9 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
                 modalType: 'form',
                 title: 'Add comment',
                 formData: {
-                    caption: '',
                     fields: [
                         { name: 'Comment', type: 'text', caption: 'Comment', validationConfiguration: { isRequired: true } },
-                        { name: 'Description', type: 'text', caption: 'Description' },
+                        { name: 'Description', type: 'multiline', caption: 'Description' },
                     ]
                 },
                 callback: {
