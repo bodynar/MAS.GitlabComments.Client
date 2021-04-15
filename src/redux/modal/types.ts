@@ -1,5 +1,7 @@
 import { Action } from "redux/types";
 
+import { ModalFormConfiguration, ModalFormItemData } from "modules/modalBox/modalForm/types";
+
 /** Type of displaying modal */
 export type ModalType =
     'info' /** Display some textual information */
@@ -15,21 +17,12 @@ export type ModalState = {
 export type ModalParams = {
     title: string;
     modalType: ModalType;
-    formData?: {
-        fields: Array<{
-            fieldName: string;
-            caption: string;
-            isRequired: boolean;
-            validationError?: string;
-        }>;
-    };
+    formData?: ModalFormConfiguration;
     message?: string;
     buttonCaption?: {
         saveCaption?: string;
         cancelCaption?: string;
     };
-
-    // TODO: is this correct?
     callback?: ModalCallback;
 };
 
@@ -41,10 +34,7 @@ export type ModalCallback = {
 export type ModalData = {
     closeCode: 'save' | 'cancel';
     formData?: {
-        fields: Array<{
-            fieldName: string;
-            value: string;
-        }>;
+        fields: Array<ModalFormItemData>;
     };
 };
 
