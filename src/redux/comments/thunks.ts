@@ -63,7 +63,7 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
                 formData: {
                     fields: [
                         { name: 'Comment', type: 'text', caption: 'Comment', validationConfiguration: { isRequired: true } },
-                        { name: 'Description', type: 'multiline', caption: 'Description' },
+                        { name: 'Description', disabled: true, type: 'multiline', caption: 'Description' },
                     ]
                 },
                 callback: {

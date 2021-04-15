@@ -1,10 +1,13 @@
 import React from 'react';
 
+import './common.style.scss';
+
 import { isNullOrUndefined } from 'utils/common';
 
 import Text from 'modules/modalBox/modalForm/components/text/text';
 
-import { ModalFormConfiguration } from './types';
+import { ModalFormConfiguration } from '../types';
+import Multiline from '../components/multiline/multiline';
 
 type ModalFormProps = {
     formConfig: ModalFormConfiguration;
@@ -22,6 +25,11 @@ export const ModalForm = ({ formConfig }: ModalFormProps): JSX.Element => {
             {formConfig.fields.map(fieldConfig => {
                 if (fieldConfig.type === 'text') {
                     return <Text
+                        key={fieldConfig.name}
+                        fieldConfig={fieldConfig}
+                    />;
+                } else if (fieldConfig.type === 'multiline') {
+                    return <Multiline
                         key={fieldConfig.name}
                         fieldConfig={fieldConfig}
                     />;

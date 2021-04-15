@@ -11,8 +11,7 @@ import Button from "components/button/button";
 
 import { getButtonCaptions, validateModalParams } from "./utils";
 
-import { ModalForm } from "./modalForm/modalForm";
-import { ModalFormConfiguration } from "./modalForm/types";
+import { ModalForm, ModalFormConfiguration } from "./modalForm";
 
 type ModalBoxProps = {
     /** Is modal currently shown */
@@ -24,7 +23,7 @@ type ModalBoxProps = {
     /** Close modal handler */
     closeModal: (closeModalData: ModalData, modalCallback?: ModalCallback) => void;
 };
-
+// TODO: if form not valid - disable save button
 function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
     const classNames: string =
         'modal' + (isOpen ? ' is-active' : '');

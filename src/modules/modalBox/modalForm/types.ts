@@ -29,6 +29,9 @@ interface ModalFormItem extends ModalFormItemData {
     /** Caption */
     caption: string;
 
+    /** Should field be readonly */
+    disabled?: boolean;
+
     /** Field type. Native control will use that type to match own type */
     type: ModalFormItemType;
 
