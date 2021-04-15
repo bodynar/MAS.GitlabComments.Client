@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { isNullOrUndefined } from "utils/common";
@@ -7,9 +7,9 @@ import { AppState } from "redux/rootReducer";
 import { closeModal } from "redux/modal/actions";
 import { ModalCallback, ModalData, ModalParams } from "redux/modal/types";
 
-import Button from "components/button/button";
+import Button from "sharedComponents/button/button";
 
-import { getButtonCaptions, validateModalParams } from "./utils";
+import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "./utils";
 
 import { ModalForm, ModalFormConfiguration } from "./modalForm";
 
@@ -23,33 +23,51 @@ type ModalBoxProps = {
     /** Close modal handler */
     closeModal: (closeModalData: ModalData, modalCallback?: ModalCallback) => void;
 };
-// TODO: if form not valid - disable save button
-function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
-    const classNames: string =
-        'modal' + (isOpen ? ' is-active' : '');
 
-    const onCloseClick = React.useCallback(() => {
+function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
+    const validationError =
+        isOpen
+            ? validateModalParams(params)
+            : undefined;
+
+    if (!isNullOrUndefined(validationError)) {
+        throw new Error(validationError);
+    }
+
+    // const initIsSaveButtonDisabled: boolean = getInitIsSaveButtonDisabled(params);
+    const [isSaveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
+
+    // TODO: fix this hack
+    useEffect(() => {
+        if (isOpen) {
+            setSaveButtonDisabled(getInitIsSaveButtonDisabled(params));
+        }
+    }, [isOpen, params]);
+
+    const onCloseClick = useCallback(() => {
         closeModal({ closeCode: 'cancel' }, params.callback);
     }, [closeModal, params]);
 
-    const onSaveClick = React.useCallback(() => {
-        const closeConfig: ModalData = {
-            closeCode: 'save'
-        };
-
-        if (params.modalType === 'form') {
-            const modalFormData: ModalFormConfiguration =
-                params.formData as ModalFormConfiguration;
-
-            closeConfig.formData = {
-                fields: modalFormData.fields.map(x => ({ name: x.name, value: x.value }))
+    const onSaveClick = useCallback(() => {
+        if (!isSaveButtonDisabled) {
+            const closeConfig: ModalData = {
+                closeCode: 'save'
             };
+
+            if (params.modalType === 'form') {
+                const modalFormData: ModalFormConfiguration =
+                    params.formData as ModalFormConfiguration;
+
+                closeConfig.formData = {
+                    fields: modalFormData.fields.map(x => ({ name: x.name, value: x.value }))
+                };
+            }
+
+            closeModal(closeConfig, params.callback);
         }
+    }, [closeModal, isSaveButtonDisabled, params]);
 
-        closeModal(closeConfig, params.callback);
-    }, [closeModal, params]);
-
-    React.useEffect(() => {
+    useEffect(() => {
         const htmlElement: HTMLElement | null =
             document.body.parentElement;
 
@@ -66,11 +84,8 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
         return <></>;
     }
 
-    const validationError = validateModalParams(params);
-
-    if (!isNullOrUndefined(validationError)) {
-        throw new Error(validationError);
-    }
+    const classNames: string =
+        'modal' + (isOpen ? ' is-active' : '');
 
     const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(params);
 
@@ -88,22 +103,26 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
                 </header>
                 <section className="modal-card-body">
                     {params.modalType === 'form'
-                        ? <ModalForm formConfig={params.formData as ModalFormConfiguration} />
+                        ? <ModalForm
+                            formConfig={params.formData as ModalFormConfiguration}
+                            setSaveButtonDisabled={setSaveButtonDisabled}
+                        />
                         : <p>{params.message}</p>}
                 </section>
                 <footer className="modal-card-foot">
                     {params.modalType !== 'info'
                         &&
                         <Button
-                            caption={saveBtnCaption}
-                            type="success"
-                            onClick={onSaveClick}
                             key="modal-success-btn"
+                            type="success"
+                            caption={saveBtnCaption}
+                            onClick={onSaveClick}
+                            disabled={isSaveButtonDisabled}
                         />
                     }
                     <Button
-                        caption={cancelBtnCaption}
                         type="default"
+                        caption={cancelBtnCaption}
                         onClick={onCloseClick}
                     />
                 </footer>

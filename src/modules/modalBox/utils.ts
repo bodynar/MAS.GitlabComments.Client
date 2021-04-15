@@ -1,7 +1,7 @@
 import { ModalParams } from "redux/modal/types";
 
 import { isNullOrUndefined, isStringEmpty } from "utils/common";
-import { ModalFormItem } from "./modalForm/types";
+import { ModalFormConfiguration, ModalFormItem } from "./modalForm/types";
 
 /**
  * Get button captions for modal box depending on modal params
@@ -94,4 +94,21 @@ export const validateModalParams = (modalParams: ModalParams): string | undefine
     }
 
     return undefined;
+};
+
+/**
+ * Get initial value for save button disabled flag
+ * @param params Modal window configuration params
+ * @returns Initial disabled flag value for save button
+ */
+export const getInitIsSaveButtonDisabled = (params: ModalParams): boolean => {
+    if (params.modalType === 'form'
+        && !isNullOrUndefined(params.formData)
+    ) {
+        return (params.formData as ModalFormConfiguration)
+            .fields
+            .some(field => !isNullOrUndefined(field.validationConfiguration));
+    }
+
+    return false;
 };
