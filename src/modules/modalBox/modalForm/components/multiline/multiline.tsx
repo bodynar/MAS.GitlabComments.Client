@@ -2,39 +2,43 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import { isNullOrUndefined } from 'utils/common';
 
-import { ModalFormItem, ModalFormItemValidation } from '../../types';
+import { ModalFormItemValidation } from '../../types';
 import { getFieldValueValidationError } from '../../utils';
 
-type MultilineProps = {
-	fieldConfig: ModalFormItem;
-};
+import { BaseFieldProps } from '../basePropsType';
 
-export default function Multiline({ fieldConfig }: MultilineProps): JSX.Element {
+type MultilineProps = BaseFieldProps;
+
+export default function Multiline({ fieldConfig, setFieldValidState }: MultilineProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || '');
 	const [isDirty, setIsDirty] = useState<boolean>(false);
 	const [validationError, setValidationError] = useState<string | undefined>();
 
+	const validate = useCallback(
+		(value: string, isDirty: boolean) => {
+			if (isDirty && !isNullOrUndefined(fieldConfig.validationConfiguration)) {
+				const validationCfg: ModalFormItemValidation =
+					fieldConfig.validationConfiguration as ModalFormItemValidation;
+				const error: string | undefined = getFieldValueValidationError(validationCfg, value);
+				setValidationError(error);
+				setFieldValidState(fieldConfig.name, isNullOrUndefined(error));
+			}
+		}, [fieldConfig.name, fieldConfig.validationConfiguration, setFieldValidState]);
+
 	const onInputChange = useCallback(
 		(event: ChangeEvent<HTMLTextAreaElement>) => {
 			const newValue: string = event.target.value;
+			let isFieldDirty: boolean = isDirty;
 
 			if (newValue !== value) {
 				setIsDirty(true);
+				isFieldDirty = true;
 			}
 
 			fieldConfig.value = newValue;
 			setValue(newValue);
-		}, [fieldConfig, value]);
-
-	const validate = useCallback(() => {
-		if (isDirty && !isNullOrUndefined(fieldConfig.validationConfiguration)) {
-			const validationCfg: ModalFormItemValidation =
-				fieldConfig.validationConfiguration as ModalFormItemValidation;
-
-			const error: string | undefined = getFieldValueValidationError(validationCfg, value);
-			setValidationError(error);
-		}
-	}, [fieldConfig.validationConfiguration, isDirty, value]);
+			validate(newValue, isFieldDirty);
+		}, [fieldConfig, isDirty, validate, value]);
 
 	const controlClassName: string = 'textarea' +
 		(isNullOrUndefined(validationError)
@@ -42,7 +46,6 @@ export default function Multiline({ fieldConfig }: MultilineProps): JSX.Element 
 
 	const labelClassName: string = 'label' +
 		(!isNullOrUndefined(fieldConfig.validationConfiguration)
-			&& fieldConfig.validationConfiguration?.isRequired === true
 			? ' is-required'
 			: '');
 
@@ -62,7 +65,7 @@ export default function Multiline({ fieldConfig }: MultilineProps): JSX.Element 
 					disabled={fieldConfig.disabled}
 					placeholder={fieldConfig.name}
 					onChange={onInputChange}
-					onBlur={validate}
+					// onBlur={validate}
 					value={value}
 				/>
 			</div>
