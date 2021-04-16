@@ -1,8 +1,18 @@
 .app-navbar {
     &__brand {
+        margin: 0 0.25rem 0 0.75rem;
+        align-items: center;
+        display: flex;
+    }
+    &__logo {
         display: flex;
         align-items: center;
-        margin: 0 0.75rem;
+        padding: 0.25rem 0.5rem;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.125);
+            border-radius: 4px;
+        }
 
         .tanuki-logo .tanuki-left-ear,
         .tanuki-logo .tanuki-right-ear,
