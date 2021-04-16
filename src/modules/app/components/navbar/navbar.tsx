@@ -40,12 +40,20 @@ export default function Navbar({ }: NavbarProps): JSX.Element {
 }
 
 type NavbarMenuItemProps = {
+    /** Menu item configuration */
     item: MenuItem;
+
+    /** Is single item. Will affect on styles */
     isSingle: boolean;
+
+    /** Is menu item active */
     isActive: boolean;
+
+    /** Menu item click handler*/
     onClick: (name: string) => void;
 };
 
+/** Navar menu item */
 const NavbarMenuItem = ({ item, isActive, onClick, isSingle }: NavbarMenuItemProps): JSX.Element => {
     const href: string | undefined =
         item.disabled === true || isActive
