@@ -27,7 +27,7 @@ function Comments(props: CommentsProps): JSX.Element {
     }, [props, props.comments]);
 
     return (
-        <section style={{ padding: '0 5em 5em 5em' }}>
+        <section>
             {props.state === 'error'
                 && <span style={{ color: 'red' }}>{props.error}</span>
             }
