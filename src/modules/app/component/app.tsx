@@ -10,16 +10,7 @@ export default function App(): JSX.Element {
         <main>
             <ModalBox />
             <Navbar />
-            <section className="container">
-                <div>
-                    <h1 className="title">
-                        Hello World
-                    </h1>
-                    <p className="subtitle">
-                        My first website with <strong>Bulma</strong>!
-                    </p>
-                </div>
-                <hr />
+            <section className="container mt-5">
                 <Comments />
             </section>
         </main>
