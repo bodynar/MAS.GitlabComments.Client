@@ -104,7 +104,7 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
  * @param addComment Model for adding comment
  * @returns Add comment function that can be called with redux dispatcher
  */
-export const onAddComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
+const onAddComment = (addComment: AddComment): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
     (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
         dispatch(getSetIsLoadingAction(true));
 

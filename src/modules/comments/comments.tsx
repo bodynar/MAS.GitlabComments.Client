@@ -1,26 +1,44 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import Button from "src/components/button/button";
-
 import { Comment } from "models/comment";
-import { AddComment } from "models/request";
 
 import { AppState } from "redux/rootReducer";
-import { getAllComments, onAddComment as addCommentAction, addComment } from 'redux/comments/thunks';
+import { getAllComments, addComment } from 'redux/comments/thunks';
 import { CommentModuleState } from "redux/comments/types";
 
+// TODO: update thunks according to addComment
+// only for those which use modal
+// use them correctly below
+
 type CommentsProps = {
+    /** All comments */
     comments: Array<Comment>;
+
+    /** Current module state */
     state: CommentModuleState;
-    error?: string;
-    testAdd: () => void;
-    addComment: (addComment: AddComment) => void;
+
+    /** Add comment in modal box */
+    addComment: () => void;
+
+    /** Get all comments */
     getComments: () => void;
+
+    /** Update specified comment in modal box */
+    updateComment: (commentId: string) => void;
+
+    /** Increment comment appearance count */
+    increment: (commentId: string) => void;
+
+    /** Show comment description */
+    showDescription: (commentId: string) => void;
+
+    /** Delete comment by it's identifier */
+    deleteComment: (commentId: string) => void;
 };
 
 function Comments(props: CommentsProps): JSX.Element {
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.state === 'init' && props.comments.length === 0) {
             props.getComments();
         }
@@ -28,23 +46,7 @@ function Comments(props: CommentsProps): JSX.Element {
 
     return (
         <section>
-            {props.state === 'error'
-                && <span style={{ color: 'red' }}>{props.error}</span>
-            }
-            <br />
-            <span>Comments: {props.comments.length}</span>
-            <br />
-            <span>State: {props.state}</span>
-            <br />
-            {props.state !== 'showModal'
-                && <Button
-                    caption='Add comment'
-                    type='primary'
-                    isLoading={props.state === 'error'}
-                    disabled={props.state === 'error'}
-                    onClick={props.testAdd}
-                />
-            }
+
         </section>
     );
 }
@@ -52,8 +54,7 @@ function Comments(props: CommentsProps): JSX.Element {
 export default connect(
     ({ comments }: AppState) => ({ ...comments }),
     {
-        addComment: addCommentAction,
+        addComment: addComment,
         getComments: getAllComments,
-        testAdd: addComment
     }
 )(Comments);
