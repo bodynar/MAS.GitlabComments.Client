@@ -1,13 +1,14 @@
 .app-notificator {
-    width: 25%;
+    width: 17.5%;
     margin: 0.5rem;
     position: absolute;
     z-index: 100;
     right: 0;
 
     &__item, .app-notification {
-        height: 7.25rem;
+        max-height: 7.25rem;
         overflow: auto;
+        max-width: 17.5rem;
 
         &-enter {
             opacity: 0;
