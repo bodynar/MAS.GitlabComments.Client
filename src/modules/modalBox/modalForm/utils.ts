@@ -4,21 +4,27 @@ import { ModalFormItemValidation } from "./types";
 
 /**
  * Validate field value
- * @param validationCfg Field validation configuration
  * @param value Field value which needs to be validated
+ * @param validationCfg Field validation configuration
  * @returns Validation error if field value is not valid; otherwise undefuned
  */
-export const getFieldValueValidationError = (validationCfg: ModalFormItemValidation, value: string): string | undefined => {
-    const validationError: string =
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        !isNullOrUndefined(validationCfg.customRequiredvalidationError) && !isStringEmpty(validationCfg.customRequiredvalidationError!)
-            ? validationCfg.customRequiredvalidationError as string
-            : 'Value is required';
+export const getFieldValueValidationError = (value: string, validationCfg?: ModalFormItemValidation): string | undefined => {
+    let validationError = 'Value is required';
+    let validator: (value: string) => string | undefined =
+        (value: string): string | undefined => isStringEmpty(value) ? validationError : undefined;
 
-    const validator: (value: string) => string | undefined =
-        !isNullOrUndefined(validationCfg.customValidation)
-            ? validationCfg.customValidation as (value: string) => string | undefined
-            : (value: string): string | undefined => value === '' ? validationError : undefined;
+    if (!isNullOrUndefined(validationCfg)) {
+        const cfg = validationCfg as ModalFormItemValidation;
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (!isNullOrUndefined(cfg.customRequiredvalidationError) && !isStringEmpty(cfg.customRequiredvalidationError as string)) {
+            validationError = cfg.customRequiredvalidationError as string;
+        }
+
+        if (!isNullOrUndefined(cfg.customValidation)) {
+            validator = cfg.customValidation as (value: string) => string | undefined;
+        }
+    }
 
     const error: string | undefined = validator(value);
 
