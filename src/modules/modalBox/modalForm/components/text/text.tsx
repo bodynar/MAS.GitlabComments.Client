@@ -2,7 +2,6 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import { isNullOrUndefined } from 'utils/common';
 
-import { ModalFormItemValidation } from '../../types';
 import { getFieldValueValidationError } from '../../utils';
 
 import { BaseFieldProps } from '../basePropsType';
@@ -16,14 +15,13 @@ export default function Text({ fieldConfig, setFieldValidState }: TextProps): JS
 
 	const validate = useCallback(
 		(value: string, isDirty: boolean) => {
-			if (isDirty && !isNullOrUndefined(fieldConfig.validationConfiguration)) {
-				const validationCfg: ModalFormItemValidation =
-					fieldConfig.validationConfiguration as ModalFormItemValidation;
-				const error: string | undefined = getFieldValueValidationError(validationCfg, value);
+			if (isDirty && fieldConfig.isRequired === true) {
+				const error: string | undefined = getFieldValueValidationError(value, fieldConfig.validationConfiguration);
+
 				setValidationError(error);
 				setFieldValidState(fieldConfig.name, isNullOrUndefined(error));
 			}
-		}, [fieldConfig.name, fieldConfig.validationConfiguration, setFieldValidState]);
+		}, [fieldConfig.isRequired, fieldConfig.name, fieldConfig.validationConfiguration, setFieldValidState]);
 
 	const onInputChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
@@ -45,33 +43,32 @@ export default function Text({ fieldConfig, setFieldValidState }: TextProps): JS
 			? '' : ' is-danger');
 
 	const labelClassName: string = 'label' +
-		(!isNullOrUndefined(fieldConfig.validationConfiguration)
+		(fieldConfig.isRequired === true
 			? ' is-required'
 			: '');
 
 	return (
-		<div className="field">
+		<div className='field'>
 			<label
 				htmlFor={fieldConfig.name}
 				className={labelClassName}
 			>
 				{fieldConfig.caption || fieldConfig.name}
 			</label>
-			<div className="control">
+			<div className='control'>
 				<input
-					type="text"
+					type='text'
 					id={fieldConfig.name}
 					name={fieldConfig.name}
 					disabled={fieldConfig.disabled}
 					className={controlClassName}
 					placeholder={fieldConfig.name}
 					onChange={onInputChange}
-					// onBlur={validate}
 					value={value}
 				/>
 			</div>
 			{!isNullOrUndefined(validationError)
-				&& <p className="help is-danger">
+				&& <p className='help is-danger'>
 					{validationError}
 				</p>
 			}

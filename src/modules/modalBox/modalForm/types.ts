@@ -35,6 +35,9 @@ interface ModalFormItem extends ModalFormItemData {
     /** Field type. Native control will use that type to match own type */
     type: ModalFormItemType;
 
+    /** Should field be required */
+    isRequired?: boolean;
+
     /** Validation configuration. If provided field will be marked as required */
     validationConfiguration?: ModalFormItemValidation;
 }

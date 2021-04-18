@@ -21,13 +21,12 @@ interface FormFieldValidationState {
 
 export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps): JSX.Element => {
     if (formConfig.fields.length === 0) {
-        throw new Error("No field provided for ModalForm");
+        throw new Error('No field provided for ModalForm');
     }
 
     const requiredFields: Array<FormFieldValidationState> =
         formConfig.fields
-            .filter(field =>
-                !isNullOrUndefined(field.validationConfiguration))
+            .filter(field => field.isRequired === true)
             .map(({ name }) => ({ fieldName: name, isValid: false }));
 
     const [fieldValidStates, setFieldValidStates] = React.useState<Array<FormFieldValidationState>>(requiredFields);
