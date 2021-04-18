@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-import { Comment } from "models/comment";
+import { Comment } from 'models/comment';
 
-import { AppState } from "redux/rootReducer";
-import { getAllComments, addComment } from 'redux/comments/thunks';
-import { CommentModuleState } from "redux/comments/types";
+import { AppState } from 'redux/rootReducer';
+import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from 'redux/comments/thunks';
+import { CommentModuleState } from 'redux/comments/types';
 
-// TODO: update thunks according to addComment
-// only for those which use modal
-// use them correctly below
+import Button from 'sharedComponents/button/button';
 
 type CommentsProps = {
     /** All comments */
@@ -56,5 +54,9 @@ export default connect(
     {
         addComment: addComment,
         getComments: getAllComments,
+        updateComment: updateComment,
+        increment: increment,
+        showDescription: showDescription,
+        deleteComment: deleteComment
     }
 )(Comments);
