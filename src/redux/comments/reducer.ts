@@ -6,15 +6,13 @@ import { isNullOrUndefined, isStringEmpty } from "utils/common";
 import { getPropertyValueWithCheck } from "utils/object";
 
 import { CommentModuleState, CommentsState } from "./types";
-import { addComment, deleteComment, increment, setComment, setComments, setError, setModuleState, updateComment } from "./actions";
+import { addComment, deleteComment, increment, setComments, setModuleState, updateComment } from "./actions";
 
 const initialState: CommentsState = {
     state: 'init',
     comments: [],
 };
 
-// TODO: add manual setting state to each case
-// depending on flow-chart
 export default function (state = initialState, action: ActionWithPayload): CommentsState {
     switch (action.type) {
         case setModuleState: {
@@ -28,19 +26,6 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             return {
                 ...state,
                 state: nextState,
-            };
-        }
-        case setError: {
-            const error: string = getPropertyValueWithCheck(action.payload, 'error', false);
-
-            if (isNullOrUndefined(error) || isStringEmpty(error)) {
-                return state;
-            }
-
-            return {
-                ...state,
-                state: 'error',
-                error: error
             };
         }
         case addComment: {
@@ -67,20 +52,6 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             return {
                 ...state,
                 comments: comments
-            };
-        }
-        case setComment: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
-
-            if (isNullOrUndefined(comment)) {
-                // log warning
-                return state;
-            }
-
-            return {
-                ...state,
-                state: 'showModal',
-                comment: comment
             };
         }
         case increment: {

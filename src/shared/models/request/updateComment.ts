@@ -1,11 +1,7 @@
+import { BaseCommentModel } from "models/comment";
+
 /**Model represents container for data to update comment */
-export interface UpdateComment {
+export interface UpdateComment extends BaseCommentModel {
     /** Comment identifier value */
     id: string;
-
-    /** Message: updated or old */
-    message: string;
-
-    /** Description: updated or old */
-    description?: string;
 }
