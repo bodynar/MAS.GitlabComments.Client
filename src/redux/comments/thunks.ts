@@ -71,6 +71,7 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
                     post<string>(`api/comments/add`, comment)
                         .then((id: string) => {
                             dispatch(getSuccessNotificationAction('Comment was added successfully'));
+
                             dispatch({
                                 type: addCommentAction,
                                 payload: {
@@ -80,6 +81,8 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
                                     }
                                 }
                             });
+
+                            dispatch(getSetIsLoadingAction(false));
                         })
                         .catch(setError(dispatch));
                 };
@@ -226,11 +229,15 @@ export const deleteComment = (commentId: string): ThunkAction<void, CommentsStat
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/delete`, { commentId: commentId })
-            .then(() => dispatch({
-                type: deleteCommentAction,
-                payload: {
-                    commentId: commentId
-                }
-            }))
+            .then(() => {
+                dispatch({
+                    type: deleteCommentAction,
+                    payload: {
+                        commentId: commentId
+                    }
+                });
+
+                dispatch(getSetIsLoadingAction(false));
+            })
             .catch(setError(dispatch));
     };
