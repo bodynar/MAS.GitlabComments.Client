@@ -1,6 +1,6 @@
 import React from "react";
 
-import Comments from "modules/comments/comments";
+import Comments from "modules/comments";
 import ModalBox from 'modules/modalBox/modalBox';
 
 import Notificator from '../components/notificator/notificator';
