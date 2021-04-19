@@ -8,7 +8,7 @@ import { NotificationItem } from 'models/notification';
 
 import { isNullOrUndefined } from 'utils/common';
 
-import { ModalFormItem } from 'modules/modalBox/modalForm';
+import { ModalFormItem } from 'modules/modalBox/components/modalForm';
 
 import { setModuleState } from './actions';
 import { CommentModuleState, CommentsState } from './types';

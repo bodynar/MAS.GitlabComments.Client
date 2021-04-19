@@ -1,7 +1,7 @@
 import React from "react";
 
 import Comments from "modules/comments";
-import ModalBox from 'modules/modalBox/modalBox';
+import ModalBox from 'modules/modalBox';
 
 import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";

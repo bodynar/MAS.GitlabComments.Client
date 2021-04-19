@@ -1,7 +1,7 @@
 import { ModalParams } from "redux/modal/types";
 
 import { isNullOrUndefined, isStringEmpty } from "utils/common";
-import { ModalFormConfiguration, ModalFormItem } from "./modalForm/types";
+import { ModalFormConfiguration, ModalFormItem } from "./components/modalForm/types";
 
 /**
  * Get button captions for modal box depending on modal params

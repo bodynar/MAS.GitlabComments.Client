@@ -9,9 +9,9 @@ import { ModalCallback, ModalData, ModalParams } from "redux/modal/types";
 
 import Button from "sharedComponents/button/button";
 
-import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "./utils";
+import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "../utils";
 
-import { ModalForm, ModalFormConfiguration } from "./modalForm";
+import { ModalForm, ModalFormConfiguration } from "../components/modalForm";
 
 type ModalBoxProps = {
     /** Is modal currently shown */
