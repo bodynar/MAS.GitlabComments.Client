@@ -1,3 +1,3 @@
-import ModalBox from './component/modalBox';
+import ModalBox from './component';
 
 export default ModalBox;

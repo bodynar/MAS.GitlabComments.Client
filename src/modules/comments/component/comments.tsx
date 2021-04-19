@@ -7,15 +7,14 @@ import { isStringEmpty } from 'utils/common';
 
 import { Comment as CommentModel } from 'models/comment';
 
-import Button from 'sharedComponents/button/button';
-import Search from 'sharedComponents/search/search';
+import Button from 'sharedComponents/button';
+import Search from 'sharedComponents/search';
 
 import { AppState } from 'redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from 'redux/comments/thunks';
 import { CommentModuleState } from 'redux/comments/types';
 
-import Comment from '../components/comment/comment';
-
+import Comment from '../components/comment';
 
 type CommentsProps = {
     /** All comments */

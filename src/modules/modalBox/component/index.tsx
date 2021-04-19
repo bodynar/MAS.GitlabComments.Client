@@ -7,7 +7,7 @@ import { AppState } from "redux/rootReducer";
 import { closeModal } from "redux/modal/actions";
 import { ModalCallback, ModalData, ModalParams } from "redux/modal/types";
 
-import Button from "sharedComponents/button/button";
+import Button from "sharedComponents/button";
 
 import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "../utils";
 

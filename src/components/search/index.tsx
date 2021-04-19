@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import './search.scss';
 
-import Button from 'sharedComponents/button/button';
+import Button from 'sharedComponents/button';
 
 import { generateGuid } from 'utils/guid';
 import { isNullOrUndefined } from 'utils/common';
