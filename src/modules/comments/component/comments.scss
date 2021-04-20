@@ -1,5 +1,16 @@
 .app-comments {
     &__items {
-        
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
+}
+
+.app-empty-list-placeholder {
+    font-style: italic;
+    color: rgb(0, 0, 0, 0.66);
+    margin: auto;
+    user-select: none;
+    white-space: pre-line;
+    text-align: center;
 }

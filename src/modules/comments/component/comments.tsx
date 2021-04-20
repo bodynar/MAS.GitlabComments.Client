@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import './comments.scss';
 
-import { isStringEmpty } from 'utils/common';
+import { isNullOrUndefined, isStringEmpty } from 'utils/common';
 
 import { Comment as CommentModel } from 'models/comment';
 
@@ -42,18 +42,10 @@ type CommentsProps = {
     deleteComment: (commentId: string) => void;
 };
 
+// TODO: add transition to comments
 function Comments(props: CommentsProps): JSX.Element {
-    // TODO: when adding new comment - update displaying comments
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
-
-    useEffect(() => {
-        if (props.state === 'init' && props.comments.length === 0) {
-            props.getComments();
-        }
-    }, [props, props.comments]);
-
-    const isLoading = useMemo(
-        (): boolean => props.state === 'loading', [props.state]);
+    const [searchPattern, setSearchPattern] = useState<string>('');
 
     const onSearch = useCallback(
         (searchPattern: string) => {
@@ -65,7 +57,27 @@ function Comments(props: CommentsProps): JSX.Element {
 
                 setDisplayedComments(filteredComments);
             }
+
+            setSearchPattern(searchPattern);
         }, [props.comments]);
+
+    useEffect(() => {
+        if (props.state === 'init') {
+            props.getComments();
+        }
+    }, [props, props.comments]);
+
+    useEffect(() => {
+        onSearch(searchPattern);
+    }, [onSearch, props.comments, searchPattern]);
+
+    const isLoading = useMemo((): boolean => props.state === 'loading', [props.state]);
+
+    const noCommentsMessage: string =
+        props.comments.length === 0
+            ? 'No comments'
+            : `No comments that satisfy your filters found
+            Try update your filters`;
 
     return (
         <section className="app-comments">
@@ -77,24 +89,41 @@ function Comments(props: CommentsProps): JSX.Element {
                     onClick={props.addComment}
                 />
             </div>
-
-            <div className="app-comments__items">
+            <div className="block">
                 <Search
                     caption="Search comment by text.."
                     onSearch={onSearch}
                     minCharsToSearch={0}
                     isLoading={isLoading}
                 />
-                {displayedComments.map(comment =>
-                    <Comment
-                        key={comment.id}
-                        comment={comment}
-                    />
-                )}
+            </div>
+            <div className="app-comments__items">
+                {displayedComments.length > 0
+                    ? displayedComments.map(comment =>
+                        <Comment
+                            key={comment.id}
+                            comment={comment}
+                            {...props}
+                        />
+                    )
+                    : <EmptyListPlaceholder message={noCommentsMessage} />
+                }
             </div>
         </section>
     );
 }
+
+const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element => {
+    const displayMessage: string =
+        isNullOrUndefined(message) || isStringEmpty(message)
+            ? 'No items' : message;
+
+    return (
+        <span className="app-empty-list-placeholder">
+            {displayMessage}
+        </span>
+    );
+};
 
 export default connect(
     ({ comments }: AppState) => ({ ...comments }),
