@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
-import './search.scss';
-
 import Button from 'sharedComponents/button';
 
 import { generateGuid } from 'utils/guid';
@@ -72,6 +70,7 @@ export default function Search(props: SearchProps): JSX.Element {
     const className: string = 'control'
         + ` is-${(props.size || 'normal')}`
         + (props.isLoading === true ? ' is-loading' : '')
+        + (searchType === 'byButton' ? ' is-expanded': '')
         ;
 
     const inputClassName: string = 'input'
