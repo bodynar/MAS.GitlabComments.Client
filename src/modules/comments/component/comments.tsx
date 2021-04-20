@@ -43,6 +43,8 @@ type CommentsProps = {
 };
 
 // TODO: add transition to comments
+// TODO: add header for columns
+// TODO: add sorting
 function Comments(props: CommentsProps): JSX.Element {
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
     const [searchPattern, setSearchPattern] = useState<string>('');
