@@ -19,6 +19,9 @@ export type ButtonProps = {
     /** Button size  */
     size?: ElementSize;
 
+    /** Title on hover */
+    title?: string;
+
     /** Is button uses light version of color  */
     light?: boolean;
 
@@ -38,6 +41,10 @@ export type ButtonProps = {
     onClick?: () => void;
 };
 
+/**
+ * Button component
+ * @throws Caption is not defined and icon configuration is not defined at the same time
+ */
 export default function Button(props: ButtonProps): JSX.Element {
     if ((isNullOrUndefined(props.caption) || isStringEmpty(props.caption as string))
         && (isNullOrUndefined(props.icon) || isStringEmpty(props.icon?.className as string))
@@ -62,38 +69,48 @@ export default function Button(props: ButtonProps): JSX.Element {
     if (!isNullOrUndefined(props.icon)) {
         return (
             <ButtonWithIcon
+                {...props}
                 className={className}
                 onClick={onClick}
                 icon={props.icon as ButtonIcon}
-                caption={props.caption}
-                disabled={props.disabled}
             />
         );
     } else {
         return (
             <SimpleButton
+                {...props}
                 className={className}
                 onClick={onClick}
-                caption={props.caption}
-                disabled={props.disabled}
             />
         );
     }
 }
 
 type SimpleButtonProps = {
+    /** Button class name*/
     className: string;
+
+    /** Button click handler */
     onClick: () => void;
+
+    /** Button caption */
     caption?: string;
+
+    /** Disabled attribute value*/
     disabled?: boolean;
+
+    /** Title on hover */
+    title?: string;
 };
 
-const SimpleButton = ({ className, disabled, onClick, caption }: SimpleButtonProps): JSX.Element => {
+/** Simple button component, without icon */
+const SimpleButton = ({ className, disabled, onClick, caption, title }: SimpleButtonProps): JSX.Element => {
     return (
         <button
             className={className}
             disabled={disabled}
             onClick={onClick}
+            title={title}
         >
             {caption}
         </button>
@@ -101,10 +118,12 @@ const SimpleButton = ({ className, disabled, onClick, caption }: SimpleButtonPro
 };
 
 type ButtonWithIconProps = SimpleButtonProps & {
+    /** Icon configuration */
     icon: ButtonIcon;
 };
 
-const ButtonWithIcon = ({ className, disabled, onClick, caption, icon }: ButtonWithIconProps): JSX.Element => {
+/** Button with icon component */
+const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: ButtonWithIconProps): JSX.Element => {
     const iconPosition = icon.position || 'left';
 
     const iconsSize: ElementSize = icon.size || 'normal';
@@ -117,6 +136,7 @@ const ButtonWithIcon = ({ className, disabled, onClick, caption, icon }: ButtonW
             className={className}
             disabled={disabled}
             onClick={onClick}
+            title={title}
         >
             {iconPosition === 'left'
                 ? <>

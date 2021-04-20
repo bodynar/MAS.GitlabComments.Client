@@ -36,6 +36,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
             <Button
                 type="default"
                 icon={{ className: 'gg-arrow-up' }}
+                title="Increment count"
                 onClick={onIncrementClick}
                 disabled={isModuleInLoadingState}
             />
@@ -50,6 +51,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     type="info"
                     outlined={true}
                     icon={{ className: 'gg-info' }}
+                    title="Show description"
                     onClick={onShowDescriptionClick}
                     disabled={isModuleInLoadingState}
                 />
@@ -57,6 +59,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     type="warning"
                     outlined={true}
                     icon={{ className: 'gg-pen' }}
+                    title="Edit"
                     onClick={onUpdateCommentClick}
                     disabled={isModuleInLoadingState}
                 />
@@ -64,6 +67,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     type="danger"
                     outlined={true}
                     icon={{ className: 'gg-trash' }}
+                    title="Delete"
                     onClick={onDeleteCommentClick}
                     disabled={isModuleInLoadingState}
                 />
