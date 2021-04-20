@@ -9,6 +9,9 @@ type CommentProps = {
     /** Displayed comment */
     comment: CommentModel;
 
+    /** Should action buttons be disabled */
+    isModuleInLoadingState: boolean;
+
     /** Increment comment appearance count */
     increment: (commentId: string) => void;
 
@@ -22,7 +25,7 @@ type CommentProps = {
     deleteComment: (commentId: string) => void;
 };
 
-export default function Comment({ comment, increment, showDescription, updateComment, deleteComment }: CommentProps): JSX.Element {
+export default function Comment({ comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState }: CommentProps): JSX.Element {
     const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
@@ -34,6 +37,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                 type="default"
                 icon={{ className: 'gg-arrow-up' }}
                 onClick={onIncrementClick}
+                disabled={isModuleInLoadingState}
             />
             <span className="app-comment__appearance">
                 {comment.appearanceCount}
@@ -47,18 +51,21 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     outlined={true}
                     icon={{ className: 'gg-info' }}
                     onClick={onShowDescriptionClick}
+                    disabled={isModuleInLoadingState}
                 />
                 <Button
                     type="warning"
                     outlined={true}
                     icon={{ className: 'gg-pen' }}
                     onClick={onUpdateCommentClick}
+                    disabled={isModuleInLoadingState}
                 />
                 <Button
                     type="danger"
                     outlined={true}
                     icon={{ className: 'gg-trash' }}
                     onClick={onDeleteCommentClick}
+                    disabled={isModuleInLoadingState}
                 />
             </div>
         </div>

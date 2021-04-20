@@ -102,8 +102,9 @@ function Comments(props: CommentsProps): JSX.Element {
                     ? displayedComments.map(comment =>
                         <Comment
                             key={comment.id}
-                            comment={comment}
                             {...props}
+                            comment={comment}
+                            isModuleInLoadingState={props.state == 'loading'}
                         />
                     )
                     : <EmptyListPlaceholder message={noCommentsMessage} />
