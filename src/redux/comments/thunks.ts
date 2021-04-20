@@ -224,20 +224,34 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
  * @returns Delete comment function that can be called with redux dispatcher
  */
 export const deleteComment = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
-        // TODO: add confirm
-        dispatch(getSetIsLoadingAction(true));
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>): void => {
+        dispatch({
+            type: OpenModal,
+            params: {
+                modalType: 'confirm',
+                title: 'Confirm delete',
+                buttonCaption: { saveCaption: 'Delete' },
+                message: 'Are you sure want to delete selected comment?',
+                callback: {
+                    saveCallback: (): void => {
+                        dispatch(getSetIsLoadingAction(true));
 
-        post(`api/comments/delete`, { commentId: commentId })
-            .then(() => {
-                dispatch({
-                    type: deleteCommentAction,
-                    payload: {
-                        commentId: commentId
-                    }
-                });
+                        post(`api/comments/delete`, { commentId: commentId })
+                            .then(() => {
+                                dispatch({
+                                    type: deleteCommentAction,
+                                    payload: {
+                                        commentId: commentId
+                                    }
+                                });
 
-                dispatch(getSetIsLoadingAction(false));
-            })
-            .catch(setError(dispatch));
+                                dispatch(getSetIsLoadingAction(false));
+                            })
+                            .catch(setError(dispatch));
+                    },
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    cancelCallback: (): void => { }
+                }
+            }
+        } as ModalAction);
     };
