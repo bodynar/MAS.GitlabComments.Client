@@ -79,7 +79,7 @@ export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel):
 
     const modalParams: ModalParams = {
         modalType: 'form',
-        title: 'Update comment',
+        title: isCommentModelDefined ? 'Update comment' : 'Add comment',
         formData: { fields: modalFields },
     };
 
