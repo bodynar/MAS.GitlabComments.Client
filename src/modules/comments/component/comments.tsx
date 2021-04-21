@@ -101,20 +101,37 @@ function Comments(props: CommentsProps): JSX.Element {
             </div>
             <div className="app-comments__items">
                 {displayedComments.length > 0
-                    ? displayedComments.map(comment =>
-                        <Comment
-                            key={comment.id}
-                            {...props}
-                            comment={comment}
-                            isModuleInLoadingState={props.state == 'loading'}
+                    ? <>
+                        <ListHeaders
+                            columns={['Appearance', 'Comment', 'Actions']}
                         />
-                    )
+                        {displayedComments.map(comment =>
+                            <Comment
+                                key={comment.id}
+                                {...props}
+                                comment={comment}
+                                isModuleInLoadingState={props.state == 'loading'}
+                            />
+                        )}
+                    </>
                     : <EmptyListPlaceholder message={noCommentsMessage} />
                 }
             </div>
         </section>
     );
 }
+
+export default connect(
+    ({ comments }: AppState) => ({ ...comments }),
+    {
+        addComment: addComment,
+        getComments: getAllComments,
+        updateComment: updateComment,
+        increment: increment,
+        showDescription: showDescription,
+        deleteComment: deleteComment
+    }
+)(Comments);
 
 const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element => {
     const displayMessage: string =
@@ -128,14 +145,17 @@ const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element =>
     );
 };
 
-export default connect(
-    ({ comments }: AppState) => ({ ...comments }),
-    {
-        addComment: addComment,
-        getComments: getAllComments,
-        updateComment: updateComment,
-        increment: increment,
-        showDescription: showDescription,
-        deleteComment: deleteComment
-    }
-)(Comments);
+// TODO: fund a better solution
+const ListHeaders = ({ columns }: { columns: Array<string>; }): JSX.Element => {
+    return (
+        <div className="app-comments__headers">
+            {columns.map(column =>
+                <span
+                    key={column}
+                >
+                    {column}
+                </span>
+            )}
+        </div>
+    );
+};
