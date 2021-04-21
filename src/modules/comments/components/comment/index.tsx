@@ -33,16 +33,18 @@ export default function Comment({ comment, increment, showDescription, updateCom
 
     return (
         <div className="app-comment">
-            <Button
-                type="default"
-                icon={{ className: 'gg-arrow-up' }}
-                title="Increment count"
-                onClick={onIncrementClick}
-                disabled={isModuleInLoadingState}
-            />
-            <span className="app-comment__appearance">
-                {comment.appearanceCount}
-            </span>
+            <div className="app-comment__appearance">
+                <Button
+                    type="default"
+                    icon={{ className: 'gg-arrow-up' }}
+                    title="Increment count"
+                    onClick={onIncrementClick}
+                    disabled={isModuleInLoadingState}
+                />
+                <span>
+                    {comment.appearanceCount}
+                </span>
+            </div>
             <p className="app-comment__message">
                 {comment.message}
             </p>

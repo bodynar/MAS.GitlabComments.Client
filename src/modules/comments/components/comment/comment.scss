@@ -7,8 +7,10 @@
     gap: 1rem;
 
     &__appearance {
-        min-width: 5%;
-        text-align: center;
+        min-width: 6.5%;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
     }
     &__message {
         width: 85%;
