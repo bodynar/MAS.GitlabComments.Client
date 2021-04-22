@@ -6,12 +6,9 @@ import GitLabLogo from '../gitlabLogo/gitlabLogo';
 
 import { MenuItem, menuItems } from './menu';
 
-type NavbarProps = {
-
-};
-
-export default function Navbar({ }: NavbarProps): JSX.Element {
+export default function Navbar(): JSX.Element {
     const [activeMenuItem, setActiveMenuItem] = useState<string>(menuItems[0].name);
+
     return (
         <nav
             className="app-navbar navbar is-link"
