@@ -1,8 +1,16 @@
+@mixin flex-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .app-comments {
     &__items {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+        @include flex-list;
+
+        & > div[role="transition-container"] {
+            @include flex-list;
+        }
     }
     &__headers {
         display: flex;

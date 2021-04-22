@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { connect } from 'react-redux';
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import './comments.scss';
 
 import { isNullOrUndefined, isStringEmpty } from 'utils/common';
@@ -42,8 +44,6 @@ type CommentsProps = {
     deleteComment: (commentId: string) => void;
 };
 
-// TODO: add transition to comments
-// TODO: add header for columns
 // TODO: add sorting
 function Comments(props: CommentsProps): JSX.Element {
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
@@ -105,14 +105,23 @@ function Comments(props: CommentsProps): JSX.Element {
                         <ListHeaders
                             columns={['Appearance', 'Comment', 'Actions']}
                         />
-                        {displayedComments.map(comment =>
-                            <Comment
-                                key={comment.id}
-                                {...props}
-                                comment={comment}
-                                isModuleInLoadingState={props.state == 'loading'}
-                            />
-                        )}
+                        <TransitionGroup role="transition-container">
+                            {displayedComments.map(comment =>
+                                <CSSTransition
+                                    key={comment.id}
+                                    timeout={250}
+                                    classNames="app-comment"
+                                    unmountOnExit
+                                >
+                                    <Comment
+                                        key={comment.id}
+                                        {...props}
+                                        comment={comment}
+                                        isModuleInLoadingState={props.state == 'loading'}
+                                    />
+                                </CSSTransition>
+                            )}
+                        </TransitionGroup>
                     </>
                     : <EmptyListPlaceholder message={noCommentsMessage} />
                 }
