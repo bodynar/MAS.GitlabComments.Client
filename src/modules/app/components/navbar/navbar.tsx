@@ -5,13 +5,24 @@ import './navbar.scss';
 import GitLabLogo from '../gitlabLogo/gitlabLogo';
 
 import { MenuItem, menuItems } from './menu';
+import { isStringEmpty } from "utils/common";
 
-export default function Navbar(): JSX.Element {
+type NavbarProps = {
+    /** Class for navbar */
+    className: string;
+};
+
+/** App navigation bar component */
+export default function Navbar({ className }: NavbarProps): JSX.Element {
+    if (isStringEmpty(className)) {
+        throw new Error("className is empty");
+    }
+
     const [activeMenuItem, setActiveMenuItem] = useState<string>(menuItems[0].name);
 
     return (
         <nav
-            className="app-navbar navbar is-link"
+            className={`${className} app-navbar navbar is-link`}
             role="navigation"
             aria-label="main navigation"
         >

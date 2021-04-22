@@ -1,20 +1,24 @@
 import React from "react";
 
+import './app.scss';
+
 import Comments from "modules/comments";
 import ModalBox from 'modules/modalBox';
 
 import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";
+import Footer from "../components/footer";
 
 export default function App(): JSX.Element {
     return (
-        <main>
+        <main className="app">
+            <Navbar className="app__navbar"/>
             <ModalBox />
-            <Navbar />
             <Notificator />
-            <section className="container mt-5">
+            <section className="app__content container">
                 <Comments />
             </section>
+            <Footer className="app__footer"/>
         </main>
     );
 }
