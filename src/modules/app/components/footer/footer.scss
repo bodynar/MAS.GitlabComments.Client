@@ -1,0 +1,13 @@
+.app-footer {
+    padding: 1.5rem;
+    display: flex;
+
+    &__left {
+        min-width: 30%;
+        flex-grow: 1;
+        white-space: pre-wrap;
+    }
+    &__right {
+        min-width: 30%;
+    }
+}
