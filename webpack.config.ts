@@ -31,7 +31,6 @@ const webpackConfig = (env: any): Configuration => ({
             {
                 test: /\.(scss|css|sass)$/,
                 use: [
-                    // 'style-loader', // replaced by MiniCssExtractPlugin.loader
                     MiniCssExtractPlugin.loader,
                     'css-loader',
                     {
