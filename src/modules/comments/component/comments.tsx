@@ -44,7 +44,6 @@ type CommentsProps = {
     deleteComment: (commentId: string) => void;
 };
 
-// TODO: add sorting
 function Comments(props: CommentsProps): JSX.Element {
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
     const [searchPattern, setSearchPattern] = useState<string>('');
