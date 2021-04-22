@@ -34,7 +34,7 @@ function Notificator({ notifications, hideNotifications }: NotificatorProps): JS
             {notifications.map(x =>
                 <CSSTransition
                     key={x.id}
-                    timeout={500}
+                    timeout={250}
                     classNames="app-notificator__item"
                 >
                     <Notification
