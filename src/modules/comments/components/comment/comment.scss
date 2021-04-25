@@ -6,6 +6,13 @@
     align-items: center;
     gap: 1rem;
 
+    transition-duration: 0.3s;
+    transition-property: border-color, background-color;
+    &:hover {
+        border-color: rgb(50, 115, 220, 0.5);
+        background-color: rgb(50, 115, 220, 0.025);
+    }
+
     &__appearance {
         min-width: 6.5%;
         display: flex;
