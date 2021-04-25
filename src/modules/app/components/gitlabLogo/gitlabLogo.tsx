@@ -4,7 +4,6 @@ import GitlabLogoIcon from 'icons/gitlabLogo';
 
 import './gitlabLogo.scss';
 
-// TODO: extract svg into file and import
 export default function GitlabLogo(): JSX.Element {
     return (
         <div className="navbar-brand app-navbar">

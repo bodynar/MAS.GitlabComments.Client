@@ -153,7 +153,7 @@ const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element =>
     );
 };
 
-// TODO: fund a better solution
+// TODO: v2 find a better solution
 const ListHeaders = ({ columns }: { columns: Array<string>; }): JSX.Element => {
     return (
         <div className="app-comments__headers">

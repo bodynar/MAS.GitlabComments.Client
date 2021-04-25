@@ -3,7 +3,6 @@ import { BaseResponseWithResult } from "models/response/baseResponse";
 import { isNullOrUndefined } from "./common";
 
 type RequestData = {
-    // TODO: fix type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [propertyName: string]: any;
 };
