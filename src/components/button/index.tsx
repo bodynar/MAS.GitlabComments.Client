@@ -46,7 +46,7 @@ export type ButtonProps = {
  * @throws Caption is not defined and icon configuration is not defined at the same time
  */
 export default function Button(props: ButtonProps): JSX.Element {
-    if ((isNullOrUndefined(props.caption) || isStringEmpty(props.caption as string))
+    if ((isNullOrEmpty(props.caption))
         && (isNullOrUndefined(props.icon) || isStringEmpty(props.icon?.className as string))
     ) {
         throw new Error("No button content provided.");
@@ -131,6 +131,8 @@ const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: 
     const iconClassName: string = "icon"
         + (iconsSize === 'normal' ? '' : ` is-${iconsSize}`);
 
+    const isCaptionNullOrEmpty: boolean = isNullOrEmpty(caption);
+
     return (
         <button
             className={className}
@@ -143,14 +145,14 @@ const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: 
                     <span className={iconClassName}>
                         <i className={icon.className} />
                     </span>
-                    {!isNullOrUndefined(caption) && !isStringEmpty(caption as string)
+                    {!isCaptionNullOrEmpty
                         && <span>
                             {caption}
                         </span>
                     }
                 </>
                 : <>
-                    {!isNullOrUndefined(caption) && !isStringEmpty(caption as string)
+                    {!isCaptionNullOrEmpty
                         && <span>
                             {caption}
                         </span>

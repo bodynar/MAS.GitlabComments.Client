@@ -5,7 +5,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import './comments.scss';
 
-import { isNullOrUndefined, isStringEmpty } from 'utils/common';
+import { isStringEmpty } from 'utils/common';
 
 import { Comment as CommentModel } from 'models/comment';
 
@@ -143,7 +143,7 @@ export default connect(
 
 const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element => {
     const displayMessage: string =
-        isNullOrUndefined(message) || isStringEmpty(message)
+        isStringEmpty(message)
             ? 'No items' : message;
 
     return (

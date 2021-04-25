@@ -55,9 +55,9 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case increment: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+            const commentId: string | undefined = getPropertyValueWithCheck(action.payload, 'commentId', false);
 
-            if (isNullOrUndefined(commentId) || isStringEmpty(commentId)) {
+            if (isNullOrEmpty(commentId)) {
                 // log warning
                 return state;
             }
@@ -92,9 +92,9 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case deleteComment: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+            const commentId: string | undefined = getPropertyValueWithCheck(action.payload, 'commentId', false);
 
-            if (isNullOrUndefined(commentId) || isStringEmpty(commentId)) {
+            if (isNullOrEmpty(commentId)) {
                 // log warning
                 return state;
             }

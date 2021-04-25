@@ -1,4 +1,4 @@
-import { isNullOrUndefined, isStringEmpty } from "utils/common";
+import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from "utils/common";
 
 import { ModalFormItemValidation } from "./types";
 
@@ -16,8 +16,7 @@ export const getFieldValueValidationError = (value: string, validationCfg?: Moda
     if (!isNullOrUndefined(validationCfg)) {
         const cfg = validationCfg as ModalFormItemValidation;
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (!isNullOrUndefined(cfg.customRequiredvalidationError) && !isStringEmpty(cfg.customRequiredvalidationError as string)) {
+        if (!isNullOrEmpty(cfg.customRequiredvalidationError)) {
             validationError = cfg.customRequiredvalidationError as string;
         }
 

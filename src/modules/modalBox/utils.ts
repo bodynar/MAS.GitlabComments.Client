@@ -1,6 +1,6 @@
 import { ModalParams } from "redux/modal/types";
 
-import { isNullOrUndefined, isStringEmpty } from "utils/common";
+import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from "utils/common";
 import { ModalFormConfiguration, ModalFormItem } from "./components/modalForm/types";
 
 /**
@@ -21,14 +21,10 @@ export const getButtonCaptions = (modalParams: ModalParams | undefined): {
     };
 
     if (!isNullOrUndefined(modalParams) && !isNullOrUndefined(modalParams?.buttonCaption)) {
-        if (!isNullOrUndefined(modalParams?.buttonCaption?.saveCaption)
-            && !isStringEmpty(modalParams?.buttonCaption?.saveCaption as string)
-        ) {
+        if (!isNullOrEmpty(modalParams?.buttonCaption?.saveCaption)) {
             result.saveBtnCaption = modalParams?.buttonCaption?.saveCaption as string;
         }
-        if (!isNullOrUndefined(modalParams?.buttonCaption?.cancelCaption)
-            && !isStringEmpty(modalParams?.buttonCaption?.cancelCaption as string)
-        ) {
+        if (!isNullOrEmpty(modalParams?.buttonCaption?.cancelCaption)) {
             result.cancelBtnCaption = modalParams?.buttonCaption?.cancelCaption as string;
         }
     }
