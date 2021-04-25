@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { isNullOrUndefined, isStringEmpty } from 'utils/common';
+import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from 'utils/common';
 
-import { ElementSize } from 'sharedComponents/types';
+import { ElementIcon, ElementSize } from 'sharedComponents/types';
 
-import { ButtonIcon, ButtonType } from './types';
+import { ButtonType } from './types';
 
 export type ButtonProps = {
     /** Button displaying text */
@@ -13,8 +13,8 @@ export type ButtonProps = {
     /** Type of button (color)  */
     type: ButtonType;
 
-    /** Configuration on inner icon */
-    icon?: ButtonIcon;
+    /** Configuration of inner icon */
+    icon?: ElementIcon;
 
     /** Button size  */
     size?: ElementSize;
@@ -72,7 +72,7 @@ export default function Button(props: ButtonProps): JSX.Element {
                 {...props}
                 className={className}
                 onClick={onClick}
-                icon={props.icon as ButtonIcon}
+                icon={props.icon as ElementIcon}
             />
         );
     } else {
@@ -119,7 +119,7 @@ const SimpleButton = ({ className, disabled, onClick, caption, title }: SimpleBu
 
 type ButtonWithIconProps = SimpleButtonProps & {
     /** Icon configuration */
-    icon: ButtonIcon;
+    icon: ElementIcon;
 };
 
 /** Button with icon component */

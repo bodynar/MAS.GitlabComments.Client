@@ -1,5 +1,3 @@
-import { ElementSize } from "sharedComponents/types";
-
 /** Button types according to Bulma framework */
 export type ButtonType =
     'default' /** color: transparent */
@@ -16,15 +14,3 @@ export type ButtonType =
     | 'text' /** Underline text with color: gray */
     | 'ghost' /** Blue underline text with color: transparent */
     ;
-
-/** Button inner icon configuration */
-export interface ButtonIcon {
-    /** Size of icon */
-    size?: ElementSize;
-
-    /** Icon class name from css framework */
-    className: string;
-
-    /** Icon position: Before text content - right or after - left */
-    position?: 'right' | 'left';
-}
