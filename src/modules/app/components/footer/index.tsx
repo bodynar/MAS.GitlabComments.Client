@@ -7,7 +7,7 @@ import './footer.scss';
 import { isStringEmpty } from 'utils/common';
 
 import Anchor from 'sharedComponents/anchor';
-import GithubIcon from 'src/icons/github';
+import GithubIcon from 'icons/github';
 
 type FooterProps = {
     /** Class for navbar */
