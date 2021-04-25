@@ -6,6 +6,9 @@ import './footer.scss';
 
 import { isStringEmpty } from 'utils/common';
 
+import Anchor from 'sharedComponents/anchor';
+import GithubIcon from 'src/icons/github';
+
 type FooterProps = {
     /** Class for navbar */
     className: string;
@@ -17,15 +20,29 @@ export default function Footer({ className }: FooterProps): JSX.Element {
         throw new Error("className is empty");
     }
 
-
     return (
         <footer className={`${className} app-footer`}>
             <div className="app-footer__left">
-                You viewing GitlabComments app version {version}.{'\n'}
-                Gitlab icon is owned by GitLab Inc.
+                You are viewing GitlabComments app version {version}.{'\n'}
+                Gitlab logo icon is owned by GitLab Inc.
             </div>
             <div className="app-footer__right">
-
+                <span className="app-footer__line">
+                    Contact author via mail:
+                    <Anchor
+                        href="mailto:bodynar@gmail.com?subject=GitlabComments - Question&Body="
+                        icon={{ className: 'gg-mail', position: 'right' }}
+                    />
+                </span>
+                <span className="app-footer__line">
+                    If you experience any issues - please, form a request:
+                    <Anchor
+                        href='https://github.com/bodynar/MAS.GitlabComments.Client/issues/new?assignees=bodynar&labels=&template=bug_report.md&title=%5BBug%5D'
+                        className="footer__icon"
+                        icon={{ iconComponent: <GithubIcon /> }}
+                        target={'_blank'}
+                    />
+                </span>
             </div>
         </footer>
     );
