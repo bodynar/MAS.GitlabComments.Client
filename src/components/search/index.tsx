@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
+import './search.scss';
+
 import Button from '@app/sharedComponents/button';
 
 import { generateGuid } from '@app/utils/guid';
