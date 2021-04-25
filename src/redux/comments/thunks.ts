@@ -168,7 +168,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
                         return (dispatch): void => {
                             dispatch(getSetIsLoadingAction(true));
 
-                            post(`api/comments/update`, { ...comment, commentId })
+                            post(`api/comments/update`, { ...comment, id: commentId })
                                 .then(() => {
                                     dispatch(getSuccessNotificationAction('Comment was updated successfully'));
 
