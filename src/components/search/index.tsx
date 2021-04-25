@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
-import Button from 'sharedComponents/button';
+import Button from '@app/sharedComponents/button';
 
-import { generateGuid } from 'utils/guid';
-import { isNullOrUndefined } from 'utils/common';
+import { generateGuid } from '@app/utils/guid';
+import { isNullOrUndefined } from '@app/utils/common';
 
 type SearchProps = {
     /** Search caption */

@@ -2,9 +2,9 @@ import React from 'react';
 
 import './anchor.scss';
 
-import { isNullOrEmpty, isNullOrUndefined } from 'utils/common';
+import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
-import { ElementIcon, ElementSize } from 'sharedComponents/types';
+import { ElementIcon, ElementSize } from '@app/sharedComponents/types';
 
 export type AnchorProps = {
     /** Link destination */

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from 'utils/common';
+import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/common';
 
-import { ElementIcon, ElementSize } from 'sharedComponents/types';
+import { ElementIcon, ElementSize } from '@app/sharedComponents/types';
 
 import { ButtonType } from './types';
 
