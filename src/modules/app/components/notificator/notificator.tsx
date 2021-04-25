@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import './notificator.scss';
 
 import { isStringEmpty } from '@app/utils/common';
-import { isStringEmpty } from 'utils/common';
+import { NotificationHideDelay } from '@app/constants';
 
 import { NotificationItem, NotificationType } from '@app/models/notification';
 
