@@ -8,12 +8,19 @@ import commentsReducer from './comments/reducer';
 import modalBoxReducer from './modal/reducer';
 import notificatorReducer from './notificator/reducer';
 
+/** Global application state */
 export type AppState = {
-    comments: CommentsState;
+    /** Modal box state */
     modal: ModalState;
+
+    /** Notifications module state */
     notificator: NotificatorState;
+
+    /** State of comments module */
+    comments: CommentsState;
 };
 
+/** Global application redux store reducer */
 export default combineReducers<AppState>({
     comments: commentsReducer,
     modal: modalBoxReducer,

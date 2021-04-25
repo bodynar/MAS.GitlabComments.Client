@@ -2,9 +2,10 @@ import React from 'react';
 
 import GitlabLogoIcon from 'icons/gitlabLogo';
 
-import './gitlabLogo.scss';
+import './navbar-brand.scss';
 
-export default function GitlabLogo(): JSX.Element {
+/** Navbar app brand */
+export default function NavbarBrand(): JSX.Element {
     return (
         <div className="navbar-brand app-navbar">
             <div className="app-navbar__brand">

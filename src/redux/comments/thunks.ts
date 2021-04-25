@@ -1,14 +1,13 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { Action, ActionWithPayload } from "redux/types";
+import { ActionWithPayload } from "redux/types";
 
 import { OpenModal } from "redux/modal/actions";
 import { ModalAction, ModalCallback, ModalParams } from "redux/modal/types";
-import { AddNotification, NotificatorAction } from "redux/notificator/types";
+import { NotificatorAction } from "redux/notificator/types";
 
 import { get, post } from "utils/api";
 
-import { NotificationItem } from "models/notification";
 import { BaseCommentModel } from "models/comment";
 
 import {
@@ -19,36 +18,10 @@ import {
     setModuleState,
     setComments
 } from "./actions";
-import { CommentModuleState, CommentsState } from "./types";
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "./utils";
+import { CommentsState } from "./types";
+import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, getSuccessNotificationAction, setError } from "./utils";
 
-const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => {
-    const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
-
-    return {
-        type: setModuleState,
-        payload: { nextState }
-    };
-};
-
-const getSuccessNotificationAction = (message: string): NotificatorAction => ({
-    type: AddNotification,
-    notifications: [{ type: 'success', message }]
-});
-
-const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (error: string): void => {
-    dispatch({
-        type: AddNotification,
-        notifications: [{ type: 'error', message: error } as NotificationItem]
-    });
-
-    dispatch({
-        type: setModuleState,
-        payload: {
-            nextState: 'idle' as CommentModuleState
-        }
-    });
-};
+// TODO: specify errors
 
 /**
  * Add comment via modal form

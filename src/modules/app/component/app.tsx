@@ -9,6 +9,7 @@ import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";
 import Footer from "../components/footer";
 
+/** Root app component */
 export default function App(): JSX.Element {
     return (
         <main className="app">

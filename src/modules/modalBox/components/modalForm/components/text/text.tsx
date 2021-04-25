@@ -8,6 +8,7 @@ import { BaseFieldProps } from '../basePropsType';
 
 type TextProps = BaseFieldProps;
 
+/** Single line text editor component */
 export default function Text({ fieldConfig, setFieldValidState }: TextProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || '');
 	const [isDirty, setIsDirty] = useState<boolean>(false);

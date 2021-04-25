@@ -14,7 +14,10 @@ type FooterProps = {
     className: string;
 };
 
-/** App footer component */
+/**
+ * App footer component
+ * @throws Classname prop parameter is empty
+ */
 export default function Footer({ className }: FooterProps): JSX.Element {
     if (isStringEmpty(className)) {
         throw new Error("className is empty");

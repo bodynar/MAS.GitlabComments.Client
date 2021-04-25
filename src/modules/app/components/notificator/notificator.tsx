@@ -48,6 +48,7 @@ function Notificator({ notifications, hideNotifications }: NotificatorProps): JS
     );
 }
 
+/** Map of notification type to bulma class name */
 const typeClassNameMap: Map<NotificationType, string> = new Map([
     ['info', 'is-info'],
     ['success', 'is-success'],
@@ -87,6 +88,7 @@ const Notification = ({ item, onHideClick }: NotificationProps): JSX.Element => 
     );
 };
 
+/** Container component for notifications */
 export default connect(
     ({ notificator }: AppState) => ({ ...notificator }),
     { hideNotifications: removeNotifications }

@@ -9,7 +9,10 @@ const generateHashSigns = (): void => {
     }
 };
 
-/** Generate hex-guid */
+/**
+ * Generate hex-guid
+ * @returns Hex-guid
+ */
 export const generateGuid = (): string => {
     const d0 = Math.random() * 0xffffffff | 0;
     const d1 = Math.random() * 0xffffffff | 0;

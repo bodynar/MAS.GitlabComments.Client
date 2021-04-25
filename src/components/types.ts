@@ -1,3 +1,4 @@
+/** Element available sizes */
 export type ElementSize =
     | 'small'
     | 'normal' /** default size */
@@ -5,6 +6,7 @@ export type ElementSize =
     | 'large'
     ;
 
+/** Element inner icon configuration */
 export interface ElementIcon {
     /** Size of icon */
     size?: ElementSize;

@@ -4,6 +4,7 @@ export type Action = {
     type: string;
 };
 
+/** Redux action with some extra payload */
 export type ActionWithPayload = Action & {
     /** Action payload data */
     payload: {

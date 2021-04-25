@@ -38,6 +38,7 @@ type SearchProps = {
     isLoading?: boolean;
 };
 
+/** Search component */
 export default function Search(props: SearchProps): JSX.Element {
     const [name] = useState<string>(props.name || generateGuid());
     const [searchValue, setSearchValue] = useState<string>('');

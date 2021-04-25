@@ -9,12 +9,12 @@ import { isStringEmpty } from 'utils/common';
 
 import { Comment as CommentModel } from 'models/comment';
 
-import Button from 'sharedComponents/button';
-import Search from 'sharedComponents/search';
-
 import { AppState } from 'redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from 'redux/comments/thunks';
 import { CommentModuleState } from 'redux/comments/types';
+
+import Button from 'sharedComponents/button';
+import Search from 'sharedComponents/search';
 
 import Comment from '../components/comment';
 
@@ -44,6 +44,7 @@ type CommentsProps = {
     deleteComment: (commentId: string) => void;
 };
 
+/** Comments module main component */
 function Comments(props: CommentsProps): JSX.Element {
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
     const [searchPattern, setSearchPattern] = useState<string>('');
@@ -129,6 +130,7 @@ function Comments(props: CommentsProps): JSX.Element {
     );
 }
 
+/** Comments module main component */
 export default connect(
     ({ comments }: AppState) => ({ ...comments }),
     {
@@ -141,6 +143,7 @@ export default connect(
     }
 )(Comments);
 
+/** Empty list placeholder */
 const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element => {
     const displayMessage: string =
         isStringEmpty(message)
@@ -154,6 +157,7 @@ const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element =>
 };
 
 // TODO: v2 find a better solution
+/** Comments table headers */
 const ListHeaders = ({ columns }: { columns: Array<string>; }): JSX.Element => {
     return (
         <div className="app-comments__headers">

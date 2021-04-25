@@ -1,3 +1,4 @@
+/** Base comment model with editable fields */
 export interface BaseCommentModel {
     /** Message */
     message: string;

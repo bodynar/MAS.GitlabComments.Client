@@ -1,5 +1,6 @@
 import { Comment } from "models/comment";
 
+/** Comments module state */
 export type CommentModuleState =
     | 'init' /** Comment module initialized */
     | 'loading' /** Something is loading */

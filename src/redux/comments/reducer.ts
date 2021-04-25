@@ -2,24 +2,26 @@ import { ActionWithPayload } from "redux/types";
 
 import { Comment } from "models/comment";
 
-import { isNullOrUndefined, isStringEmpty } from "utils/common";
+import { isNullOrEmpty, isNullOrUndefined } from "utils/common";
 import { getPropertyValueWithCheck } from "utils/object";
 
 import { CommentModuleState, CommentsState } from "./types";
 import { addComment, deleteComment, increment, setComments, setModuleState, updateComment } from "./actions";
 
+/** Initial comment module state */
 const initialState: CommentsState = {
     state: 'init',
     comments: [],
 };
 
+/** Comment module reducer function */
 export default function (state = initialState, action: ActionWithPayload): CommentsState {
     switch (action.type) {
         case setModuleState: {
             const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, 'nextState', false);
 
             if (isNullOrUndefined(nextState)) {
-                // log warning
+                // TODO: v2 log warning
                 return state;
             }
 
@@ -32,7 +34,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
 
             if (isNullOrUndefined(comment) || isNullOrUndefined(comment.id)) {
-                // log warning
+                // TODO: v2 log warning
                 return state;
             }
 
@@ -45,7 +47,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, 'comments', false);
 
             if (isNullOrUndefined(comments)) {
-                // log warning
+                // TODO: v2 log warning
                 return state;
             }
 
@@ -58,7 +60,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             const commentId: string | undefined = getPropertyValueWithCheck(action.payload, 'commentId', false);
 
             if (isNullOrEmpty(commentId)) {
-                // log warning
+                // TODO: v2 log warning
                 return state;
             }
 
@@ -79,7 +81,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
 
             if (isNullOrUndefined(comment)) {
-                // log warning
+                // TODO: v2 log warning
                 return state;
             }
             return {
@@ -95,7 +97,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             const commentId: string | undefined = getPropertyValueWithCheck(action.payload, 'commentId', false);
 
             if (isNullOrEmpty(commentId)) {
-                // log warning
+                // TODO: v2 log warning
                 return state;
             }
 

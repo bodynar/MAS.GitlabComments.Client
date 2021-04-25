@@ -3,6 +3,7 @@ import { generateGuid } from 'utils/guid';
 import { NotificationItem } from 'models/notification';
 import { NotificatorState, NotificatorAction, AddNotification, RemoveAllNotifications, RemoveNotification } from './types';
 
+/** Default state of notification module */
 const defaultState: NotificatorState = {
     notifications: []
 };
@@ -14,6 +15,7 @@ export default function (state: NotificatorState = defaultState, action: Notific
             const addingNotifications: Array<NotificationItem> = action.notifications as Array<NotificationItem>;
 
             if (addingNotifications.length === 0) {
+                // TOOD: v2 log warning
                 return state;
             }
 
@@ -28,6 +30,7 @@ export default function (state: NotificatorState = defaultState, action: Notific
             const removingIds: Array<string> = action.notifications as Array<string>;
 
             if (removingIds.length === 0) {
+                // TOOD: v2 log warning
                 return state;
             }
 

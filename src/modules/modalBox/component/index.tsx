@@ -5,7 +5,7 @@ import { isNullOrUndefined } from "utils/common";
 
 import { AppState } from "redux/rootReducer";
 import { closeModal } from "redux/modal/actions";
-import { ModalCallback, ModalData, ModalParams } from "redux/modal/types";
+import { ModalCallback, ModalCloseData, ModalParams } from "redux/modal/types";
 
 import Button from "sharedComponents/button";
 
@@ -21,9 +21,13 @@ type ModalBoxProps = {
     params: ModalParams;
 
     /** Close modal handler */
-    closeModal: (closeModalData: ModalData, modalCallback?: ModalCallback) => void;
+    closeModal: (closeModalData: ModalCloseData, modalCallback?: ModalCallback) => void;
 };
 
+/** 
+ * Modal window component
+ * @throws Modal params is invalid
+ */
 function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
     const validationError =
         isOpen
@@ -49,7 +53,7 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
 
     const onSaveClick = useCallback(() => {
         if (!isSaveButtonDisabled) {
-            const closeConfig: ModalData = {
+            const closeConfig: ModalCloseData = {
                 closeCode: 'save'
             };
 
@@ -130,7 +134,10 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
     );
 }
 
-
+/** 
+ * Modal window component
+ * @throws Modal params is invalid
+ */
 export default connect(
     ({ modal }: AppState) => ({
         isOpen: modal.isOpen,

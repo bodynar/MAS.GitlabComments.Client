@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import './comment.scss';
 
 import { Comment as CommentModel } from 'models/comment';
+
 import Button from 'sharedComponents/button';
 
 type CommentProps = {
@@ -25,6 +26,7 @@ type CommentProps = {
     deleteComment: (commentId: string) => void;
 };
 
+/** Comment component */
 export default function Comment({ comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState }: CommentProps): JSX.Element {
     const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);

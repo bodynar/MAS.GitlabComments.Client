@@ -10,15 +10,26 @@ import Text from '../components/text/text';
 import Multiline from '../components/multiline/multiline';
 
 type ModalFormProps = {
+    /** Form configuration */
     formConfig: ModalFormConfiguration;
+
+    /** Handler of field calculating validation result */
     setSaveButtonDisabled: (isValid: boolean) => void;
 };
 
+/** Field validation state */
 interface FormFieldValidationState {
+    /** Field name */
     fieldName: string;
+
+    /** Validation status */
     isValid: boolean;
 }
 
+/**
+ * Modal form container component
+ * @throws Form configuration does not contain any field
+ */
 export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps): JSX.Element => {
     if (formConfig.fields.length === 0) {
         throw new Error('No field provided for ModalForm');
@@ -52,7 +63,8 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
     return (
         <div>
             {!isNullOrUndefined(formConfig.caption)
-                && <h3>{formConfig.caption}</h3>}
+                && <h3>{formConfig.caption}</h3>
+            }
             {formConfig.fields.map(fieldConfig => {
                 if (fieldConfig.type === 'text') {
                     return <Text
@@ -67,7 +79,11 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
                         setFieldValidState={setFieldValidState}
                     />;
                 }
-                return <>{fieldConfig.type} - {fieldConfig.name}</>;
+                else {
+                    // TODO: v2
+                    console.error(`Field type ${fieldConfig.type} is not supported at the moment.`);
+                    return <></>;
+                }
             })}
         </div>
     );

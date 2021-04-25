@@ -2,6 +2,7 @@ import { BaseResponseWithResult } from "models/response/baseResponse";
 
 import { isNullOrUndefined } from "./common";
 
+/** Request body data */
 type RequestData = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [propertyName: string]: any;
@@ -57,6 +58,7 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
 
     if (response.ok) {
         const baseResponse: BaseResponseWithResult<TResult> = await response.json();
+
         if (baseResponse.success) {
             return Promise.resolve(baseResponse.result);
         } else {

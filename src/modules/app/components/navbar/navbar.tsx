@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import './navbar.scss';
 
-import GitLabLogo from '../gitlabLogo/gitlabLogo';
+import NavbarBrand from '../navbarBrand/navbar-brand';
 
 import { MenuItem, menuItems } from './menu';
 import { isStringEmpty } from "utils/common";
@@ -12,7 +12,10 @@ type NavbarProps = {
     className: string;
 };
 
-/** App navigation bar component */
+/**
+ * App navigation bar component
+ * @throws Classname prop parameter is empty
+ */
 export default function Navbar({ className }: NavbarProps): JSX.Element {
     if (isStringEmpty(className)) {
         throw new Error("className is empty");
@@ -26,7 +29,7 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
             role="navigation"
             aria-label="main navigation"
         >
-            <GitLabLogo />
+            <NavbarBrand />
             <div className="navbar-menu" >
                 <div className="navbar-start">
                     {menuItems.map(menuItem =>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+/** Github logo icon component */
 export default function GithubIcon(): JSX.Element {
     return (
         <svg

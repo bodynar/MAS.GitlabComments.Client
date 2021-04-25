@@ -2,9 +2,11 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { Action, ActionWithPayload } from 'redux/types';
 
-import { ModalCallback, ModalData, ModalParams } from 'redux/modal/types';
+import { ModalCallback, ModalCloseData, ModalParams } from 'redux/modal/types';
 import { AddNotification, NotificatorAction } from 'redux/notificator/types';
+
 import { NotificationItem } from 'models/notification';
+import { BaseCommentModel } from 'models/comment';
 
 import { isNullOrUndefined } from 'utils/common';
 
@@ -12,7 +14,6 @@ import { ModalFormItem } from 'modules/modalBox/components/modalForm';
 
 import { setModuleState } from './actions';
 import { CommentModuleState, CommentsState } from './types';
-import { BaseCommentModel } from 'models/comment';
 
 /**
  * Create dispatch-based action to set comments module error state
@@ -50,6 +51,16 @@ export const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => 
         payload: { nextState }
     };
 };
+
+/**
+ * Get notifications module action which adding success notification
+ * @param message Notification message
+ * @returns Notification module redux store action
+ */
+export const getSuccessNotificationAction = (message: string): NotificatorAction => ({
+    type: AddNotification,
+    notifications: [{ type: 'success', message }]
+});
 
 /**
  * Get comment form configuration for form in modal box
@@ -97,7 +108,7 @@ export const getCommentModalFormCallbackConfig = (
     action: (updateComment: BaseCommentModel) => ThunkAction<void, CommentsState, unknown, ActionWithPayload | NotificatorAction>
 ): ModalCallback => {
     return {
-        saveCallback: (modalData: ModalData): void => {
+        saveCallback: (modalData: ModalCloseData): void => {
             dispatch(getSetIsLoadingAction(false));
 
             const message: string | undefined = modalData.formData?.fields.find(x => x.name === 'Comment')?.value;
