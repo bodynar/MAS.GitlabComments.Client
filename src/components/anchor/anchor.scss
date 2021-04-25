@@ -1,0 +1,21 @@
+.app-anchor {
+    text-decoration: none;
+    color: inherit;
+
+    .icon {
+        &--left {
+            margin-right: 0.125rem;
+        }
+        &--right {
+            margin-left: 0.125rem;
+        }
+    }
+
+    &:hover {
+        text-decoration: underline;
+
+        .icon i:hover, svg:hover {
+            color: #3273dc;
+        }
+    }
+}
