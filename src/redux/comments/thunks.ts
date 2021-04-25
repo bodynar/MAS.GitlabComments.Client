@@ -1,12 +1,13 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
+import { get, post } from "@app/utils/api";
+import { isNullOrEmpty } from "@app/utils/common";
+
 import { ActionWithPayload } from "@app/redux/types";
 
 import { OpenModal } from "@app/redux/modal/actions";
 import { ModalAction, ModalCallback, ModalParams } from "@app/redux/modal/types";
 import { NotificatorAction } from "@app/redux/notificator/types";
-
-import { get, post } from "@app/utils/api";
 
 import { BaseCommentModel } from "@app/models/comment";
 
@@ -20,6 +21,7 @@ import {
 } from "./actions";
 import { CommentsState } from "./types";
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, getSuccessNotificationAction, setError } from "./utils";
+
 
 /**
  * Add comment via modal form
@@ -48,7 +50,8 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
                                 payload: {
                                     comment: {
                                         ...comment,
-                                        id: id
+                                        appearanceCount: 0,
+                                        id: id,
                                     }
                                 }
                             });
@@ -103,12 +106,16 @@ export const showDescription = (commentId: string): ThunkAction<void, CommentsSt
             .then((description: string) => {
                 dispatch(getSetIsLoadingAction(false));
 
+                const modalMessage: string = isNullOrEmpty(description)
+                    ? 'Comment does not have any description.'
+                    : description;
+
                 dispatch({
                     type: OpenModal,
                     params: {
                         modalType: 'info',
                         title: 'Comment description',
-                        message: description,
+                        message: modalMessage,
                     }
                 } as ModalAction);
             })
@@ -124,7 +131,7 @@ export const increment = (commentId: string): ThunkAction<void, CommentsState, u
     (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | NotificatorAction>): void => {
         dispatch(getSetIsLoadingAction(true));
 
-        post(`api/comments/increment`, { commentId: commentId })
+        post(`api/comments/increment`, commentId)
             .then(() => {
                 dispatch(getSuccessNotificationAction('Comment appearence count was updated successfully'));
 
@@ -161,7 +168,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
                         return (dispatch): void => {
                             dispatch(getSetIsLoadingAction(true));
 
-                            post(`api/comments/update`, comment)
+                            post(`api/comments/update`, { ...comment, commentId })
                                 .then(() => {
                                     dispatch(getSuccessNotificationAction('Comment was updated successfully'));
 
@@ -207,7 +214,7 @@ export const deleteComment = (commentId: string): ThunkAction<void, CommentsStat
                     saveCallback: (): void => {
                         dispatch(getSetIsLoadingAction(true));
 
-                        post(`api/comments/delete`, { commentId: commentId })
+                        post(`api/comments/delete`, commentId)
                             .then(() => {
                                 dispatch({
                                     type: deleteCommentAction,

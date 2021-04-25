@@ -6,7 +6,7 @@ import { isNullOrUndefined } from "./common";
 type RequestData = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [propertyName: string]: any;
-};
+} | unknown;
 
 /** Map of http status codes to errors */
 const statusCodesErrorsMap = new Map<number, string>([

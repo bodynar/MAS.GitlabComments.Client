@@ -103,7 +103,7 @@ export const getInitIsSaveButtonDisabled = (params: ModalParams): boolean => {
     ) {
         return (params.formData as ModalFormConfiguration)
             .fields
-            .some(field => field.isRequired === true);
+            .some(field => field.isRequired === true && isNullOrEmpty(field.value));
     }
 
     return false;
