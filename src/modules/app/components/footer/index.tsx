@@ -4,10 +4,10 @@ import { version } from 'package.json';
 
 import './footer.scss';
 
-import { isStringEmpty } from 'utils/common';
+import { isStringEmpty } from '@app/utils/common';
 
-import Anchor from 'sharedComponents/anchor';
-import GithubIcon from 'icons/github';
+import Anchor from '@app/sharedComponents/anchor';
+import GithubIcon from '@app/icons/github';
 
 type FooterProps = {
     /** Class for navbar */

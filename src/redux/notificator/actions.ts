@@ -1,4 +1,4 @@
-import { NotificationItem } from "models/notification";
+import { NotificationItem } from "@app/models/notification";
 
 import { AddNotification, NotificatorAction, RemoveNotification, RemoveAllNotifications } from "./types";
 

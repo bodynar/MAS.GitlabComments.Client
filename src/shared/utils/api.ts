@@ -1,4 +1,4 @@
-import { BaseResponseWithResult } from "models/response/baseResponse";
+import { BaseResponseWithResult } from "@app/models/response/baseResponse";
 
 import { isNullOrUndefined } from "./common";
 
@@ -8,6 +8,12 @@ type RequestData = {
     [propertyName: string]: any;
 };
 
+/** Map of http status codes to errors */
+const statusCodesErrorsMap = new Map<number, string>([
+    [404, "Server is not reachable."],
+    [415, "Server request failed: data is not valid."]
+]);
+
 /**
  * Send data to api to process
  * @param uri Api endpoint address
@@ -15,25 +21,15 @@ type RequestData = {
  * @returns {Promise<TResult>} Promise with api processing result
  */
 export const post = async <TResult>(uri: string, requestData: RequestData): Promise<TResult> => {
-    const response: Response = await fetch(uri, {
+    const requestParams: RequestInit = {
         method: 'POST',
         headers: {
-            'content-type': 'application/json;charset=UTF-8',
+            'content-type': 'application/json',
         },
         body: JSON.stringify(requestData)
-    });
+    };
 
-    if (response.ok) {
-        const baseResponse: BaseResponseWithResult<TResult> = await response.json();
-
-        if (baseResponse.success) {
-            return Promise.resolve(baseResponse.result);
-        } else {
-            return Promise.reject(baseResponse.erorr);
-        }
-    } else {
-        return Promise.reject(response.statusText);
-    }
+    return safeFetch<TResult>(uri, requestParams);
 };
 
 /**
@@ -54,17 +50,49 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
         requestParams.body = JSON.stringify(requestData);
     }
 
-    const response: Response = await fetch(uri, requestParams);
+    return safeFetch<TResult>(uri, requestParams);
+};
 
-    if (response.ok) {
-        const baseResponse: BaseResponseWithResult<TResult> = await response.json();
+/**
+ * Send configured http request to specified api with error handling
+ * @param uri Uri addres to fetch
+ * @param requestParams Request parameters
+ * @returns Fetch result: error message or requested typed result
+ */
+const safeFetch = async <TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
+    try {
+        const response: Response = await fetch(uri, requestParams);
 
-        if (baseResponse.success) {
-            return Promise.resolve(baseResponse.result);
+        if (response.ok) {
+            const baseResponse: BaseResponseWithResult<TResult> = await response.json();
+
+            if (baseResponse.success) {
+                return Promise.resolve(baseResponse.result);
+            } else {
+                return Promise.reject(new Error(baseResponse.erorr));
+            }
         } else {
-            return Promise.reject(new Error(baseResponse.erorr));
+            return Promise.reject(getErrorText(response));
         }
-    } else {
-        return Promise.reject(response.statusText);
+    } catch (error) {
+        console.error(error);
+        return Promise.reject("Unexpected error.");
     }
+};
+
+/**
+ * Get error message depending on http response
+ * @param response Http response
+ * @returns Error message to display
+ */
+const getErrorText = (response: Response): string => {
+    if (response.ok) {
+        throw new Error("Response is ok, but error handler called.");
+    }
+
+    if (!statusCodesErrorsMap.has(response.status)) {
+        return "Unexpected error.";
+    }
+
+    return statusCodesErrorsMap.get(response.status) as string;
 };

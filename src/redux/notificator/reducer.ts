@@ -1,6 +1,6 @@
-import { generateGuid } from 'utils/guid';
+import { generateGuid } from '@app/utils/guid';
 
-import { NotificationItem } from 'models/notification';
+import { NotificationItem } from '@app/models/notification';
 import { NotificatorState, NotificatorAction, AddNotification, RemoveAllNotifications, RemoveNotification } from './types';
 
 /** Default state of notification module */

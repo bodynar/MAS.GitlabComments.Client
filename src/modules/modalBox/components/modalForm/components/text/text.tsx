@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
-import { isNullOrUndefined } from 'utils/common';
+import { isNullOrUndefined } from '@app/utils/common';
 
 import { getFieldValueValidationError } from '../../utils';
 

@@ -1,4 +1,4 @@
-import { isStringEmpty } from "utils/common";
+import { isStringEmpty } from "@app/utils/common";
 
 /** Model for navbar menu items */
 export interface MenuItem {

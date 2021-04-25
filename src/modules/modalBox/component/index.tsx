@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import { isNullOrUndefined } from "utils/common";
+import { isNullOrUndefined } from "@app/utils/common";
 
-import { AppState } from "redux/rootReducer";
-import { closeModal } from "redux/modal/actions";
-import { ModalCallback, ModalCloseData, ModalParams } from "redux/modal/types";
+import { AppState } from "@app/redux/rootReducer";
+import { closeModal } from "@app/redux/modal/actions";
+import { ModalCallback, ModalCloseData, ModalParams } from "@app/redux/modal/types";
 
-import Button from "sharedComponents/button";
+import Button from "@app/sharedComponents/button";
 
 import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "../utils";
 

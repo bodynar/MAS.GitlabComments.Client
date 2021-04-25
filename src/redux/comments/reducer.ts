@@ -1,9 +1,9 @@
-import { ActionWithPayload } from "redux/types";
+import { ActionWithPayload } from "@app/redux/types";
 
-import { Comment } from "models/comment";
+import { Comment } from "@app/models/comment";
 
-import { isNullOrEmpty, isNullOrUndefined } from "utils/common";
-import { getPropertyValueWithCheck } from "utils/object";
+import { isNullOrEmpty, isNullOrUndefined } from "@app/utils/common";
+import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { CommentModuleState, CommentsState } from "./types";
 import { addComment, deleteComment, increment, setComments, setModuleState, updateComment } from "./actions";

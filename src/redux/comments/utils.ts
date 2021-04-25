@@ -1,16 +1,16 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { Action, ActionWithPayload } from 'redux/types';
+import { Action, ActionWithPayload } from '@app/redux/types';
 
-import { ModalCallback, ModalCloseData, ModalParams } from 'redux/modal/types';
-import { AddNotification, NotificatorAction } from 'redux/notificator/types';
+import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';
+import { AddNotification, NotificatorAction } from '@app/redux/notificator/types';
 
-import { NotificationItem } from 'models/notification';
-import { BaseCommentModel } from 'models/comment';
+import { NotificationItem } from '@app/models/notification';
+import { BaseCommentModel } from '@app/models/comment';
 
-import { isNullOrUndefined } from 'utils/common';
+import { isNullOrUndefined } from '@app/utils/common';
 
-import { ModalFormItem } from 'modules/modalBox/components/modalForm';
+import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
 
 import { setModuleState } from './actions';
 import { CommentModuleState, CommentsState } from './types';

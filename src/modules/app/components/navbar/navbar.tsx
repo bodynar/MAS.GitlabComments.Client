@@ -2,10 +2,11 @@ import React, { useState } from "react";
 
 import './navbar.scss';
 
+import { isStringEmpty } from "@app/utils/common";
+
 import NavbarBrand from '../navbarBrand/navbar-brand';
 
 import { MenuItem, menuItems } from './menu';
-import { isStringEmpty } from "utils/common";
 
 type NavbarProps = {
     /** Class for navbar */

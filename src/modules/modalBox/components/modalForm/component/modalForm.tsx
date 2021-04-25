@@ -2,7 +2,7 @@ import React from 'react';
 
 import './common.style.scss';
 
-import { isNullOrUndefined } from 'utils/common';
+import { isNullOrUndefined } from '@app/utils/common';
 
 import { ModalFormConfiguration } from '../types';
 

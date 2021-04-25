@@ -1,14 +1,14 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { ActionWithPayload } from "redux/types";
+import { ActionWithPayload } from "@app/redux/types";
 
-import { OpenModal } from "redux/modal/actions";
-import { ModalAction, ModalCallback, ModalParams } from "redux/modal/types";
-import { NotificatorAction } from "redux/notificator/types";
+import { OpenModal } from "@app/redux/modal/actions";
+import { ModalAction, ModalCallback, ModalParams } from "@app/redux/modal/types";
+import { NotificatorAction } from "@app/redux/notificator/types";
 
-import { get, post } from "utils/api";
+import { get, post } from "@app/utils/api";
 
-import { BaseCommentModel } from "models/comment";
+import { BaseCommentModel } from "@app/models/comment";
 
 import {
     increment as incrementAction,
@@ -20,8 +20,6 @@ import {
 } from "./actions";
 import { CommentsState } from "./types";
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, getSuccessNotificationAction, setError } from "./utils";
-
-// TODO: specify errors
 
 /**
  * Add comment via modal form

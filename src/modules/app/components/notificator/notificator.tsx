@@ -5,12 +5,13 @@ import { connect } from 'react-redux';
 
 import './notificator.scss';
 
+import { isStringEmpty } from '@app/utils/common';
 import { isStringEmpty } from 'utils/common';
 
-import { NotificationItem, NotificationType } from 'models/notification';
+import { NotificationItem, NotificationType } from '@app/models/notification';
 
-import { AppState } from 'redux/rootReducer';
-import { removeNotifications } from 'redux/notificator/actions';
+import { AppState } from '@app/redux/rootReducer';
+import { removeNotifications } from '@app/redux/notificator/actions';
 
 type NotificatorProps = {
     /** Active notifications */
@@ -72,7 +73,7 @@ const Notification = ({ item, onHideClick }: NotificationProps): JSX.Element => 
     }, [item.id, onHideClick]);
 
     useEffect(() => {
-        const timer: NodeJS.Timeout = setTimeout(hide, 2.5 * 1000);
+        const timer: NodeJS.Timeout = setTimeout(hide, NotificationHideDelay);
 
         return (): void => { clearTimeout(timer); };
     }, [hide]);

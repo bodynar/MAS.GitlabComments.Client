@@ -1,6 +1,6 @@
-import { ModalParams } from "redux/modal/types";
+import { ModalParams } from "@app/redux/modal/types";
 
-import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from "utils/common";
+import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from "@app/utils/common";
 import { ModalFormConfiguration, ModalFormItem } from "./components/modalForm/types";
 
 /**

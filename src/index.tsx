@@ -6,7 +6,7 @@ import store from "./redux/store";
 
 import "./style.scss";
 
-import App from "modules/app";
+import App from "@app/modules/app";
 
 ReactDOM.render(
     <Provider store={store}>

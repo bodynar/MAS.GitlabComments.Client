@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 
 import './comment.scss';
 
-import { Comment as CommentModel } from 'models/comment';
+import { Comment as CommentModel } from '@app/models/comment';
 
-import Button from 'sharedComponents/button';
+import Button from '@app/sharedComponents/button';
 
 type CommentProps = {
     /** Displayed comment */

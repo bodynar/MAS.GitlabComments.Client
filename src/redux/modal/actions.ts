@@ -1,5 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { isNullOrUndefined } from "utils/common";
+
+import { isNullOrUndefined } from "@app/utils/common";
 
 import { ModalAction, ModalCloseData, ModalCallback, ModalState, ModalType } from "./types";
 

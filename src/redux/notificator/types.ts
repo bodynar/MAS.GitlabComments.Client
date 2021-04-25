@@ -1,6 +1,6 @@
-import { Action } from "redux/types";
+import { Action } from "@app/redux/types";
 
-import { NotificationItem } from "models/notification";
+import { NotificationItem } from "@app/models/notification";
 
 /** Add notification to store */
 export const AddNotification = "notification/add";

@@ -5,16 +5,16 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import './comments.scss';
 
-import { isStringEmpty } from 'utils/common';
+import { isStringEmpty } from '@app/utils/common';
 
-import { Comment as CommentModel } from 'models/comment';
+import { Comment as CommentModel } from '@app/models/comment';
 
-import { AppState } from 'redux/rootReducer';
-import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from 'redux/comments/thunks';
-import { CommentModuleState } from 'redux/comments/types';
+import { AppState } from '@app/redux/rootReducer';
+import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
+import { CommentModuleState } from '@app/redux/comments/types';
 
-import Button from 'sharedComponents/button';
-import Search from 'sharedComponents/search';
+import Button from '@app/sharedComponents/button';
+import Search from '@app/sharedComponents/search';
 
 import Comment from '../components/comment';
 

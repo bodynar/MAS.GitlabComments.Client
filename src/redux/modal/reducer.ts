@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "utils/common";
+import { isNullOrUndefined } from "@app/utils/common";
 
 import { ModalAction, ModalState } from "./types";
 import { OpenModal, CloseModal } from './actions';

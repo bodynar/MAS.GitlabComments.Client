@@ -2,8 +2,8 @@ import React from "react";
 
 import './app.scss';
 
-import Comments from "modules/comments";
-import ModalBox from 'modules/modalBox';
+import Comments from "@app/modules/comments";
+import ModalBox from '@app/modules/modalBox';
 
 import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";

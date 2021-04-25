@@ -1,6 +1,6 @@
-import { Action } from "redux/types";
+import { Action } from "@app/redux/types";
 
-import { ModalFormConfiguration, ModalFormItemData } from "modules/modalBox/components/modalForm/types";
+import { ModalFormConfiguration, ModalFormItemData } from "@app/modules/modalBox/components/modalForm/types";
 
 /** Type of displaying modal */
 export type ModalType =
