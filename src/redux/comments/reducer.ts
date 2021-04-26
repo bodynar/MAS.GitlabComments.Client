@@ -73,6 +73,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             }
 
             (specifiedComment as Comment).appearanceCount += 1;
+            // TODO: v2 when increment - sort in view
 
             return {
                 ...state,
