@@ -1,0 +1,19 @@
+.app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__header {
+        min-height: 5%;
+    }
+    &__content {
+        flex-grow: 1;
+        flex-shrink: 0;
+        width: 90%;
+    }
+    &__footer {
+        min-height: 5%;
+        flex-shrink: 0;
+    }
+}
