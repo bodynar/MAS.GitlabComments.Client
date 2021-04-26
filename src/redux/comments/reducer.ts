@@ -64,17 +64,19 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 return state;
             }
 
+            const specifiedComment: Comment | undefined =
+                state.comments.find(({ id }) => id === commentId);
+
+            if (isNullOrUndefined(specifiedComment)) {
+                // TODO: v2 log warning
+                return state;
+            }
+
+            (specifiedComment as Comment).appearanceCount += 1;
+
             return {
                 ...state,
-                comments: state.comments.map(comment => {
-                    let appearanceCount: number = comment.appearanceCount;
-
-                    if (comment.id === commentId) {
-                        ++appearanceCount;
-                    }
-
-                    return { ...comment, appearanceCount: appearanceCount };
-                })
+                comments: state.comments.sort((x, y) => y.appearanceCount - x.appearanceCount)
             };
         }
         case updateComment: {
