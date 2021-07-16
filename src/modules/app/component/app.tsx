@@ -13,6 +13,7 @@ import ModalBox from '@app/modules/modalBox';
 
 import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";
+import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
 
 /** App component props */
@@ -38,11 +39,23 @@ function App(props: AppProps): JSX.Element {
             <ModalBox />
             <Notificator />
             <section className="app__content container">
-                <Comments />
+                <AppContent isReadOnly={props.readOnlyMode === true} />
             </section>
             <Footer className="app__footer" />
         </main>
     );
+}
+
+// todo: v2 update solution
+function AppContent({ isReadOnly }: { isReadOnly: boolean }): JSX.Element {
+    if (isReadOnly) {
+        return (<>
+            <ReadOnlyModeNote />
+            <Comments />
+        </>);
+    }
+
+    return (<Comments />);
 }
 
 export default connect(
