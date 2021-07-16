@@ -154,7 +154,7 @@ const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element =>
             ? 'No items' : message;
 
     return (
-        <span className="app-empty-list-placeholder">
+        <span className="app-empty-list-placeholder is-unselectable">
             {displayMessage}
         </span>
     );

@@ -72,7 +72,7 @@ const NavbarMenuItem = ({ item, isActive, onClick, isSingle }: NavbarMenuItemPro
             ? undefined
             : item.link;
 
-    let className = 'app-navbar__item';
+    let className = 'app-navbar__item is-unselectable';
 
     if (isSingle) {
         className += ' app-navbar__item--single';
