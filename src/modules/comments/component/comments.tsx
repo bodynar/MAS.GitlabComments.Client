@@ -19,6 +19,9 @@ import Search from '@app/sharedComponents/search';
 import Comment from '../components/comment';
 
 type CommentsProps = {
+    /** Is app in read only mode */
+    readOnlyMode?: boolean;
+
     /** All comments */
     comments: Array<CommentModel>;
 
@@ -89,6 +92,7 @@ function Comments(props: CommentsProps): JSX.Element {
                     type="success"
                     isLoading={isLoading}
                     onClick={props.addComment}
+                    disabled={props.readOnlyMode}
                 />
             </div>
             <div className="block">
@@ -117,7 +121,7 @@ function Comments(props: CommentsProps): JSX.Element {
                                         key={comment.id}
                                         {...props}
                                         comment={comment}
-                                        isModuleInLoadingState={props.state == 'loading'}
+                                        isModuleInLoadingState={props.state == 'loading' || props.readOnlyMode === true}
                                     />
                                 </CSSTransition>
                             )}
@@ -132,7 +136,7 @@ function Comments(props: CommentsProps): JSX.Element {
 
 /** Comments module main component */
 export default connect(
-    ({ comments }: AppState) => ({ ...comments }),
+    ({ comments, globalState }: AppState) => ({ ...comments, readOnlyMode: globalState.readOnlyMode }),
     {
         addComment: addComment,
         getComments: getAllComments,
