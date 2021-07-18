@@ -121,7 +121,8 @@ function Comments(props: CommentsProps): JSX.Element {
                                         key={comment.id}
                                         {...props}
                                         comment={comment}
-                                        isModuleInLoadingState={props.state == 'loading' || props.readOnlyMode === true}
+                                        isModuleInLoadingState={props.state == 'loading'}
+                                        isReadOnlyMode={props.readOnlyMode === true}
                                     />
                                 </CSSTransition>
                             )}

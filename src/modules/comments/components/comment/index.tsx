@@ -10,8 +10,11 @@ type CommentProps = {
     /** Displayed comment */
     comment: CommentModel;
 
-    /** Should action buttons be disabled */
+    /** Is module in loading state. Should action buttons be disabled */
     isModuleInLoadingState: boolean;
+
+    /** Is application in read only mode */
+    isReadOnlyMode: boolean;
 
     /** Increment comment appearance count */
     increment: (commentId: string) => void;
@@ -27,7 +30,7 @@ type CommentProps = {
 };
 
 /** Comment component */
-export default function Comment({ comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState }: CommentProps): JSX.Element {
+export default function Comment({ comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState, isReadOnlyMode }: CommentProps): JSX.Element {
     const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
@@ -41,7 +44,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     icon={{ className: 'gg-arrow-up' }}
                     title="Increment count"
                     onClick={onIncrementClick}
-                    disabled={isModuleInLoadingState}
+                    disabled={isModuleInLoadingState || isReadOnlyMode}
                 />
                 <span>
                     {comment.appearanceCount}
@@ -65,7 +68,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     icon={{ className: 'gg-pen' }}
                     title="Edit"
                     onClick={onUpdateCommentClick}
-                    disabled={isModuleInLoadingState}
+                    disabled={isModuleInLoadingState || isReadOnlyMode}
                 />
                 <Button
                     type="danger"
@@ -73,7 +76,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     icon={{ className: 'gg-trash' }}
                     title="Delete"
                     onClick={onDeleteCommentClick}
-                    disabled={isModuleInLoadingState}
+                    disabled={isModuleInLoadingState || isReadOnlyMode}
                 />
             </div>
         </div>
