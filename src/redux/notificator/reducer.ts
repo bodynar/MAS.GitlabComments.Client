@@ -1,7 +1,9 @@
 import { generateGuid } from '@app/utils/guid';
 
 import { NotificationItem } from '@app/models/notification';
-import { NotificatorState, NotificatorAction, AddNotification, RemoveAllNotifications, RemoveNotification } from './types';
+import { NotificatorState, NotificatorAction, AddNotification, HideAllNotifications, HideNotification } from './types';
+
+import { removeByKey } from '@app/utils/array';
 
 /** Default state of notification module */
 const defaultState: NotificatorState = {
@@ -26,7 +28,7 @@ export default function (state: NotificatorState = defaultState, action: Notific
                 ]
             };
         }
-        case RemoveNotification: {
+        case HideNotification: {
             const removingIds: Array<string> = action.notifications as Array<string>;
 
             if (removingIds.length === 0) {
@@ -38,8 +40,7 @@ export default function (state: NotificatorState = defaultState, action: Notific
                 notifications: removeByKey(state.notifications, x => x.id, removingIds),
             };
         }
-        case RemoveAllNotifications: {
-            return defaultState;
+        case HideAllNotifications: {
         }
         default: {
             return state;

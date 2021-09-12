@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 import './notificator.scss';
 
 import { isStringEmpty } from '@app/utils/common';
-import { NotificationHideDelay } from '@app/constants';
+import { NotificationHideDelay } from 'src/shared/constants';
 
 import { NotificationItem, NotificationType } from '@app/models/notification';
 
-import { AppState } from '@app/redux/rootReducer';
-import { removeNotifications } from '@app/redux/notificator/actions';
+import { CompositeAppState } from '@app/redux/rootReducer';
+import { HideNotifications } from '@app/redux/notificator/actions';
 
 type NotificatorProps = {
     /** Active notifications */
@@ -69,7 +69,7 @@ type NotificationProps = {
 /** Single notification component */
 const Notification = ({ item, onHideClick }: NotificationProps): JSX.Element => {
     const hide = useCallback(() => {
-        onHideClick(item.id as string);
+        onHideClick(item.id);
     }, [item.id, onHideClick]);
 
     useEffect(() => {
@@ -91,6 +91,6 @@ const Notification = ({ item, onHideClick }: NotificationProps): JSX.Element => 
 
 /** Container component for notifications */
 export default connect(
-    ({ notificator }: AppState) => ({ ...notificator }),
-    { hideNotifications: removeNotifications }
+    ({ notificator }: CompositeAppState) => ({ ...notificator }),
+    { hideNotifications: HideNotifications }
 )(Notificator);

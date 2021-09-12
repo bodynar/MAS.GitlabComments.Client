@@ -1,6 +1,6 @@
 import { NotificationItem } from "@app/models/notification";
 
-import { AddNotification, NotificatorAction, RemoveNotification, RemoveAllNotifications } from "./types";
+import { AddNotification, NotificatorAction, HideNotification, HideAllNotifications } from "./types";
 
 /** Show notification */
 export const addNotification = (notification: NotificationItem): NotificatorAction => {
@@ -16,20 +16,20 @@ export const addNotifications = (notifications: Array<NotificationItem>): Notifi
 };
 
 /** Hide notification */
-export const removeNotification = (notificationId: string): NotificatorAction => {
-    return removeNotifications([notificationId]);
+export const hideNotification = (notificationId: string): NotificatorAction => {
+    return HideNotifications([notificationId]);
 };
 
 /** Hide pack of notifications */
-export const removeNotifications = (notificationIds: Array<string>): NotificatorAction => {
+export const HideNotifications = (notificationIds: Array<string>): NotificatorAction => {
     return {
-        type: RemoveNotification,
+        type: HideNotification,
         notifications: notificationIds
     };
 };
 
 /** Hide all notifications */
-export const removeAllNotifications = (): NotificatorAction => ({
-    type: RemoveAllNotifications,
+export const hideAllNotifications = (): NotificatorAction => ({
+    type: HideAllNotifications,
     notifications: [],
 });

@@ -5,11 +5,11 @@ import { NotificationItem } from "@app/models/notification";
 /** Add notification to store */
 export const AddNotification = "notification/add";
 
-/** Remove specified notifications */
-export const RemoveNotification = "notification/remove";
+/** Hide specified notifications */
+export const HideNotification = "notification/hide";
 
 /** Clear all active notifications */
-export const RemoveAllNotifications = "notification/removeAll";
+export const HideAllNotifications = "notification/hideAll";
 
 /** State of notification module */
 export type NotificatorState = {
