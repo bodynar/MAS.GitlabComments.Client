@@ -1,6 +1,6 @@
 import { Action } from "@app/redux/types";
 
-import { NotificationItem } from "@app/models/notification";
+import { NotificationHistoryItem, NotificationItem } from "@app/models/notification";
 
 /** Add notification to store */
 export const AddNotification = "notification/add";
@@ -13,8 +13,11 @@ export const HideAllNotifications = "notification/hideAll";
 
 /** State of notification module */
 export type NotificatorState = {
-    /** Stored notification */
+    /** Active notifications */
     notifications: Array<NotificationItem>;
+
+    /** ??? notifications */
+    history: Array<NotificationHistoryItem>;
 };
 
 

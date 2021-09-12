@@ -1,5 +1,3 @@
-import { generateGuid } from '@app/utils/guid';
-
 import { NotificationItem } from '@app/models/notification';
 import { NotificatorState, NotificatorAction, AddNotification, HideAllNotifications, HideNotification } from './types';
 
@@ -7,7 +5,8 @@ import { removeByKey } from '@app/utils/array';
 
 /** Default state of notification module */
 const defaultState: NotificatorState = {
-    notifications: []
+    notifications: [],
+    history: []
 };
 
 /** Notification redux reducer function */
@@ -22,10 +21,11 @@ export default function (state: NotificatorState = defaultState, action: Notific
             }
 
             return {
+                ...state,
                 notifications: [
                     ...state.notifications,
-                    ...addingNotifications.map(x => ({ ...x, id: generateGuid() })) // menual id will be owerriten
-                ]
+                    ...addingNotifications
+                ],
             };
         }
         case HideNotification: {
@@ -36,11 +36,21 @@ export default function (state: NotificatorState = defaultState, action: Notific
                 return state;
             }
 
+            const hiddenNotifications: Array<NotificationItem> =
+                state.notifications.filter(x => removingIds.includes(x.id));
+
             return {
+                ...state,
                 notifications: removeByKey(state.notifications, x => x.id, removingIds),
+                history: [...state.history, ...hiddenNotifications]
             };
         }
         case HideAllNotifications: {
+            return {
+                ...state,
+                notifications: [],
+                history: state.notifications
+            };
         }
         default: {
             return state;
