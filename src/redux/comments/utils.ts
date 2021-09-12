@@ -2,18 +2,17 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 import { Action, ActionWithPayload } from '@app/redux/types';
 
-import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';
-import { AddNotification, NotificatorAction } from '@app/redux/notificator/types';
-
+import { isNullOrUndefined } from '@app/utils/common';
 import { BaseCommentModel } from '@app/models/comment';
 
-import { isNullOrUndefined } from '@app/utils/common';
+import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';
+import { NotificatorAction } from '@app/redux/notificator/types';
+import { getErrorNotificationAction } from '@app/redux/notificator/utils';
 
 import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
 
 import { setModuleState } from './actions';
 import { CommentModuleState, CommentsState } from './types';
-import { generateGuid } from '@app/utils/guid';
 
 /**
  * Create dispatch-based action to set comments module error state
@@ -21,17 +20,9 @@ import { generateGuid } from '@app/utils/guid';
  * @returns Redux store action setting error
  */
 export const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (error: string): void => {
-    dispatch({
-        type: AddNotification,
-        notifications: [getErrorNotificationAction(error)]
-    });
+    dispatch(getErrorNotificationAction(error));
 
-    dispatch({
-        type: setModuleState,
-        payload: {
-            nextState: 'idle' as CommentModuleState
-        }
-    });
+    dispatch(getSetIsLoadingAction(false));
 };
 
 /**
@@ -48,26 +39,6 @@ export const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => 
         payload: { nextState }
     };
 };
-
-/**
- * Get notifications module action which adding success notification
- * @param message Notification message
- * @returns Notification module redux store action
- */
-export const getSuccessNotificationAction = (message: string): NotificatorAction => ({
-    type: AddNotification,
-    notifications: [{ type: 'success', message, id: generateGuid(), createdAt: new Date() }]
-});
-
-/**
- * Get notifications module action which adding error notification
- * @param message Notification message
- * @returns Notification module redux store action
- */
-export const getErrorNotificationAction = (message: string): NotificatorAction => ({
-    type: AddNotification,
-    notifications: [{ type: 'error', message, id: generateGuid(), createdAt: new Date() }]
-});
 
 /**
  * Get comment form configuration for form in modal box
