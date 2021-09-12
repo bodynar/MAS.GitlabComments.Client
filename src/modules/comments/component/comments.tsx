@@ -9,7 +9,7 @@ import { isStringEmpty } from '@app/utils/common';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
-import { AppState } from '@app/redux/rootReducer';
+import { CompositeAppState } from '@app/redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
 import { CommentModuleState } from '@app/redux/comments/types';
 
@@ -132,7 +132,7 @@ function Comments(props: CommentsProps): JSX.Element {
 
 /** Comments module main component */
 export default connect(
-    ({ comments }: AppState) => ({ ...comments }),
+    ({ comments }: CompositeAppState) => ({ ...comments }),
     {
         addComment: addComment,
         getComments: getAllComments,

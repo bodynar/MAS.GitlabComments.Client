@@ -9,7 +9,7 @@ import modalBoxReducer from './modal/reducer';
 import notificatorReducer from './notificator/reducer';
 
 /** Global application state */
-export type AppState = {
+export type CompositeAppState = {
     /** Modal box state */
     modal: ModalState;
 
@@ -21,7 +21,7 @@ export type AppState = {
 };
 
 /** Global application redux store reducer */
-export default combineReducers<AppState>({
+export default combineReducers<CompositeAppState>({
     comments: commentsReducer,
     modal: modalBoxReducer,
     notificator: notificatorReducer,
