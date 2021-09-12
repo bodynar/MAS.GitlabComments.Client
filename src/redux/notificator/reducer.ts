@@ -35,7 +35,7 @@ export default function (state: NotificatorState = defaultState, action: Notific
             }
 
             return {
-                notifications: state.notifications.filter(x => !removingIds.includes(x.id as string))
+                notifications: removeByKey(state.notifications, x => x.id, removingIds),
             };
         }
         case RemoveAllNotifications: {
