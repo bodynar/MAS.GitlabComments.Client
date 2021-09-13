@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import './app.scss';
 
@@ -9,17 +10,46 @@ import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";
 import Footer from "../components/footer";
 
+import { setTabIsFocused } from "@app/redux/app/action";
+
+type AppPropsType = {
+    setTabIsFocused: (isFocused: boolean) => void;
+};
+
 /** Root app component */
-export default function App(): JSX.Element {
+function App({ setTabIsFocused }: AppPropsType): JSX.Element {
+    const onFocus = React.useCallback(() => {
+        setTabIsFocused(true);
+    }, [setTabIsFocused]);
+
+    const onBlur = React.useCallback(() => {
+        setTabIsFocused(false);
+    }, [setTabIsFocused]);
+
+    React.useEffect(() => {
+        window.addEventListener('focus', onFocus);
+        window.addEventListener('blur', onBlur);
+
+        return (): void => {
+            window.removeEventListener('focus', onFocus);
+            window.removeEventListener('blur', onBlur);
+        };
+    }, [onBlur, onFocus]);
+
     return (
         <main className="app">
-            <Navbar className="app__navbar"/>
+            <Navbar className="app__navbar" />
             <ModalBox />
             <Notificator />
             <section className="app__content container">
                 <Comments />
             </section>
-            <Footer className="app__footer"/>
+            <Footer className="app__footer" />
         </main>
     );
 }
+
+export default connect(
+    null,
+    { setTabIsFocused: setTabIsFocused }
+)(App);
