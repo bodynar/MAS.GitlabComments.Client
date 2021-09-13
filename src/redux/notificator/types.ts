@@ -16,13 +16,26 @@ export type NotificatorState = {
     /** Active notifications */
     notifications: Array<NotificationItem>;
 
-    /** ??? notifications */
+    /** Stack of all notifications */
     history: Array<NotificationHistoryItem>;
+
+    /** Number on history badge */
+    historyBadgeCount: number;
 };
 
+/** Notification store add action */
+export type NotificationAddAction = Action & {
+    /** Payload notifications */
+    notifications: Array<NotificationItem>;
+
+    /** Should notification be rendered as dismisasable block */
+    displayDismissableNotification: boolean;
+};
+
+export type NotificationEditAction = Action & {
+    /** Notification identifiers */
+    notificationIds: Array<string>;
+};
 
 /** Notification store action */
-export type NotificatorAction = Action & {
-    /** Payload notifications or their identifiers */
-    notifications: Array<NotificationItem> | Array<string>;
-};
+export type NotificatorAction = NotificationAddAction | NotificationEditAction;
