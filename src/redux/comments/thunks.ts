@@ -4,10 +4,11 @@ import { get, post } from "@app/utils/api";
 import { isNullOrEmpty } from "@app/utils/common";
 
 import { ActionWithPayload } from "@app/redux/types";
+import { CompositeAppState } from "@app/redux/rootReducer";
 
 import { OpenModal } from "@app/redux/modal/actions";
 import { ModalAction, ModalCallback, ModalParams } from "@app/redux/modal/types";
-import { NotificatorAction } from "@app/redux/notificator/types";
+import { NotificationAddAction } from "@app/redux/notificator/types";
 
 import { BaseCommentModel } from "@app/models/comment";
 
@@ -20,15 +21,18 @@ import {
     setComments
 } from "./actions";
 import { CommentsState } from "./types";
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, getSuccessNotificationAction, setError } from "./utils";
+import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, setError } from "./utils";
 
+import { getSuccessNotificationAction } from "../notificator/utils";
 
 /**
  * Add comment via modal form
  * @returns Add comment function that can be called with redux dispatcher
  */
-export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ModalAction | ActionWithPayload>): void => {
+export const addComment = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ModalAction | ActionWithPayload>,
+        getState: () => CompositeAppState,
+    ): void => {
         dispatch({
             type: setModuleState,
             payload: { nextState: 'showModal' }
@@ -43,7 +47,8 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
 
                     post<string>(`api/comments/add`, comment)
                         .then((id: string) => {
-                            dispatch(getSuccessNotificationAction('Comment was added successfully'));
+                            const { app } = getState();
+                            dispatch(getSuccessNotificationAction('Comment was added successfully', app.isCurrentTabFocused));
 
                             dispatch({
                                 type: addCommentAction,
@@ -58,7 +63,7 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
 
                             dispatch(getSetIsLoadingAction(false));
                         })
-                        .catch(setError(dispatch));
+                        .catch(setError(dispatch, getState));
                 };
             });
 
@@ -75,8 +80,10 @@ export const addComment = (): ThunkAction<void, CommentsState, unknown, ActionWi
  * Get all comments from api
  * @returns Get all comments function that can be called with redux dispatcher
  */
-export const getAllComments = (): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>): void => {
+export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>,
+        getState: () => CompositeAppState
+    ): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<Array<Comment>>(`api/comments/getAll`)
@@ -90,7 +97,7 @@ export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Acti
 
                 dispatch(getSetIsLoadingAction(false));
             })
-            .catch(setError(dispatch));
+            .catch(setError(dispatch, getState));
     };
 
 /**
@@ -98,8 +105,10 @@ export const getAllComments = (): ThunkAction<void, CommentsState, unknown, Acti
  * @param commentId Comment identifier value
  * @returns Show description function that can be called with redux dispatcher
  */
-export const showDescription = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>): void => {
+export const showDescription = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>,
+        getState: () => CompositeAppState,
+    ): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<string>(`api/comments/description?commentId=${commentId}`)
@@ -119,7 +128,7 @@ export const showDescription = (commentId: string): ThunkAction<void, CommentsSt
                     }
                 } as ModalAction);
             })
-            .catch(setError(dispatch));
+            .catch(setError(dispatch, getState));
     };
 
 /**
@@ -127,13 +136,16 @@ export const showDescription = (commentId: string): ThunkAction<void, CommentsSt
  * @param commentId Comment identifier value
  * @returns Increment appearance count function that can be called with redux dispatcher
  */
-export const increment = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | NotificatorAction>): void => {
+export const increment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | NotificationAddAction>,
+        getState: () => CompositeAppState,
+    ): void => {
         dispatch(getSetIsLoadingAction(true));
 
         post(`api/comments/increment`, commentId)
             .then(() => {
-                dispatch(getSuccessNotificationAction('Comment appearence count was updated successfully'));
+                const { app } = getState();
+                dispatch(getSuccessNotificationAction('Comment appearence count was updated successfully', app.isCurrentTabFocused));
 
                 dispatch({
                     type: incrementAction,
@@ -144,7 +156,7 @@ export const increment = (commentId: string): ThunkAction<void, CommentsState, u
 
                 dispatch(getSetIsLoadingAction(false));
             })
-            .catch(setError(dispatch));
+            .catch(setError(dispatch, getState));
     };
 
 /**
@@ -152,8 +164,10 @@ export const increment = (commentId: string): ThunkAction<void, CommentsState, u
  * @param commentId Comment identifier value
  * @returns Update comment function that can be called with redux dispatcher
  */
-export const updateComment = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>): void => {
+export const updateComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>,
+        getState: () => CompositeAppState
+    ): void => {
         dispatch(getSetIsLoadingAction(true));
 
         get<BaseCommentModel>(`api/comments/get?commentId=${commentId}`)
@@ -170,7 +184,8 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
 
                             post(`api/comments/update`, { ...comment, id: commentId })
                                 .then(() => {
-                                    dispatch(getSuccessNotificationAction('Comment was updated successfully'));
+                                    const { app } = getState();
+                                    dispatch(getSuccessNotificationAction('Comment was updated successfully', app.isCurrentTabFocused));
 
                                     dispatch({
                                         type: updateCommentAction,
@@ -181,7 +196,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
 
                                     dispatch(getSetIsLoadingAction(false));
                                 })
-                                .catch(setError(dispatch));
+                                .catch(setError(dispatch, getState));
                         };
                     });
 
@@ -193,7 +208,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
                     }
                 } as ModalAction);
             })
-            .catch(setError(dispatch));
+            .catch(setError(dispatch, getState));
     };
 
 /**
@@ -201,8 +216,10 @@ export const updateComment = (commentId: string): ThunkAction<void, CommentsStat
  * @param commentId Comment identifier value
  * @returns Delete comment function that can be called with redux dispatcher
  */
-export const deleteComment = (commentId: string): ThunkAction<void, CommentsState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>): void => {
+export const deleteComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
+    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>,
+        getState: () => CompositeAppState,
+    ): void => {
         dispatch({
             type: OpenModal,
             params: {
@@ -225,7 +242,7 @@ export const deleteComment = (commentId: string): ThunkAction<void, CommentsStat
 
                                 dispatch(getSetIsLoadingAction(false));
                             })
-                            .catch(setError(dispatch));
+                            .catch(setError(dispatch, getState));
                     },
                     // eslint-disable-next-line @typescript-eslint/no-empty-function
                     cancelCallback: (): void => { }

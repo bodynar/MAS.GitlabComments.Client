@@ -13,14 +13,20 @@ import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
 
 import { setModuleState } from './actions';
 import { CommentModuleState, CommentsState } from './types';
+import { CompositeAppState } from '../rootReducer';
 
 /**
  * Create dispatch-based action to set comments module error state
  * @param dispatch Redux store dispatcher
  * @returns Redux store action setting error
  */
-export const setError = (dispatch: ThunkDispatch<CommentsState, unknown, Action>) => (error: string): void => {
-    dispatch(getErrorNotificationAction(error));
+export const setError = (
+    dispatch: ThunkDispatch<CommentsState, unknown, Action>,
+    getState: () => CompositeAppState
+) => (error: string): void => {
+    const { app } = getState();
+
+    dispatch(getErrorNotificationAction(error, app.isCurrentTabFocused));
 
     dispatch(getSetIsLoadingAction(false));
 };
