@@ -1,5 +1,5 @@
 import { NotificationItem } from '@app/models/notification';
-import { NotificatorState, NotificatorAction, AddNotification, HideAllNotifications, HideNotification, NotificationAddAction, NotificationEditAction } from './types';
+import { NotificatorState, NotificatorAction, AddNotification, HideAllNotifications, HideNotification, NotificationAddAction, NotificationEditAction, SetNotificationsBadgeToZero } from './types';
 
 import { removeByKey } from '@app/utils/array';
 import { isNullOrUndefined } from '@app/utils/common';
@@ -67,6 +67,12 @@ export default function (state: NotificatorState = defaultState, action: Notific
             return {
                 ...state,
                 notifications: [],
+            };
+        }
+        case SetNotificationsBadgeToZero: {
+            return {
+                ...state,
+                historyBadgeCount: 0,
             };
         }
         default: {

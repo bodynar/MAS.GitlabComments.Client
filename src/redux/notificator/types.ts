@@ -11,6 +11,9 @@ export const HideNotification = "notification/hide";
 /** Clear all active notifications */
 export const HideAllNotifications = "notification/hideAll";
 
+/** Clear notification badge by setting to zero */
+export const SetNotificationsBadgeToZero = "notification/setBadgeToZero";
+
 /** State of notification module */
 export type NotificatorState = {
     /** Active notifications */
@@ -38,4 +41,4 @@ export type NotificationEditAction = Action & {
 };
 
 /** Notification store action */
-export type NotificatorAction = NotificationAddAction | NotificationEditAction;
+export type NotificatorAction = NotificationAddAction | NotificationEditAction | Action;
