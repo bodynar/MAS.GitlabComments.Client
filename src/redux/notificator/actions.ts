@@ -37,5 +37,5 @@ export const hideAllNotifications = (): NotificationEditAction => ({
 
 /** Clear notification badge by setting to zero  */
 export const setNotificationsBadgeToZero = (): NotificatorAction => ({
-    type: SetNotificationsBadgeToZero
+    type: SetNotificationsBadgeToZero,
 });

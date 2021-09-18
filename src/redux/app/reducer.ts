@@ -2,10 +2,10 @@ import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { ActionWithPayload } from "../types";
 
-import { AppState, SetTabIsFocused } from "./types";
+import { AppState, SetTabIsFocused, SetReadOnlyModeValue } from "./types";
 
 const defaultState: AppState = {
-    isCurrentTabFocused: false
+    isCurrentTabFocused: true,
 };
 
 /**
@@ -23,6 +23,15 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
             return {
                 ...state,
                 isCurrentTabFocused: isTabFocused
+            };
+        }
+        case SetReadOnlyModeValue: {
+            const readOnlyMode: boolean =
+                getPropertyValueWithCheck(action.payload, 'readOnlyMode', false) || false;
+
+            return {
+                ...state,
+                readOnlyMode: readOnlyMode
             };
         }
         default: {
