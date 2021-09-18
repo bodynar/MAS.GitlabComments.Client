@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './button.scss';
+
 import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/common';
 
 import { ElementIcon, ElementSize } from '@app/sharedComponents/types';
