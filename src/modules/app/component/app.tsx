@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import './app.scss';
 
+import { setTabIsFocused } from "@app/redux/app/action";
+
 import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
 
@@ -10,9 +12,8 @@ import Notificator from '../components/notificator/notificator';
 import Navbar from "../components/navbar/navbar";
 import Footer from "../components/footer";
 
-import { setTabIsFocused } from "@app/redux/app/action";
-
 type AppPropsType = {
+    /** Store state of app tab focus */
     setTabIsFocused: (isFocused: boolean) => void;
 };
 
