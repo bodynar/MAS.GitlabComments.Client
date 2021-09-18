@@ -1,4 +1,12 @@
-input[type="search"]::-webkit-search-cancel-button {
-    cursor: pointer;
-    font-size: 1.25rem;
+input[type="search"] {
+    transition: 0.25s ease-out border-color;
+
+    &::placeholder {
+        user-select: none;
+    }
+
+    &::-webkit-search-cancel-button {
+        cursor: pointer;
+        font-size: 1.25rem;
+    }
 }

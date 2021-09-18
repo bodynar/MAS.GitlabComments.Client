@@ -3,6 +3,7 @@ export interface BaseCommentModel {
     /** Message */
     message: string;
 
+    /** Description */
     description?: string;
 }
 

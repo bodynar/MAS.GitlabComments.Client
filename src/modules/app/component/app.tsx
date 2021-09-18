@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 
 import './app.scss';
 
-import { getReadOnlyMode } from "@app/redux/global/thunks";
-import { AppState } from "@app/redux/rootReducer";
-
 import { isNullOrUndefined } from "@app/utils/common";
+
+import { CompositeAppState } from "@app/redux/rootReducer";
+
+import { setTabIsFocused } from "@app/redux/app/action";
+import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 
 import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
@@ -16,8 +18,10 @@ import Navbar from "../components/navbar/navbar";
 import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
 
-/** App component props */
-type AppProps = {
+type AppPropsType = {
+    /** Store state of app tab focus */
+    setTabIsFocused: (isFocused: boolean) => void;
+
     /** Is application in read only mode */
     readOnlyMode?: boolean;
 
@@ -26,12 +30,30 @@ type AppProps = {
 };
 
 /** Root app component */
-function App(props: AppProps): JSX.Element {
+function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode }: AppPropsType): JSX.Element {
+    const onFocus = React.useCallback(() => {
+        setTabIsFocused(true);
+    }, [setTabIsFocused]);
+
+    const onBlur = React.useCallback(() => {
+        setTabIsFocused(false);
+    }, [setTabIsFocused]);
+
     React.useEffect(() => {
-        if (isNullOrUndefined(props.readOnlyMode)) {
-            props.getReadOnlyMode();
+        if (isNullOrUndefined(readOnlyMode)) {
+            getReadOnlyMode();
         }
-    }, [props, props.readOnlyMode]);
+    }, [getReadOnlyMode, readOnlyMode]);
+
+    React.useEffect(() => {
+        window.addEventListener('focus', onFocus);
+        window.addEventListener('blur', onBlur);
+
+        return (): void => {
+            window.removeEventListener('focus', onFocus);
+            window.removeEventListener('blur', onBlur);
+        };
+    }, [onBlur, onFocus]);
 
     return (
         <main className="app">
@@ -39,7 +61,7 @@ function App(props: AppProps): JSX.Element {
             <ModalBox />
             <Notificator />
             <section className="app__content container">
-                <AppContent isReadOnly={props.readOnlyMode === true} />
+                <AppContent isReadOnly={readOnlyMode === true} />
             </section>
             <Footer className="app__footer" />
         </main>
@@ -47,7 +69,7 @@ function App(props: AppProps): JSX.Element {
 }
 
 // todo: v2 update solution
-function AppContent({ isReadOnly }: { isReadOnly: boolean }): JSX.Element {
+function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
     if (isReadOnly) {
         return (<>
             <ReadOnlyModeNote />
@@ -59,8 +81,9 @@ function AppContent({ isReadOnly }: { isReadOnly: boolean }): JSX.Element {
 }
 
 export default connect(
-    ({ globalState }: AppState) => ({ ...globalState }),
+    ({ app }: CompositeAppState) => ({ readOnlyMode: app.readOnlyMode }),
     {
+        setTabIsFocused: setTabIsFocused,
         getReadOnlyMode: getReadOnlyMode
     }
 )(App);
