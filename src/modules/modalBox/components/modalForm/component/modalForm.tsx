@@ -80,9 +80,8 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
                     />;
                 }
                 else {
-                    // TODO: v2
                     console.error(`Field type ${fieldConfig.type} is not supported at the moment.`);
-                    return <></>;
+                    return <span>Error during form building</span>;
                 }
             })}
         </div>
