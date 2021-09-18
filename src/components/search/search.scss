@@ -4,4 +4,9 @@ input[type="search"] {
     &::placeholder {
         user-select: none;
     }
+
+    &::-webkit-search-cancel-button {
+        cursor: pointer;
+        font-size: 1.25rem;
+    }
 }

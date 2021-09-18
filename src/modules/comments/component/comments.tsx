@@ -19,6 +19,9 @@ import Search from '@app/sharedComponents/search';
 import Comment from '../components/comment';
 
 type CommentsProps = {
+    /** Is app in read only mode */
+    readOnlyMode?: boolean;
+
     /** All comments */
     comments: Array<CommentModel>;
 
@@ -89,6 +92,7 @@ function Comments(props: CommentsProps): JSX.Element {
                     type="success"
                     isLoading={isLoading}
                     onClick={props.addComment}
+                    disabled={props.readOnlyMode}
                 />
             </div>
             <div className="block">
@@ -118,6 +122,7 @@ function Comments(props: CommentsProps): JSX.Element {
                                         {...props}
                                         comment={comment}
                                         isModuleInLoadingState={props.state == 'loading'}
+                                        isReadOnlyMode={props.readOnlyMode === true}
                                     />
                                 </CSSTransition>
                             )}
@@ -132,7 +137,7 @@ function Comments(props: CommentsProps): JSX.Element {
 
 /** Comments module main component */
 export default connect(
-    ({ comments }: CompositeAppState) => ({ ...comments }),
+    ({ comments, app }: CompositeAppState) => ({ ...comments, readOnlyMode: app.readOnlyMode }),
     {
         addComment: addComment,
         getComments: getAllComments,
@@ -150,7 +155,7 @@ const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element =>
             ? 'No items' : message;
 
     return (
-        <span className="app-empty-list-placeholder">
+        <span className="app-empty-list-placeholder is-unselectable">
             {displayMessage}
         </span>
     );

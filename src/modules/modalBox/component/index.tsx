@@ -87,13 +87,10 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
         return <></>;
     }
 
-    const classNames: string =
-        'modal' + (isOpen ? ' is-active' : '');
-
     const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(params);
 
     return (
-        <div className={classNames}>
+        <div className='modal is-active'>
             <div className="modal-background"></div>
             <div className="modal-card">
                 <header className="modal-card-head">

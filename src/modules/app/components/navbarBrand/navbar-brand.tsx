@@ -12,7 +12,7 @@ export default function NavbarBrand(): JSX.Element {
 
                 <a className="app-navbar__logo">
                     <GitlabLogoIcon />
-                    <span className="app-navbar__name">
+                    <span className="app-navbar__name is-unselectable">
                         Gitlab Comments
                     </span>
                 </a>

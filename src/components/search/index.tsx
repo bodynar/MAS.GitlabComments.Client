@@ -76,14 +76,14 @@ export default function Search(props: SearchProps): JSX.Element {
         + (searchType === 'byButton' ? ' is-expanded': '')
         ;
 
-    const inputClassName: string = 'input'
+    const inputClassName: string = 'input is-unselectable'
         + ` is-${(props.size || 'normal')}`
         + (props.rounded === true ? ' is-rounded' : '')
         ;
 
     if (searchType === 'byButton') {
         return (
-            <div className="field has-addons app-search">
+            <div className="field has-addons">
                 <div className={className}>
                     <input
                         type='search'
