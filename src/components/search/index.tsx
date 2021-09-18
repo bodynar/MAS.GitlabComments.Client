@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
+import './search.scss';
+
 import Button from '@app/sharedComponents/button';
 
 import { generateGuid } from '@app/utils/guid';
@@ -81,7 +83,7 @@ export default function Search(props: SearchProps): JSX.Element {
 
     if (searchType === 'byButton') {
         return (
-            <div className="field has-addons app-search">
+            <div className="field has-addons">
                 <div className={className}>
                     <input
                         type='search'
