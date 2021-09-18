@@ -5,6 +5,7 @@ import './navbar.scss';
 import { isStringEmpty } from "@app/utils/common";
 
 import NavbarBrand from '../navbarBrand/navbar-brand';
+import Bell from '../bell/component/bell';
 
 import { MenuItem, menuItems } from './menu';
 
@@ -44,7 +45,7 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
                     )}
                 </div>
                 <div className="navbar-end">
-
+                    <Bell/>
                 </div>
             </div>
         </nav>
