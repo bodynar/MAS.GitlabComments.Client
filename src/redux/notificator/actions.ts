@@ -3,16 +3,16 @@ import { NotificationItem } from "@app/models/notification";
 import { AddNotification, HideNotification, HideAllNotifications, NotificationAddAction, NotificationEditAction, NotificatorAction, SetNotificationsBadgeToZero } from "./types";
 
 /** Show notification */
-export const addNotification = (notification: NotificationItem): NotificationAddAction => {
-    return addNotifications([notification]);
+export const addNotification = (notification: NotificationItem, notifyOnBadge: boolean): NotificationAddAction => {
+    return addNotifications([notification], notifyOnBadge);
 };
 
 /** Show pack of notifications */
-export const addNotifications = (notifications: Array<NotificationItem>): NotificationAddAction => {
+export const addNotifications = (notifications: Array<NotificationItem>, notifyOnBadge: boolean): NotificationAddAction => {
     return {
         type: AddNotification,
         notifications: notifications,
-        displayDismissableNotification: true // TODO: replace with arg
+        displayDismissableNotification: notifyOnBadge
     };
 };
 
