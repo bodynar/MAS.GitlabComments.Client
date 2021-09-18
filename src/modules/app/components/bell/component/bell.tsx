@@ -35,6 +35,7 @@ function Bell(props: BellProps): JSX.Element {
             if (props.notificationBadge !== 0) {
                 props.onListOpened();
             }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [isListVisible, props.notificationBadge, props.onListOpened]
     );
 
