@@ -64,7 +64,7 @@ const getModalSuccessCallback = (
                     payload: {
                         comment: {
                             ...updateComment,
-                            appearanceCount: 0,
+                            appearanceCount: 1,
                             id: id,
                         }
                     }
