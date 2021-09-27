@@ -11,7 +11,7 @@ import { NotificationHistoryItem } from '@app/models/notification';
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { setNotificationsBadgeToZero } from '@app/redux/notificator/actions';
 
-import NotificationStoryRecord from '../components/notificationStoryRecord';
+import BellList from '../components/bellList/bellList';
 
 type BellProps = {
     /** All notifications in current session */
@@ -35,7 +35,7 @@ function Bell(props: BellProps): JSX.Element {
             if (props.notificationBadge !== 0) {
                 props.onListOpened();
             }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [isListVisible, props.notificationBadge, props.onListOpened]
     );
 
@@ -64,8 +64,11 @@ function Bell(props: BellProps): JSX.Element {
     }, [onDocumentClick]);
 
     const shouldBadgeBeVisible: boolean = props.notificationBadge > 0;
-    const badgeNumber: string = props.notificationBadge > 10 ? '9+' : `${props.notificationBadge}`;
+    const badgeNumber: string = props.notificationBadge > 9 ? '9+' : `${props.notificationBadge}`;
     const title: string = shouldBadgeBeVisible ? `${badgeNumber} new notifications` : 'No new notifications';
+    const listClassName: string = !shouldBadgeBeVisible
+        ? 'app-bell__list app-bell__list--empty'
+        : 'app-bell__list';
 
     return (
         <div className="app-bell">
@@ -81,32 +84,12 @@ function Bell(props: BellProps): JSX.Element {
                     <span className="app-bell__badge">{badgeNumber}</span>
                 }
             </div>
-            <div className="app-bell__list" aria-hidden={!isListVisible}>
-                <BellList notifications={props.notifications} />
+            <div className={listClassName} aria-hidden={!isListVisible}>
+                <div className="app-bell__list-wrapper">
+                    <BellList notifications={props.notifications} />
+                </div>
             </div>
         </div>
-    );
-}
-
-/** Bell notification list component */
-function BellList({ notifications }: { notifications: Array<NotificationHistoryItem>; }): JSX.Element {
-    if (notifications.length > 0) {
-        return (
-            <ul>
-                {notifications.map(x =>
-                    <NotificationStoryRecord
-                        key={x.id}
-                        item={x}
-                    />
-                )}
-            </ul>
-        );
-    }
-
-    return (
-        <span className="app-bell__empty-list">
-            You haven&apos;t received any notifications yet
-        </span>
     );
 }
 

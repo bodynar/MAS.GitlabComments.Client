@@ -17,6 +17,31 @@
         &--opened {
             background-color: rgba(0, 0, 0, 0.125);
         }
+
+        &::after {
+            content: "";
+
+            position: absolute;
+            top: 3rem;
+            right: 2.5rem;
+            width: 0;
+            height: 0;
+
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid rgba(0, 0, 0, 0.275);
+
+            visibility: collapse;
+            opacity: 0;
+
+            transition: 0.15s ease-in;
+            transition-property: opacity, visibility;
+        }
+
+        &--opened::after {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 
     &__list {
@@ -25,9 +50,10 @@
 
         position: absolute;
         right: 0.5rem;
+        
         width: 20rem;
-        max-height: 35vh;
         min-height: 10vh;
+        max-height: 35vh;
         overflow-x: auto;
 
         margin-top: 0.5rem;
@@ -40,21 +66,22 @@
         transition: 0.15s ease-in;
         transition-property: opacity, visibility;
 
+        z-index: 100;
+
+        &-wrapper {
+            min-height: 10vh;
+            max-height: 35vh;
+            overflow-x: auto;
+        }
+
+        &--empty,
+        &--empty .app-bell__list-wrapper {
+            min-height: initial;
+        }
+
         &[aria-hidden="false"] {
             opacity: 1;
             visibility: visible;
-        }
-
-        &::after {
-            content: "";
-            position: absolute;
-            right: 30px;
-            top: -5px;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 5px solid rgba(0, 0, 0, 0.275);
-            width: 0;
-            height: 0;
         }
     }
     
