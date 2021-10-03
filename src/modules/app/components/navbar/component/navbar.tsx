@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import './navbar.scss';
 
-import { isStringEmpty } from "@app/utils/string";
+import { isStringEmpty } from "@app/utils/common";
 
 import { NavbarBrand, Bell, NavbarMenuItem } from '../components';
 
