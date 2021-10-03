@@ -39,6 +39,6 @@ export const isStringEmpty = (value: string): boolean => {
  * @param value Value to check
  * @returns Flag is passed value null or undefined or empty string
  */
-export const isNullOrEmpty = (value?: string): boolean => {
+export const isNullOrEmpty = (value?: string | null): boolean => {
     return isNullOrUndefined(value) || isStringEmpty(value as string);
 };
