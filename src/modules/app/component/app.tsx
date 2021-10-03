@@ -14,7 +14,7 @@ import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
 
 import Notificator from '../components/notificator/notificator';
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../components/navbar/component/navbar";
 import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
 
