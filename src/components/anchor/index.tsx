@@ -12,7 +12,7 @@ export type AnchorProps = {
     href: string;
 
     /** Link caption  */
-    caption: string;
+    caption?: string;
 
     /** Click handler */
     onClick?: () => void;
@@ -32,6 +32,10 @@ export type AnchorProps = {
 
 /** Anchor component */
 export default function Anchor(props: AnchorProps): JSX.Element {
+    if (isNullOrUndefined(props.caption) && isNullOrUndefined(props.icon)) {
+        throw new Error("No anchor content provided");
+    }
+
     const className: string = 'app-anchor'
         + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '');
 
@@ -66,7 +70,7 @@ type SimpleAnchorProps = {
     onClick?: () => void;
 
     /** Link caption  */
-    caption: string;
+    caption?: string;
 
     /** Title of anchor */
     title?: string;
