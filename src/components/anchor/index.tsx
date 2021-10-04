@@ -112,7 +112,7 @@ const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon
                 target={target}
                 onClick={onClick}
             >
-                <Icon {...icon} />
+                <Icon {...icon} className={`${icon.className} app-icon--left`}/>
                 {caption}
             </a>
         );
@@ -127,7 +127,7 @@ const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon
             onClick={onClick}
         >
             {caption}
-            <Icon {...icon} />
+            <Icon {...icon} className={`${icon.className} app-icon--right`}/>
         </a>
     );
 };
