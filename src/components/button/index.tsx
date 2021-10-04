@@ -4,7 +4,7 @@ import './button.scss';
 
 import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/common';
 
-import { ElementIcon, ElementSize } from '@app/sharedComponents/types';
+import { ElementIcon, IconSize } from '@app/sharedComponents/icon/elementIcon';
 
 import { ButtonType } from './types';
 
@@ -19,7 +19,7 @@ export type ButtonProps = {
     icon?: ElementIcon;
 
     /** Button size  */
-    size?: ElementSize;
+    size?: IconSize;
 
     /** Title on hover */
     title?: string;
