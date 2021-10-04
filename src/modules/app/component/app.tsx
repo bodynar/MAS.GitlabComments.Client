@@ -25,19 +25,17 @@ type AppPropsType = {
     /** Is application in read only mode */
     readOnlyMode?: boolean;
 
+    /** Is app in dark mode */
+    isDarkMode?: boolean;
+
     /** Read readonly mode value and save it in store */
     getReadOnlyMode: () => void;
 };
 
 /** Root app component */
-function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode }: AppPropsType): JSX.Element {
-    const onFocus = React.useCallback(() => {
-        setTabIsFocused(true);
-    }, [setTabIsFocused]);
-
-    const onBlur = React.useCallback(() => {
-        setTabIsFocused(false);
-    }, [setTabIsFocused]);
+function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppPropsType): JSX.Element {
+    const onFocus = React.useCallback(() => { setTabIsFocused(true); }, [setTabIsFocused]);
+    const onBlur = React.useCallback(() => { setTabIsFocused(false); }, [setTabIsFocused]);
 
     React.useEffect(() => {
         if (isNullOrUndefined(readOnlyMode)) {
@@ -55,8 +53,12 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode }: AppPropsType): 
         };
     }, [onBlur, onFocus]);
 
+    const className: string = isDarkMode === true
+        ? 'app app--dark'
+        : 'app';
+
     return (
-        <main className="app">
+        <main className={className}>
             <Navbar className="app__navbar" />
             <ModalBox />
             <Notificator />
@@ -81,7 +83,10 @@ function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
 }
 
 export default connect(
-    ({ app }: CompositeAppState) => ({ readOnlyMode: app.readOnlyMode }),
+    ({ app }: CompositeAppState) => ({
+        readOnlyMode: app.readOnlyMode,
+        isDarkMode: app.isDarkMode
+    }),
     {
         setTabIsFocused: setTabIsFocused,
         getReadOnlyMode: getReadOnlyMode

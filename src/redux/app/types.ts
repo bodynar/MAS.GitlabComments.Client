@@ -16,5 +16,5 @@ export type AppState = {
     readOnlyMode?: boolean;
 
     /** Is dark mode active */
-    isDarkMode: boolean;
+    isDarkMode?: boolean;
 };
