@@ -34,7 +34,7 @@ export type AnchorProps = {
  * @throws Caption is not defined and icon configuration is not defined at the same time
  */
 export default function Anchor(props: AnchorProps): JSX.Element {
-    if ((isNullOrEmpty(props.caption))
+    if (isNullOrEmpty(props.caption)
         && (isNullOrUndefined(props.icon)
             || (isNullOrEmpty(props.icon?.className)
                 && isNullOrUndefined(props.icon?.iconComponent))
@@ -42,12 +42,6 @@ export default function Anchor(props: AnchorProps): JSX.Element {
     ) {
         throw new Error("No anchor content provided.");
     }
-
-    const onClick = React.useCallback(() => {
-        if (!isNullOrUndefined(props.onClick)) {
-            props.onClick?.call(undefined);
-        }
-    }, [props.onClick]);
 
     const className: string = 'app-anchor'
         + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '');
@@ -57,7 +51,7 @@ export default function Anchor(props: AnchorProps): JSX.Element {
             <AnchorWithIcon
                 {...props}
                 className={className}
-                onClick={onClick}
+                onClick={props.onClick}
                 icon={props.icon as ElementIcon}
             />
         );
@@ -66,7 +60,7 @@ export default function Anchor(props: AnchorProps): JSX.Element {
             <SimpleAnchor
                 {...props}
                 className={className}
-                onClick={onClick}
+                onClick={props.onClick}
             />
         );
     }
@@ -80,7 +74,7 @@ type SimpleAnchorProps = {
     className: string;
 
     /** Click handler */
-    onClick: () => void;
+    onClick?: () => void;
 
     /** Link caption  */
     caption?: string;
