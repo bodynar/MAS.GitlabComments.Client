@@ -4,14 +4,15 @@ import './anchor.scss';
 
 import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
-import { ElementIcon, ElementSize } from '@app/sharedComponents/types';
+import Icon from '@app/sharedComponents/icon';
+import { ElementIcon } from '@app/sharedComponents/icon/elementIcon';
 
 export type AnchorProps = {
     /** Link destination */
     href: string;
 
     /** Link caption  */
-    caption?: string;
+    caption: string;
 
     /** Click handler */
     onClick?: () => void;
@@ -29,33 +30,12 @@ export type AnchorProps = {
     className?: string;
 };
 
-/**
- * Anchor component
- * @throws Caption is not defined and icon configuration is not defined at the same time
- */
+/** Anchor component */
 export default function Anchor(props: AnchorProps): JSX.Element {
-    if (isNullOrEmpty(props.caption)
-        && (isNullOrUndefined(props.icon)
-            || (isNullOrEmpty(props.icon?.className)
-                && isNullOrUndefined(props.icon?.iconComponent))
-        )
-    ) {
-        throw new Error("No anchor content provided.");
-    }
-
     const className: string = 'app-anchor'
         + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '');
 
-    if (!isNullOrUndefined(props.icon)) {
-        return (
-            <AnchorWithIcon
-                {...props}
-                className={className}
-                onClick={props.onClick}
-                icon={props.icon as ElementIcon}
-            />
-        );
-    } else {
+    if (isNullOrUndefined(props.icon)) {
         return (
             <SimpleAnchor
                 {...props}
@@ -64,6 +44,15 @@ export default function Anchor(props: AnchorProps): JSX.Element {
             />
         );
     }
+
+    return (
+        <AnchorWithIcon
+            {...props}
+            className={className}
+            onClick={props.onClick}
+            icon={props.icon as ElementIcon}
+        />
+    );
 }
 
 type SimpleAnchorProps = {
@@ -77,7 +66,7 @@ type SimpleAnchorProps = {
     onClick?: () => void;
 
     /** Link caption  */
-    caption?: string;
+    caption: string;
 
     /** Title of anchor */
     title?: string;
@@ -109,7 +98,21 @@ type AnchorWithIconProps = SimpleAnchorProps & {
 /** Anchor with icon component */
 const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon }: AnchorWithIconProps): JSX.Element => {
     const iconPosition = icon.position || 'left';
-    const isCaptionNullOrEmpty: boolean = isNullOrEmpty(caption);
+
+    if (iconPosition === 'left') {
+        return (
+            <a
+                href={href}
+                className={className}
+                title={title}
+                target={target}
+                onClick={onClick}
+            >
+                <Icon {...icon} />
+                {caption}
+            </a>
+        );
+    }
 
     return (
         <a
@@ -119,53 +122,9 @@ const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon
             target={target}
             onClick={onClick}
         >
-            {iconPosition === 'left'
-                ? <>
-                    <AnchorIcon
-                        {...icon}
-                        position={iconPosition}
-                    />
-                    {!isCaptionNullOrEmpty
-                        && <span>
-                            {caption}
-                        </span>
-                    }
-                </>
-                : <>
-                    {!isCaptionNullOrEmpty
-                        && <span>
-                            {caption}
-                        </span>
-                    }
-                    <AnchorIcon
-                        {...icon}
-                        position={iconPosition}
-                    />
-
-                </>}
+            {caption}
+            <Icon {...icon} />
         </a>
     );
 };
 
-/** Ancrhor icon component */
-const AnchorIcon = (icon: ElementIcon, iconPosition: 'left' | 'right'): JSX.Element => {
-    const iconsSize: ElementSize = icon.size || 'normal';
-
-    const iconClassName: string = 'icon'
-        + (iconsSize === 'normal' ? '' : ` is-${iconsSize}`)
-        + (iconPosition === 'left' ? ' icon--left' : ' icon--right');
-
-    if (!isNullOrUndefined(icon.iconComponent)) {
-        return (
-            <span className={iconClassName}>
-                {icon.iconComponent}
-            </span>
-        );
-    } else {
-        return (
-            <span className={iconClassName}>
-                <i className={icon.className} />
-            </span>
-        );
-    }
-};
