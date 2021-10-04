@@ -28,7 +28,7 @@ const sizeToClassMap: Map<IconSize, string> = new Map([
 export default function Icon(props: IconProps): JSX.Element {
     const size: IconSize = props.size || 'medium';
 
-    const className = `app-icon bi ${props.className}${sizeToClassMap.get(size)}`;
+    const className = `app-icon bi bi-${props.className}${sizeToClassMap.get(size)}`;
 
     return (
         <i className={className}></i>
