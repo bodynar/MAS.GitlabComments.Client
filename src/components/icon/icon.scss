@@ -1,0 +1,9 @@
+.app-icon {
+    transition: 0.25s ease-in-out color;
+    &--small {
+        font-size: 0.5em;
+    }
+    &--large {
+        font-size: 1.5em;
+    }
+}
