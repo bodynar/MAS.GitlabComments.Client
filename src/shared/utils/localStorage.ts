@@ -8,7 +8,7 @@ const storage: Storage = window.localStorage;
  * @param key Unique record key
  * @returns Flag representing existance of record
  */
-export const hasRecord = (key: string): boolean => {
+const hasRecord = (key: string): boolean => {
     if (isStringEmpty(key)) {
         return false;
     }
@@ -23,7 +23,7 @@ export const hasRecord = (key: string): boolean => {
  * @param key Unique record key
  * @returns Undefined if record does not exist in storage; otherwise saved value
  */
-export const getRecord = <TValue>(key: string): TValue | undefined => {
+const getRecord = <TValue>(key: string): TValue | undefined => {
     if (isStringEmpty(key)) {
         return undefined;
     }
@@ -42,7 +42,7 @@ export const getRecord = <TValue>(key: string): TValue | undefined => {
  * @param key Unique record key
  * @param value Some data to store
  */
-export const saveRecord = <TValue>(key: string, value: TValue): void => {
+const saveRecord = <TValue>(key: string, value: TValue): void => {
     if (isStringEmpty(key)) {
         return;
     }
@@ -50,4 +50,11 @@ export const saveRecord = <TValue>(key: string, value: TValue): void => {
     const record = JSON.stringify(value);
 
     storage.setItem(key, record);
+};
+
+/** API to access local storage data */
+export const appStorage = {
+    hasRecord,
+    getRecord,
+    saveRecord
 };
