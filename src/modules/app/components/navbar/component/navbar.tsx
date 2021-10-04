@@ -4,7 +4,7 @@ import './navbar.scss';
 
 import { isStringEmpty } from "@app/utils/common";
 
-import { NavbarBrand, Bell, NavbarMenuItem } from '../components';
+import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from '../components';
 
 import { menuItems } from '../menu';
 
@@ -44,6 +44,7 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
                     )}
                 </div>
                 <div className="navbar-end">
+                    <ViewModeSwitcher />
                     <Bell />
                 </div>
             </div>
