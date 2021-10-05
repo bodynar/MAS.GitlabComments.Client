@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './bell.scss';
+import './bell.dark.scss';
 
 import { isNull, isNullOrUndefined } from '@app/utils/common';
 
