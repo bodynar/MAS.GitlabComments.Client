@@ -2,11 +2,14 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
+import './viewModeSwitcher.scss';
+
 import { isUndefined } from '@app/utils/common';
 import { appStorage } from '@app/utils/localStorage';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { setDarkModeState } from '@app/redux/app/action';
+import Icon from '@app/sharedComponents/icon';
 
 type ViewModeSwitcherProps = {
     /** Is dark mode currently active */
@@ -24,14 +27,24 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
         setDarkModeState(darkModeState);
     }, [isDarkMode, setDarkModeState]);
 
-    const onClick = React.useCallback(() => {
+    const onClick = React.useCallback((event: React.MouseEvent) => {
+        event.preventDefault();
+
         setDarkModeState(!(isDarkMode as boolean));
     }, [isDarkMode, setDarkModeState]);
 
+    const sunClassName: string = isDarkMode === true ? 'sun' : 'sun-fill';
+    const moonClassName: string = isDarkMode !== true ? 'moon' : 'moon-stars-fill';
+// TODO: update style, fix click handler
+// TODO: add handler on click icons => change state
     return (
-        <div className="app-mode-switcher" onClick={onClick}>
-            gg-sun
-            gg-moon
+        <div className="app-mode-switcher">
+            <Icon className={sunClassName} />
+            <label className="app-mode-switcher__switch">
+                <input type="checkbox" onChange={e => setDarkModeState(e.target.checked)} />
+                <span className="app-mode-switcher__slider"></span>
+            </label>
+            <Icon className={moonClassName} />
         </div>
     );
 }
