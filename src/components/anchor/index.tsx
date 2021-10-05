@@ -103,6 +103,13 @@ type AnchorWithIconProps = SimpleAnchorProps & {
 const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon }: AnchorWithIconProps): JSX.Element => {
     const iconPosition = icon.position || 'left';
 
+    const iconClassName: string = isNullOrEmpty(caption)
+        ? icon.className
+        : iconPosition === 'left'
+            ? `${icon.className} app-icon--left`
+            : `${icon.className} app-icon--right`;
+
+
     if (iconPosition === 'left') {
         return (
             <a
@@ -112,7 +119,7 @@ const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon
                 target={target}
                 onClick={onClick}
             >
-                <Icon {...icon} className={`${icon.className} app-icon--left`}/>
+                <Icon {...icon} className={iconClassName} />
                 {caption}
             </a>
         );
@@ -127,7 +134,7 @@ const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon
             onClick={onClick}
         >
             {caption}
-            <Icon {...icon} className={`${icon.className} app-icon--right`}/>
+            <Icon {...icon} className={iconClassName} />
         </a>
     );
 };

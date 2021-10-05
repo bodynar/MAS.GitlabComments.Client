@@ -7,6 +7,7 @@ import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/comm
 import { ElementIcon, IconSize } from '@app/sharedComponents/icon/elementIcon';
 
 import { ButtonType } from './types';
+import Icon from '../icon';
 
 export type ButtonProps = {
     /** Button displaying text */
@@ -19,7 +20,7 @@ export type ButtonProps = {
     icon?: ElementIcon;
 
     /** Button size  */
-    size?: IconSize;
+    size?: IconSize; // TODO: fix this type using
 
     /** Title on hover */
     title?: string;
@@ -62,18 +63,12 @@ export default function Button(props: ButtonProps): JSX.Element {
         + (props.rounded === true ? ' is-rounded' : '')
         + (props.isLoading === true ? ' is-loading' : '');
 
-    const onClick = React.useCallback(() => {
-        if (!isNullOrUndefined(props.onClick)) {
-            props.onClick?.call(null);
-        }
-    }, [props.onClick]);
-
     if (!isNullOrUndefined(props.icon)) {
         return (
             <ButtonWithIcon
                 {...props}
                 className={className}
-                onClick={onClick}
+                onClick={props.onClick}
                 icon={props.icon as ElementIcon}
             />
         );
@@ -82,7 +77,7 @@ export default function Button(props: ButtonProps): JSX.Element {
             <SimpleButton
                 {...props}
                 className={className}
-                onClick={onClick}
+                onClick={props.onClick}
             />
         );
     }
@@ -93,7 +88,7 @@ type SimpleButtonProps = {
     className: string;
 
     /** Button click handler */
-    onClick: () => void;
+    onClick?: () => void;
 
     /** Button caption */
     caption?: string;
@@ -128,12 +123,25 @@ type ButtonWithIconProps = SimpleButtonProps & {
 const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: ButtonWithIconProps): JSX.Element => {
     const iconPosition = icon.position || 'left';
 
-    const iconsSize: ElementSize = icon.size || 'normal';
+    const iconClassName: string = isNullOrEmpty(caption)
+        ? icon.className
+        : iconPosition === 'left'
+            ? `${icon.className} app-icon--left`
+            : `${icon.className} app-icon--right`;
 
-    const iconClassName: string = "icon"
-        + (iconsSize === 'normal' ? '' : ` is-${iconsSize}`);
-
-    const isCaptionNullOrEmpty: boolean = isNullOrEmpty(caption);
+    if (iconPosition === 'left') {
+        return (
+            <button
+                className={className}
+                disabled={disabled}
+                onClick={onClick}
+                title={title}
+            >
+                <Icon {...icon} className={iconClassName} />
+                {caption}
+            </button>
+        );
+    }
 
     return (
         <button
@@ -142,28 +150,8 @@ const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: 
             onClick={onClick}
             title={title}
         >
-            {iconPosition === 'left'
-                ? <>
-                    <span className={iconClassName}>
-                        <i className={icon.className} />
-                    </span>
-                    {!isCaptionNullOrEmpty
-                        && <span>
-                            {caption}
-                        </span>
-                    }
-                </>
-                : <>
-                    {!isCaptionNullOrEmpty
-                        && <span>
-                            {caption}
-                        </span>
-                    }
-                    <span className={iconClassName}>
-                        <i className={icon.className} />
-                    </span>
-
-                </>}
+            {caption}
+            <Icon {...icon} className={iconClassName} />
         </button>
     );
 };
