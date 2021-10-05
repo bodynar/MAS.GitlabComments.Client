@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -9,6 +9,7 @@ import { appStorage } from '@app/utils/localStorage';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { setDarkModeState } from '@app/redux/app/action';
+
 import Icon from '@app/sharedComponents/icon';
 
 type ViewModeSwitcherProps = {
@@ -21,27 +22,43 @@ type ViewModeSwitcherProps = {
 
 /** App view mode switcher. From light mode to dark mode */
 function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProps): JSX.Element {
-    React.useEffect(() => {
+    const onDarkModeStateChange = useCallback(
+        (enabled: boolean, suppressSave: boolean) => {
+            setDarkModeState(enabled);
+            setDarkModeEnabled(enabled);
+
+            if (!suppressSave) {
+                appStorage.saveRecord<boolean>('darkmode-state', enabled);
+            }
+        }, [setDarkModeState]
+    );
+
+    useEffect(() => {
         const darkModeState = getDarkModeState(isDarkMode);
 
-        setDarkModeState(darkModeState);
-    }, [isDarkMode, setDarkModeState]);
+        onDarkModeStateChange(darkModeState, true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [onDarkModeStateChange]);
 
-    const onClick = React.useCallback((event: React.MouseEvent) => {
-        event.preventDefault();
+    const onCheckedChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>): void => {
+            onDarkModeStateChange(event.target.checked, false);
+        }, [onDarkModeStateChange]);
 
-        setDarkModeState(!(isDarkMode as boolean));
-    }, [isDarkMode, setDarkModeState]);
+    const [darkModeEnabled, setDarkModeEnabled] = useState(isDarkMode === true);
 
-    const sunClassName: string = isDarkMode === true ? 'sun' : 'sun-fill';
-    const moonClassName: string = isDarkMode !== true ? 'moon' : 'moon-stars-fill';
-// TODO: update style, fix click handler
-// TODO: add handler on click icons => change state
+    const sunClassName: string = darkModeEnabled ? 'sun' : 'sun-fill';
+    const moonClassName: string = !darkModeEnabled ? 'moon' : 'moon-stars-fill';
+
     return (
         <div className="app-mode-switcher">
             <Icon className={sunClassName} />
             <label className="app-mode-switcher__switch">
-                <input type="checkbox" onChange={e => setDarkModeState(e.target.checked)} />
+                <input
+                    type="checkbox"
+                    onChange={onCheckedChange}
+                    checked={darkModeEnabled}
+                />
                 <span className="app-mode-switcher__slider"></span>
             </label>
             <Icon className={moonClassName} />

@@ -5,8 +5,7 @@ import { ActionWithPayload } from "../types";
 import { AppState, SetTabIsFocused, SetReadOnlyModeState, SetDarkModeState } from "./types";
 
 const defaultState: AppState = {
-    isCurrentTabFocused: true,
-    isDarkMode: false
+    isCurrentTabFocused: true
 };
 
 /**
