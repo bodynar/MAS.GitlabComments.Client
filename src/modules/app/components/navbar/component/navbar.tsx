@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import './navbar.scss';
+import './navbar.dark.scss';
 
 import { isStringEmpty } from "@app/utils/common";
 
