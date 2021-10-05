@@ -1,6 +1,10 @@
 import React from "react";
 
+import './navbarMenuItem.scss';
+
 import { MenuItem } from "../../menu";
+
+import Anchor from "@app/sharedComponents/anchor";
 
 type NavbarMenuItemProps = {
     /** Menu item configuration */
@@ -41,15 +45,16 @@ export default function NavbarMenuItem({ item, isActive, onClick, isSingle }: Na
             if (item.disabled !== true && !isActive) {
                 onClick(item.name);
             }
-        }, [isActive, item.disabled, item.name, onClick]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [isActive, item.disabled, onClick]);
 
     return (
-        <a
+        <Anchor
             className={className}
             href={href}
+            caption={item.caption}
             onClick={onHrefClick}
-        >
-            {item.caption}
-        </a>
+            disableHovering={true}
+        />
     );
 }

@@ -4,7 +4,7 @@
 
     transition: 0.15s ease-in-out color;
 
-    &:hover {
+    &:not(&--unhoverable):hover {
         text-decoration: underline;
         color: #3273dc;
     }

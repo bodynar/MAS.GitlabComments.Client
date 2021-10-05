@@ -9,7 +9,7 @@ import { ElementIcon } from '@app/sharedComponents/icon/elementIcon';
 
 export type AnchorProps = {
     /** Link destination */
-    href: string;
+    href?: string;
 
     /** Link caption  */
     caption?: string;
@@ -28,6 +28,9 @@ export type AnchorProps = {
 
     /** Additional class names */
     className?: string;
+
+    /** Should css hovering effects be disabled */
+    disableHovering?: boolean;
 };
 
 /** Anchor component */
@@ -37,7 +40,8 @@ export default function Anchor(props: AnchorProps): JSX.Element {
     }
 
     const className: string = 'app-anchor'
-        + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '');
+        + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '')
+        + (props.disableHovering === true ? ' app-anchor--unhoverable' : '');
 
     if (isNullOrUndefined(props.icon)) {
         return (
@@ -61,7 +65,7 @@ export default function Anchor(props: AnchorProps): JSX.Element {
 
 type SimpleAnchorProps = {
     /** Link destination */
-    href: string;
+    href?: string;
 
     /** Class names */
     className: string;
