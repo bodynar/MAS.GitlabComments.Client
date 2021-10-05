@@ -129,6 +129,10 @@ const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: 
             ? `${icon.className} app-icon--left`
             : `${icon.className} app-icon--right`;
 
+    className = isNullOrEmpty(caption)
+        ? `${className} button--icon-only`
+        : className;
+
     if (iconPosition === 'left') {
         return (
             <button
