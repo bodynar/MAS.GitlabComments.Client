@@ -5,6 +5,9 @@
     max-width: 17.5rem;
     font-size: 0.95rem;
 
+    transition: 0.15s ease-in-out;
+    transition-property: color, background-color;
+
     &-enter {
         opacity: 0;
         right: -100%;
