@@ -13,7 +13,7 @@ import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
 
-import Notificator from '../components/notificator/notificator';
+import Notificator from '../components/notificator/component/notificator';
 import Navbar from "../components/navbar/component/navbar";
 import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
