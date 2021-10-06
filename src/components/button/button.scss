@@ -5,4 +5,8 @@
     &--icon-only {
         padding: 0.55rem;
     }
+
+    &.is-warning.is-outlined:hover {
+        color: #000;
+    }
 }
