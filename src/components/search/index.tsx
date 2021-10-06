@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import './search.scss';
+import './search.dark.scss';
 
 import Button from '@app/sharedComponents/button';
 
@@ -76,7 +77,7 @@ export default function Search(props: SearchProps): JSX.Element {
         + (searchType === 'byButton' ? ' is-expanded': '')
         ;
 
-    const inputClassName: string = 'input is-unselectable'
+    const inputClassName: string = 'app-search input is-unselectable'
         + ` is-${(props.size || 'normal')}`
         + (props.rounded === true ? ' is-rounded' : '')
         ;

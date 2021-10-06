@@ -1,0 +1,10 @@
+.app--dark {
+    .app-search {
+        background-color: #585858;
+        color: white;
+
+        &::-webkit-input-placeholder {
+            color: white;
+        }
+    }
+}

@@ -1,8 +1,13 @@
-input[type="search"] {
-    transition: 0.25s ease-out border-color;
+.app-search {
+    transition: 0.15s ease-out;
+    transition-property: border-color, color, background-color;
 
     &::placeholder {
         user-select: none;
+    }
+
+    &::-webkit-input-placeholder {
+        transition: 0.15s ease-out color;
     }
 
     &::-webkit-search-cancel-button {
