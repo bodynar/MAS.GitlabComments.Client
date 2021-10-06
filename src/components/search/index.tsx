@@ -71,13 +71,13 @@ export default function Search(props: SearchProps): JSX.Element {
             props.onSearch(searchValue);
         }, [props, searchValue]);
 
-    const className: string = 'control'
+    const className: string = 'app-search control'
         + ` is-${(props.size || 'normal')}`
         + (props.isLoading === true ? ' is-loading' : '')
         + (searchType === 'byButton' ? ' is-expanded': '')
         ;
 
-    const inputClassName: string = 'app-search input is-unselectable'
+    const inputClassName: string = 'input is-unselectable'
         + ` is-${(props.size || 'normal')}`
         + (props.rounded === true ? ' is-rounded' : '')
         ;
