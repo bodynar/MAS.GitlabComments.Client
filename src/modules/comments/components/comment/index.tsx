@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 
 import './comment.scss';
+import './comment.dark.scss';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
