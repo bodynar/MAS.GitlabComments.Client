@@ -1,5 +1,5 @@
 .app--dark {
-    .app-notification {
+    .button:not(.is-outlined):not(:hover) {
         &.is-danger {
             background-color: #b12e48;
         }

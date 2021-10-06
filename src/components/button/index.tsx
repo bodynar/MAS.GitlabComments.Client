@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './button.scss';
+import './button.dark.scss';
 
 import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/common';
 
@@ -9,7 +10,7 @@ import { ElementIcon, IconSize } from '@app/sharedComponents/icon/elementIcon';
 import { ButtonType } from './types';
 import Icon from '../icon';
 
-export type ButtonProps = {
+type ButtonProps = {
     /** Button displaying text */
     caption?: string;
 
