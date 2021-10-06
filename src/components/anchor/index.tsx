@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './anchor.scss';
+import './anchor.dark.scss';
 
 import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
