@@ -1,0 +1,8 @@
+.app--dark {
+    .app-anchor {
+        &:not(&--unhoverable):hover {
+            text-decoration: underline;
+            color: #5c9bff;
+        }
+    }
+}

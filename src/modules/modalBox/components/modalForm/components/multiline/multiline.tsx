@@ -8,6 +8,7 @@ import { BaseFieldProps } from '../basePropsType';
 
 type MultilineProps = BaseFieldProps;
 
+// TODO: move to @sharedComponents
 /** Multiline form editor component */
 export default function Multiline({ fieldConfig, setFieldValidState }: MultilineProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || '');

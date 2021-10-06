@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 
 import './search.scss';
+import './search.dark.scss';
 
 import Button from '@app/sharedComponents/button';
 
@@ -70,7 +71,7 @@ export default function Search(props: SearchProps): JSX.Element {
             props.onSearch(searchValue);
         }, [props, searchValue]);
 
-    const className: string = 'control'
+    const className: string = 'app-search control'
         + ` is-${(props.size || 'normal')}`
         + (props.isLoading === true ? ' is-loading' : '')
         + (searchType === 'byButton' ? ' is-expanded': '')

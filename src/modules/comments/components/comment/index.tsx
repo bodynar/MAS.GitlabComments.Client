@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 
 import './comment.scss';
+import './comment.dark.scss';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
@@ -41,7 +42,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
             <div className="app-comment__appearance">
                 <Button
                     type="default"
-                    icon={{ className: 'gg-arrow-up' }}
+                    icon={{ className: 'arrow-up' }}
                     title="Increment count"
                     onClick={onIncrementClick}
                     disabled={isModuleInLoadingState || isReadOnlyMode}
@@ -57,7 +58,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                 <Button
                     type="info"
                     outlined={true}
-                    icon={{ className: 'gg-info' }}
+                    icon={{ className: 'info-lg' }}
                     title="Show description"
                     onClick={onShowDescriptionClick}
                     disabled={isModuleInLoadingState}
@@ -65,7 +66,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                 <Button
                     type="warning"
                     outlined={true}
-                    icon={{ className: 'gg-pen' }}
+                    icon={{ className: 'pencil' }}
                     title="Edit"
                     onClick={onUpdateCommentClick}
                     disabled={isModuleInLoadingState || isReadOnlyMode}
@@ -73,7 +74,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                 <Button
                     type="danger"
                     outlined={true}
-                    icon={{ className: 'gg-trash' }}
+                    icon={{ className: 'trash' }}
                     title="Delete"
                     onClick={onDeleteCommentClick}
                     disabled={isModuleInLoadingState || isReadOnlyMode}

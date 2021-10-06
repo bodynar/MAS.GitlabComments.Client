@@ -1,14 +1,16 @@
 import React from 'react';
 
 import './anchor.scss';
+import './anchor.dark.scss';
 
 import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
-import { ElementIcon, ElementSize } from '@app/sharedComponents/types';
+import Icon from '@app/sharedComponents/icon';
+import { ElementIcon } from '@app/sharedComponents/icon/elementIcon';
 
 export type AnchorProps = {
     /** Link destination */
-    href: string;
+    href?: string;
 
     /** Link caption  */
     caption?: string;
@@ -27,60 +29,50 @@ export type AnchorProps = {
 
     /** Additional class names */
     className?: string;
+
+    /** Should css hovering effects be disabled */
+    disableHovering?: boolean;
 };
 
-/**
- * Anchor component
- * @throws Caption is not defined and icon configuration is not defined at the same time
- */
+/** Anchor component */
 export default function Anchor(props: AnchorProps): JSX.Element {
-    if ((isNullOrEmpty(props.caption))
-        && (isNullOrUndefined(props.icon)
-            || (isNullOrEmpty(props.icon?.className)
-                && isNullOrUndefined(props.icon?.iconComponent))
-        )
-    ) {
-        throw new Error("No anchor content provided.");
+    if (isNullOrUndefined(props.caption) && isNullOrUndefined(props.icon)) {
+        throw new Error("No anchor content provided");
     }
 
-    const onClick = React.useCallback(() => {
-        if (!isNullOrUndefined(props.onClick)) {
-            props.onClick?.call(undefined);
-        }
-    }, [props.onClick]);
-
     const className: string = 'app-anchor'
-        + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '');
+        + (!isNullOrEmpty(props.className) ? ` ${props.className}` : '')
+        + (props.disableHovering === true ? ' app-anchor--unhoverable' : '');
 
-    if (!isNullOrUndefined(props.icon)) {
-        return (
-            <AnchorWithIcon
-                {...props}
-                className={className}
-                onClick={onClick}
-                icon={props.icon as ElementIcon}
-            />
-        );
-    } else {
+    if (isNullOrUndefined(props.icon)) {
         return (
             <SimpleAnchor
                 {...props}
                 className={className}
-                onClick={onClick}
+                onClick={props.onClick}
             />
         );
     }
+
+    return (
+        <AnchorWithIcon
+            {...props}
+            className={className}
+            onClick={props.onClick}
+            icon={props.icon as ElementIcon}
+        />
+    );
 }
 
 type SimpleAnchorProps = {
     /** Link destination */
-    href: string;
+    href?: string;
 
     /** Class names */
     className: string;
 
     /** Click handler */
-    onClick: () => void;
+    onClick?: () => void;
 
     /** Link caption  */
     caption?: string;
@@ -115,7 +107,28 @@ type AnchorWithIconProps = SimpleAnchorProps & {
 /** Anchor with icon component */
 const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon }: AnchorWithIconProps): JSX.Element => {
     const iconPosition = icon.position || 'left';
-    const isCaptionNullOrEmpty: boolean = isNullOrEmpty(caption);
+
+    const iconClassName: string = isNullOrEmpty(caption)
+        ? icon.className
+        : iconPosition === 'left'
+            ? `${icon.className} app-icon--left`
+            : `${icon.className} app-icon--right`;
+
+
+    if (iconPosition === 'left') {
+        return (
+            <a
+                href={href}
+                className={className}
+                title={title}
+                target={target}
+                onClick={onClick}
+            >
+                <Icon {...icon} className={iconClassName} />
+                {caption}
+            </a>
+        );
+    }
 
     return (
         <a
@@ -125,53 +138,9 @@ const AnchorWithIcon = ({ href, className, onClick, caption, title, target, icon
             target={target}
             onClick={onClick}
         >
-            {iconPosition === 'left'
-                ? <>
-                    <AnchorIcon
-                        {...icon}
-                        position={iconPosition}
-                    />
-                    {!isCaptionNullOrEmpty
-                        && <span>
-                            {caption}
-                        </span>
-                    }
-                </>
-                : <>
-                    {!isCaptionNullOrEmpty
-                        && <span>
-                            {caption}
-                        </span>
-                    }
-                    <AnchorIcon
-                        {...icon}
-                        position={iconPosition}
-                    />
-
-                </>}
+            {caption}
+            <Icon {...icon} className={iconClassName} />
         </a>
     );
 };
 
-/** Ancrhor icon component */
-const AnchorIcon = (icon: ElementIcon, iconPosition: 'left' | 'right'): JSX.Element => {
-    const iconsSize: ElementSize = icon.size || 'normal';
-
-    const iconClassName: string = 'icon'
-        + (iconsSize === 'normal' ? '' : ` is-${iconsSize}`)
-        + (iconPosition === 'left' ? ' icon--left' : ' icon--right');
-
-    if (!isNullOrUndefined(icon.iconComponent)) {
-        return (
-            <span className={iconClassName}>
-                {icon.iconComponent}
-            </span>
-        );
-    } else {
-        return (
-            <span className={iconClassName}>
-                <i className={icon.className} />
-            </span>
-        );
-    }
-};

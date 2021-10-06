@@ -1,0 +1,37 @@
+.app--dark {
+    .app-modal .modal-card {
+        border: 1px solid #1c81bd;
+        border-radius: 4px;
+
+        .modal-card-head,
+        .modal-card-foot {
+            background-color: #222222;
+        }
+
+        .modal-card-title,
+        .label {
+            color: white;
+        }
+
+        .modal-card-body {
+            background-color: #585858;
+            color: white;
+        }
+
+        .field {
+            input,
+            textarea {
+                background-color: #585858;
+                color: white;
+
+                &::-webkit-input-placeholder {
+                    color: #d1cfcf;
+                }
+            }
+
+            .help.is-danger {
+                color: #ffcccc;
+            }
+        }
+    }
+}

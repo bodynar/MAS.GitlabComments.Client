@@ -1,6 +1,9 @@
 import React from 'react';
 
+import moment from 'moment';
+
 import './notificationStoryRecord.scss';
+import './notificationStoryRecord.dark.scss';
 
 import { NotificationHistoryItem, NotificationType } from '@app/models/notification';
 
@@ -19,15 +22,12 @@ const typeColorMap: Map<NotificationType, string> = new Map([
 
 /** Notification item in history list component */
 export default function NotificationStoryRecord({ item }: NotificationStoryRecordProps): JSX.Element {
-    const month: string = item.createdAt.toLocaleString('default', { month: 'long' });
-
-    const time =
-        `${item.createdAt.getDay()} ${month} ${item.createdAt.getHours()}:${item.createdAt.getMinutes()}`;
+    const createdAt: string = moment(item.createdAt).format('DD MMMM hh:mm');
 
     return (
         <li className="notification-story-item">
             <div className="notification-story-item__description" style={{ borderColor: typeColorMap.get(item.type) }}>
-                <span>{time}</span>
+                <span>{createdAt}</span>
                 <p>
                     {item.message}
                 </p>

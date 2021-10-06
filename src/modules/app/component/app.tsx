@@ -13,8 +13,8 @@ import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
 
-import Notificator from '../components/notificator/notificator';
-import Navbar from "../components/navbar/navbar";
+import Notificator from '../components/notificator/component/notificator';
+import Navbar from "../components/navbar/component/navbar";
 import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
 
@@ -25,19 +25,17 @@ type AppPropsType = {
     /** Is application in read only mode */
     readOnlyMode?: boolean;
 
+    /** Is app in dark mode */
+    isDarkMode?: boolean;
+
     /** Read readonly mode value and save it in store */
     getReadOnlyMode: () => void;
 };
 
 /** Root app component */
-function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode }: AppPropsType): JSX.Element {
-    const onFocus = React.useCallback(() => {
-        setTabIsFocused(true);
-    }, [setTabIsFocused]);
-
-    const onBlur = React.useCallback(() => {
-        setTabIsFocused(false);
-    }, [setTabIsFocused]);
+function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppPropsType): JSX.Element {
+    const onFocus = React.useCallback(() => { setTabIsFocused(true); }, [setTabIsFocused]);
+    const onBlur = React.useCallback(() => { setTabIsFocused(false); }, [setTabIsFocused]);
 
     React.useEffect(() => {
         if (isNullOrUndefined(readOnlyMode)) {
@@ -55,8 +53,12 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode }: AppPropsType): 
         };
     }, [onBlur, onFocus]);
 
+    const className: string = isDarkMode === true
+        ? 'app app--dark'
+        : 'app';
+
     return (
-        <main className="app">
+        <main className={className}>
             <Navbar className="app__navbar" />
             <ModalBox />
             <Notificator />
@@ -81,7 +83,10 @@ function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
 }
 
 export default connect(
-    ({ app }: CompositeAppState) => ({ readOnlyMode: app.readOnlyMode }),
+    ({ app }: CompositeAppState) => ({
+        readOnlyMode: app.readOnlyMode,
+        isDarkMode: app.isDarkMode
+    }),
     {
         setTabIsFocused: setTabIsFocused,
         getReadOnlyMode: getReadOnlyMode

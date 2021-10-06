@@ -61,7 +61,7 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
         }, [fieldValidStates, setSaveButtonDisabled]);
 
     return (
-        <div>
+        <>
             {!isNullOrUndefined(formConfig.caption)
                 && <h3>{formConfig.caption}</h3>
             }
@@ -84,6 +84,6 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
                     return <span key={fieldConfig.name}>Error during form building</span>;
                 }
             })}
-        </div>
+        </>
     );
 };

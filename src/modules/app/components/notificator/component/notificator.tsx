@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { connect } from 'react-redux';
@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import './notificator.scss';
 
 import { isStringEmpty } from '@app/utils/common';
-import { NotificationHideDelay } from 'src/shared/constants';
 
-import { NotificationItem, NotificationType } from '@app/models/notification';
+import { NotificationItem } from '@app/models/notification';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { HideNotifications } from '@app/redux/notificator/actions';
+
+import Notification from '../components/notificationItem';
 
 type NotificatorProps = {
     /** Active notifications */
@@ -48,46 +49,6 @@ function Notificator({ notifications, hideNotifications }: NotificatorProps): JS
         </TransitionGroup>
     );
 }
-
-/** Map of notification type to bulma class name */
-const typeClassNameMap: Map<NotificationType, string> = new Map([
-    ['info', 'is-info'],
-    ['success', 'is-success'],
-    ['warn', 'is-warning'],
-    ['error', 'is-danger'],
-]);
-
-/** Single notification component configuration */
-type NotificationProps = {
-    /** Notification configuration */
-    item: NotificationItem;
-
-    /** Close notification click handler */
-    onHideClick: (notificationId: string) => void;
-};
-
-/** Single notification component */
-const Notification = ({ item, onHideClick }: NotificationProps): JSX.Element => {
-    const hide = useCallback(() => {
-        onHideClick(item.id);
-    }, [item.id, onHideClick]);
-
-    useEffect(() => {
-        const timer: NodeJS.Timeout = setTimeout(hide, NotificationHideDelay);
-
-        return (): void => { clearTimeout(timer); };
-    }, [hide]);
-
-    return (
-        <div className={`notification app-notification ${typeClassNameMap.get(item.type)}`}>
-            <button
-                className="delete"
-                onClick={hide}
-            ></button>
-            {item.message}
-        </div>
-    );
-};
 
 /** Container component for notifications */
 export default connect(

@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './bell.scss';
+import './bell.dark.scss';
 
 import { isNull, isNullOrUndefined } from '@app/utils/common';
 
@@ -12,6 +13,7 @@ import { CompositeAppState } from '@app/redux/rootReducer';
 import { setNotificationsBadgeToZero } from '@app/redux/notificator/actions';
 
 import BellList from '../components/bellList/bellList';
+import Icon from '@app/sharedComponents/icon';
 
 type BellProps = {
     /** All notifications in current session */
@@ -77,9 +79,7 @@ function Bell(props: BellProps): JSX.Element {
                 onClick={onBellClick}
                 title={title}
             >
-                <span className="icon">
-                    <i className="gg-bell"></i>
-                </span>
+                <Icon className="bell" />
                 {shouldBadgeBeVisible &&
                     <span className="app-bell__badge">{badgeNumber}</span>
                 }

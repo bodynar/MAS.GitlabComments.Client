@@ -1,9 +1,12 @@
 import React from 'react';
 
+import './readOnlyMode.scss';
+import './readOnlyMode.dark.scss';
+
 /** Wide note to inform user about read only mode */
 export default function ReadOnlyModeNote(): JSX.Element {
     return (
-        <article className="message is-warning is-unselectable">
+        <article className="app-readonly-warning message is-warning is-unselectable">
             <div className="message-header">
                 <p>Note</p>
             </div>
