@@ -58,7 +58,8 @@ const webpackConfig = (env: any): Configuration => ({
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./public/index.html"
+            template: "./public/index.html",
+            favicon: "./public/favicon.svg",
         }),
         new webpack.DefinePlugin({
             "process.env.PRODUCTION": env.production || !env.development,
