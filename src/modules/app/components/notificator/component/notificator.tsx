@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import './notificator.scss';
 import './notificator.dark.scss';
 
+import { NotificationCountToShowHideAll } from '@app/constants';
 import { isStringEmpty } from '@app/utils/common';
-
 import { NotificationItem } from '@app/models/notification';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
@@ -39,7 +39,7 @@ function Notificator({ notifications, hideNotifications, hideAll }: NotificatorP
 
     return (
         <TransitionGroup className="app-notificator">
-            {notifications.length > 1 &&
+            {notifications.length > NotificationCountToShowHideAll &&
                 <CSSTransition
                     key="app-notificator__cleaner"
                     timeout={250}
