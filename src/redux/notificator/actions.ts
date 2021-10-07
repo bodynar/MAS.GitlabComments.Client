@@ -18,11 +18,11 @@ export const addNotifications = (notifications: Array<NotificationItem>, notifyO
 
 /** Hide notification */
 export const hideNotification = (notificationId: string): NotificationEditAction => {
-    return HideNotifications([notificationId]);
+    return hideNotifications([notificationId]);
 };
 
 /** Hide pack of notifications */
-export const HideNotifications = (notificationIds: Array<string>): NotificationEditAction => {
+export const hideNotifications = (notificationIds: Array<string>): NotificationEditAction => {
     return {
         type: HideNotification,
         notificationIds: notificationIds
