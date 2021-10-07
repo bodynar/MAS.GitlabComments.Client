@@ -7,9 +7,17 @@ export type NotificationType =
     ;
 
 /** Notification model */
-export interface NotificationItem {
+export interface NotificationItem extends NotificationHistoryItem {
+    /** Optional delay in seconds */
+    delay?: number;
+
+    /** Should notification be light-colored */
+    isLightColor?: boolean;
+}
+
+export interface NotificationHistoryItem {
     /** Unique identifier, automaticly generated */
-    id?: string;
+    id: string;
 
     /** Type  */
     type: NotificationType;
@@ -17,9 +25,6 @@ export interface NotificationItem {
     /** Displaying message */
     message: string;
 
-    /** Optional delay in seconds */
-    delay?: number;
-
-    /** Should notification be light-colored */
-    isLightColor?: boolean;
+    /** Date of creation */
+    createdAt: Date;
 }

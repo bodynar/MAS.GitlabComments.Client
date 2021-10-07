@@ -1,0 +1,24 @@
+.app-navbar {
+    &__brand {
+        margin: 0 0.25rem 0 0.75rem;
+        align-items: center;
+        display: flex;
+    }
+    &__logo {
+        display: flex;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+
+        transition: 0.25s ease-out background-color;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.125);
+        }
+    }
+    &__name {
+        color: white;
+        margin-left: 0.5rem;
+        font-size: 1.25rem;
+    }
+}

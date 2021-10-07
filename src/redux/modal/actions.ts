@@ -37,18 +37,27 @@ export const closeModal = (closeModalData: ModalCloseData, modalCallback?: Modal
             type: CloseModal,
         });
 
-        if (!isNullOrUndefined(modalCallback)) {
-            if (closeModalData.closeCode === 'cancel' && !isNullOrUndefined(modalCallback?.cancelCallback)) {
-                const customCallback: (modalData: ModalCloseData) => void =
-                    modalCallback?.cancelCallback as (modalData: ModalCloseData) => void;
+        if (isNullOrUndefined(modalCallback)) {
+            return;
+        }
 
-                customCallback(closeModalData);
-            }
-            else if (closeModalData.closeCode === 'save' && !isNullOrUndefined(modalCallback?.saveCallback)) {
-                const customCallback: (modalData: ModalCloseData) => void =
-                    modalCallback?.saveCallback as (modalData: ModalCloseData) => void;
+        if (closeModalData.closeCode === 'cancel' && !isNullOrUndefined(modalCallback?.cancelCallback)) {
+            const customCallback: (modalData: ModalCloseData) => void =
+                modalCallback?.cancelCallback as (modalData: ModalCloseData) => void;
 
-                customCallback(closeModalData);
+            if (isNullOrUndefined(customCallback)) {
+                return;
             }
+
+            customCallback(closeModalData);
+        }
+        else if (closeModalData.closeCode === 'save' && !isNullOrUndefined(modalCallback?.saveCallback)) {
+            const customCallback: (modalData: ModalCloseData) => void =
+                modalCallback?.saveCallback as (modalData: ModalCloseData) => void;
+
+            if (isNullOrUndefined(customCallback)) {
+                return;
+            }
+            customCallback(closeModalData);
         }
     };

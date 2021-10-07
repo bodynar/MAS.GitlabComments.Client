@@ -20,7 +20,7 @@
         cursor: default;
 
         & > *:nth-child(1) {
-            min-width: 7.5%;
+            min-width: 6rem;
         }
         & > *:nth-child(2) {
             width: 85%;
@@ -33,7 +33,7 @@
 
 .app-empty-list-placeholder {
     font-style: italic;
-    color: rgb(0, 0, 0, 0.66);
+    color: rgb(0, 0, 0, 0.75);
     margin: auto;
     white-space: pre-line;
     text-align: center;

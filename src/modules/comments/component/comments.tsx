@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import './comments.scss';
+import './comments.dark.scss';
 
 import { isStringEmpty } from '@app/utils/common';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
-import { AppState } from '@app/redux/rootReducer';
+import { CompositeAppState } from '@app/redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
 import { CommentModuleState } from '@app/redux/comments/types';
 
@@ -70,11 +71,10 @@ function Comments(props: CommentsProps): JSX.Element {
         if (props.state === 'init') {
             props.getComments();
         }
-    }, [props, props.comments]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.state]);
 
-    useEffect(() => {
-        onSearch(searchPattern);
-    }, [onSearch, props.comments, searchPattern]);
+    useEffect(() => onSearch(searchPattern), [onSearch, props.comments, searchPattern]);
 
     const isLoading = useMemo((): boolean => props.state === 'loading', [props.state]);
 
@@ -137,7 +137,7 @@ function Comments(props: CommentsProps): JSX.Element {
 
 /** Comments module main component */
 export default connect(
-    ({ comments, globalState }: AppState) => ({ ...comments, readOnlyMode: globalState.readOnlyMode }),
+    ({ comments, app }: CompositeAppState) => ({ ...comments, readOnlyMode: app.readOnlyMode }),
     {
         addComment: addComment,
         getComments: getAllComments,

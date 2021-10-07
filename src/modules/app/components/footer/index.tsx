@@ -7,7 +7,6 @@ import './footer.scss';
 import { isStringEmpty } from '@app/utils/common';
 
 import Anchor from '@app/sharedComponents/anchor';
-import GithubIcon from '@app/icons/github';
 
 type FooterProps = {
     /** Class for navbar */
@@ -34,7 +33,7 @@ export default function Footer({ className }: FooterProps): JSX.Element {
                     Contact author via mail:
                     <Anchor
                         href="mailto:bodynar@gmail.com?subject=GitlabComments - Question&Body="
-                        icon={{ className: 'gg-mail', position: 'right' }}
+                        icon={{ className: 'envelope', position: 'right' }}
                     />
                 </span>
                 <span className="app-footer__line">
@@ -42,7 +41,7 @@ export default function Footer({ className }: FooterProps): JSX.Element {
                     <Anchor
                         href='https://github.com/bodynar/MAS.GitlabComments.Client/issues/new?assignees=bodynar&labels=&template=bug_report.md&title=%5BBug%5D'
                         className="footer__icon"
-                        icon={{ iconComponent: <GithubIcon /> }}
+                        icon={{ className: 'github', position: 'right' }}
                         target={'_blank'}
                     />
                 </span>

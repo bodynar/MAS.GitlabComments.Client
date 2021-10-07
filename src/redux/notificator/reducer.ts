@@ -1,45 +1,79 @@
-import { generateGuid } from '@app/utils/guid';
-
 import { NotificationItem } from '@app/models/notification';
-import { NotificatorState, NotificatorAction, AddNotification, RemoveAllNotifications, RemoveNotification } from './types';
+import { NotificatorState, NotificatorAction, AddNotification, HideAllNotifications, HideNotification, NotificationAddAction, NotificationEditAction, SetNotificationsBadgeToZero } from './types';
+
+import { removeByKey } from '@app/utils/array';
+import { isNullOrUndefined } from '@app/utils/common';
 
 /** Default state of notification module */
 const defaultState: NotificatorState = {
-    notifications: []
+    notifications: [],
+    history: [],
+    historyBadgeCount: 0,
 };
 
 /** Notification redux reducer function */
 export default function (state: NotificatorState = defaultState, action: NotificatorAction): NotificatorState {
     switch (action.type) {
         case AddNotification: {
-            const addingNotifications: Array<NotificationItem> = action.notifications as Array<NotificationItem>;
+            const addAction: NotificationAddAction = action as NotificationAddAction;
+            if (isNullOrUndefined(addAction)) {
+                // TODO: v2 log error
+                return state;
+            }
+
+            const addingNotifications: Array<NotificationItem> = addAction.notifications as Array<NotificationItem>;
 
             if (addingNotifications.length === 0) {
                 // TOOD: v2 log warning
                 return state;
             }
 
+            const notifications: Array<NotificationItem> = addAction.displayDismissableNotification
+                ? [...state.notifications, ...addAction.notifications]
+                : state.notifications;
+
+            const historyBadgeCount: number = addAction.displayDismissableNotification
+                ? state.historyBadgeCount
+                : state.historyBadgeCount + 1;
+
             return {
-                notifications: [
-                    ...state.notifications,
-                    ...addingNotifications.map(x => ({ ...x, id: generateGuid() })) // menual id will be owerriten
-                ]
+                ...state,
+                history: [
+                    ...state.history,
+                    ...addAction.notifications
+                ],
+                notifications: notifications,
+                historyBadgeCount: historyBadgeCount,
             };
         }
-        case RemoveNotification: {
-            const removingIds: Array<string> = action.notifications as Array<string>;
+        case HideNotification: {
+            const editAction: NotificationEditAction = action as NotificationEditAction;
+            if (isNullOrUndefined(editAction)) {
+                // TODO: v2 log error
+                return state;
+            }
 
-            if (removingIds.length === 0) {
+            if (editAction.notificationIds.length === 0) {
                 // TOOD: v2 log warning
                 return state;
             }
 
             return {
-                notifications: state.notifications.filter(x => !removingIds.includes(x.id as string))
+                ...state,
+                notifications: removeByKey(state.notifications, x => x.id, editAction.notificationIds),
             };
         }
-        case RemoveAllNotifications: {
-            return defaultState;
+        case HideAllNotifications: {
+            return {
+                ...state,
+                notifications: [],
+            };
+        }
+        case SetNotificationsBadgeToZero: {
+            return {
+                ...state,
+                historyBadgeCount: 0,
+            };
         }
         default: {
             return state;

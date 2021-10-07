@@ -1,0 +1,9 @@
+.app--dark {
+    .app-comment {
+        border-color: rgba(255, 255, 255, 0.25);
+
+        &:hover {
+            border-color: rgb(50, 115, 220, 0.75);
+        }
+    }
+}

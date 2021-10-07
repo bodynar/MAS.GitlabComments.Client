@@ -2,20 +2,14 @@
     text-decoration: none;
     color: inherit;
 
-    .icon {
-        &--left {
-            margin-right: 0.125rem;
-        }
-        &--right {
-            margin-left: 0.125rem;
-        }
+    transition: 0.15s ease-in-out color;
+
+    &:not(&--unhoverable):hover {
+        text-decoration: underline;
+        color: #3273dc;
     }
 
-    &:hover {
-        text-decoration: underline;
-
-        .icon i:hover, svg:hover {
-            color: #3273dc;
-        }
+    .app-icon {
+        transition: none;
     }
 }

@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
+import './modalBox.scss';
+import './modalBox.dark.scss';
+
 import { isNullOrUndefined } from "@app/utils/common";
 
-import { AppState } from "@app/redux/rootReducer";
+import { CompositeAppState } from "@app/redux/rootReducer";
 import { closeModal } from "@app/redux/modal/actions";
 import { ModalCallback, ModalCloseData, ModalParams } from "@app/redux/modal/types";
 
@@ -90,7 +93,7 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
     const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(params);
 
     return (
-        <div className='modal is-active'>
+        <div className='app-modal modal is-active'>
             <div className="modal-background"></div>
             <div className="modal-card">
                 <header className="modal-card-head">
@@ -136,11 +139,9 @@ function ModalBox({ isOpen, params, closeModal }: ModalBoxProps): JSX.Element {
  * @throws Modal params is invalid
  */
 export default connect(
-    ({ modal }: AppState) => ({
+    ({ modal }: CompositeAppState) => ({
         isOpen: modal.isOpen,
         params: modal.modalParams as ModalParams
     }),
-    {
-        closeModal: closeModal
-    }
+    { closeModal: closeModal }
 )(ModalBox);

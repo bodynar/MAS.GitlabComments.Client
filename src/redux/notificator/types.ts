@@ -1,25 +1,44 @@
 import { Action } from "@app/redux/types";
 
-import { NotificationItem } from "@app/models/notification";
+import { NotificationHistoryItem, NotificationItem } from "@app/models/notification";
 
 /** Add notification to store */
 export const AddNotification = "notification/add";
 
-/** Remove specified notifications */
-export const RemoveNotification = "notification/remove";
+/** Hide specified notifications */
+export const HideNotification = "notification/hide";
 
 /** Clear all active notifications */
-export const RemoveAllNotifications = "notification/removeAll";
+export const HideAllNotifications = "notification/hideAll";
+
+/** Clear notification badge by setting to zero */
+export const SetNotificationsBadgeToZero = "notification/setBadgeToZero";
 
 /** State of notification module */
 export type NotificatorState = {
-    /** Stored notification */
+    /** Active notifications */
     notifications: Array<NotificationItem>;
+
+    /** Stack of all notifications */
+    history: Array<NotificationHistoryItem>;
+
+    /** Number on history badge */
+    historyBadgeCount: number;
 };
 
+/** Notification store add action */
+export type NotificationAddAction = Action & {
+    /** Payload notifications */
+    notifications: Array<NotificationItem>;
+
+    /** Should notification be rendered as dismisasable block */
+    displayDismissableNotification: boolean;
+};
+
+export type NotificationEditAction = Action & {
+    /** Notification identifiers */
+    notificationIds: Array<string>;
+};
 
 /** Notification store action */
-export type NotificatorAction = Action & {
-    /** Payload notifications or their identifiers */
-    notifications: Array<NotificationItem> | Array<string>;
-};
+export type NotificatorAction = NotificationAddAction | NotificationEditAction | Action;
