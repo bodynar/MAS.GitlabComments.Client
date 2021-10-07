@@ -1,6 +1,6 @@
 {
   "name": "mas.gitlabcomments.client",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Trivial web app to track gitlab popular MR comments. Client part",
   "scripts": {
     "start": "webpack-cli serve --mode=development --env development --open --hot",
