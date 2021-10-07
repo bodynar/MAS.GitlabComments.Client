@@ -13,9 +13,23 @@
             color: white;
         }
 
+        .modal-card-head button[aria-label="close"] {
+            background-color: #fff;
+
+            &::before, &::after {
+                background-color: black
+            }
+        }
+
         .modal-card-body {
             background-color: #585858;
             color: white;
+        }
+
+        .modal-card-foot {
+            .button.is-default {
+                border-color: transparent;
+            }
         }
 
         .field {
