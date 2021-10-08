@@ -5,6 +5,7 @@ import { post } from "@app/utils/api";
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
+import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 import { OpenModal } from "@app/redux/modal/actions";
 import { ModalAction } from "@app/redux/modal/types";
 
@@ -34,6 +35,9 @@ export const deleteComment = (commentId: string): ThunkAction<void, CompositeApp
 
                         post(`api/comments/delete`, commentId)
                             .then(() => {
+                                const { app } = getState();
+                                dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
+
                                 dispatch({
                                     type: deleteCommentAction,
                                     payload: {
