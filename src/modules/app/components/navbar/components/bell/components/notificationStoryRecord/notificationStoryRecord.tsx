@@ -22,7 +22,7 @@ const typeColorMap: Map<NotificationType, string> = new Map([
 
 /** Notification item in history list component */
 export default function NotificationStoryRecord({ item }: NotificationStoryRecordProps): JSX.Element {
-    const createdAt: string = moment(item.createdAt).format('DD MMMM hh:mm');
+    const createdAt: string = moment(item.createdAt).format('DD MMMM HH:mm');
 
     return (
         <li className="notification-story-item">
