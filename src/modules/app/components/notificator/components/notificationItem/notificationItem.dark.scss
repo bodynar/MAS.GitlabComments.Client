@@ -1,0 +1,17 @@
+.app--dark {
+    .app-notification {
+        &.is-danger {
+            background-color: #b12e48;
+        }
+        &.is-success {
+            background-color: #287a44;
+        }
+        &.is-info {
+            background-color: #286c99;
+        }
+        &.is-warning {
+            background-color: #9d8426;
+            color: white;
+        }
+    }
+}
