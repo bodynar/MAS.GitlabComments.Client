@@ -1,38 +1,40 @@
 .app--dark {
     .button:not(.is-outlined) {
-        &.is-danger {
-            background-color: #b12e48;
-            &:hover {
-                background-color: #f03a5f;
+        &:not([disabled]) {
+            &.is-danger {
+                background-color: #b12e48;
+                &:hover {
+                    background-color: #f03a5f;
+                }
             }
-        }
-        &.is-success {
-            background-color: #287a44;
-            &:hover {
-                background-color: #3ec46d;
+            &.is-success {
+                background-color: #287a44;
+                &:hover {
+                    background-color: #3ec46d;
+                }
             }
-        }
-        &.is-info {
-            background-color: #286c99;
+            &.is-info {
+                background-color: #286c99;
 
-            &:hover {
-                background-color: #238cd1;
+                &:hover {
+                    background-color: #238cd1;
+                }
             }
-        }
-        &.is-warning {
-            background-color: #9d8426;
-            color: white;
+            &.is-warning {
+                background-color: #9d8426;
+                color: white;
 
-            &:hover {
-                background-color: #ffdb4a;
-                color: black;
+                &:hover {
+                    background-color: #ffdb4a;
+                    color: black;
+                }
             }
         }
         &.is-default {
             background-color: #6a6a6a;
             color: white;
 
-            &:hover {
+            &:hover:not([disabled]) {
                 background-color: #fff;
                 color: #363636;
             }
