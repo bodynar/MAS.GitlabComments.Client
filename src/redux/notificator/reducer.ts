@@ -29,7 +29,7 @@ export default function (state: NotificatorState = defaultState, action: Notific
             }
 
             const notifications: Array<NotificationItem> = addAction.displayDismissableNotification
-                ? [...state.notifications, ...addAction.notifications]
+                ? [...addAction.notifications, ...state.notifications]
                 : state.notifications;
 
             const historyBadgeCount: number = addAction.displayDismissableNotification
@@ -39,8 +39,8 @@ export default function (state: NotificatorState = defaultState, action: Notific
             return {
                 ...state,
                 history: [
+                    ...addAction.notifications,
                     ...state.history,
-                    ...addAction.notifications
                 ],
                 notifications: notifications,
                 historyBadgeCount: historyBadgeCount,
