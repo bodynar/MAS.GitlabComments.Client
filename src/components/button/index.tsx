@@ -8,7 +8,8 @@ import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/comm
 import { ElementIcon, IconSize } from '@app/sharedComponents/icon/elementIcon';
 
 import { ButtonType } from './types';
-import Icon from '../icon';
+import { ButtonWithIcon } from './components/buttonWithIcon/buttonWithIcon';
+import { SimpleButton } from './components/simpleButton/simpleButton';
 
 type ButtonProps = {
     /** Button displaying text */
@@ -83,80 +84,3 @@ export default function Button(props: ButtonProps): JSX.Element {
         );
     }
 }
-
-type SimpleButtonProps = {
-    /** Button class name*/
-    className: string;
-
-    /** Button click handler */
-    onClick?: () => void;
-
-    /** Button caption */
-    caption?: string;
-
-    /** Disabled attribute value*/
-    disabled?: boolean;
-
-    /** Title on hover */
-    title?: string;
-};
-
-/** Simple button component, without icon */
-const SimpleButton = ({ className, disabled, onClick, caption, title }: SimpleButtonProps): JSX.Element => {
-    return (
-        <button
-            className={className}
-            disabled={disabled}
-            onClick={onClick}
-            title={title}
-        >
-            {caption}
-        </button>
-    );
-};
-
-type ButtonWithIconProps = SimpleButtonProps & {
-    /** Icon configuration */
-    icon: ElementIcon;
-};
-
-/** Button with icon component */
-const ButtonWithIcon = ({ className, disabled, onClick, caption, title, icon }: ButtonWithIconProps): JSX.Element => {
-    const iconPosition = icon.position || 'left';
-
-    const iconClassName: string = isNullOrEmpty(caption)
-        ? icon.className
-        : iconPosition === 'left'
-            ? `${icon.className} app-icon--left`
-            : `${icon.className} app-icon--right`;
-
-    className = isNullOrEmpty(caption)
-        ? `${className} button--icon-only`
-        : className;
-
-    if (iconPosition === 'left') {
-        return (
-            <button
-                className={className}
-                disabled={disabled}
-                onClick={onClick}
-                title={title}
-            >
-                <Icon {...icon} className={iconClassName} />
-                {caption}
-            </button>
-        );
-    }
-
-    return (
-        <button
-            className={className}
-            disabled={disabled}
-            onClick={onClick}
-            title={title}
-        >
-            {caption}
-            <Icon {...icon} className={iconClassName} />
-        </button>
-    );
-};
