@@ -9,7 +9,6 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { OpenModal } from "@app/redux/modal/actions";
 import { ModalAction } from "@app/redux/modal/types";
 
-import { CommentsState } from "../types";
 import { getSetIsLoadingAction, setError } from "../utils";
 
 /**
@@ -18,7 +17,7 @@ import { getSetIsLoadingAction, setError } from "../utils";
  * @returns Show description function that can be called with redux dispatcher
  */
 export const showDescription = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
         getState: () => CompositeAppState,
     ): void => {
         dispatch(getSetIsLoadingAction(true));

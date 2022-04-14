@@ -12,7 +12,6 @@ import { ModalAction } from "@app/redux/modal/types";
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 import { NotificationAddAction } from "@app/redux/notificator/types";
 
-import { CommentsState } from "../types";
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, setError } from "../utils";
 import { updateComment as updateCommentAction } from "../actions";
 
@@ -22,7 +21,7 @@ import { updateComment as updateCommentAction } from "../actions";
  * @returns Update comment function that can be called with redux dispatcher
  */
 export const updateComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
         getState: () => CompositeAppState
     ): void => {
         dispatch(getSetIsLoadingAction(true));
@@ -55,7 +54,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CompositeApp
 const getModalSuccessCallback = (
     commentId: string,
     getState: () => CompositeAppState,
-) => (comment: BaseCommentModel): ThunkAction<void, CommentsState, unknown, ActionWithPayload | NotificationAddAction> => {
+) => (comment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificationAddAction> => {
     return (dispatch): void => {
         dispatch(getSetIsLoadingAction(true));
 

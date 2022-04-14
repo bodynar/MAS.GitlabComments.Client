@@ -12,7 +12,7 @@ import { getErrorNotificationAction } from '@app/redux/notificator/utils';
 import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
 
 import { setModuleState } from './actions';
-import { CommentModuleState, CommentsState } from './types';
+import { CommentModuleState } from './types';
 import { CompositeAppState } from '../rootReducer';
 
 /**
@@ -21,7 +21,7 @@ import { CompositeAppState } from '../rootReducer';
  * @returns Redux store action setting error
  */
 export const setError = (
-    dispatch: ThunkDispatch<CommentsState, unknown, Action>,
+    dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
     getState: () => CompositeAppState
 ) => (error: string): void => {
     const { app } = getState();
@@ -88,8 +88,8 @@ export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel):
  * @returns Modal callback configuration
  */
 export const getCommentModalFormCallbackConfig = (
-    dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | NotificatorAction>,
-    action: (updateComment: BaseCommentModel) => ThunkAction<void, CommentsState, unknown, ActionWithPayload | NotificatorAction>
+    dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | NotificatorAction>,
+    action: (updateComment: BaseCommentModel) => ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificatorAction>
 ): ModalCallback => {
     return {
         saveCallback: (modalData: ModalCloseData): void => {

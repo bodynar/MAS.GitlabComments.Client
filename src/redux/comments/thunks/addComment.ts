@@ -13,7 +13,6 @@ import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 import { NotificationAddAction } from "@app/redux/notificator/types";
 
 import { setModuleState } from "../actions";
-import { CommentsState } from "../types";
 import { addComment as addCommentAction } from "../actions";
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, setError } from "../utils";
 
@@ -22,7 +21,7 @@ import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsL
  * @returns Add comment function that can be called with redux dispatcher
  */
 export const addComment = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ModalAction | ActionWithPayload>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ModalAction | ActionWithPayload>,
         getState: () => CompositeAppState,
     ): void => {
         dispatch({
@@ -50,7 +49,7 @@ export const addComment = (): ThunkAction<void, CompositeAppState, unknown, Acti
  */
 const getModalSuccessCallback = (
     getState: () => CompositeAppState,
-) => (updateComment: BaseCommentModel): ThunkAction<void, CommentsState, unknown, ActionWithPayload | NotificationAddAction> => {
+) => (updateComment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificationAddAction> => {
     return (dispatch): void => {
         dispatch(getSetIsLoadingAction(true));
 

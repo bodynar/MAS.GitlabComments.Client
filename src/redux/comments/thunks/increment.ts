@@ -8,7 +8,6 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { NotificationAddAction } from "@app/redux/notificator/types";
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
-import { CommentsState } from "../types";
 import { getSetIsLoadingAction, setError } from "../utils";
 
 import { increment as incrementAction } from "../actions";
@@ -19,7 +18,7 @@ import { increment as incrementAction } from "../actions";
  * @returns Increment appearance count function that can be called with redux dispatcher
  */
 export const increment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | NotificationAddAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | NotificationAddAction>,
         getState: () => CompositeAppState,
     ): void => {
         dispatch(getSetIsLoadingAction(true));

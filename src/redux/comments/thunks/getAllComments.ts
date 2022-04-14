@@ -6,7 +6,6 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { ActionWithPayload } from "@app/redux/types";
 
 import { setComments } from "../actions";
-import { CommentsState } from "../types";
 import { getSetIsLoadingAction, setError } from "../utils";
 
 /**
@@ -14,7 +13,7 @@ import { getSetIsLoadingAction, setError } from "../utils";
  * @returns Get all comments function that can be called with redux dispatcher
  */
 export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState
     ): void => {
         dispatch(getSetIsLoadingAction(true));
