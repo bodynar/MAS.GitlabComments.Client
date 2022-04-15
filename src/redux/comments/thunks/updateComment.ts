@@ -26,7 +26,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CompositeApp
     ): void => {
         dispatch(getSetIsLoadingAction(true));
 
-        get<BaseCommentModel>(`api/comments/get?commentId=${commentId}`)
+        get<BaseCommentModel>(`/api/comments/get?commentId=${commentId}`)
             .then(comment => {
                 dispatch(getSetIsLoadingAction(false));
 

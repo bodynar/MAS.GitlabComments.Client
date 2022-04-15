@@ -22,7 +22,7 @@ export const showDescription = (commentId: string): ThunkAction<void, CompositeA
     ): void => {
         dispatch(getSetIsLoadingAction(true));
 
-        get<string>(`api/comments/description?commentId=${commentId}`)
+        get<string>(`/api/comments/description?commentId=${commentId}`)
             .then((description: string) => {
                 dispatch(getSetIsLoadingAction(false));
 

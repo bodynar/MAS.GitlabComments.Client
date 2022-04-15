@@ -18,7 +18,7 @@ export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, 
     ): void => {
         dispatch(getSetIsLoadingAction(true));
 
-        get<Array<Comment>>(`api/comments/getAll`)
+        get<Array<Comment>>(`/api/comments/getAll`)
             .then((comments: Array<Comment>) => {
                 dispatch({
                     type: setComments,

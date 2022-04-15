@@ -19,7 +19,7 @@ export const getReadOnlyMode = (): ThunkAction<void, CompositeAppState, unknown,
     ): void => {
         dispatch(getSetIsLoadingAction(true));
 
-        get<boolean>(`api/app/getIsReadOnly`)
+        get<boolean>(`/api/app/getIsReadOnly`)
             .then((readOnlyMode: boolean) => {
                 dispatch({
                     type: SetReadOnlyModeState,
