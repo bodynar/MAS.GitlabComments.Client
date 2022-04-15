@@ -1,4 +1,9 @@
+import React from 'react';
+
 import { isStringEmpty } from "@app/utils/common";
+
+import Comments from "@app/modules/comments/index";
+import Stats from '@app/modules/stats/component/stats';
 
 /** Model for navbar menu items */
 export interface MenuItem {
@@ -13,6 +18,9 @@ export interface MenuItem {
 
     /** Should item be readonly */
     disabled?: boolean;
+
+    /** Which component should be rendered as module */
+    component: JSX.Element;
 }
 
 /** Static navbar menu */
@@ -20,12 +28,13 @@ export const menuItems: Array<MenuItem> = [
     {
         name: 'Comments',
         caption: 'Comments',
-        link: '/'
+        link: '/',
+        component: <Comments />,
     },
-    // {
-    //     name: 'stats',
-    //     caption: 'Statistics',
-    //     link: '/stats/',
-    //     disabled: true
-    // }
+    {
+        name: 'stats',
+        caption: 'Statistics',
+        link: '/stats/',
+        component: <Stats />,
+    }
 ].filter(x => !isStringEmpty(x.name) && !isStringEmpty(x.link));

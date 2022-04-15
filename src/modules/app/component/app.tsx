@@ -1,5 +1,8 @@
 import React from "react";
+
 import { connect } from "react-redux";
+
+import { Route, Routes } from "react-router-dom";
 
 import './app.scss';
 
@@ -10,13 +13,14 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { setTabIsFocused } from "@app/redux/app/action";
 import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 
-import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
 
 import Notificator from '../components/notificator/component/notificator';
 import Navbar from "../components/navbar/component/navbar";
 import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
+
+import { menuItems } from "../components/navbar/menu";
 
 type AppPropsType = {
     /** Store state of app tab focus */
@@ -72,14 +76,23 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: App
 
 // todo: v2 update solution
 function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
-    if (isReadOnly) {
-        return (<>
-            <ReadOnlyModeNote />
-            <Comments />
-        </>);
-    }
 
-    return (<Comments />);
+    return (
+        <>
+            {isReadOnly &&
+                <ReadOnlyModeNote />
+            }
+            <Routes>
+                {menuItems.map(menuItem =>
+                    <Route
+                        key={menuItem.name}
+                        path={menuItem.link}
+                        element={menuItem.component}
+                    />
+                )}
+            </Routes>
+        </>
+    );
 }
 
 export default connect(

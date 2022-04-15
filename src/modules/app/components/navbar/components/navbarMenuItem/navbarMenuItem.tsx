@@ -1,17 +1,15 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 import './navbarMenuItem.scss';
+import './navbarMenuItem.dark.scss';
 
 import { MenuItem } from "../../menu";
-
-import Anchor from "@app/sharedComponents/anchor";
 
 type NavbarMenuItemProps = {
     /** Menu item configuration */
     item: MenuItem;
-
-    /** Is single item. Will affect on styles */
-    isSingle: boolean;
 
     /** Is menu item active */
     isActive: boolean;
@@ -21,23 +19,14 @@ type NavbarMenuItemProps = {
 };
 
 /** Navar menu item component */
-export default function NavbarMenuItem({ item, isActive, onClick, isSingle }: NavbarMenuItemProps): JSX.Element {
-    const href: string | undefined =
-        item.disabled === true || isActive
-            ? undefined
-            : item.link;
-
+export default function NavbarMenuItem({ item, isActive, onClick }: NavbarMenuItemProps): JSX.Element {
     let className = 'app-navbar__item is-unselectable';
 
-    if (isSingle) {
-        className += ' app-navbar__item--single';
-    } else {
-        if (item.disabled === true) {
-            className += ' app-navbar__item--disabled';
-        }
-        if (isActive) {
-            className += ' app-navbar__item--active';
-        }
+    if (item.disabled === true) {
+        className += ' app-navbar__item--disabled';
+    }
+    if (isActive) {
+        className += ' app-navbar__item--active';
     }
 
     const onHrefClick = React.useCallback(
@@ -45,16 +34,26 @@ export default function NavbarMenuItem({ item, isActive, onClick, isSingle }: Na
             if (item.disabled !== true && !isActive) {
                 onClick(item.name);
             }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [isActive, item.disabled, onClick]);
 
-    return (
-        <Anchor
-            className={className}
-            href={href}
-            caption={item.caption}
-            onClick={onHrefClick}
-            disableHovering={true}
-        />
-    );
+    if (item.disabled === true || isActive) {
+        return (
+            <span
+                className={className}
+            >
+                {item.caption}
+            </span>
+        );
+    } else {
+        return (
+            <Link
+                className={className}
+                to={item.link}
+                onClick={onHrefClick}
+            >
+                {item.caption}
+            </Link>
+        );
+    }
 }
