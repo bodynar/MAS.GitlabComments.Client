@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useNavigate } from "react-router-dom";
+
 import { connect } from 'react-redux';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -54,12 +56,15 @@ type CommentsProps = {
 /** Comments module main component */
 function Comments(props: CommentsProps): JSX.Element {
     const searchQueryParam = useQueryParam('q');
+    const navigate = useNavigate();
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
     const [searchPattern, setSearchPattern] = useState<string>(searchQueryParam || '');
 
     const onSearch = useCallback(
         (searchPattern: string) => {
+            const params = new URLSearchParams();
+
             if (isStringEmpty(searchPattern)) {
                 setDisplayedComments([...props.comments]);
             } else {
@@ -67,10 +72,14 @@ function Comments(props: CommentsProps): JSX.Element {
                     [...props.comments].filter(x => x.message.toLowerCase().includes(searchPattern.toLowerCase()));
 
                 setDisplayedComments(filteredComments);
+
+                params.append('q', searchPattern);
             }
 
+            navigate({ search: params.toString() });
+
             setSearchPattern(searchPattern);
-        }, [props.comments]);
+        }, [navigate, props.comments]);
 
     useEffect(() => {
         if (props.state === 'init') {
