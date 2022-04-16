@@ -15,6 +15,9 @@ type SearchProps = {
     /** Search handler */
     onSearch: (searchPattern: string) => void;
 
+    /** Initial search value */
+    defaultValue?: string;
+
     /** 
      * Search type: by typing, starts from minimum characters to search
      * or by clicking on button next to search bar.
@@ -44,7 +47,7 @@ type SearchProps = {
 /** Search component */
 export default function Search(props: SearchProps): JSX.Element {
     const [name] = useState<string>(props.name || generateGuid());
-    const [searchValue, setSearchValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>(props.defaultValue || '');
 
     const searchType = props.searchType || 'byTyping';
 
@@ -89,6 +92,7 @@ export default function Search(props: SearchProps): JSX.Element {
                     <input
                         type='search'
                         name={name}
+                        defaultValue={searchValue}
                         className={inputClassName}
                         disabled={props.disabled}
                         onChange={onChange}
@@ -112,6 +116,7 @@ export default function Search(props: SearchProps): JSX.Element {
                 <input
                     type='search'
                     name={name}
+                    defaultValue={searchValue}
                     className={inputClassName}
                     disabled={props.disabled}
                     onChange={onChange}

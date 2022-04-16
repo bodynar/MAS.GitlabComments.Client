@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { connect } from 'react-redux';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -16,6 +17,8 @@ import { CommentModuleState } from '@app/redux/comments/types';
 
 import Button from '@app/sharedComponents/button';
 import Search from '@app/sharedComponents/search';
+
+import useQueryParam from '@app/hooks/useQueryParam';
 
 import Comment from '../components/comment';
 
@@ -50,8 +53,10 @@ type CommentsProps = {
 
 /** Comments module main component */
 function Comments(props: CommentsProps): JSX.Element {
+    const searchQueryParam = useQueryParam('q');
+
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
-    const [searchPattern, setSearchPattern] = useState<string>('');
+    const [searchPattern, setSearchPattern] = useState<string>(searchQueryParam || '');
 
     const onSearch = useCallback(
         (searchPattern: string) => {
@@ -71,7 +76,7 @@ function Comments(props: CommentsProps): JSX.Element {
         if (props.state === 'init') {
             props.getComments();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.state]);
 
     useEffect(() => onSearch(searchPattern), [onSearch, props.comments, searchPattern]);
@@ -98,6 +103,7 @@ function Comments(props: CommentsProps): JSX.Element {
             <div className="block">
                 <Search
                     caption="Search comment by text.."
+                    defaultValue={searchQueryParam}
                     onSearch={onSearch}
                     minCharsToSearch={0}
                     isLoading={isLoading}
