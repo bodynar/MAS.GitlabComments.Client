@@ -57,6 +57,7 @@ type CommentsProps = {
 function Comments(props: CommentsProps): JSX.Element {
     const searchQueryParam = useQueryParam('q');
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
     const [searchPattern, setSearchPattern] = useState<string>(searchQueryParam || '');
@@ -76,10 +77,10 @@ function Comments(props: CommentsProps): JSX.Element {
                 params.append('q', searchPattern);
             }
 
-            navigate({ search: params.toString() });
+            navigate({ search: params.toString(), hash: location.hash, });
 
             setSearchPattern(searchPattern);
-        }, [navigate, props.comments]);
+        }, [location.hash, navigate, props.comments]);
 
     useEffect(() => {
         if (props.state === 'init') {
