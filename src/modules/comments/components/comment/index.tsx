@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import './comment.scss';
 import './comment.dark.scss';
@@ -8,6 +8,9 @@ import { Comment as CommentModel } from '@app/models/comment';
 import Button from '@app/sharedComponents/button';
 
 type CommentProps = {
+    /** Is comment should be scrolled into view after render */
+    shouldBeScrolledTo: boolean;
+
     /** Displayed comment */
     comment: CommentModel;
 
@@ -31,14 +34,42 @@ type CommentProps = {
 };
 
 /** Comment component */
-export default function Comment({ comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState, isReadOnlyMode }: CommentProps): JSX.Element {
+export default function Comment({ shouldBeScrolledTo, comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState, isReadOnlyMode }: CommentProps): JSX.Element {
     const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
     const onDeleteCommentClick = useCallback(() => { deleteComment(comment.id); }, [comment.id, deleteComment]);
 
+    const [highlighted, setHighlighted] = useState(false);
+
+    const className =
+        'app-comment'
+        + (highlighted ? ' app-comment--highlighted' : '');
+
+    useEffect(() => {
+        if (shouldBeScrolledTo) {
+            const element = document.getElementById(comment.id);
+
+            if (element) {
+                element.scrollIntoView();
+
+                setHighlighted(true);
+
+                const timer = setTimeout(() => {
+                    setHighlighted(false);
+                }, 5 * 1000);
+
+                return () => clearTimeout(timer);
+            }
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        return () => { };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
-        <div className="app-comment">
+        <div className={className} id={comment.id}>
             <div className="app-comment__appearance">
                 <Button
                     type="default"

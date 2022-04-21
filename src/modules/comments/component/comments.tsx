@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { connect } from 'react-redux';
 
@@ -58,6 +58,8 @@ function Comments(props: CommentsProps): JSX.Element {
     const searchQueryParam = useQueryParam('q');
     const navigate = useNavigate();
     const location = useLocation();
+
+    const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : '';
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
     const [searchPattern, setSearchPattern] = useState<string>(searchQueryParam || '');
@@ -137,6 +139,7 @@ function Comments(props: CommentsProps): JSX.Element {
                                         key={comment.id}
                                         {...props}
                                         comment={comment}
+                                        shouldBeScrolledTo={highlightedCommentId === comment.id}
                                         isModuleInLoadingState={props.state == 'loading'}
                                         isReadOnlyMode={props.readOnlyMode === true}
                                     />
