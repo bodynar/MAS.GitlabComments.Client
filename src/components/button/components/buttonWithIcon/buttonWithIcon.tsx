@@ -1,6 +1,4 @@
 
-import React from 'react';
-
 import { isNullOrEmpty } from '@app/utils/common';
 
 import Icon from '@app/sharedComponents/icon';

@@ -48,7 +48,6 @@ export const deleteComment = (commentId: string): ThunkAction<void, CompositeApp
                             })
                             .catch(setError(dispatch, getState));
                     },
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
                     cancelCallback: (): void => { }
                 }
             }

@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback, useEffect } from "react";
 
 import { connect } from "react-redux";
 
@@ -38,16 +38,16 @@ type AppPropsType = {
 
 /** Root app component */
 function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppPropsType): JSX.Element {
-    const onFocus = React.useCallback(() => { setTabIsFocused(true); }, [setTabIsFocused]);
-    const onBlur = React.useCallback(() => { setTabIsFocused(false); }, [setTabIsFocused]);
+    const onFocus = useCallback(() => { setTabIsFocused(true); }, [setTabIsFocused]);
+    const onBlur = useCallback(() => { setTabIsFocused(false); }, [setTabIsFocused]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isNullOrUndefined(readOnlyMode)) {
             getReadOnlyMode();
         }
     }, [getReadOnlyMode, readOnlyMode]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener('focus', onFocus);
         window.addEventListener('blur', onBlur);
 

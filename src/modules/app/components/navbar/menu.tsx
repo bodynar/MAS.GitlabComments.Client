@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { isStringEmpty } from "@app/utils/common";
 
 import Comments from "@app/modules/comments/index";

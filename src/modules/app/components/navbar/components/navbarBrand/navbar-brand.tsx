@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './navbar-brand.scss';
 
 import { GitlabLogoIcon } from '../';

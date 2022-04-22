@@ -10,7 +10,6 @@ export default function useQueryParam(paramKey: string): string | undefined {
     const params = new URLSearchParams(search);
 
     return params.has(paramKey)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ? params.get(paramKey)!
         : undefined;
 }

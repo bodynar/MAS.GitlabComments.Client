@@ -19,7 +19,7 @@ export const ensurePropertyDefined = <T>(object: T, propertyName: string): void 
     const isKeyDefined: boolean = Object.keys(object).includes(propertyName);
 
     if (!isKeyDefined) {
-        throw new Error(`Key \"${propertyName}\" is not defined in object`);
+        throw new Error(`Key "${propertyName}" is not defined in object`);
     }
 };
 
@@ -40,7 +40,7 @@ export const getPropertyValueWithCheck = <TResult>(object: Record<string, unknow
     const value: TResult = object[propertyName] as TResult;
 
     if (throwOnUndefined && isNullOrUndefined(value)) {
-        throw new Error(`Property \"${propertyName}\" is not defined as requested type in object.`);
+        throw new Error(`Property "${propertyName}" is not defined as requested type in object.`);
     }
 
     return value;

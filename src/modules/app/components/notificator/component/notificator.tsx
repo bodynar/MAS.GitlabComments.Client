@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { connect } from 'react-redux';

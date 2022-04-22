@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -41,7 +41,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
     }, [onDarkModeStateChange]);
 
     const onCheckedChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
+        (event: ChangeEvent<HTMLInputElement>): void => {
             onDarkModeStateChange(event.target.checked, false);
         }, [onDarkModeStateChange]);
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { SimpleAnchorProps } from "../../types";
 
 /** Simple anchor component, without icon */

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './icon.scss';
 
 import { IconSize } from './elementIcon';

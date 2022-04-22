@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import './comment.scss';
 import './comment.dark.scss';
@@ -63,7 +63,6 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
             }
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         return () => { };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

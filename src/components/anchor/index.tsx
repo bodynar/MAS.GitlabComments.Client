@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './anchor.scss';
 import './anchor.dark.scss';
 

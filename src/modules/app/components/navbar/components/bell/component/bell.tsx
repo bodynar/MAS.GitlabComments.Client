@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -28,9 +28,9 @@ type BellProps = {
 
 /** Bell with notifications component */
 function Bell(props: BellProps): JSX.Element {
-    const [isListVisible, setListVisibility] = React.useState<boolean>(false);
+    const [isListVisible, setListVisibility] = useState<boolean>(false);
 
-    const onBellClick = React.useCallback(
+    const onBellClick = useCallback(
         () => {
             setListVisibility(!isListVisible);
 
@@ -41,7 +41,7 @@ function Bell(props: BellProps): JSX.Element {
         }, [isListVisible, props.notificationBadge, props.onListOpened]
     );
 
-    const onDocumentClick = React.useCallback(
+    const onDocumentClick = useCallback(
         (event: MouseEvent): void => {
             if (isListVisible) {
                 const target: HTMLElement = event.target as HTMLElement;
@@ -59,7 +59,7 @@ function Bell(props: BellProps): JSX.Element {
             }
         }, [isListVisible]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         document.addEventListener('click', onDocumentClick);
 
         return (): void => document.removeEventListener('click', onDocumentClick);

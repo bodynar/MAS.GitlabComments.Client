@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { connect } from 'react-redux';
 
 import './stats.scss';
@@ -22,6 +20,7 @@ function Stats(props: StatsProps): JSX.Element {
 
 /** Statistics module main component */
 export default connect(
+    // eslint-disable-next-line no-empty-pattern
     ({ }: CompositeAppState) => ({}),
     {
     }

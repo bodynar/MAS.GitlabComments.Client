@@ -1,10 +1,10 @@
+/* eslint-disable no-undef */
 import { BaseResponseWithResult } from "@app/models/response/baseResponse";
 
 import { isNullOrUndefined } from "./common";
 
 /** Request body data */
 type RequestData = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [propertyName: string]: any;
 } | unknown;
 

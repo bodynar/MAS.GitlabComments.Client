@@ -1,4 +1,4 @@
-import React from "react";
+import { useCallback } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -29,7 +29,7 @@ export default function NavbarMenuItem({ item, isActive, onClick }: NavbarMenuIt
         className += ' app-navbar__item--active';
     }
 
-    const onHrefClick = React.useCallback(
+    const onHrefClick = useCallback(
         () => {
             if (item.disabled !== true && !isActive) {
                 onClick(item.name);

@@ -1,6 +1,4 @@
 
-import React from 'react';
-
 import { SimpleButtonProps } from '../../types';
 
 /** Simple button component, without icon */

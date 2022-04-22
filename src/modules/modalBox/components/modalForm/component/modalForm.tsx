@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useState } from 'react';
 
 import './common.style.scss';
 
@@ -40,9 +40,9 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
             .filter(field => field.isRequired === true)
             .map(({ name }) => ({ fieldName: name, isValid: false }));
 
-    const [fieldValidStates, setFieldValidStates] = React.useState<Array<FormFieldValidationState>>(requiredFields);
+    const [fieldValidStates, setFieldValidStates] = useState<Array<FormFieldValidationState>>(requiredFields);
 
-    const setFieldValidState = React.useCallback(
+    const setFieldValidState = useCallback(
         (fieldName: string, isValid: boolean) => {
             if (isValid) {
                 const hasInvalidField: boolean =
