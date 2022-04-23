@@ -1,5 +1,3 @@
-import { Dispatch } from "react";
-
 import { ActionWithPayload } from "@app/redux/types";
 
 import { setSearchQuery as setSearchQueryAction } from "../actions";
@@ -9,8 +7,8 @@ import { setSearchQuery as setSearchQueryAction } from "../actions";
  * @param searchQuery Search text typed by user
  * @returns State updating action
  */
-export const setSearchQuery = (searchQuery: string): (dispatch: any) => void => {
-    return (dispatch: Dispatch<ActionWithPayload>) => dispatch({
+export const setSearchQuery = (searchQuery: string): ActionWithPayload => {
+    return ({
         type: setSearchQueryAction,
         payload: { searchQuery }
     });
