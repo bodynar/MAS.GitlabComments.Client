@@ -10,7 +10,7 @@ import { isNullOrUndefined } from "@app/utils/common";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { setTabIsFocused } from "@app/redux/app/action";
+import { setTabIsFocused } from "@app/redux/app/actions";
 import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 
 import ModalBox from '@app/modules/modalBox';

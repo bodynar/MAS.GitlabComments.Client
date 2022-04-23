@@ -8,7 +8,7 @@ import { isUndefined } from '@app/utils/common';
 import { appStorage } from '@app/utils/localStorage';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
-import { setDarkModeState } from '@app/redux/app/action';
+import { setDarkModeState } from '@app/redux/app/actions';
 
 import Icon from '@app/sharedComponents/icon';
 

@@ -70,7 +70,7 @@ function Comments(props: CommentsProps): JSX.Element {
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(
         props.comments.filter(x =>
-            x.message.toLowerCase().includes((props.searchQuery || searchQueryParam)!.toLocaleLowerCase())
+            x.message.toLowerCase().includes((props.searchQuery || searchQueryParam).toLocaleLowerCase())
         )
     );
 
