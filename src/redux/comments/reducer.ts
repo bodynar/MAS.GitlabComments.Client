@@ -6,12 +6,13 @@ import { isNullOrEmpty, isNullOrUndefined } from "@app/utils/common";
 import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { CommentModuleState, CommentsState } from "./types";
-import { addComment, deleteComment, increment, setComments, setModuleState, updateComment } from "./actions";
+import { addComment, deleteComment, increment, setComments, setModuleState, setSearchQuery, updateComment } from "./actions";
 
 /** Initial comment module state */
 const initialState: CommentsState = {
     state: 'init',
     comments: [],
+    searchQuery: '',
 };
 
 /** Comment module reducer function */
@@ -107,6 +108,14 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             return {
                 ...state,
                 comments: state.comments.filter(comment => comment.id !== commentId)
+            };
+        }
+        case setSearchQuery: {
+            const searchQuery: string = getPropertyValueWithCheck(action.payload, 'searchQuery', false) || '';
+
+            return {
+                ...state,
+                searchQuery
             };
         }
         default:

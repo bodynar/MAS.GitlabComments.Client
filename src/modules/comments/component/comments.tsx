@@ -9,12 +9,13 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './comments.scss';
 import './comments.dark.scss';
 
-import { isStringEmpty } from '@app/utils/common';
+import { isNullOrEmpty, isStringEmpty } from '@app/utils/common';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
+import { setSearchQuery } from '@app/redux/comments/actions/setSearchQuery';
 import { CommentModuleState } from '@app/redux/comments/types';
 
 import Button from '@app/sharedComponents/button';
@@ -34,6 +35,9 @@ type CommentsProps = {
     /** Current module state */
     state: CommentModuleState;
 
+    /** Current search query */
+    searchQuery: string;
+
     /** Add comment in modal box */
     addComment: () => void;
 
@@ -51,18 +55,24 @@ type CommentsProps = {
 
     /** Delete comment by it's identifier */
     deleteComment: (commentId: string) => void;
+
+    /** Save current search query */
+    setSearchQuery: (searchQuery: string) => void;
 };
 
 /** Comments module main component */
 function Comments(props: CommentsProps): JSX.Element {
-    const searchQueryParam = useQueryParam('q');
+    const searchQueryParam = useQueryParam('q') || '';
     const navigate = useNavigate();
     const location = useLocation();
 
     const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : '';
 
-    const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
-    const [searchPattern, setSearchPattern] = useState<string>(searchQueryParam || '');
+    const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(
+        props.comments.filter(x =>
+            x.message.toLowerCase().includes((props.searchQuery || searchQueryParam)!.toLocaleLowerCase())
+        )
+    );
 
     const onSearch = useCallback(
         (searchPattern: string) => {
@@ -81,7 +91,8 @@ function Comments(props: CommentsProps): JSX.Element {
 
             navigate({ search: params.toString(), hash: location.hash, });
 
-            setSearchPattern(searchPattern);
+            props.setSearchQuery(searchPattern);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [location.hash, navigate, props.comments]);
 
     useEffect(() => {
@@ -91,7 +102,14 @@ function Comments(props: CommentsProps): JSX.Element {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.state]);
 
-    useEffect(() => onSearch(searchPattern), [onSearch, props.comments, searchPattern]);
+    useEffect(() => {
+        if (isNullOrEmpty(props.searchQuery) && !isNullOrEmpty(searchQueryParam)) {
+            props.setSearchQuery(searchQueryParam!);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    
+    useEffect(() => onSearch(props.searchQuery), [onSearch, props.comments, props.searchQuery]);
 
     const isLoading = useMemo((): boolean => props.state === 'loading', [props.state]);
 
@@ -115,7 +133,7 @@ function Comments(props: CommentsProps): JSX.Element {
             <div className="block">
                 <Search
                     caption="Search comment by text.."
-                    defaultValue={searchQueryParam}
+                    defaultValue={props.searchQuery}
                     onSearch={onSearch}
                     minCharsToSearch={0}
                     isLoading={isLoading}
@@ -163,7 +181,8 @@ export default connect(
         updateComment: updateComment,
         increment: increment,
         showDescription: showDescription,
-        deleteComment: deleteComment
+        deleteComment: deleteComment,
+        setSearchQuery: setSearchQuery,
     }
 )(Comments);
 

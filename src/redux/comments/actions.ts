@@ -15,3 +15,7 @@ export const deleteComment = "comments/deleteComment";
 
 /** Set comments module state action type */
 export const setModuleState = "comments/setModuleState";
+
+/** Set comments module search query action type */
+export const setSearchQuery = "comments/setSearchQuery";
+

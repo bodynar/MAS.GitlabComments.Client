@@ -14,4 +14,7 @@ export type CommentsState = {
 
     /** Loaded comments */
     comments: Array<Comment>;
+
+    /** Current search query */
+    searchQuery: string;
 };
