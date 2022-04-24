@@ -1,18 +1,6 @@
 import { StatsRecord } from "@app/models/response/statsRecord";
 
 /**
- * @constant
- * Store fetched stats data
- */
-export const SetStatsData = "stats/setData";
-
-/**
- * @constant
- * Store selected stats filter
- */
-export const SetStatsFilters = "stats/setFilters";
-
-/**
  * @enum
  * Type of selected date range to filter records
 */
@@ -36,10 +24,10 @@ export type StatsFilter = {
     type: DateRange;
 
     /** Left date-boundary */
-    leftDate: Date;
+    leftDate?: Date;
 
     /** Right date-boundary */
-    rightDate: Date;
+    rightDate?: Date;
 };
 
 /** Statistics module state */
