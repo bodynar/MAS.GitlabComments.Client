@@ -1,11 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { connect } from 'react-redux';
 
 import './bell.scss';
 import './bell.dark.scss';
-
-import { isNull, isNullOrUndefined } from '@app/utils/common';
 
 import { NotificationHistoryItem } from '@app/models/notification';
 
@@ -14,6 +12,7 @@ import { setNotificationsBadgeToZero } from '@app/redux/notificator/actions';
 
 import BellList from '../components/bellList/bellList';
 import Icon from '@app/sharedComponents/icon';
+import { useComponentOutsideClick } from '@app/hooks/useComponentOutsideClick';
 
 type BellProps = {
     /** All notifications in current session */
@@ -41,29 +40,11 @@ function Bell(props: BellProps): JSX.Element {
         }, [isListVisible, props.notificationBadge, props.onListOpened]
     );
 
-    const onDocumentClick = useCallback(
-        (event: MouseEvent): void => {
-            if (isListVisible) {
-                const target: HTMLElement = event.target as HTMLElement;
-
-                if (isNullOrUndefined(target)) {
-                    return;
-                }
-
-                const rootBellComponent: Element | null =
-                    target.closest('.app-bell');
-
-                if (isNull(rootBellComponent)) {
-                    setListVisibility(false);
-                }
-            }
-        }, [isListVisible]);
-
-    useEffect(() => {
-        document.addEventListener('click', onDocumentClick);
-
-        return (): void => document.removeEventListener('click', onDocumentClick);
-    }, [onDocumentClick]);
+    useComponentOutsideClick(
+        '.app-bell',
+        isListVisible,
+        () => setListVisibility(false),
+    );
 
     const shouldBadgeBeVisible: boolean = props.notificationBadge > 0;
     const badgeNumber: string = props.notificationBadge > 9 ? '9+' : `${props.notificationBadge}`;

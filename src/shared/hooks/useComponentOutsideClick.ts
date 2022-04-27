@@ -1,5 +1,6 @@
-import { isNull, isNullOrUndefined } from "@app/utils/common";
 import { DependencyList, useCallback, useEffect } from "react";
+
+import { isNull, isNullOrUndefined } from "@app/utils/common";
 
 /**
  * Subscribe to component outside click
