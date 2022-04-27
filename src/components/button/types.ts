@@ -1,4 +1,4 @@
-import { ElementIcon } from "../icon/elementIcon";
+import { ElementIcon } from "../types";
 
 /** Button types according to Bulma framework */
 export type ButtonType =

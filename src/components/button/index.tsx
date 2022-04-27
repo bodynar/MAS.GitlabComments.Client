@@ -3,7 +3,7 @@ import './button.dark.scss';
 
 import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/common';
 
-import { ElementIcon, IconSize } from '@app/sharedComponents/icon/elementIcon';
+import { ElementIcon, IconSize } from '../types';
 
 import { ButtonType } from './types';
 import { ButtonWithIcon } from './components/buttonWithIcon/buttonWithIcon';

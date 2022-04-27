@@ -8,12 +8,12 @@ import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 import { useComponentOutsideClick } from '@app/hooks/useComponentOutsideClick';
 
 import { SelectableItem } from './types';
-import { BaseElementProps } from '../type';
+import { BaseElementProps } from '../types';
 
 import DropdownItem from './components/dropdownItem/dropdownItem';
 import DropdownLabel from './components/dropdownLabel/dropdownLabel';
 
-interface DropdownProps extends BaseElementProps {
+type DropdownProps = BaseElementProps & {
     /** Items which can be selected */
     items: Array<SelectableItem>;
 

@@ -3,7 +3,8 @@ import './anchor.dark.scss';
 
 import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
-import { ElementIcon } from '@app/sharedComponents/icon/elementIcon';
+import { ElementIcon } from '../types';
+
 import { SimpleAnchor } from './components/simpleAnchor/simpleAnchor';
 import { AnchorWithIcon } from './components/anchorWithIcon/anchorWithIcon';
 

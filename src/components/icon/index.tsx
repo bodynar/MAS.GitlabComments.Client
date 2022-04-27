@@ -1,9 +1,9 @@
 import './icon.scss';
 
-import { IconSize } from './elementIcon';
+import { IconSize } from '../types';
 
 /** Icon component props */
-interface IconProps {
+type IconProps = {
     /**
      * Class name for icon.
      * Used to display icon from bootstrap-icons
