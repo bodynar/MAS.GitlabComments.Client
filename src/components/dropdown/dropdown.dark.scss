@@ -1,0 +1,43 @@
+.app--dark {
+    .app-dropdown {
+        span.dropdown-item {
+            color: gray;
+            text-align: center;
+        }
+
+        &__label {
+            background-color: #585858;
+            color: white;
+
+            &--default span {
+                color: #d1cfcf;
+            }
+
+            .app-icon {
+                color: rgb(201, 201, 201);
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+
+        .dropdown-content {
+            background-color: rgb(88, 88, 88);
+        }
+
+        &-item {
+            color: white;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.35);
+            }
+            &:active {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+
+            &.is-active {
+                background-color: #234f95;
+                color: #fff;
+            }
+        }
+    }
+}

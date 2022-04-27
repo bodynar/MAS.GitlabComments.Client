@@ -1,6 +1,7 @@
 import { MouseEvent, useCallback, useId, useState } from 'react';
 
 import './dropdown.scss';
+import './dropdown.dark.scss';
 
 import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
