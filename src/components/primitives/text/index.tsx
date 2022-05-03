@@ -9,9 +9,7 @@ import TextWithLabel from './components/textWithLabel/textWithLabel';
 import TextWithoutLabel from './components/textWithoutLabel/textWithoutLabel';
 
 /** Text input conponent props type */
-export type TextProps = BaseInputElementProps<string> & {
-
-};
+export type TextProps = BaseInputElementProps<string>;
 
 /** Textual input component */
 const Text = (props: TextProps): JSX.Element => {

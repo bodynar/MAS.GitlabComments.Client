@@ -31,6 +31,9 @@ export type BaseInputElementProps<TValue> = BaseElementProps & {
 
     /** Style. Colors the border */
     style?: InputColor;
+
+    /** Name of element. Required for form elements */
+    name?: string;
 };
 
 /** Input label configuration */
