@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
 import './app.scss';
+import '../../../shared/globalStyles.scss';
 
 import { isNullOrUndefined } from "@app/utils/common";
 
