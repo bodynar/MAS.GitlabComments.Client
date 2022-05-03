@@ -9,7 +9,8 @@
     transition-property: color, background-color;
 
     &__navbar {
-        min-height: 10%;
+        height: 10%;
+        max-height: 3.25rem;
     }
     &__content {
         flex-grow: 1;
