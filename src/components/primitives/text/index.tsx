@@ -1,12 +1,9 @@
-import './text.scss';
-import './text.dark.scss';
-
 import { isNullOrUndefined } from '@app/utils/common';
 
 import { BaseInputElementProps } from '../types';
 
-import TextWithLabel from './components/textWithLabel/textWithLabel';
-import TextWithoutLabel from './components/textWithoutLabel/textWithoutLabel';
+import TextWithLabel from './components/textWithLabel';
+import TextWithoutLabel from './components/textWithoutLabel';
 
 /** Text input conponent props type */
 export type TextProps = BaseInputElementProps<string>;
