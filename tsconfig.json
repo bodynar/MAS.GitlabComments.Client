@@ -41,7 +41,8 @@
 				"src/modules/*"
 			],
 			"@app/sharedComponents/*": [
-				"src/components/*"
+				"src/components/*",
+				"src/components/primitives/*"
 			],
 			"@app/icons/*": [
 				"src/icons/*"
