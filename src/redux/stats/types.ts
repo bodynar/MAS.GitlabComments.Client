@@ -5,17 +5,19 @@ import { StatsRecord } from "@app/models/response/statsRecord";
  * Type of selected date range to filter records
 */
 export enum DateRange {
-    /** Manual date selecting */
-    Custom = 0,
+    None = "",
 
     /** Last week */
-    Week = 1,
+    Week = "Last week",
 
     /** Last month */
-    Month = 2,
+    Month = "Last month",
 
     /** Last year */
-    Year = 3,
+    Year = "Last year",
+
+    /** Manual date selecting */
+    Manual = "Custom",
 }
 
 /** Statistics filter data */
@@ -36,5 +38,5 @@ export type StatsState = {
     data: Array<StatsRecord>;
 
     /** Current stats module filter */
-    filter?: StatsFilter;
+    filter: StatsFilter;
 };

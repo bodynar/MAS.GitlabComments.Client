@@ -3,11 +3,14 @@ import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { ActionWithPayload } from "../types";
 import { SetStatsData, SetStatsFilters } from "./actions";
-import { StatsFilter, StatsState } from "./types";
+import { DateRange, StatsFilter, StatsState } from "./types";
 
 /** Default stats module state */
 const defaultState: StatsState = {
     data: [],
+    filter: {
+        type: DateRange.None
+    }
 };
 
 /**
