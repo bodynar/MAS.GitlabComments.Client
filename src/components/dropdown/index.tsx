@@ -69,6 +69,7 @@ const Dropdown = ({ value, items, onSelect, caption, deselectable, className, hi
             }
 
             if (value === item) {
+                setListVisible(false);
                 return;
             }
 
