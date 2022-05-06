@@ -1,4 +1,4 @@
-import { ElementIcon } from "../icon/elementIcon";
+import { ElementIcon } from "../types";
 
 export type SimpleAnchorProps = {
     /** Link destination */
