@@ -6,7 +6,7 @@ import { isNullOrUndefined } from "./common";
 /** Request body data */
 type RequestData = {
     [propertyName: string]: any;
-} | unknown;
+};
 
 /** Map of http status codes to errors */
 const statusCodesErrorsMap = new Map<number, string>([
