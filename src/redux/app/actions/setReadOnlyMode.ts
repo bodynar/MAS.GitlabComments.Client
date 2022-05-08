@@ -7,7 +7,7 @@ import { SetReadOnlyModeState } from "../actions";
  * @param readOnlyMode Is app should be in read only state
  * @returns Redux action to update state
  */
-export const getSetReadOnlyMode = (readOnlyMode: boolean): ActionWithPayload => ({
+export const getSetReadOnlyModeAction = (readOnlyMode: boolean): ActionWithPayload => ({
     type: SetReadOnlyModeState,
     payload: { readOnlyMode },
 });

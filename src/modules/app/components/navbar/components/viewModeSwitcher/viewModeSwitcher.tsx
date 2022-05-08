@@ -8,7 +8,7 @@ import { isUndefined } from '@app/utils/common';
 import { appStorage } from '@app/utils/localStorage';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
-import { getSetDarkModeState } from '@app/redux/app/actions/setDarkModeState';
+import { getSetDarkModeStateAction } from '@app/redux/app/actions/setDarkModeState';
 
 import Icon from '@app/sharedComponents/icon';
 
@@ -68,7 +68,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
 
 export default connect(
     ({ app }: CompositeAppState) => ({ isDarkMode: app.isDarkMode }),
-    { setDarkModeState: getSetDarkModeState }
+    { setDarkModeState: getSetDarkModeStateAction }
 )(ViewModeSwitcher);
 
 /**

@@ -4,7 +4,7 @@ import { getErrorNotificationAction } from "../notificator/utils";
 import { CompositeAppState } from "../rootReducer";
 import { Action } from "../types";
 
-import { getSetAppIsLoading } from "./actions/setAppIsLoading";
+import { getSetAppIsLoadingAction } from "./actions/setAppIsLoading";
 
 /**
  * Create dispatch-based action to set app error state
@@ -19,5 +19,5 @@ export const setError = (
 
     dispatch(getErrorNotificationAction(error, app.isCurrentTabFocused));
 
-    dispatch(getSetAppIsLoading(false));
+    dispatch(getSetAppIsLoadingAction(false));
 };

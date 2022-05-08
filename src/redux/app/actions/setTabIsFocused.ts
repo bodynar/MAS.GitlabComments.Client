@@ -7,7 +7,7 @@ import { SetTabIsFocused } from "../actions";
  * @param isTabFocused Is tab currently in focus
  * @returns Redux action to update state
  */
-export const getSetTabIsFocused = (isTabFocused: boolean): ActionWithPayload => ({
+export const getSetTabIsFocusedAction = (isTabFocused: boolean): ActionWithPayload => ({
     type: SetTabIsFocused,
     payload: {
         isTabFocused

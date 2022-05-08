@@ -7,7 +7,7 @@ import { SetIsAppLoadingState } from "../actions";
  * @param loading Is app in loading state 
  * @returns Redux action to update state
  */
-export const getSetAppIsLoading = (loading: boolean): ActionWithPayload => ({
+export const getSetAppIsLoadingAction = (loading: boolean): ActionWithPayload => ({
     type: SetIsAppLoadingState,
     payload: { loading },
 });

@@ -7,7 +7,7 @@ import { SetDarkModeState } from "../actions";
  * @param isDarkMode 
  * @returns Redux action to update state
  */
-export const getSetDarkModeState = (isDarkMode: boolean): ActionWithPayload => ({
+export const getSetDarkModeStateAction = (isDarkMode: boolean): ActionWithPayload => ({
     type: SetDarkModeState,
     payload: {
         isDarkMode
