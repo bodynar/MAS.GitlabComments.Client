@@ -1,12 +1,12 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { get } from "@app/utils/api";
+import { get } from "@app/utils/delayedApi";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 import { ActionWithPayload } from "@app/redux/types";
 
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-import { setError } from "@app/redux/app/utils";
+import { setErrorWithDelay } from "@app/redux/app/utils";
 
 import { Comment } from "@app/models/comment";
 
@@ -33,7 +33,7 @@ export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, 
                 dispatch(getSetModuleStateAction("idle"));
             })
             .catch(() => {
-                setError(dispatch, getState);
+                setErrorWithDelay(dispatch, getState);
                 dispatch(getSetModuleStateAction("idle"));
             });
     };

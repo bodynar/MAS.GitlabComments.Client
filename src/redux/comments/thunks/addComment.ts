@@ -1,13 +1,13 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/api";
+import { post } from "@app/utils/delayedApi";
 
 import { BaseCommentModel } from "@app/models/comment";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { setError } from "@app/redux/app/utils";
+import { setErrorWithDelay } from "@app/redux/app/utils";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
 import { ModalAction } from "@app/redux/modal/types";
@@ -55,6 +55,6 @@ const getModalSuccessCallback = (
                 dispatch(getAddCommentAction(newComment, commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })
-            .catch(setError(dispatch, getState));
+            .catch(setErrorWithDelay(dispatch, getState));
     };
 };

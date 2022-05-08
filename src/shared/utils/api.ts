@@ -4,12 +4,12 @@ import { BaseResponseWithResult } from "@app/models/response/baseResponse";
 import { isNullOrUndefined } from "./common";
 
 /** Request body data */
-type RequestData = {
+export type RequestData = {
     [propertyName: string]: any;
 } | string;
 
 /** Map of http status codes to errors */
-const statusCodesErrorsMap = new Map<number, string>([
+export const statusCodesErrorsMap = new Map<number, string>([
     [404, "Server is not reachable."],
     [415, "Server request failed: data is not valid."]
 ]);
@@ -59,7 +59,7 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
  * @param requestParams Request parameters
  * @returns Fetch result: error message or requested typed result
  */
-const safeFetch = async <TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
+export const safeFetch = async <TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
     try {
         const response: Response = await fetch(uri, requestParams);
 
@@ -85,7 +85,7 @@ const safeFetch = async <TResult>(uri: string, requestParams: RequestInit): Prom
  * @param response Http response
  * @returns Error message to display
  */
-const getErrorText = (response: Response): string => {
+export const getErrorText = (response: Response): string => {
     if (response.ok) {
         throw new Error("Response is ok, but error handler called.");
     }

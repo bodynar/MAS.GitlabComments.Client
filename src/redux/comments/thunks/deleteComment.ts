@@ -1,12 +1,12 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/api";
+import { post } from "@app/utils/delayedApi";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-import { setError } from "@app/redux/app/utils";
+import { setErrorWithDelay } from "@app/redux/app/utils";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
@@ -41,7 +41,7 @@ export const deleteComment = (commentId: string): ThunkAction<void, CompositeApp
                             dispatch(getDeleteCommentAction(commentId));
                             dispatch(getSetAppIsLoadingAction(false));
                         })
-                        .catch(setError(dispatch, getState));
+                        .catch(setErrorWithDelay(dispatch, getState));
                 },
                 cancelCallback: (): void => { }
             }

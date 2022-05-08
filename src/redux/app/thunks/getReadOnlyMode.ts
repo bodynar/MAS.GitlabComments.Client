@@ -1,13 +1,13 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { get } from "@app/utils/api";
+import { get } from "@app/utils/delayedApi";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
 import { getSetReadOnlyModeAction } from "../actions/setReadOnlyMode";
 import { getSetAppIsLoadingAction } from "../actions/setAppIsLoading";
-import { setError } from "../utils";
+import { setErrorWithDelay } from "../utils";
 
 /**
  * Get application read only mode state
@@ -25,5 +25,5 @@ export const getReadOnlyMode = (): ThunkAction<void, CompositeAppState, unknown,
 
                 dispatch(getSetAppIsLoadingAction(false));
             })
-            .catch(setError(dispatch, getState));
+            .catch(setErrorWithDelay(dispatch, getState));
     };

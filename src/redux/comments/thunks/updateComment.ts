@@ -2,7 +2,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { BaseCommentModel } from "@app/models/comment";
 
-import { get, post } from "@app/utils/api";
+import { get, post } from "@app/utils/delayedApi";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
@@ -12,7 +12,7 @@ import { ModalAction } from "@app/redux/modal/types";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
-import { setError } from "@app/redux/app/utils";
+import { setErrorWithDelay } from "@app/redux/app/utils";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
@@ -41,7 +41,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CompositeApp
                     ...modalParams, callback: { ...modalCallback },
                 }));
             })
-            .catch(setError(dispatch, getState));
+            .catch(setErrorWithDelay(dispatch, getState));
     };
 
 /**
@@ -65,6 +65,6 @@ const getModalSuccessCallback = (
                 dispatch(getUpdateCommentAction(comment, commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })
-            .catch(setError(dispatch, getState));
+            .catch(setErrorWithDelay(dispatch, getState));
     };
 };
