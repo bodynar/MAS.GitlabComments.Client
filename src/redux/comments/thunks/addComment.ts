@@ -7,14 +7,17 @@ import { BaseCommentModel } from "@app/models/comment";
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
+import { setError } from "@app/redux/app/utils";
+import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
+
 import { ModalAction } from "@app/redux/modal/types";
 import { OpenModal } from "@app/redux/modal/actions";
+
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 import { NotificationAddAction } from "@app/redux/notificator/types";
 
-import { setModuleState } from "../actions";
-import { addComment as addCommentAction } from "../actions";
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig, getSetIsLoadingAction, setError } from "../utils";
+import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
+import { getAddCommentAction } from "../actions/addComment";
 
 /**
  * Add comment via modal form
@@ -24,11 +27,6 @@ export const addComment = (): ThunkAction<void, CompositeAppState, unknown, Acti
     (dispatch: ThunkDispatch<CompositeAppState, unknown, ModalAction | ActionWithPayload>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch({
-            type: setModuleState,
-            payload: { nextState: 'showModal' }
-        } as ActionWithPayload);
-
         const modalParams = getCommentModalFormConfig();
         const modalSuccessCallback = getModalSuccessCallback(getState);
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
@@ -49,27 +47,17 @@ export const addComment = (): ThunkAction<void, CompositeAppState, unknown, Acti
  */
 const getModalSuccessCallback = (
     getState: () => CompositeAppState,
-) => (updateComment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificationAddAction> => {
+) => (newComment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificationAddAction> => {
     return (dispatch): void => {
-        dispatch(getSetIsLoadingAction(true));
+        dispatch(getSetAppIsLoadingAction(true));
 
-        post<string>(`api/comments/add`, updateComment)
-            .then((id: string) => {
+        post<string>(`api/comments/add`, newComment)
+            .then((commentId: string) => {
                 const { app } = getState();
+
                 dispatch(getSuccessNotificationAction('Comment was added successfully', app.isCurrentTabFocused));
-
-                dispatch({
-                    type: addCommentAction,
-                    payload: {
-                        comment: {
-                            ...updateComment,
-                            appearanceCount: 1,
-                            id: id,
-                        }
-                    }
-                });
-
-                dispatch(getSetIsLoadingAction(false));
+                dispatch(getAddCommentAction(newComment, commentId));
+                dispatch(getSetAppIsLoadingAction(false));
             })
             .catch(setError(dispatch, getState));
     };

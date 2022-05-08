@@ -8,9 +8,10 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { NotificationAddAction } from "@app/redux/notificator/types";
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
-import { getSetIsLoadingAction, setError } from "../utils";
+import { setError } from "@app/redux/app/utils";
+import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
-import { increment as incrementAction } from "../actions";
+import { getIncrementAction } from "../actions/increment";
 
 /**
  * Increment appearance count in specified comment
@@ -21,21 +22,15 @@ export const increment = (commentId: string): ThunkAction<void, CompositeAppStat
     (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | NotificationAddAction>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch(getSetIsLoadingAction(true));
+        dispatch(getSetAppIsLoadingAction(true));
 
         post(`api/comments/increment`, commentId)
             .then(() => {
                 const { app } = getState();
+
                 dispatch(getSuccessNotificationAction('Comment appearence count was updated successfully', app.isCurrentTabFocused));
-
-                dispatch({
-                    type: incrementAction,
-                    payload: {
-                        commentId: commentId
-                    }
-                });
-
-                dispatch(getSetIsLoadingAction(false));
+                dispatch(getIncrementAction(commentId));
+                dispatch(getSetAppIsLoadingAction(false));
             })
             .catch(setError(dispatch, getState));
     };
