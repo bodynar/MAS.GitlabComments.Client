@@ -4,7 +4,7 @@ import { ModalFormConfiguration, ModalFormItemData } from "@app/modules/modalBox
 
 /** Type of displaying modal */
 export type ModalType =
-    'info' /** Display some textual information */
+    | 'info' /** Display some textual information */
     | 'form' /** Display some form to fill */
     | 'confirm' /** Display modal with confirm message and 2 optional buttons */
     ;

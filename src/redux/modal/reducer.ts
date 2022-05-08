@@ -1,6 +1,7 @@
 import { isNullOrUndefined } from "@app/utils/common";
+import { getPropertyValueWithCheck } from "@app/utils/object";
 
-import { ModalAction, ModalState } from "./types";
+import { ModalAction, ModalParams, ModalState } from "./types";
 import { OpenModal, CloseModal } from './actions';
 
 /** Initial state of modal module */
@@ -16,7 +17,9 @@ const initialState: ModalState = {
 export default function (state = initialState, action: ModalAction): ModalState {
     switch (action.type) {
         case OpenModal: {
-            if (isNullOrUndefined(action.params)) {
+            const modalParams: ModalParams = getPropertyValueWithCheck(action, 'params', false);
+
+            if (isNullOrUndefined(modalParams)) {
                 // TODO: v2 log warning
                 return state;
             }
@@ -24,7 +27,7 @@ export default function (state = initialState, action: ModalAction): ModalState 
             return {
                 ...state,
                 isOpen: true,
-                modalParams: action.params
+                modalParams
             };
         }
         case CloseModal: {
