@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -15,7 +15,7 @@ import { Comment as CommentModel } from '@app/models/comment';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
-import { setSearchQuery } from '@app/redux/comments/actions/setSearchQuery';
+import { getSetSearchQueryAction } from '@app/redux/comments/actions/setSearchQuery';
 import { CommentModuleState } from '@app/redux/comments/types';
 
 import Button from '@app/sharedComponents/button';
@@ -111,8 +111,6 @@ function Comments(props: CommentsProps): JSX.Element {
     
     useEffect(() => onSearch(props.searchQuery), [onSearch, props.comments, props.searchQuery]);
 
-    const isLoading = useMemo((): boolean => props.state === 'loading', [props.state]);
-
     const noCommentsMessage: string =
         props.comments.length === 0
             ? 'No comments'
@@ -125,7 +123,6 @@ function Comments(props: CommentsProps): JSX.Element {
                 <Button
                     caption="Add comment"
                     type="success"
-                    isLoading={isLoading}
                     onClick={props.addComment}
                     disabled={props.readOnlyMode}
                 />
@@ -136,7 +133,6 @@ function Comments(props: CommentsProps): JSX.Element {
                     defaultValue={props.searchQuery}
                     onSearch={onSearch}
                     minCharsToSearch={0}
-                    isLoading={isLoading}
                 />
             </div>
             <div className="app-comments__items">
@@ -158,7 +154,6 @@ function Comments(props: CommentsProps): JSX.Element {
                                         {...props}
                                         comment={comment}
                                         shouldBeScrolledTo={highlightedCommentId === comment.id}
-                                        isModuleInLoadingState={props.state == 'loading'}
                                         isReadOnlyMode={props.readOnlyMode === true}
                                     />
                                 </CSSTransition>
@@ -182,7 +177,7 @@ export default connect(
         increment: increment,
         showDescription: showDescription,
         deleteComment: deleteComment,
-        setSearchQuery: setSearchQuery,
+        setSearchQuery: getSetSearchQueryAction,
     }
 )(Comments);
 

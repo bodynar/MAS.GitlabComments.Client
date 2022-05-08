@@ -14,9 +14,6 @@ type CommentProps = {
     /** Displayed comment */
     comment: CommentModel;
 
-    /** Is module in loading state. Should action buttons be disabled */
-    isModuleInLoadingState: boolean;
-
     /** Is application in read only mode */
     isReadOnlyMode: boolean;
 
@@ -34,7 +31,7 @@ type CommentProps = {
 };
 
 /** Comment component */
-export default function Comment({ shouldBeScrolledTo, comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState, isReadOnlyMode }: CommentProps): JSX.Element {
+export default function Comment({ shouldBeScrolledTo, comment, increment, showDescription, updateComment, deleteComment, isReadOnlyMode }: CommentProps): JSX.Element {
     const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
@@ -75,7 +72,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     icon={{ className: 'arrow-up' }}
                     title="Increment count"
                     onClick={onIncrementClick}
-                    disabled={isModuleInLoadingState || isReadOnlyMode}
+                    disabled={isReadOnlyMode}
                 />
                 <span>
                     {comment.appearanceCount}
@@ -91,7 +88,6 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     icon={{ className: 'info-lg' }}
                     title="Show description"
                     onClick={onShowDescriptionClick}
-                    disabled={isModuleInLoadingState}
                 />
                 <Button
                     type="warning"
@@ -99,7 +95,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     icon={{ className: 'pencil' }}
                     title="Edit"
                     onClick={onUpdateCommentClick}
-                    disabled={isModuleInLoadingState || isReadOnlyMode}
+                    disabled={isReadOnlyMode}
                 />
                 <Button
                     type="danger"
@@ -107,7 +103,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     icon={{ className: 'trash' }}
                     title="Delete"
                     onClick={onDeleteCommentClick}
-                    disabled={isModuleInLoadingState || isReadOnlyMode}
+                    disabled={isReadOnlyMode}
                 />
             </div>
         </div>

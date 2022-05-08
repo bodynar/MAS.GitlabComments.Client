@@ -3,7 +3,6 @@ import { Comment } from "@app/models/comment";
 /** Comments module state */
 export type CommentModuleState =
     | 'init' /** Comment module initialized */
-    | 'loading' /** Something is loading */
     | 'idle' /** Comment module is waiting for user action  */
     ;
 
