@@ -9,7 +9,8 @@ import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading
 import { setError } from "@app/redux/app/utils";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-import { OpenModal } from "@app/redux/modal/actions";
+
+import { getOpenModalAction } from "@app/redux/modal/actions/open";
 import { ModalAction } from "@app/redux/modal/types";
 
 import { getDeleteCommentAction } from "../actions/deleteComment";
@@ -23,29 +24,26 @@ export const deleteComment = (commentId: string): ThunkAction<void, CompositeApp
     (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch({
-            type: OpenModal,
-            params: {
-                modalType: 'confirm',
-                title: 'Confirm delete',
-                buttonCaption: { saveCaption: 'Delete' },
-                message: 'Are you sure want to delete selected comment?',
-                callback: {
-                    saveCallback: (): void => {
-                        dispatch(getSetAppIsLoadingAction(true));
+        dispatch(getOpenModalAction({
+            modalType: 'confirm',
+            title: 'Confirm delete',
+            buttonCaption: { saveCaption: 'Delete' },
+            message: 'Are you sure want to delete selected comment?',
+            callback: {
+                saveCallback: (): void => {
+                    dispatch(getSetAppIsLoadingAction(true));
 
-                        post(`api/comments/delete`, commentId)
-                            .then(() => {
-                                const { app } = getState();
+                    post(`api/comments/delete`, commentId)
+                        .then(() => {
+                            const { app } = getState();
 
-                                dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
-                                dispatch(getDeleteCommentAction(commentId));
-                                dispatch(getSetAppIsLoadingAction(false));
-                            })
-                            .catch(setError(dispatch, getState));
-                    },
-                    cancelCallback: (): void => { }
-                }
+                            dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
+                            dispatch(getDeleteCommentAction(commentId));
+                            dispatch(getSetAppIsLoadingAction(false));
+                        })
+                        .catch(setError(dispatch, getState));
+                },
+                cancelCallback: (): void => { }
             }
-        } as ModalAction);
+        }));
     };

@@ -11,10 +11,9 @@ import { setError } from "@app/redux/app/utils";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
 import { ModalAction } from "@app/redux/modal/types";
-import { OpenModal } from "@app/redux/modal/actions";
+import { getOpenModalAction } from "@app/redux/modal/actions/open";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-import { NotificationAddAction } from "@app/redux/notificator/types";
 
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
 import { getAddCommentAction } from "../actions/addComment";
@@ -31,13 +30,10 @@ export const addComment = (): ThunkAction<void, CompositeAppState, unknown, Acti
         const modalSuccessCallback = getModalSuccessCallback(getState);
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
-        dispatch({
-            type: OpenModal,
-            params: {
-                ...modalParams,
-                callback: { ...modalCallback },
-            }
-        } as ModalAction);
+        dispatch(getOpenModalAction({
+            ...modalParams,
+            callback: { ...modalCallback },
+        }));
     };
 
 /**
@@ -47,7 +43,7 @@ export const addComment = (): ThunkAction<void, CompositeAppState, unknown, Acti
  */
 const getModalSuccessCallback = (
     getState: () => CompositeAppState,
-) => (newComment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificationAddAction> => {
+) => (newComment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> => {
     return (dispatch): void => {
         dispatch(getSetAppIsLoadingAction(true));
 

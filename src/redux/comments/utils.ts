@@ -6,7 +6,6 @@ import { isNullOrUndefined } from '@app/utils/common';
 import { BaseCommentModel } from '@app/models/comment';
 
 import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';
-import { NotificatorAction } from '@app/redux/notificator/types';
 
 import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
 
@@ -55,8 +54,8 @@ export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel):
  * @returns Modal callback configuration
  */
 export const getCommentModalFormCallbackConfig = (
-    dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | NotificatorAction>,
-    action: (updateComment: BaseCommentModel) => ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificatorAction>
+    dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
+    action: (updateComment: BaseCommentModel) => ThunkAction<void, CompositeAppState, unknown, ActionWithPayload>
 ): ModalCallback => {
     return {
         saveCallback: (modalData: ModalCloseData): void => {

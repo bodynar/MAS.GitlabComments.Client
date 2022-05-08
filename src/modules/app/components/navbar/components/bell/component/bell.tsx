@@ -8,11 +8,14 @@ import './bell.dark.scss';
 import { NotificationHistoryItem } from '@app/models/notification';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
-import { setNotificationsBadgeToZero } from '@app/redux/notificator/actions';
+
+import { setNotificationsBadgeToZero } from '@app/redux/notificator/actions/setNotificationsBadgeToZero';
+
+import Icon from '@app/sharedComponents/icon';
+
+import { useComponentOutsideClick } from '@app/hooks/useComponentOutsideClick';
 
 import BellList from '../components/bellList/bellList';
-import Icon from '@app/sharedComponents/icon';
-import { useComponentOutsideClick } from '@app/hooks/useComponentOutsideClick';
 
 type BellProps = {
     /** All notifications in current session */

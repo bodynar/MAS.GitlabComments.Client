@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { connect } from 'react-redux';
@@ -11,7 +12,9 @@ import { isStringEmpty } from '@app/utils/common';
 import { NotificationItem } from '@app/models/notification';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
-import { hideNotifications, hideAllNotifications } from '@app/redux/notificator/actions';
+
+import { getHideNotificationsAction } from '@app/redux/notificator/actions/hideNotification';
+import { getHideAllNotificationsAction } from '@app/redux/notificator/actions/hideAllNotifications';
 
 import Notification from '../components/notificationItem/notificationItem';
 
@@ -75,7 +78,7 @@ function Notificator({ notifications, hideNotifications, hideAll }: NotificatorP
 export default connect(
     ({ notificator }: CompositeAppState) => ({ ...notificator }),
     {
-        hideNotifications: hideNotifications,
-        hideAll: hideAllNotifications
+        hideNotifications: getHideNotificationsAction,
+        hideAll: getHideAllNotificationsAction
     }
 )(Notificator);

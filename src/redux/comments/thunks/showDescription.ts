@@ -6,11 +6,12 @@ import { get } from "@app/utils/api";
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { OpenModal } from "@app/redux/modal/actions";
+import { setError } from "@app/redux/app/utils";
+
 import { ModalAction } from "@app/redux/modal/types";
+import { getOpenModalAction } from "@app/redux/modal/actions/open";
 
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-import { setError } from "@app/redux/app/utils";
 
 /**
  * Show description for specified comment from api
@@ -31,14 +32,11 @@ export const showDescription = (commentId: string): ThunkAction<void, CompositeA
                     ? 'Comment does not have any description.'
                     : description;
 
-                dispatch({
-                    type: OpenModal,
-                    params: {
-                        modalType: 'info',
-                        title: 'Comment description',
-                        message: modalMessage,
-                    }
-                } as ModalAction);
+                dispatch(getOpenModalAction({
+                    modalType: 'info',
+                    title: 'Comment description',
+                    message: modalMessage,
+                }));
             })
             .catch(setError(dispatch, getState));
     };

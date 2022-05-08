@@ -7,11 +7,10 @@ import { get, post } from "@app/utils/api";
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { OpenModal } from "@app/redux/modal/actions";
+import { getOpenModalAction } from "@app/redux/modal/actions/open";
 import { ModalAction } from "@app/redux/modal/types";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-import { NotificationAddAction } from "@app/redux/notificator/types";
 
 import { setError } from "@app/redux/app/utils";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
@@ -38,13 +37,9 @@ export const updateComment = (commentId: string): ThunkAction<void, CompositeApp
                 const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
                 const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
-                dispatch({
-                    type: OpenModal,
-                    params: {
-                        ...modalParams,
-                        callback: { ...modalCallback },
-                    }
-                } as ModalAction);
+                dispatch(getOpenModalAction({
+                    ...modalParams, callback: { ...modalCallback },
+                }));
             })
             .catch(setError(dispatch, getState));
     };
@@ -58,7 +53,7 @@ export const updateComment = (commentId: string): ThunkAction<void, CompositeApp
 const getModalSuccessCallback = (
     commentId: string,
     getState: () => CompositeAppState,
-) => (comment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload | NotificationAddAction> => {
+) => (comment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> => {
     return (dispatch): void => {
         dispatch(getSetAppIsLoadingAction(true));
 
