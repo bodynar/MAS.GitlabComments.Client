@@ -11,7 +11,7 @@ import { isNullOrUndefined } from "@app/utils/common";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { setTabIsFocused } from "@app/redux/app/actions";
+import { setTabIsFocused } from "@app/redux/app/actions/setTabIsFocused";
 import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 
 import ModalBox from '@app/modules/modalBox';
@@ -39,8 +39,8 @@ type AppPropsType = {
 
 /** Root app component */
 function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppPropsType): JSX.Element {
-    const onFocus = useCallback(() => { setTabIsFocused(true); }, [setTabIsFocused]);
-    const onBlur = useCallback(() => { setTabIsFocused(false); }, [setTabIsFocused]);
+    const onFocus = useCallback(() => setTabIsFocused(true), [setTabIsFocused]);
+    const onBlur = useCallback(() => setTabIsFocused(false), [setTabIsFocused]);
 
     useEffect(() => {
         if (isNullOrUndefined(readOnlyMode)) {
@@ -75,6 +75,17 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: App
     );
 }
 
+export default connect(
+    ({ app }: CompositeAppState) => ({
+        readOnlyMode: app.readOnlyMode,
+        isDarkMode: app.isDarkMode
+    }),
+    {
+        setTabIsFocused: setTabIsFocused,
+        getReadOnlyMode: getReadOnlyMode,
+    }
+)(App);
+
 // todo: v2 update solution
 function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
 
@@ -95,14 +106,3 @@ function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
         </>
     );
 }
-
-export default connect(
-    ({ app }: CompositeAppState) => ({
-        readOnlyMode: app.readOnlyMode,
-        isDarkMode: app.isDarkMode
-    }),
-    {
-        setTabIsFocused: setTabIsFocused,
-        getReadOnlyMode: getReadOnlyMode
-    }
-)(App);
