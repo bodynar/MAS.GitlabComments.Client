@@ -1,8 +1,9 @@
 import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { ActionWithPayload } from "../types";
+import { SetDarkModeState, SetIsAppLoadingState, SetReadOnlyModeState, SetTabIsFocused } from "./actions";
 
-import { AppState, SetTabIsFocused, SetReadOnlyModeState, SetDarkModeState, SetIsAppLoadingState } from "./types";
+import { AppState } from "./types";
 
 const defaultState: AppState = {
     isCurrentTabFocused: true,

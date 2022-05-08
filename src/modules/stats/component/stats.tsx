@@ -40,14 +40,14 @@ function Stats({ data, filter, setStatsFilter, loadStatsData }: StatsProps): JSX
                 setStatsFilter={setStatsFilter}
                 onApplyFiltersClick={onApplyFiltersClick}
             />
-            <div>
+            <>
                 {data.map(x =>
                     <StatsRecordComponent
                         key={x.commentId}
                         {...x}
                     />
                 )}
-            </div>
+            </>
         </section>
     );
 }
