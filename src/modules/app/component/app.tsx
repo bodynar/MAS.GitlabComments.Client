@@ -2,8 +2,6 @@ import { useCallback, useEffect } from "react";
 
 import { connect } from "react-redux";
 
-import { Route, Routes } from "react-router-dom";
-
 import './app.scss';
 import '../../../shared/globalStyles.scss';
 
@@ -18,12 +16,16 @@ import ModalBox from '@app/modules/modalBox';
 
 import Notificator from '../components/notificator/component/notificator';
 import Navbar from "../components/navbar/component/navbar";
-import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
+import AppContent from "../components/content";
 
-import { menuItems } from "../components/navbar/menu";
+type AppProps = {
+    /** 
+     * Is app currently loading something important.
+     * If so - covers content with loading gif block
+    */
+    isLoading: boolean;
 
-type AppPropsType = {
     /** Store state of app tab focus */
     setTabIsFocused: (isFocused: boolean) => void;
 
@@ -38,7 +40,7 @@ type AppPropsType = {
 };
 
 /** Root app component */
-function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppPropsType): JSX.Element {
+function App({ isLoading, setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppProps): JSX.Element {
     const onFocus = useCallback(() => setTabIsFocused(true), [setTabIsFocused]);
     const onBlur = useCallback(() => setTabIsFocused(false), [setTabIsFocused]);
 
@@ -68,7 +70,10 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: App
             <ModalBox />
             <Notificator />
             <section className="app__content container">
-                <AppContent isReadOnly={readOnlyMode === true} />
+                <AppContent
+                    isReadOnly={readOnlyMode === true}
+                    isLoading={isLoading}
+                />
             </section>
             <Footer className="app__footer" />
         </main>
@@ -78,7 +83,8 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: App
 export default connect(
     ({ app }: CompositeAppState) => ({
         readOnlyMode: app.readOnlyMode,
-        isDarkMode: app.isDarkMode
+        isDarkMode: app.isDarkMode,
+        isLoading: app.loading,
     }),
     {
         setTabIsFocused: setTabIsFocused,
@@ -86,23 +92,3 @@ export default connect(
     }
 )(App);
 
-// todo: v2 update solution
-function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
-
-    return (
-        <>
-            {isReadOnly &&
-                <ReadOnlyModeNote />
-            }
-            <Routes>
-                {menuItems.map(menuItem =>
-                    <Route
-                        key={menuItem.name}
-                        path={menuItem.link}
-                        element={menuItem.component}
-                    />
-                )}
-            </Routes>
-        </>
-    );
-}
