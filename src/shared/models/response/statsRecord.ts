@@ -8,5 +8,5 @@ export type StatsRecord = {
     commentText: string;
 
     /** Comment increment amount during specified range */
-    count: string;
+    count: number;
 };
