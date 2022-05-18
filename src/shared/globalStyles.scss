@@ -17,6 +17,33 @@
             }
         }
     }
+
+    .table {
+        background-color: #595959;
+        color: #fff;
+
+        transition: 0.25s ease-in-out;
+        transition-property: color, background-color;
+
+        tr {
+            transition: 0.25s ease-in-out;
+            transition-property: color, background-color;
+        }
+
+        & thead td,
+        & thead th {
+            color: #fff;
+        }
+
+        &.is-striped tbody tr:not(.is-selected):nth-child(even) {
+            background-color: #767676;
+        }
+
+        &.is-hoverable.is-striped tbody tr:not(.is-selected):hover {
+            background-color: #cccccc;
+            color: #000;
+        }
+    }
 }
 
 .app-input {
