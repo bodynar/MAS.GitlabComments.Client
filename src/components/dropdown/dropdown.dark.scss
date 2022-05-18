@@ -23,6 +23,9 @@
 
         .dropdown-content {
             background-color: rgb(88, 88, 88);
+            border: 1px solid #1c81bd;
+
+            box-shadow: 0 0.5em 1em -0.125em rgb(255, 255, 255, 0.3), 0 0px 0 1px rgb(10, 10, 10, 0.02);
         }
 
         &-item {
