@@ -32,9 +32,9 @@ export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, 
                 dispatch(getSetAppIsLoadingAction(false));
                 dispatch(getSetModuleStateAction("idle"));
             })
-            .catch(() => {
-                setError(dispatch, getState);
+            .catch(error => {
                 dispatch(getSetModuleStateAction("idle"));
+                setError(dispatch, getState)(error);
             });
     };
 
