@@ -14,7 +14,7 @@ import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading
 import { setStatsData } from "../actions/setStatsData";
 
 import { DateRange, StatsFilter } from "../types";
-import { setErrorWithDelay } from "@app/redux/app/utils";
+import { setError } from "@app/redux/app/utils";
 
 /**
  * Get fetch stats data redux action
@@ -35,7 +35,7 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
 
                 dispatch(getSetAppIsLoadingAction(false));
             })
-            .catch(setErrorWithDelay(dispatch, getState));
+            .catch(setError(dispatch, getState));
     };
 
 /**

@@ -7,7 +7,7 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
-import { setErrorWithDelay } from "@app/redux/app/utils";
+import { setError } from "@app/redux/app/utils";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
 import { getIncrementAction } from "../actions/increment";
@@ -31,5 +31,5 @@ export const increment = (commentId: string): ThunkAction<void, CompositeAppStat
                 dispatch(getIncrementAction(commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })
-            .catch(setErrorWithDelay(dispatch, getState));
+            .catch(setError(dispatch, getState));
     };

@@ -6,7 +6,7 @@ import { get } from "@app/utils/delayedApi";
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { setErrorWithDelay } from "@app/redux/app/utils";
+import { setError } from "@app/redux/app/utils";
 
 import { ModalAction } from "@app/redux/modal/types";
 import { getOpenModalAction } from "@app/redux/modal/actions/open";
@@ -38,5 +38,5 @@ export const showDescription = (commentId: string): ThunkAction<void, CompositeA
                     message: modalMessage,
                 }));
             })
-            .catch(setErrorWithDelay(dispatch, getState));
+            .catch(setError(dispatch, getState));
     };

@@ -7,7 +7,7 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 
 import { getSetReadOnlyModeAction } from "../actions/setReadOnlyMode";
 import { getSetAppIsLoadingAction } from "../actions/setAppIsLoading";
-import { setErrorWithDelay } from "../utils";
+import { setError } from "../utils";
 
 /**
  * Get application read only mode state
@@ -25,5 +25,5 @@ export const getReadOnlyMode = (): ThunkAction<void, CompositeAppState, unknown,
 
                 dispatch(getSetAppIsLoadingAction(false));
             })
-            .catch(setErrorWithDelay(dispatch, getState));
+            .catch(setError(dispatch, getState));
     };
