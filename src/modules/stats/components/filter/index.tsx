@@ -72,7 +72,7 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
     const onRightDateChange = useCallback((value?: Date) => onDateChange('rightDate', value, filter.leftDate, value), [filter.leftDate, onDateChange]);
 
     return (
-        <>
+        <div className="block">
             <div className="my-2">
                 <Dropdown
                     caption="Date range type"
@@ -116,7 +116,7 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
                     disabled={isFilterButtonDisabled}
                 />
             </div>
-        </>
+        </div>
     );
 };
 
