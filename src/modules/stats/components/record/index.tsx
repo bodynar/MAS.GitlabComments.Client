@@ -6,9 +6,10 @@ type StatsRecordProps = StatsRecord & {
 
 const StatsRecordComponent = ({ commentId, commentText, count }: StatsRecordProps): JSX.Element => {
     return (
-        <span key={commentId}>
-            [{count}] {commentText}
-        </span>
+        <tr>
+            <td>{count}</td>
+            <td>{commentText}</td>
+        </tr>
     );
 };
 

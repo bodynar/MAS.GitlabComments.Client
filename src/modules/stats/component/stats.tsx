@@ -10,8 +10,8 @@ import { StatsFilter } from '@app/redux/stats/types';
 import { setStatsFilter } from '@app/redux/stats/actions/setStatsFilter';
 import { loadStatsData } from '@app/redux/stats/thunks/loadStatsData';
 
-import StatsRecordComponent from '../components/record';
 import StatsFilters from '../components/filter';
+import StatsTableComponent from '../components/table';
 
 type StatsProps = {
     /** Fetched statistics data for specified date range */
@@ -29,7 +29,7 @@ type StatsProps = {
 
 /** Statistics module main component */
 function Stats({ data, filter, setStatsFilter, loadStatsData }: StatsProps): JSX.Element {
-    const onApplyFiltersClick = useCallback(() => loadStatsData(filter!), [filter, loadStatsData]);
+    const onApplyFiltersClick = useCallback(() => loadStatsData(filter), [filter, loadStatsData]);
 
     return (
         <section className="app-stats">
@@ -40,14 +40,10 @@ function Stats({ data, filter, setStatsFilter, loadStatsData }: StatsProps): JSX
                 setStatsFilter={setStatsFilter}
                 onApplyFiltersClick={onApplyFiltersClick}
             />
-            <>
-                {data.map(x =>
-                    <StatsRecordComponent
-                        key={x.commentId}
-                        {...x}
-                    />
-                )}
-            </>
+            <StatsTableComponent
+                data={data}
+                filter={filter}
+            />
         </section>
     );
 }
