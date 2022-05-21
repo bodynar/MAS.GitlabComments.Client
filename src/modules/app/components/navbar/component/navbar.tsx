@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useLocation } from "react-router-dom";
 
 import './navbar.scss';
@@ -28,8 +26,6 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
     const { pathname } = useLocation();
     const activeItem = menuItems.find(({ link }) => pathname === link)?.name || menuItems[0].name;
 
-    const [activeMenuItem, setActiveMenuItem] = useState<string>(activeItem);
-
     return (
         <nav
             className={`${className} app-navbar navbar is-link`}
@@ -43,8 +39,7 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
                         <NavbarMenuItem
                             key={menuItem.name}
                             item={menuItem}
-                            isActive={menuItem.name === activeMenuItem}
-                            onClick={setActiveMenuItem}
+                            isActive={menuItem.name === activeItem}
                         />
                     )}
                 </div>

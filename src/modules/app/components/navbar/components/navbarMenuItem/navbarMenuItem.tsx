@@ -1,11 +1,10 @@
-import { useCallback } from "react";
-
 import { Link } from "react-router-dom";
 
 import './navbarMenuItem.scss';
 import './navbarMenuItem.dark.scss';
 
 import { MenuItem } from "../../menu";
+import { getClassName } from "@app/utils/component";
 
 type NavbarMenuItemProps = {
     /** Menu item configuration */
@@ -13,29 +12,15 @@ type NavbarMenuItemProps = {
 
     /** Is menu item active */
     isActive: boolean;
-
-    /** Menu item click handler*/
-    onClick: (name: string) => void;
 };
 
 /** Navar menu item component */
-export default function NavbarMenuItem({ item, isActive, onClick }: NavbarMenuItemProps): JSX.Element {
-    let className = 'app-navbar__item is-unselectable';
-
-    if (item.disabled === true) {
-        className += ' app-navbar__item--disabled';
-    }
-    if (isActive) {
-        className += ' app-navbar__item--active';
-    }
-
-    const onHrefClick = useCallback(
-        () => {
-            if (item.disabled !== true && !isActive) {
-                onClick(item.name);
-            }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [isActive, item.disabled, onClick]);
+export default function NavbarMenuItem({ item, isActive }: NavbarMenuItemProps): JSX.Element {
+    const className = getClassName([
+        'app-navbar__item',
+        item.disabled === true ? 'app-navbar__item--disabled' : '',
+        isActive ? 'app-navbar__item--active' : '',
+    ]);
 
     if (item.disabled === true || isActive) {
         return (
@@ -50,7 +35,6 @@ export default function NavbarMenuItem({ item, isActive, onClick }: NavbarMenuIt
             <Link
                 className={className}
                 to={item.link}
-                onClick={onHrefClick}
             >
                 {item.caption}
             </Link>
