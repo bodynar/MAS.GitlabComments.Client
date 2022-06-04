@@ -3,9 +3,9 @@ import { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 
 import './app.scss';
-import '../../../shared/globalStyles.scss';
+import '../../../shared/styles/globalStyles.scss';
 
-import { isNullOrUndefined } from "@app/utils/common";
+import { isNullOrUndefined } from "@bodynarf/utils/common";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 
