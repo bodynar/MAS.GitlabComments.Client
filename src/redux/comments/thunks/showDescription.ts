@@ -1,6 +1,7 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { isNullOrEmpty } from "@app/utils/common";
+import { isNullOrEmpty } from "@bodynarf/utils/common";
+
 import { get } from "@app/utils/delayedApi";
 
 import { ActionWithPayload } from "@app/redux/types";

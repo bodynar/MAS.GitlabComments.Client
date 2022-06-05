@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import './modalBox.scss';
 import './modalBox.dark.scss';
 
-import { isNullOrUndefined } from "@app/utils/common";
+import { isNullOrUndefined } from "@bodynarf/utils/common";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 import { closeModal } from "@app/redux/modal/utils";

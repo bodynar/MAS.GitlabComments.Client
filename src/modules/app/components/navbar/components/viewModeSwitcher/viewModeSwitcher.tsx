@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import './viewModeSwitcher.scss';
 
-import { isUndefined } from '@app/utils/common';
-import { appStorage } from '@app/utils/localStorage';
+import { isUndefined } from '@bodynarf/utils/common';
+import { appStorage } from '@bodynarf/utils/localStorage';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { getSetDarkModeStateAction } from '@app/redux/app/actions/setDarkModeState';

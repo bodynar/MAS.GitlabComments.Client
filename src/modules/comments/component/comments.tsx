@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+
+import { isNullOrEmpty, isStringEmpty } from '@bodynarf/utils/common';
+
 import './comments.scss';
 import './comments.dark.scss';
-
-import { isNullOrEmpty, isStringEmpty } from '@app/utils/common';
 
 import { Comment as CommentModel } from '@app/models/comment';
 

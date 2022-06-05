@@ -4,11 +4,12 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { connect } from 'react-redux';
 
+import { isStringEmpty } from '@bodynarf/utils/common';
+
 import './notificator.scss';
 import './notificator.dark.scss';
 
 import { NotificationCountToShowHideAll } from '@app/constants';
-import { isStringEmpty } from '@app/utils/common';
 import { NotificationItem } from '@app/models/notification';
 
 import { CompositeAppState } from '@app/redux/rootReducer';

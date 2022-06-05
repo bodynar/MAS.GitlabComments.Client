@@ -1,4 +1,4 @@
-import { getPropertyValueWithCheck } from "@app/utils/object";
+import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
 
 import { ActionWithPayload } from "../types";
 import { SetDarkModeState, SetIsAppLoadingState, SetReadOnlyModeState, SetTabIsFocused } from "./actions";

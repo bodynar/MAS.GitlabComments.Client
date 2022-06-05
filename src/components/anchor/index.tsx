@@ -1,7 +1,7 @@
 import './anchor.scss';
 import './anchor.dark.scss';
 
-import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
+import { isNullOrEmpty, isNullOrUndefined } from '@bodynarf/utils/common';
 
 import { ElementIcon } from '../types';
 

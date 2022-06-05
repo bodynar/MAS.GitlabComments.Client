@@ -1,7 +1,7 @@
 import './button.scss';
 import './button.dark.scss';
 
-import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@app/utils/common';
+import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from '@bodynarf/utils/common';
 
 import { ElementIcon, IconSize } from '../types';
 

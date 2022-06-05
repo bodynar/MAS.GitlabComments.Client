@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
 
-import { isNullOrUndefined } from '@app/utils/common';
+import { isNullOrUndefined } from '@bodynarf/utils/common';
 
-import { DateRange, StatsFilter } from '@app/redux/stats/types';
 
 import { SelectableItem } from '@app/sharedComponents/dropdown/types';
 import Dropdown from '@app/sharedComponents/dropdown';
 import Date from '@app/sharedComponents/date';
 import Button from '@app/sharedComponents/button';
+import { DateRange, StatsFilter } from '@app/redux/stats/types';
 
 type StatsFiltersProps = {
     /** Current stats module filter */

@@ -1,12 +1,12 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
+import { generateGuid } from '@bodynarf/utils/guid';
+import { isNullOrUndefined } from '@bodynarf/utils/common';
+
 import './search.scss';
 import './search.dark.scss';
 
 import Button from '@app/sharedComponents/button';
-
-import { generateGuid } from '@app/utils/guid';
-import { isNullOrUndefined } from '@app/utils/common';
 
 type SearchProps = {
     /** Search caption */
@@ -77,7 +77,7 @@ export default function Search(props: SearchProps): JSX.Element {
     const className: string = 'app-search control'
         + ` is-${(props.size || 'normal')}`
         + (props.isLoading === true ? ' is-loading' : '')
-        + (searchType === 'byButton' ? ' is-expanded': '')
+        + (searchType === 'byButton' ? ' is-expanded' : '')
         ;
 
     const inputClassName: string = 'input is-unselectable'

@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback } from 'react';
 
-import { generateGuid } from '@app/utils/guid';
-import { getClassName } from '@app/utils/component';
+import { generateGuid } from '@bodynarf/utils/guid';
+import { getClassName } from '@bodynarf/utils/component';
 
 import { MultilineProps } from '../..';
 

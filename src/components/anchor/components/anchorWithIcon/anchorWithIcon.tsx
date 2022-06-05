@@ -1,4 +1,4 @@
-import { isNullOrEmpty } from '@app/utils/common';
+import { isNullOrEmpty } from '@bodynarf/utils/common';
 
 import Icon from '@app/sharedComponents/icon';
 

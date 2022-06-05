@@ -1,8 +1,5 @@
 import { ThunkDispatch } from "redux-thunk";
 
-import { LoadingStateHideDelay } from "@app/constants";
-import { withDelay } from "@app/utils/function";
-
 import { getErrorNotificationAction } from "../notificator/utils";
 import { CompositeAppState } from "../rootReducer";
 import { Action } from "../types";

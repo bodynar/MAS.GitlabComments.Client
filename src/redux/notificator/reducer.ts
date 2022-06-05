@@ -1,3 +1,5 @@
+import { getPropertyValueWithCheck } from '@bodynarf/utils/object';
+
 import { NotificationItem } from '@app/models/notification';
 import { NotificatorState } from './types';
 
@@ -6,7 +8,6 @@ import { removeByKey } from '@app/utils/array';
 import { ActionWithPayload } from '@app/redux/types';
 
 import { AddNotification, HideAllNotifications, HideNotification, SetNotificationsBadgeToZero } from './actions';
-import { getPropertyValueWithCheck } from '@app/utils/object';
 
 /** Default state of notification module */
 const defaultState: NotificatorState = {

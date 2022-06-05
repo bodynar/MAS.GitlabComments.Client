@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 
-import { isNullOrEmpty, isNullOrUndefined } from "@app/utils/common";
+import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils/common";
 
 import Icon from '@app/sharedComponents/icon';
 

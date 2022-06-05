@@ -1,10 +1,11 @@
 import moment from "moment";
 
-import { LoadingStateHideDelay } from "@app/constants";
+import { isNullOrUndefined } from "@bodynarf/utils/common";
+import { delayResolve, delayReject } from "@bodynarf/utils/function";
+import { RequestData, safeFetch } from "@bodynarf/utils/api";
 
-import { isNullOrUndefined } from "./common";
-import { RequestData, safeFetch } from "./api";
-import { delayReject, delayResolve } from "./function";
+import { LoadingStateHideDelay } from "@app/constants";
+import { BaseResponseWithResult } from "@app/models/response/baseResponse";
 
 /**
  * Send data to api to process
@@ -54,7 +55,12 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
 const fetchWithDelay = async<TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
     const start = moment();
 
-    return safeFetch<TResult>(uri, requestParams)
+    return safeFetch<BaseResponseWithResult<TResult>>(uri, requestParams)
+        .then((response: BaseResponseWithResult<TResult>) => {
+            return response.success
+                ? response.result
+                : new Promise<TResult>((_, r) => r(response.erorr));
+        })
         .then((result: TResult) => {
             const end = moment();
 

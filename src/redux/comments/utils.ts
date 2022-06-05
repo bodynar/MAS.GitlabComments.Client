@@ -1,8 +1,9 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
+import { isNullOrUndefined } from '@bodynarf/utils/common';
+
 import { ActionWithPayload } from '@app/redux/types';
 
-import { isNullOrUndefined } from '@app/utils/common';
 import { BaseCommentModel } from '@app/models/comment';
 
 import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';

@@ -1,4 +1,4 @@
-import { generateGuid } from "@app/utils/guid";
+import { generateGuid } from "@bodynarf/utils/guid";
 
 import { ActionWithPayload } from "../types";
 import { getAddNotificationAction } from "./actions/addNotification";

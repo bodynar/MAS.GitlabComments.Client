@@ -1,5 +1,5 @@
-import { isNullOrUndefined } from "@app/utils/common";
-import { getPropertyValueWithCheck } from "@app/utils/object";
+import { isNullOrUndefined } from "@bodynarf/utils/common";
+import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
 
 import { ModalAction, ModalParams, ModalState } from "./types";
 import { OpenModal, CloseModal } from './actions';

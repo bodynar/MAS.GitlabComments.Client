@@ -1,9 +1,9 @@
 import { MouseEvent, useCallback, useId, useState } from 'react';
 
+import { isNullOrEmpty, isNullOrUndefined } from '@bodynarf/utils/common';
+
 import './dropdown.scss';
 import './dropdown.dark.scss';
-
-import { isNullOrEmpty, isNullOrUndefined } from '@app/utils/common';
 
 import { useComponentOutsideClick } from '@app/hooks/useComponentOutsideClick';
 

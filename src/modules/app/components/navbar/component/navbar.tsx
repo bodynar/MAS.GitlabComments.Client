@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import './navbar.scss';
 import './navbar.dark.scss';
 
-import { isStringEmpty } from "@app/utils/common";
+import { isStringEmpty } from "@bodynarf/utils/common";
 
 import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from '../components';
 

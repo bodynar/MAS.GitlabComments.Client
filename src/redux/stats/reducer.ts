@@ -1,5 +1,6 @@
+import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+
 import { StatsRecord } from "@app/models/response/statsRecord";
-import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { ActionWithPayload } from "../types";
 import { SetStatsData, SetStatsFilters } from "./actions";

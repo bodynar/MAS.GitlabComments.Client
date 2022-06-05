@@ -1,10 +1,11 @@
+import { useMemo } from "react";
+
 import moment, { unitOfTime } from "moment";
 
 import { StatsRecord } from "@app/models/response/statsRecord";
 import { DateRange, StatsFilter } from "@app/redux/stats/types";
 
 import StatsRecordComponent from "../record";
-import { useMemo } from "react";
 
 /** Type of incoming StatsTableComponent props */
 type StatsTableComponentProps = {
@@ -35,7 +36,7 @@ const StatsTableComponent = ({ data, filter }: StatsTableComponentProps): JSX.El
             <div className="block">
                 {label}
             </div>
-            
+
             <div className="table-container">
                 <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                     <thead>

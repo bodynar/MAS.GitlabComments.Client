@@ -1,9 +1,9 @@
+import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils/common";
+import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+
 import { ActionWithPayload } from "@app/redux/types";
 
 import { Comment } from "@app/models/comment";
-
-import { isNullOrEmpty, isNullOrUndefined } from "@app/utils/common";
-import { getPropertyValueWithCheck } from "@app/utils/object";
 
 import { CommentModuleState, CommentsState } from "./types";
 import { AddComment, DeleteComment, Increment, SetComments, SetModuleState, SetSearchQuery, UpdateComment } from "./actions";
