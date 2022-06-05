@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 import './notificationItem.scss';
 import './notificationItem.dark.scss';
 
-import { NotificationHideDelay } from 'src/shared/constants';
+import { NotificationHideDelay } from '@app/constants';
 
 import { NotificationItem, NotificationType } from '@app/models/notification';
 
