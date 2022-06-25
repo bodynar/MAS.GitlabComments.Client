@@ -1,49 +1,14 @@
-.app--dark {
-    .app-input {
-        label {
-            color: white;
-        }
-        input,
-        textarea {
-            background-color: #585858;
-            color: white;
+@charset "utf-8";
 
-            &::-webkit-input-placeholder {
-                color: #d1cfcf;
-            }
+.modal-card {
+    overflow: auto;
+}
 
-            &[type="date"]::-webkit-calendar-picker-indicator {
-                background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0id2hpdGUiIGNsYXNzPSJiaSBiaS1jYWxlbmRhciIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICA8cGF0aCBkPSJNMy41IDBhLjUuNSAwIDAgMSAuNS41VjFoOFYuNWEuNS41IDAgMCAxIDEgMFYxaDFhMiAyIDAgMCAxIDIgMnYxMWEyIDIgMCAwIDEtMiAySDJhMiAyIDAgMCAxLTItMlYzYTIgMiAwIDAgMSAyLTJoMVYuNWEuNS41IDAgMCAxIC41LS41ek0xIDR2MTBhMSAxIDAgMCAwIDEgMWgxMmExIDEgMCAwIDAgMS0xVjRIMXoiLz4KPC9zdmc+");
-            }
-        }
-    }
-
-    .table {
-        background-color: #595959;
-        color: #fff;
-
-        transition: 0.25s ease-in-out;
-        transition-property: color, background-color;
-
-        tr {
-            transition: 0.25s ease-in-out;
-            transition-property: color, background-color;
-        }
-
-        & thead td,
-        & thead th {
-            color: #fff;
-        }
-
-        &.is-striped tbody tr:not(.is-selected):nth-child(even) {
-            background-color: #767676;
-        }
-
-        &.is-hoverable.is-striped tbody tr:not(.is-selected):hover {
-            background-color: #cccccc;
-            color: #000;
-        }
-    }
+html,
+body,
+#root {
+    height: 100%;
+    overflow: hidden !important;
 }
 
 .app-input {

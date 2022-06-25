@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import './app.scss';
 import '../../../shared/styles/globalStyles.scss';
+import '../../../shared/styles/darkStyles.scss';
 
 import { isNullOrUndefined } from "@bodynarf/utils/common";
 
