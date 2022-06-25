@@ -10,6 +10,8 @@ import { StatsFilter } from '@app/redux/stats/types';
 import { setStatsFilter } from '@app/redux/stats/actions/setStatsFilter';
 import { loadStatsData } from '@app/redux/stats/thunks/loadStatsData';
 
+import { showDescription } from '@app/redux/comments/thunks';
+
 import StatsFilters from '../components/filter';
 import StatsTableComponent from '../components/table';
 
@@ -25,10 +27,17 @@ type StatsProps = {
 
     /** Load stats data according to specified filter */
     loadStatsData: (filter: StatsFilter) => void;
+
+    /** Show comment description */
+    showDescription: (commentId: string) => void;
 };
 
 /** Statistics module main component */
-function Stats({ data, filter, setStatsFilter, loadStatsData }: StatsProps): JSX.Element {
+function Stats({
+    data, filter,
+    setStatsFilter, loadStatsData,
+    showDescription
+}: StatsProps): JSX.Element {
     const onApplyFiltersClick = useCallback(() => loadStatsData(filter), [filter, loadStatsData]);
 
     return (
@@ -43,6 +52,7 @@ function Stats({ data, filter, setStatsFilter, loadStatsData }: StatsProps): JSX
             <StatsTableComponent
                 data={data}
                 filter={filter}
+                showDescription={showDescription}
             />
         </section>
     );
@@ -51,5 +61,5 @@ function Stats({ data, filter, setStatsFilter, loadStatsData }: StatsProps): JSX
 /** Statistics module main component */
 export default connect(
     ({ stats }: CompositeAppState) => ({ ...stats }),
-    { setStatsFilter, loadStatsData }
+    { setStatsFilter, loadStatsData, showDescription }
 )(Stats);
