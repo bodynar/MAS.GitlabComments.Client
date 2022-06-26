@@ -27,7 +27,7 @@ const StatsRecordComponent = ({ commentId, commentText, count, showDescription }
     const onShowDescriptionClick = useCallback(() => showDescription(commentId), [commentId, showDescription]);
 
     return (
-        <div className="app-stats-record columns">
+        <div className="app-stats-record columns ml-1">
             <div className="column is-2 m-auto has-text-centered">
                 +{count}
             </div>

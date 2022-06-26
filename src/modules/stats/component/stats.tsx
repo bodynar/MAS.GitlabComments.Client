@@ -42,8 +42,14 @@ function Stats({
 
     return (
         <section className="app-stats">
-            <h2 className="my-2">Stats</h2>
-            <div className="my-2">heading</div>
+            <div className="block">
+                <h3 className="title is-3">
+                    Stats
+                </h3>
+                <h5 className="subtitle is-5">
+                    Specify date range to see comments &quot;Appearance count&quot; field changes
+                </h5>
+            </div>
             <StatsFilters
                 filter={filter}
                 setStatsFilter={setStatsFilter}

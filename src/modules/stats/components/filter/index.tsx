@@ -1,12 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
+import moment from 'moment';
 
 import { isNullOrUndefined } from '@bodynarf/utils/common';
-
 
 import { SelectableItem } from '@app/sharedComponents/dropdown/types';
 import Dropdown from '@app/sharedComponents/dropdown';
 import Date from '@app/sharedComponents/date';
 import Button from '@app/sharedComponents/button';
+
 import { DateRange, StatsFilter } from '@app/redux/stats/types';
 
 type StatsFiltersProps = {
@@ -19,6 +21,8 @@ type StatsFiltersProps = {
     /** Apply filters button click handler */
     onApplyFiltersClick: () => void;
 };
+
+const today = moment();
 
 /** Stats module filter component */
 const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFiltersProps): JSX.Element => {
@@ -71,9 +75,11 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
     const onLeftDateChange = useCallback((value?: Date) => onDateChange('leftDate', value, value, filter.rightDate), [filter.rightDate, onDateChange]);
     const onRightDateChange = useCallback((value?: Date) => onDateChange('rightDate', value, filter.leftDate, value), [filter.leftDate, onDateChange]);
 
+    const dateRange = useMemo(() => getDateRange(filterRange), [filterRange]);
+
     return (
         <div className="block">
-            <div className="my-2">
+            <div className="block is-flex is-align-content-center">
                 <Dropdown
                     caption="Date range type"
                     hideOnOuterClick={true}
@@ -82,6 +88,9 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
                     onSelect={onRangeSelect}
                     value={filterRange}
                 />
+                <span className="ml-4">
+                    {dateRange}
+                </span>
             </div>
             {filterRange?.value === DateRange.Manual &&
                 <>
@@ -108,14 +117,12 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
                     }
                 </>
             }
-            <div className="my-2">
-                <Button
-                    type="success"
-                    caption="Show stats"
-                    onClick={onApplyFiltersClick}
-                    disabled={isFilterButtonDisabled}
-                />
-            </div>
+            <Button
+                type="success"
+                caption="Show stats"
+                onClick={onApplyFiltersClick}
+                disabled={isFilterButtonDisabled}
+            />
         </div>
     );
 };
@@ -168,4 +175,40 @@ const isButtonDisabled = (filter: StatsFilter): boolean => {
     }
 
     return false;
+};
+
+/**
+ * Get formatted date range string
+ * @param filterRange Selected date range
+ * @returns Formatted date range string
+ */
+const getDateRange = (filterRange?: SelectableItem): string => {
+    if (isNullOrUndefined(filterRange)) {
+        return '';
+    }
+
+    const { value } = filterRange!;
+
+    if (value == DateRange.Manual) {
+        return '';
+    }
+
+    let period: moment.unitOfTime.DurationConstructor = 'month';
+
+    switch (value) {
+        case DateRange.Month:
+            period = 'month';
+            break;
+
+        case DateRange.Week:
+            period = 'week';
+            break;
+
+        case DateRange.Year:
+            period = 'year';
+            break;
+    }
+
+    const left = today.clone().add(-1, period);
+    return `(${left.format("DD.MM.yyyy")} - ${today.format("DD.MM.yyyy")})`;
 };

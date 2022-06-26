@@ -71,6 +71,11 @@ const StatsTableComponent = ({ data, filter, showDescription }: StatsTableCompon
 
 export default StatsTableComponent;
 
+/**
+ * Get stats table label according to specified filter
+ * @param filter Current stats filter
+ * @returns Label for stats table
+ */
 const getLabel = (filter: StatsFilter): string => {
     if (filter.type === DateRange.Manual) {
         return `Comments appearance updates from ${filter.leftDate!.toDateString()} to ${filter.leftDate!.toDateString()}`;
