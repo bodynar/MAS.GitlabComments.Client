@@ -38,8 +38,9 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
                         rawData.map(x => ({
                             commentId: x['commentId'],
                             text: x['commentText'],
-                            count: x['incrementCount'],
-                        }))
+                            count: x['count'],
+                        }) as StatsRecord)
+                            .sort(({ count }, y) => y.count - count)
                     )
                 );
 
