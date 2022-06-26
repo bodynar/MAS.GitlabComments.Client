@@ -15,6 +15,9 @@ type StatsTableComponentProps = {
     /** Current stats module filter */
     filter: StatsFilter;
 
+    /** Is stats data loaded */
+    loaded?: boolean;
+
     /** Show comment description */
     showDescription: (commentId: string) => void;
 };
@@ -25,12 +28,14 @@ const today = moment();
  * Statistics table component.
  * Represents data about comments apperance increment during specified date range
 */
-const StatsTableComponent = ({ data, filter, showDescription }: StatsTableComponentProps): JSX.Element => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const label = useMemo(() => getLabel(filter), [data]);
+const StatsTableComponent = ({
+    data, filter,
+    showDescription,
+}: StatsTableComponentProps): JSX.Element => {
+    const label = useMemo(() => getLabel(filter), [filter]);
 
     if (data.length === 0) {
-        return <></>;
+        return <>No data found. Please, update date range</>;
     }
 
     return (

@@ -9,7 +9,7 @@ import { SetStatsData } from "../actions";
  * @param data Fetched statistics data
  * @returns Redux action to dispatch to update app state
  */
-export const setStatsData = (data: Array<StatsRecord>): ActionWithPayload => ({
+export const getSetStatsDataAction = (data: Array<StatsRecord>): ActionWithPayload => ({
     type: SetStatsData,
     payload: { data },
 });

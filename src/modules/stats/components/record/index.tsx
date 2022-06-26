@@ -13,7 +13,7 @@ type StatsRecordProps = StatsRecord & {
     showDescription: (commentId: string) => void;
 };
 
-const StatsRecordComponent = ({ commentId, commentText, count, showDescription }: StatsRecordProps): JSX.Element => {
+const StatsRecordComponent = ({ commentId, text: commentText, count, showDescription }: StatsRecordProps): JSX.Element => {
     const navigate = useNavigate();
 
     const onShowClick = useCallback(() => {
@@ -36,7 +36,7 @@ const StatsRecordComponent = ({ commentId, commentText, count, showDescription }
                     {commentText}
                 </span>
             </div>
-            <div className="column is-2">
+            <div className="column is-2 my-auto">
                 <div className="buttons is-justify-content-center">
                     <Button
                         type="info"

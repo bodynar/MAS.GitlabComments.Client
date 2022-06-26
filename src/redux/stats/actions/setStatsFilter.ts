@@ -8,7 +8,7 @@ import { StatsFilter } from "../types";
  * @param filter Selected filter
  * @returns Redux action to dispatch to update app state
  */
-export const setStatsFilter = (filter: StatsFilter): ActionWithPayload => ({
+export const getSetStatsFilterAction = (filter: StatsFilter): ActionWithPayload => ({
     type: SetStatsFilters,
     payload: { filter }
 });

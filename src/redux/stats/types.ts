@@ -39,4 +39,7 @@ export type StatsState = {
 
     /** Current stats module filter */
     filter: StatsFilter;
+
+    /** Is stats data loaded */
+    loaded?: boolean;
 };

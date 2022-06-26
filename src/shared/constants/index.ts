@@ -5,4 +5,4 @@ export const NotificationHideDelay: number = 2.5 * 1000;
 export const NotificationCountToShowHideAll = 2;
 
 /** Delay before loading state gif will be hidden */
-export const LoadingStateHideDelay: number = 2 * 1000;
+export const LoadingStateHideDelay: number = 1.5 * 1000;

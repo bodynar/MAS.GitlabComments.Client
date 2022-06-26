@@ -8,13 +8,14 @@ import { StatsRecord } from "@app/models/response/statsRecord";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 import { ActionWithPayload } from "@app/redux/types";
+import { setError } from "@app/redux/app/utils";
 
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
-import { setStatsData } from "../actions/setStatsData";
+import { getSetStatsDataAction } from "../actions/setStatsData";
 
 import { DateRange, StatsFilter } from "../types";
-import { setError } from "@app/redux/app/utils";
+import { getSetStatsLoadedStateAction } from "../actions/setStatsLoadingState";
 
 /**
  * Get fetch stats data redux action
@@ -26,16 +27,30 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
         getState: () => CompositeAppState
     ): void => {
         dispatch(getSetAppIsLoadingAction(true));
+        dispatch(getSetStatsLoadedStateAction(false));
 
         const searchParams = getSearchParams(filter);
 
         get<Array<StatsRecord>>(`/api/stats/top${searchParams}`)
-            .then((statsData: Array<StatsRecord>) => {
-                dispatch(setStatsData(statsData));
+            .then((rawData: Array<any>) => {
+                dispatch(
+                    getSetStatsDataAction(
+                        rawData.map(x => ({
+                            commentId: x['commentId'],
+                            text: x['commentText'],
+                            count: x['incrementCount'],
+                        }))
+                    )
+                );
 
                 dispatch(getSetAppIsLoadingAction(false));
+
+                dispatch(getSetStatsLoadedStateAction(true));
             })
-            .catch(setError(dispatch, getState));
+            .catch(error => {
+                dispatch(getSetStatsLoadedStateAction(undefined));
+                setError(dispatch, getState)(error);
+            });
     };
 
 /**

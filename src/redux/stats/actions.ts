@@ -9,3 +9,9 @@ export const SetStatsData = "stats/setData";
  * Store selected stats filter
  */
 export const SetStatsFilters = "stats/setFilters";
+
+/**
+ * @constant
+ * Save current stats loaded state
+ */
+export const SetStatsLoadedState = "stats/setLoaded";

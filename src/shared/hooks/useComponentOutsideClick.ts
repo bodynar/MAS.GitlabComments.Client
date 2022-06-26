@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import { isNull, isNullOrUndefined } from "@bodynarf/utils/common";
 
@@ -14,8 +14,7 @@ export const useComponentOutsideClick = (
     selector: string,
     clickHandleCondition: boolean,
     clickHandleChange: () => void,
-    clickListenCondition?: boolean,
-    dependencies?: DependencyList
+    clickListenCondition?: boolean
 ): void => {
     const onDocumentClick = useCallback(
         (event: MouseEvent): void => {
@@ -33,8 +32,7 @@ export const useComponentOutsideClick = (
                     clickHandleChange();
                 }
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [clickHandleCondition, selector, clickHandleChange, dependencies]);
+        }, [clickHandleCondition, selector, clickHandleChange]);
 
     useEffect(() => {
         if (isNullOrUndefined(clickListenCondition) || clickListenCondition === true) {

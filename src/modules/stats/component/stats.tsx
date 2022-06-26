@@ -7,8 +7,9 @@ import { StatsRecord } from '@app/models/response/statsRecord';
 import { CompositeAppState } from '@app/redux/rootReducer';
 
 import { StatsFilter } from '@app/redux/stats/types';
-import { setStatsFilter } from '@app/redux/stats/actions/setStatsFilter';
+import { getSetStatsFilterAction } from '@app/redux/stats/actions/setStatsFilter';
 import { loadStatsData } from '@app/redux/stats/thunks/loadStatsData';
+import { getSetStatsLoadedStateAction } from '@app/redux/stats/actions/setStatsLoadingState';
 
 import { showDescription } from '@app/redux/comments/thunks';
 
@@ -22,6 +23,9 @@ type StatsProps = {
     /** Current stats module filter */
     filter: StatsFilter;
 
+    /** Is stats data loaded */
+    loaded?: boolean;
+
     /** Save selected filter in app */
     setStatsFilter: (filter: StatsFilter) => void;
 
@@ -30,13 +34,16 @@ type StatsProps = {
 
     /** Show comment description */
     showDescription: (commentId: string) => void;
+
+    /** Set is stats data loaded */
+    setIsLoaded: (loaded?: boolean) => void;
 };
 
 /** Statistics module main component */
 function Stats({
-    data, filter,
+    data, filter, loaded,
     setStatsFilter, loadStatsData,
-    showDescription
+    showDescription, setIsLoaded
 }: StatsProps): JSX.Element {
     const onApplyFiltersClick = useCallback(() => loadStatsData(filter), [filter, loadStatsData]);
 
@@ -54,12 +61,16 @@ function Stats({
                 filter={filter}
                 setStatsFilter={setStatsFilter}
                 onApplyFiltersClick={onApplyFiltersClick}
+                loaded={loaded}
+                setIsLoaded={setIsLoaded}
             />
-            <StatsTableComponent
-                data={data}
-                filter={filter}
-                showDescription={showDescription}
-            />
+            {loaded === true &&
+                <StatsTableComponent
+                    data={data}
+                    filter={filter}
+                    showDescription={showDescription}
+                />
+            }
         </section>
     );
 }
@@ -67,5 +78,9 @@ function Stats({
 /** Statistics module main component */
 export default connect(
     ({ stats }: CompositeAppState) => ({ ...stats }),
-    { setStatsFilter, loadStatsData, showDescription }
+    {
+        setStatsFilter: getSetStatsFilterAction,
+        setIsLoaded: getSetStatsLoadedStateAction,
+        loadStatsData, showDescription,
+    }
 )(Stats);

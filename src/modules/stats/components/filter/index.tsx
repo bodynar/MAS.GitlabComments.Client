@@ -15,17 +15,23 @@ type StatsFiltersProps = {
     /** Current stats module filter */
     filter: StatsFilter;
 
+    /** Is stats data loaded */
+    loaded?: boolean;
+
     /** Save selected filter in app */
     setStatsFilter: (filter: StatsFilter) => void;
 
     /** Apply filters button click handler */
     onApplyFiltersClick: () => void;
+
+    /** Set is stats data loaded */
+    setIsLoaded: (loaded?: boolean) => void;
 };
 
 const today = moment();
 
 /** Stats module filter component */
-const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFiltersProps): JSX.Element => {
+const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, setIsLoaded }: StatsFiltersProps): JSX.Element => {
     const preSelected = filter.type === DateRange.None
         ? undefined
         : dateRangeOptionsMap.get(filter.type)
@@ -38,6 +44,10 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
     const onRangeSelect = useCallback((selectedItem?: SelectableItem) => {
         setRange(selectedItem);
 
+        if (loaded === true) {
+            setIsLoaded(undefined);
+        }
+
         setManualDateValid(true);
 
         const type = isNullOrUndefined(selectedItem)
@@ -47,7 +57,7 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
         setFilterButtonDisabled(isNullOrUndefined(selectedItem) || type === DateRange.Manual);
         setStatsFilter({ type });
 
-    }, [setStatsFilter]);
+    }, [setStatsFilter, setIsLoaded, loaded]);
 
     const onDateChange = useCallback(
         (key: keyof StatsFilter, value?: Date, leftDate?: Date, rightDate?: Date) => {
@@ -55,6 +65,10 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
                 ...filter,
                 [key]: value
             });
+
+            if (loaded === true) {
+                setIsLoaded(undefined);
+            }
 
             if (isNullOrUndefined(value)) {
                 setFilterButtonDisabled(true);
@@ -70,7 +84,7 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
 
             setManualDateValid(isValid);
             setFilterButtonDisabled(!isValid);
-        }, [filter, setStatsFilter]);
+        }, [setStatsFilter, filter, loaded, setIsLoaded]);
 
     const onLeftDateChange = useCallback((value?: Date) => onDateChange('leftDate', value, value, filter.rightDate), [filter.rightDate, onDateChange]);
     const onRightDateChange = useCallback((value?: Date) => onDateChange('rightDate', value, filter.leftDate, value), [filter.leftDate, onDateChange]);
@@ -79,7 +93,7 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
 
     return (
         <div className="block">
-            <div className="block is-flex is-align-content-center">
+            <div className="block is-flex is-align-items-center">
                 <Dropdown
                     caption="Date range type"
                     hideOnOuterClick={true}

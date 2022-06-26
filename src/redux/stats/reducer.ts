@@ -1,9 +1,9 @@
-import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { getPropertyValue, getPropertyValueWithCheck } from "@bodynarf/utils/object";
 
 import { StatsRecord } from "@app/models/response/statsRecord";
 
 import { ActionWithPayload } from "../types";
-import { SetStatsData, SetStatsFilters } from "./actions";
+import { SetStatsData, SetStatsFilters, SetStatsLoadedState } from "./actions";
 import { DateRange, StatsFilter, StatsState } from "./types";
 
 /** Default stats module state */
@@ -11,7 +11,7 @@ const defaultState: StatsState = {
     data: [],
     filter: {
         type: DateRange.None
-    }
+    },
 };
 
 /**
@@ -36,6 +36,14 @@ export default function (state: StatsState = defaultState, action: ActionWithPay
             return {
                 ...state,
                 filter: filter
+            };
+        }
+        case SetStatsLoadedState: {
+            const loaded: boolean | undefined = getPropertyValue<boolean>(action.payload, 'loaded');
+
+            return {
+                ...state,
+                loaded
             };
         }
         default: {

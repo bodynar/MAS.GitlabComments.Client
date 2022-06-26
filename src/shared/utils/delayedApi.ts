@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import { isNullOrUndefined } from "@bodynarf/utils/common";
+import { isNullOrUndefined, isStringEmpty } from "@bodynarf/utils/common";
 import { delayResolve, delayReject } from "@bodynarf/utils/function";
 import { RequestData, safeFetch } from "@bodynarf/utils/api";
 
@@ -55,11 +55,21 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
 const fetchWithDelay = async<TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
     const start = moment();
 
-    return safeFetch<BaseResponseWithResult<TResult>>(uri, requestParams)
-        .then((response: BaseResponseWithResult<TResult>) => {
-            return response.success
-                ? response.result
-                : new Promise<TResult>((_, r) => r(response.erorr));
+    return safeFetch(uri, requestParams)
+        .then((textResponse: string) => {
+            if (isStringEmpty(textResponse)) {
+                return new Promise<TResult>((_, r) => r("No data loaded"));
+            }
+
+            try {
+                const result: BaseResponseWithResult<TResult> = JSON.parse(textResponse);
+                return result.success
+                    ? result.result
+                    : new Promise<TResult>((_, r) => r(result.erorr));
+            } catch (error) {
+                console.error(`Error occured during fetching "${uri}": [${error}]. Textual response: ${textResponse}`);
+                return new Promise<TResult>((_, r) => r("Invalid server response. Please, contact administrator."));
+            }
         })
         .then((result: TResult) => {
             const end = moment();
