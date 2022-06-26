@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import './notificationItem.scss';
 import './notificationItem.dark.scss';
 
-import { NotificationHideDelay } from 'src/shared/constants';
+import { NotificationHideDelay } from '@app/constants';
 
 import { NotificationItem, NotificationType } from '@app/models/notification';
 
@@ -32,7 +32,7 @@ export default function Notification({ item, onHideClick }: NotificationProps): 
     }, [item.id, onHideClick]);
 
     useEffect(() => {
-        const timer: NodeJS.Timeout = setTimeout(hide, NotificationHideDelay);
+        const timer = setTimeout(hide, NotificationHideDelay);
 
         return (): void => { clearTimeout(timer); };
     }, [hide]);

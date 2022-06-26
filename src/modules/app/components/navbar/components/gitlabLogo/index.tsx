@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './gitlabLogo.scss';
 
 /** Gitlab logo icon component */

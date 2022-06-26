@@ -1,3 +1,5 @@
+import { ElementIcon } from "../types";
+
 /** Button types according to Bulma framework */
 export type ButtonType =
     'default' /** color: transparent */
@@ -14,3 +16,25 @@ export type ButtonType =
     | 'text' /** Underline text with color: gray */
     | 'ghost' /** Blue underline text with color: transparent */
     ;
+
+export type SimpleButtonProps = {
+    /** Button class name*/
+    className: string;
+
+    /** Button click handler */
+    onClick?: () => void;
+
+    /** Button caption */
+    caption?: string;
+
+    /** Disabled attribute value*/
+    disabled?: boolean;
+
+    /** Title on hover */
+    title?: string;
+};
+
+export type ButtonWithIconProps = SimpleButtonProps & {
+    /** Icon configuration */
+    icon: ElementIcon;
+};

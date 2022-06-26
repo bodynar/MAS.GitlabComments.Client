@@ -6,11 +6,25 @@
     align-items: center;
     gap: 1rem;
 
+    scroll-margin-top: 15rem;
+
     transition-duration: 0.15s;
     transition-property: border-color, background-color;
     &:hover {
         border-color: rgb(50, 115, 220, 0.75);
         background-color: rgb(50, 115, 220, 0.05);
+    }
+
+    &--highlighted {
+        animation-name: highlighted;
+        animation-duration: 3.5s;
+    }
+
+    @keyframes highlighted {
+        50% {
+            border-color: rgb(50, 115, 220, 0.75);
+            background-color: rgb(66, 132, 239, 0.15);
+        }
     }
 
     &__appearance {

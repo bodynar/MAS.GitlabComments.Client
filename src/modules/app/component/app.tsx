@@ -1,24 +1,32 @@
-import React from "react";
+import { useCallback, useEffect } from "react";
+
 import { connect } from "react-redux";
 
 import './app.scss';
+import '../../../shared/styles/globalStyles.scss';
+import '../../../shared/styles/darkStyles.scss';
 
-import { isNullOrUndefined } from "@app/utils/common";
+import { isNullOrUndefined } from "@bodynarf/utils/common";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { setTabIsFocused } from "@app/redux/app/action";
+import { getSetTabIsFocusedAction } from "@app/redux/app/actions/setTabIsFocused";
 import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 
-import Comments from "@app/modules/comments";
 import ModalBox from '@app/modules/modalBox';
 
 import Notificator from '../components/notificator/component/notificator';
 import Navbar from "../components/navbar/component/navbar";
-import ReadOnlyModeNote from "../components/readOnlyModeNote";
 import Footer from "../components/footer";
+import AppContent from "../components/content";
 
-type AppPropsType = {
+type AppProps = {
+    /** 
+     * Is app currently loading something important.
+     * If so - covers content with loading gif block
+    */
+    isLoading: boolean;
+
     /** Store state of app tab focus */
     setTabIsFocused: (isFocused: boolean) => void;
 
@@ -33,17 +41,17 @@ type AppPropsType = {
 };
 
 /** Root app component */
-function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppPropsType): JSX.Element {
-    const onFocus = React.useCallback(() => { setTabIsFocused(true); }, [setTabIsFocused]);
-    const onBlur = React.useCallback(() => { setTabIsFocused(false); }, [setTabIsFocused]);
+function App({ isLoading, setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppProps): JSX.Element {
+    const onFocus = useCallback(() => setTabIsFocused(true), [setTabIsFocused]);
+    const onBlur = useCallback(() => setTabIsFocused(false), [setTabIsFocused]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isNullOrUndefined(readOnlyMode)) {
             getReadOnlyMode();
         }
     }, [getReadOnlyMode, readOnlyMode]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener('focus', onFocus);
         window.addEventListener('blur', onBlur);
 
@@ -63,32 +71,25 @@ function App({ setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: App
             <ModalBox />
             <Notificator />
             <section className="app__content container">
-                <AppContent isReadOnly={readOnlyMode === true} />
+                <AppContent
+                    isReadOnly={readOnlyMode === true}
+                    isLoading={isLoading}
+                />
             </section>
             <Footer className="app__footer" />
         </main>
     );
 }
 
-// todo: v2 update solution
-function AppContent({ isReadOnly }: { isReadOnly: boolean; }): JSX.Element {
-    if (isReadOnly) {
-        return (<>
-            <ReadOnlyModeNote />
-            <Comments />
-        </>);
-    }
-
-    return (<Comments />);
-}
-
 export default connect(
     ({ app }: CompositeAppState) => ({
         readOnlyMode: app.readOnlyMode,
-        isDarkMode: app.isDarkMode
+        isDarkMode: app.isDarkMode,
+        isLoading: app.loading,
     }),
     {
-        setTabIsFocused: setTabIsFocused,
-        getReadOnlyMode: getReadOnlyMode
+        setTabIsFocused: getSetTabIsFocusedAction,
+        getReadOnlyMode: getReadOnlyMode,
     }
 )(App);
+

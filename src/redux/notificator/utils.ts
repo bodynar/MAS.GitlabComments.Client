@@ -1,6 +1,7 @@
-import { generateGuid } from "@app/utils/guid";
+import { generateGuid } from "@bodynarf/utils/guid";
 
-import { AddNotification, NotificationAddAction } from "./types";
+import { ActionWithPayload } from "../types";
+import { getAddNotificationAction } from "./actions/addNotification";
 
 /**
  * Get notifications module action which adding success notification
@@ -11,11 +12,7 @@ import { AddNotification, NotificationAddAction } from "./types";
 export const getSuccessNotificationAction = (
     message: string,
     shouldDisplay: boolean
-): NotificationAddAction => ({
-    type: AddNotification,
-    notifications: [{ type: 'success', message, id: generateGuid(), createdAt: new Date() }],
-    displayDismissableNotification: shouldDisplay
-});
+): ActionWithPayload => getAddNotificationAction({ type: 'success', message, id: generateGuid(), createdAt: new Date() }, shouldDisplay);
 
 /**
  * Get notifications module action which adding error notification
@@ -26,8 +23,4 @@ export const getSuccessNotificationAction = (
 export const getErrorNotificationAction = (
     message: string,
     shouldDisplay: boolean
-): NotificationAddAction => ({
-    type: AddNotification,
-    notifications: [{ type: 'error', message, id: generateGuid(), createdAt: new Date() }],
-    displayDismissableNotification: shouldDisplay
-});
+): ActionWithPayload => getAddNotificationAction({ type: 'error', message, id: generateGuid(), createdAt: new Date() }, shouldDisplay);

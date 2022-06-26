@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
+
+import { generateGuid } from '@bodynarf/utils/guid';
+import { isNullOrUndefined } from '@bodynarf/utils/common';
 
 import './search.scss';
 import './search.dark.scss';
 
 import Button from '@app/sharedComponents/button';
-
-import { generateGuid } from '@app/utils/guid';
-import { isNullOrUndefined } from '@app/utils/common';
 
 type SearchProps = {
     /** Search caption */
@@ -14,6 +14,9 @@ type SearchProps = {
 
     /** Search handler */
     onSearch: (searchPattern: string) => void;
+
+    /** Initial search value */
+    defaultValue?: string;
 
     /** 
      * Search type: by typing, starts from minimum characters to search
@@ -44,7 +47,7 @@ type SearchProps = {
 /** Search component */
 export default function Search(props: SearchProps): JSX.Element {
     const [name] = useState<string>(props.name || generateGuid());
-    const [searchValue, setSearchValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>(props.defaultValue || '');
 
     const searchType = props.searchType || 'byTyping';
 
@@ -74,7 +77,7 @@ export default function Search(props: SearchProps): JSX.Element {
     const className: string = 'app-search control'
         + ` is-${(props.size || 'normal')}`
         + (props.isLoading === true ? ' is-loading' : '')
-        + (searchType === 'byButton' ? ' is-expanded': '')
+        + (searchType === 'byButton' ? ' is-expanded' : '')
         ;
 
     const inputClassName: string = 'input is-unselectable'
@@ -89,6 +92,7 @@ export default function Search(props: SearchProps): JSX.Element {
                     <input
                         type='search'
                         name={name}
+                        defaultValue={searchValue}
                         className={inputClassName}
                         disabled={props.disabled}
                         onChange={onChange}
@@ -112,6 +116,7 @@ export default function Search(props: SearchProps): JSX.Element {
                 <input
                     type='search'
                     name={name}
+                    defaultValue={searchValue}
                     className={inputClassName}
                     disabled={props.disabled}
                     onChange={onChange}

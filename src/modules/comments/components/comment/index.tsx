@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import './comment.scss';
 import './comment.dark.scss';
@@ -8,11 +8,11 @@ import { Comment as CommentModel } from '@app/models/comment';
 import Button from '@app/sharedComponents/button';
 
 type CommentProps = {
+    /** Is comment should be scrolled into view after render */
+    shouldBeScrolledTo: boolean;
+
     /** Displayed comment */
     comment: CommentModel;
-
-    /** Is module in loading state. Should action buttons be disabled */
-    isModuleInLoadingState: boolean;
 
     /** Is application in read only mode */
     isReadOnlyMode: boolean;
@@ -31,21 +31,48 @@ type CommentProps = {
 };
 
 /** Comment component */
-export default function Comment({ comment, increment, showDescription, updateComment, deleteComment, isModuleInLoadingState, isReadOnlyMode }: CommentProps): JSX.Element {
+export default function Comment({ shouldBeScrolledTo, comment, increment, showDescription, updateComment, deleteComment, isReadOnlyMode }: CommentProps): JSX.Element {
     const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
     const onDeleteCommentClick = useCallback(() => { deleteComment(comment.id); }, [comment.id, deleteComment]);
 
+    const [highlighted, setHighlighted] = useState(false);
+
+    const className =
+        'app-comment'
+        + (highlighted ? ' app-comment--highlighted' : '');
+
+    useEffect(() => {
+        if (shouldBeScrolledTo) {
+            const element = document.getElementById(comment.id);
+
+            if (element) {
+                element.scrollIntoView();
+
+                setHighlighted(true);
+
+                const timer = setTimeout(() => {
+                    setHighlighted(false);
+                }, 5 * 1000);
+
+                return () => clearTimeout(timer);
+            }
+        }
+
+        return () => { };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
-        <div className="app-comment">
+        <div className={className} id={comment.id}>
             <div className="app-comment__appearance">
                 <Button
                     type="default"
                     icon={{ className: 'arrow-up' }}
                     title="Increment count"
                     onClick={onIncrementClick}
-                    disabled={isModuleInLoadingState || isReadOnlyMode}
+                    disabled={isReadOnlyMode}
                 />
                 <span>
                     {comment.appearanceCount}
@@ -61,7 +88,6 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     icon={{ className: 'info-lg' }}
                     title="Show description"
                     onClick={onShowDescriptionClick}
-                    disabled={isModuleInLoadingState}
                 />
                 <Button
                     type="warning"
@@ -69,7 +95,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     icon={{ className: 'pencil' }}
                     title="Edit"
                     onClick={onUpdateCommentClick}
-                    disabled={isModuleInLoadingState || isReadOnlyMode}
+                    disabled={isReadOnlyMode}
                 />
                 <Button
                     type="danger"
@@ -77,7 +103,7 @@ export default function Comment({ comment, increment, showDescription, updateCom
                     icon={{ className: 'trash' }}
                     title="Delete"
                     onClick={onDeleteCommentClick}
-                    disabled={isModuleInLoadingState || isReadOnlyMode}
+                    disabled={isReadOnlyMode}
                 />
             </div>
         </div>

@@ -1,0 +1,89 @@
+.app-dropdown {
+    min-width: 7.5rem;
+    width: fit-content;
+
+    &__list {
+        position: absolute;
+
+        opacity: 0;
+        visibility: collapse;
+
+        transition: 0.15s ease-in-out opacity;
+    }
+
+    & .dropdown-menu {
+        min-width: 11.75rem;
+    }
+
+    span.dropdown-item {
+        color: gray;
+        text-align: center;
+    }
+
+    &__label {
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            max-width: 15rem;
+        }
+
+        &--default span {
+            color: gray;
+            font-style: italic;
+        }
+
+        .app-icon {
+            &:hover {
+                color: #0d6efd;
+            }
+
+            &.bi-arrow-up::before {
+                transition: 0.25s ease-in-out transform;
+            }
+
+            &.bi-plus-lg::before {
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    &-item {
+        cursor: pointer;
+        user-select: none;
+        white-space: normal;
+
+        transition: 0.25s ease-in-out;
+        transition-property: color, background-color;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #0a0a0a;
+        }
+        &:active {
+            background-color: rgba(0, 0, 0, 0.15);
+            color: #0a0a0a;
+        }
+
+        &.is-active {
+            background-color: #485fc7;
+            color: #fff;
+        }
+    }
+
+    &.is-active {
+        .app-dropdown__label .app-icon.bi-arrow-up::before {
+            transform: rotate(180deg);
+        }
+
+        .app-dropdown__list {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

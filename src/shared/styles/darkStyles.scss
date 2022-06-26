@@ -1,0 +1,24 @@
+.app--dark {
+    .app-input {
+        label {
+            color: white;
+        }
+        input,
+        textarea {
+            background-color: #585858;
+            color: white;
+
+            &::-webkit-input-placeholder {
+                color: #d1cfcf;
+            }
+
+            &[type="date"]::-webkit-calendar-picker-indicator {
+                background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0id2hpdGUiIGNsYXNzPSJiaSBiaS1jYWxlbmRhciIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICA8cGF0aCBkPSJNMy41IDBhLjUuNSAwIDAgMSAuNS41VjFoOFYuNWEuNS41IDAgMCAxIDEgMFYxaDFhMiAyIDAgMCAxIDIgMnYxMWEyIDIgMCAwIDEtMiAySDJhMiAyIDAgMCAxLTItMlYzYTIgMiAwIDAgMSAyLTJoMVYuNWEuNS41IDAgMCAxIC41LS41ek0xIDR2MTBhMSAxIDAgMCAwIDEgMWgxMmExIDEgMCAwIDAgMS0xVjRIMXoiLz4KPC9zdmc+");
+            }
+        }
+    }
+
+    .title, .subtitle {
+        color: white;
+    }
+}

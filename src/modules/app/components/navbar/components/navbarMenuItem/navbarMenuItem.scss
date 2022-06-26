@@ -11,7 +11,7 @@
 
     transition: background-color 0.125s ease-in-out, color 0.125s ease-in-out;
 
-    &:not(&--disabled):not(&--active):not(&--single) {
+    &:not(&--disabled):not(&--active) {
         &:hover {
             color: #fff;
             background-color: rgba(0, 0, 0, 0.125);
@@ -21,15 +21,15 @@
         }
     }
 
-    &:hover {
+    &:hover:not(&--active) {
         color: #fff;
     }
 
-    &--disabled:not(&--single) {
+    &--disabled {
         cursor: not-allowed;
     }
 
-    &--active:not(&--single) {
+    &--active {
         cursor: default;
         color: #000;
         background-color: #fff;

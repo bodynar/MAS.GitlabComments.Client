@@ -1,10 +1,8 @@
-import React from 'react';
-
 import { version } from 'package.json';
 
 import './footer.scss';
 
-import { isStringEmpty } from '@app/utils/common';
+import { isStringEmpty } from '@bodynarf/utils/common';
 
 import Anchor from '@app/sharedComponents/anchor';
 

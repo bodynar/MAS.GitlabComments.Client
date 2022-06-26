@@ -1,50 +1,17 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-import { Action, ActionWithPayload } from '@app/redux/types';
+import { isNullOrUndefined } from '@bodynarf/utils/common';
 
-import { isNullOrUndefined } from '@app/utils/common';
+import { ActionWithPayload } from '@app/redux/types';
+
 import { BaseCommentModel } from '@app/models/comment';
 
 import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';
-import { NotificatorAction } from '@app/redux/notificator/types';
-import { getErrorNotificationAction } from '@app/redux/notificator/utils';
 
 import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
 
-import { setModuleState } from './actions';
-import { CommentModuleState, CommentsState } from './types';
 import { CompositeAppState } from '../rootReducer';
-
-/**
- * Create dispatch-based action to set comments module error state
- * @param dispatch Redux store dispatcher
- * @returns Redux store action setting error
- */
-export const setError = (
-    dispatch: ThunkDispatch<CommentsState, unknown, Action>,
-    getState: () => CompositeAppState
-) => (error: string): void => {
-    const { app } = getState();
-
-    dispatch(getErrorNotificationAction(error, app.isCurrentTabFocused));
-
-    dispatch(getSetIsLoadingAction(false));
-};
-
-/**
- * Create comments module redux action to set module state according to loading state flag.
- * Will set idle if flag is false
- * @param isLoading Is module in loading state
- * @returns Comments module redux store action
- */
-export const getSetIsLoadingAction = (isLoading: boolean): ActionWithPayload => {
-    const nextState: CommentModuleState = isLoading ? 'loading' : 'idle';
-
-    return {
-        type: setModuleState,
-        payload: { nextState }
-    };
-};
+import { getSetAppIsLoadingAction } from '../app/actions/setAppIsLoading';
 
 /**
  * Get comment form configuration for form in modal box
@@ -88,12 +55,12 @@ export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel):
  * @returns Modal callback configuration
  */
 export const getCommentModalFormCallbackConfig = (
-    dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | NotificatorAction>,
-    action: (updateComment: BaseCommentModel) => ThunkAction<void, CommentsState, unknown, ActionWithPayload | NotificatorAction>
+    dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
+    action: (updateComment: BaseCommentModel) => ThunkAction<void, CompositeAppState, unknown, ActionWithPayload>
 ): ModalCallback => {
     return {
         saveCallback: (modalData: ModalCloseData): void => {
-            dispatch(getSetIsLoadingAction(false));
+            dispatch(getSetAppIsLoadingAction(false));
 
             const message: string | undefined = modalData.formData?.fields.find(x => x.name === 'Comment')?.value;
 
@@ -109,7 +76,7 @@ export const getCommentModalFormCallbackConfig = (
             dispatch(action(comment));
         },
         cancelCallback: (): void => {
-            dispatch(getSetIsLoadingAction(false));
+            dispatch(getSetAppIsLoadingAction(false));
         },
     };
 };

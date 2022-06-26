@@ -9,7 +9,7 @@ import rootReducer from "./rootReducer";
  * During development mode also provides redux store changes logger
 */
 const middleWare =
-    process.env.PRODUCTION
+    import.meta.env.PRODUCTION
         ? applyMiddleware(thunkMiddleware)
         : applyMiddleware(thunkMiddleware, createLogger());
 

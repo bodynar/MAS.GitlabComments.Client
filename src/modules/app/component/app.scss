@@ -8,8 +8,9 @@
     transition: 0.15s ease-in-out;
     transition-property: color, background-color;
 
-    &__header {
-        min-height: 5%;
+    &__navbar {
+        height: 10%;
+        max-height: 3.25rem;
     }
     &__content {
         flex-grow: 1;
