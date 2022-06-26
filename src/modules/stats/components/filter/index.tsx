@@ -98,14 +98,14 @@ const StatsFilters = ({ filter, setStatsFilter, onApplyFiltersClick }: StatsFilt
                         <div className="column">
                             <Date
                                 onValueChange={onLeftDateChange}
-                                defaultValue={filter?.leftDate}
+                                defaultValue={filter.leftDate}
                                 label={{ caption: "From", horizontal: true }}
                             />
                         </div>
                         <div className="column">
                             <Date
                                 onValueChange={onRightDateChange}
-                                defaultValue={filter?.rightDate}
+                                defaultValue={filter.rightDate}
                                 label={{ caption: "To", horizontal: true }}
                             />
                         </div>
