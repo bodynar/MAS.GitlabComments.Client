@@ -6,6 +6,7 @@ import './comment.dark.scss';
 import { Comment as CommentModel } from '@app/models/comment';
 
 import Button from '@app/sharedComponents/button';
+import { getClassName } from '@bodynarf/utils/component';
 
 type CommentProps = {
     /** Is comment should be scrolled into view after render */
@@ -39,9 +40,12 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
 
     const [highlighted, setHighlighted] = useState(false);
 
-    const className =
-        'app-comment'
-        + (highlighted ? ' app-comment--highlighted' : '');
+    const className = getClassName([
+        "app-comment",
+        "columns",
+        "ml-1",
+        highlighted ? "app-comment--highlighted" : ""
+    ]);
 
     useEffect(() => {
         if (shouldBeScrolledTo) {
@@ -66,45 +70,50 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
 
     return (
         <div className={className} id={comment.id}>
-            <div className="app-comment__appearance">
-                <Button
-                    type="default"
-                    icon={{ className: 'arrow-up' }}
-                    title="Increment count"
-                    onClick={onIncrementClick}
-                    disabled={isReadOnlyMode}
-                />
-                <span>
-                    {comment.appearanceCount}
-                </span>
+            <div className="column is-1 my-auto">
+
+                <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
+                    <Button
+                        type="default"
+                        icon={{ className: 'arrow-up' }}
+                        title="Increment count"
+                        onClick={onIncrementClick}
+                        disabled={isReadOnlyMode}
+                    />
+                    <span className="ml-2">
+                        {comment.appearanceCount}
+                    </span>
+                </div>
             </div>
-            <p className="app-comment__message">
+            <p className="column m-auto">
                 {comment.message}
             </p>
-            <div className="buttons app-comment__actions">
-                <Button
-                    type="info"
-                    outlined={true}
-                    icon={{ className: 'info-lg' }}
-                    title="Show description"
-                    onClick={onShowDescriptionClick}
-                />
-                <Button
-                    type="warning"
-                    outlined={true}
-                    icon={{ className: 'pencil' }}
-                    title="Edit"
-                    onClick={onUpdateCommentClick}
-                    disabled={isReadOnlyMode}
-                />
-                <Button
-                    type="danger"
-                    outlined={true}
-                    icon={{ className: 'trash' }}
-                    title="Delete"
-                    onClick={onDeleteCommentClick}
-                    disabled={isReadOnlyMode}
-                />
+            <div className="column is-2 my-auto">
+                <div className="buttons is-justify-content-center">
+                    <Button
+                        type="info"
+                        outlined={true}
+                        icon={{ className: 'info-lg' }}
+                        title="Show description"
+                        onClick={onShowDescriptionClick}
+                    />
+                    <Button
+                        type="warning"
+                        outlined={true}
+                        icon={{ className: 'pencil' }}
+                        title="Edit"
+                        onClick={onUpdateCommentClick}
+                        disabled={isReadOnlyMode}
+                    />
+                    <Button
+                        type="danger"
+                        outlined={true}
+                        icon={{ className: 'trash' }}
+                        title="Delete"
+                        onClick={onDeleteCommentClick}
+                        disabled={isReadOnlyMode}
+                    />
+                </div>
             </div>
         </div>
     );

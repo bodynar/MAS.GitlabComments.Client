@@ -4,33 +4,6 @@
     gap: 1rem;
 }
 
-.app-comments {
-    &__items {
-        @include flex-list;
-
-        & > div[role="transition-container"] {
-            @include flex-list;
-        }
-    }
-    &__headers {
-        display: flex;
-        gap: 1em;
-
-        font-style: italic;
-        cursor: default;
-
-        & > *:nth-child(1) {
-            min-width: 6rem;
-        }
-        & > *:nth-child(2) {
-            width: 85%;
-        }
-        & > *:nth-child(3) {
-            min-width: 10rem;
-        }
-    }
-}
-
 .app-empty-list-placeholder {
     font-style: italic;
     color: rgb(0, 0, 0, 0.75);

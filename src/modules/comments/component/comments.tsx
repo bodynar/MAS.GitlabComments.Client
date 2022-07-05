@@ -107,9 +107,9 @@ function Comments(props: CommentsProps): JSX.Element {
         if (isNullOrEmpty(props.searchQuery) && !isNullOrEmpty(searchQueryParam)) {
             props.setSearchQuery(searchQueryParam!);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    
+
     useEffect(() => onSearch(props.searchQuery), [onSearch, props.comments, props.searchQuery]);
 
     const noCommentsMessage: string =
@@ -139,9 +139,24 @@ function Comments(props: CommentsProps): JSX.Element {
             <div className="app-comments__items">
                 {displayedComments.length > 0
                     ? <>
-                        <ListHeaders
-                            columns={['Appearance', 'Comment', 'Actions']}
-                        />
+                        <div className="columns ml-1">
+                            <div className="column is-1">
+                                <span className="is-flex is-justify-content-center">
+                                    Appearance
+                                </span>
+                            </div>
+                            <div className="column ml-2">
+                                <span>
+                                    Comment
+                                </span>
+                            </div>
+                            <div className="column is-2">
+                                <span className="is-flex is-justify-content-center">
+                                    Actions
+                                </span>
+                            </div>
+                        </div>
+
                         <TransitionGroup role="transition-container">
                             {displayedComments.map(comment =>
                                 <CSSTransition
@@ -192,21 +207,5 @@ const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element =>
         <span className="app-empty-list-placeholder is-unselectable">
             {displayMessage}
         </span>
-    );
-};
-
-// TODO: v2 find a better solution
-/** Comments table headers */
-const ListHeaders = ({ columns }: { columns: Array<string>; }): JSX.Element => {
-    return (
-        <div className="app-comments__headers">
-            {columns.map(column =>
-                <span
-                    key={column}
-                >
-                    {column}
-                </span>
-            )}
-        </div>
     );
 };

@@ -13,8 +13,6 @@ import { Comment } from "@app/models/comment";
 import { getSetModuleStateAction } from "../actions/setModuleState";
 import { getSetCommentsAction } from "../actions/setComments";
 
-// import { generateGuid } from "@app/utils/guid";
-
 /**
  * Get all comments from api
  * @returns Get all comments function that can be called with redux dispatcher
@@ -37,20 +35,3 @@ export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, 
                 setError(dispatch, getState)(error);
             });
     };
-
-// const mockComments: Array<Comment> =
-//     new Array(100)
-//         .fill(0, 0, 100)
-//         .map((_, i) => ({
-//             id: generateGuid(),
-//             appearanceCount: i + 1,
-//             message: `Comment ${i + 1}`
-//         }))
-//         .map(x => ({
-//             ...x,
-//             id: x.appearanceCount === 15 ? 'afb494f8-5977-4a12-9fca-b7da599802e4' : x.id
-//         }))
-//         .map(x => ({
-//             ...x,
-//             message: `Comment ${x.id}`
-//         }));
