@@ -4,13 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { connect } from 'react-redux';
 
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
-
 import { isNullOrEmpty, isStringEmpty } from '@bodynarf/utils/common';
-
-import './comments.scss';
-import './comments.dark.scss';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
@@ -24,7 +18,7 @@ import Search from '@app/sharedComponents/search';
 
 import useQueryParam from '@app/hooks/useQueryParam';
 
-import Comment from '../components/comment';
+import CommentTable from '../components/table';
 
 type CommentsProps = {
     /** Is app in read only mode */
@@ -136,49 +130,13 @@ function Comments(props: CommentsProps): JSX.Element {
                     minCharsToSearch={0}
                 />
             </div>
-            <div className="app-comments__items">
-                {displayedComments.length > 0
-                    ? <>
-                        <div className="columns ml-1">
-                            <div className="column is-1">
-                                <span className="is-flex is-justify-content-center">
-                                    Appearance
-                                </span>
-                            </div>
-                            <div className="column ml-2">
-                                <span>
-                                    Comment
-                                </span>
-                            </div>
-                            <div className="column is-2">
-                                <span className="is-flex is-justify-content-center">
-                                    Actions
-                                </span>
-                            </div>
-                        </div>
-
-                        <TransitionGroup role="transition-container">
-                            {displayedComments.map(comment =>
-                                <CSSTransition
-                                    key={comment.id}
-                                    timeout={250}
-                                    classNames="app-comment"
-                                    unmountOnExit
-                                >
-                                    <Comment
-                                        key={comment.id}
-                                        {...props}
-                                        comment={comment}
-                                        shouldBeScrolledTo={highlightedCommentId === comment.id}
-                                        isReadOnlyMode={props.readOnlyMode === true}
-                                    />
-                                </CSSTransition>
-                            )}
-                        </TransitionGroup>
-                    </>
-                    : <EmptyListPlaceholder message={noCommentsMessage} />
-                }
-            </div>
+            <CommentTable
+                {...props}
+                displayedComments={displayedComments}
+                highlightedCommentId={highlightedCommentId}
+                noCommentsMessage={noCommentsMessage}
+                readOnlyMode={props.readOnlyMode === true}
+            />
         </section>
     );
 }
@@ -196,16 +154,3 @@ export default connect(
         setSearchQuery: getSetSearchQueryAction,
     }
 )(Comments);
-
-/** Empty list placeholder */
-const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element => {
-    const displayMessage: string =
-        isStringEmpty(message)
-            ? 'No items' : message;
-
-    return (
-        <span className="app-empty-list-placeholder is-unselectable">
-            {displayMessage}
-        </span>
-    );
-};
