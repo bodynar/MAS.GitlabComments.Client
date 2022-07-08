@@ -31,7 +31,7 @@ const DevelopmentPanel = ({ show }: DevelopmentPanelProps): JSX.Element => {
             show({
                 id: generateGuid(),
                 createdAt: new Date(),
-                message: 'Test message in DEV mode',
+                message: 'Test message in DEV mode\nNew line content\nLorem ipsum dorem dolores',
                 type: type as NotificationType
             }, true);
         }, [show]);

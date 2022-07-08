@@ -1,4 +1,3 @@
-.app-notification,
 .app-notificator__item {
     max-height: 7.25rem;
     overflow: auto;
@@ -7,6 +6,8 @@
 
     transition: 0.15s ease-in-out;
     transition-property: color, background-color;
+
+    white-space: pre-line;
 
     &-enter {
         opacity: 0;

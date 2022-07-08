@@ -24,7 +24,6 @@ type NotificationProps = {
     onHideClick: (notificationId: string) => void;
 };
 
-
 /** Single notification component */
 export default function Notification({ item, onHideClick }: NotificationProps): JSX.Element {
     const hide = useCallback(() => {
@@ -38,7 +37,7 @@ export default function Notification({ item, onHideClick }: NotificationProps): 
     }, [hide]);
 
     return (
-        <div className={`app-notification notification ${typeClassNameMap.get(item.type)}`}>
+        <div className={`app-notificator__item notification ${typeClassNameMap.get(item.type)}`}>
             <button
                 className="delete"
                 onClick={hide}
