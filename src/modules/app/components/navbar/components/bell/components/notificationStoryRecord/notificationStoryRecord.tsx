@@ -12,10 +12,10 @@ type NotificationStoryRecordProps = {
 
 /** Map of notification type to color */
 const typeColorMap: Map<NotificationType, string> = new Map([
-    ['info', '#3298dc'],
-    ['success', '#48c774'],
-    ['warn', '#ffd83d'],
-    ['error', '#f14668'],
+    [NotificationType.info, '#3298dc'],
+    [NotificationType.success, '#48c774'],
+    [NotificationType.warn, '#ffd83d'],
+    [NotificationType.error, '#f14668'],
 ]);
 
 /** Notification item in history list component */

@@ -1,10 +1,16 @@
 /** Notification types */
-export type NotificationType =
-    | 'info' /** Blue color */
-    | 'success' /** Green color */
-    | 'warn' /** Orange color */
-    | 'error' /** Red color */
-    ;
+// export type NotificationType =
+//     | 'info' /** Blue color */
+//     | 'success' /** Green color */
+//     | 'warn' /** Orange color */
+//     | 'error' /** Red color */
+//     ;
+export enum NotificationType {
+    info = 'info',
+    success = 'success',
+    warn = 'warn',
+    error = 'error'
+}
 
 /** Notification model */
 export interface NotificationItem extends NotificationHistoryItem {

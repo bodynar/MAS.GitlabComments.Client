@@ -7,6 +7,7 @@ import loading from '@app/assets/loading01.svg';
 import { menuItems } from "../navbar/menu";
 
 import ReadOnlyModeNote from "../readOnlyModeNote";
+import DevelopmentPanel from "../devPanel";
 
 type AppContentProps = {
     /** 
@@ -22,9 +23,12 @@ type AppContentProps = {
 /**
  * Block of application main content
  */
-function AppContent({ isLoading, isReadOnly }: AppContentProps): JSX.Element {
+const AppContent = ({ isLoading, isReadOnly }: AppContentProps): JSX.Element => {
     return (
         <>
+            {import.meta.env.DEV &&
+                <DevelopmentPanel/>
+            }
             {isReadOnly &&
                 <ReadOnlyModeNote />
             }
@@ -51,6 +55,6 @@ function AppContent({ isLoading, isReadOnly }: AppContentProps): JSX.Element {
             </div>
         </>
     );
-}
+};
 
 export default AppContent;
