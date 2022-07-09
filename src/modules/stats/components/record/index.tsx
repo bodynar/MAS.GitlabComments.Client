@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './record.scss';
 import './record.dark.scss';
 
-import Button from '@app/sharedComponents/button';
+import Button from '@bodynarf/react.components/components/button';
 
 import { StatsRecord } from '@app/models/response/statsRecord';
 
@@ -41,13 +41,13 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ className: 'info-lg' }}
+                        icon={{ name: 'info-lg' }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="link"
-                        icon={{ className: 'link-45deg' }}
+                        icon={{ name: 'link-45deg' }}
                         title="Show in list"
                         onClick={onShowClick}
                     />

@@ -5,7 +5,8 @@ import './comment.dark.scss';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
-import Button from '@app/sharedComponents/button';
+import Button from '@bodynarf/react.components/components/button';
+
 import { getClassName } from '@bodynarf/utils/component';
 
 type CommentProps = {
@@ -71,11 +72,10 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
     return (
         <div className={className} id={comment.id}>
             <div className="column is-1 my-auto">
-
                 <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
                     <Button
                         type="default"
-                        icon={{ className: 'arrow-up' }}
+                        icon={{ name: 'arrow-up' }}
                         title="Increment count"
                         onClick={onIncrementClick}
                         disabled={isReadOnlyMode}
@@ -93,14 +93,14 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ className: 'info-lg' }}
+                        icon={{ name: 'info-lg' }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="warning"
                         outlined={true}
-                        icon={{ className: 'pencil' }}
+                        icon={{ name: 'pencil' }}
                         title="Edit"
                         onClick={onUpdateCommentClick}
                         disabled={isReadOnlyMode}
@@ -108,7 +108,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     <Button
                         type="danger"
                         outlined={true}
-                        icon={{ className: 'trash' }}
+                        icon={{ name: 'trash' }}
                         title="Delete"
                         onClick={onDeleteCommentClick}
                         disabled={isReadOnlyMode}

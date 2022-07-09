@@ -19,3 +19,10 @@ body,
         }
     }
 }
+
+label.is-required::after {
+    color: red;
+    content: "*";
+    margin-left: 0.25rem;
+    font-size: 0.95rem;
+}

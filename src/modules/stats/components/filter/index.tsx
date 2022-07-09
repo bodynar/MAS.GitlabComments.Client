@@ -4,10 +4,10 @@ import moment from 'moment';
 
 import { isNullOrUndefined } from '@bodynarf/utils/common';
 
-import { SelectableItem } from '@app/sharedComponents/dropdown/types';
-import Dropdown from '@app/sharedComponents/dropdown';
-import Date from '@app/sharedComponents/date';
-import Button from '@app/sharedComponents/button';
+import { SelectableItem } from '@bodynarf/react.components/components/dropdown/types';
+import Dropdown from '@bodynarf/react.components/components/dropdown';
+import Date from '@bodynarf/react.components/components/primitives/date';
+import Button from '@bodynarf/react.components/components/button';
 
 import { DateRange, StatsFilter } from '@app/redux/stats/types';
 

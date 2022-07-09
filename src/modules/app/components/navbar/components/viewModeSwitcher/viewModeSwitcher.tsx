@@ -7,10 +7,11 @@ import './viewModeSwitcher.scss';
 import { isUndefined } from '@bodynarf/utils/common';
 import { appStorage } from '@bodynarf/utils/localStorage';
 
+import Icon from '@bodynarf/react.components/components/icon';
+
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { getSetDarkModeStateAction } from '@app/redux/app/actions/setDarkModeState';
 
-import Icon from '@app/sharedComponents/icon';
 
 type ViewModeSwitcherProps = {
     /** Is dark mode currently active */
@@ -52,7 +53,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
 
     return (
         <div className="app-mode-switcher">
-            <Icon className={sunClassName} />
+            <Icon name={sunClassName} />
             <label className="app-mode-switcher__switch">
                 <input
                     type="checkbox"
@@ -61,7 +62,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
                 />
                 <span className="app-mode-switcher__slider"></span>
             </label>
-            <Icon className={moonClassName} />
+            <Icon name={moonClassName} />
         </div>
     );
 }
