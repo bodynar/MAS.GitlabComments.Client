@@ -1,41 +1,11 @@
-import { NotificationItem } from "@app/models/notification";
+/** Add notification to store */
+export const AddNotification = "notification/add";
 
-import { AddNotification, HideNotification, HideAllNotifications, NotificationAddAction, NotificationEditAction, NotificatorAction, SetNotificationsBadgeToZero } from "./types";
+/** Hide specified notifications */
+export const HideNotification = "notification/hide";
 
-/** Show notification */
-export const addNotification = (notification: NotificationItem, notifyOnBadge: boolean): NotificationAddAction => {
-    return addNotifications([notification], notifyOnBadge);
-};
+/** Clear all active notifications */
+export const HideAllNotifications = "notification/hideAll";
 
-/** Show pack of notifications */
-export const addNotifications = (notifications: Array<NotificationItem>, notifyOnBadge: boolean): NotificationAddAction => {
-    return {
-        type: AddNotification,
-        notifications: notifications,
-        displayDismissableNotification: notifyOnBadge
-    };
-};
-
-/** Hide notification */
-export const hideNotification = (notificationId: string): NotificationEditAction => {
-    return hideNotifications([notificationId]);
-};
-
-/** Hide pack of notifications */
-export const hideNotifications = (notificationIds: Array<string>): NotificationEditAction => {
-    return {
-        type: HideNotification,
-        notificationIds: notificationIds
-    };
-};
-
-/** Hide all notifications */
-export const hideAllNotifications = (): NotificationEditAction => ({
-    type: HideAllNotifications,
-    notificationIds: [],
-});
-
-/** Clear notification badge by setting to zero  */
-export const setNotificationsBadgeToZero = (): NotificatorAction => ({
-    type: SetNotificationsBadgeToZero,
-});
+/** Clear notification badge by setting to zero */
+export const SetNotificationsBadgeToZero = "notification/setBadgeToZero";

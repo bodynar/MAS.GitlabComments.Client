@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import './navbar.scss';
 import './navbar.dark.scss';
 
-import { isStringEmpty } from "@app/utils/common";
+import { isStringEmpty } from "@bodynarf/utils/common";
 
 import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from '../components';
 
@@ -23,7 +23,8 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
         throw new Error("className is empty");
     }
 
-    const [activeMenuItem, setActiveMenuItem] = useState<string>(menuItems[0].name);
+    const { pathname } = useLocation();
+    const activeItem = menuItems.find(({ link }) => pathname === link)?.name || menuItems[0].name;
 
     return (
         <nav
@@ -38,9 +39,7 @@ export default function Navbar({ className }: NavbarProps): JSX.Element {
                         <NavbarMenuItem
                             key={menuItem.name}
                             item={menuItem}
-                            isSingle={menuItems.length === 1}
-                            isActive={menuItem.name === activeMenuItem}
-                            onClick={setActiveMenuItem}
+                            isActive={menuItem.name === activeItem}
                         />
                     )}
                 </div>

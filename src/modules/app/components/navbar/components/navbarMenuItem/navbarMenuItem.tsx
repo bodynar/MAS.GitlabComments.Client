@@ -1,60 +1,44 @@
-import React from "react";
+import { Link } from "react-router-dom";
+
+import { getClassName } from "@bodynarf/utils/component";
 
 import './navbarMenuItem.scss';
+import './navbarMenuItem.dark.scss';
 
 import { MenuItem } from "../../menu";
-
-import Anchor from "@app/sharedComponents/anchor";
 
 type NavbarMenuItemProps = {
     /** Menu item configuration */
     item: MenuItem;
 
-    /** Is single item. Will affect on styles */
-    isSingle: boolean;
-
     /** Is menu item active */
     isActive: boolean;
-
-    /** Menu item click handler*/
-    onClick: (name: string) => void;
 };
 
 /** Navar menu item component */
-export default function NavbarMenuItem({ item, isActive, onClick, isSingle }: NavbarMenuItemProps): JSX.Element {
-    const href: string | undefined =
-        item.disabled === true || isActive
-            ? undefined
-            : item.link;
+export default function NavbarMenuItem({ item, isActive }: NavbarMenuItemProps): JSX.Element {
+    const className = getClassName([
+        'app-navbar__item',
+        item.disabled === true ? 'app-navbar__item--disabled' : '',
+        isActive ? 'app-navbar__item--active' : '',
+    ]);
 
-    let className = 'app-navbar__item is-unselectable';
-
-    if (isSingle) {
-        className += ' app-navbar__item--single';
+    if (item.disabled === true || isActive) {
+        return (
+            <span
+                className={className}
+            >
+                {item.caption}
+            </span>
+        );
     } else {
-        if (item.disabled === true) {
-            className += ' app-navbar__item--disabled';
-        }
-        if (isActive) {
-            className += ' app-navbar__item--active';
-        }
+        return (
+            <Link
+                className={className}
+                to={item.link}
+            >
+                {item.caption}
+            </Link>
+        );
     }
-
-    const onHrefClick = React.useCallback(
-        () => {
-            if (item.disabled !== true && !isActive) {
-                onClick(item.name);
-            }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [isActive, item.disabled, onClick]);
-
-    return (
-        <Anchor
-            className={className}
-            href={href}
-            caption={item.caption}
-            onClick={onHrefClick}
-            disableHovering={true}
-        />
-    );
 }

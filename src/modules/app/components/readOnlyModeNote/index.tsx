@@ -1,5 +1,3 @@
-import React from 'react';
-
 import './readOnlyMode.scss';
 import './readOnlyMode.dark.scss';
 

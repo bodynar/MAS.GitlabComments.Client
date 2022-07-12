@@ -1,11 +1,13 @@
-import { getPropertyValueWithCheck } from "@app/utils/object";
+import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
 
 import { ActionWithPayload } from "../types";
+import { SetDarkModeState, SetIsAppLoadingState, SetReadOnlyModeState, SetTabIsFocused } from "./actions";
 
-import { AppState, SetTabIsFocused, SetReadOnlyModeState, SetDarkModeState } from "./types";
+import { AppState } from "./types";
 
 const defaultState: AppState = {
-    isCurrentTabFocused: true
+    isCurrentTabFocused: true,
+    loading: false
 };
 
 /**
@@ -41,6 +43,15 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
             return {
                 ...state,
                 isDarkMode: isDarkMode
+            };
+        }
+        case SetIsAppLoadingState: {
+            const isLoading: boolean =
+                getPropertyValueWithCheck(action.payload, 'loading', false) || false;
+
+            return {
+                ...state,
+                loading: isLoading
             };
         }
         default: {

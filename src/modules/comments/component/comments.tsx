@@ -1,23 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { connect } from 'react-redux';
 
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { isNullOrEmpty, isStringEmpty } from '@bodynarf/utils/common';
 
-import './comments.scss';
-import './comments.dark.scss';
-
-import { isStringEmpty } from '@app/utils/common';
+import Button from '@bodynarf/react.components/components/button';
+import Search from '@bodynarf/react.components/components/search';
 
 import { Comment as CommentModel } from '@app/models/comment';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
+import { getSetSearchQueryAction } from '@app/redux/comments/actions/setSearchQuery';
 import { CommentModuleState } from '@app/redux/comments/types';
 
-import Button from '@app/sharedComponents/button';
-import Search from '@app/sharedComponents/search';
+import useQueryParam from '@app/hooks/useQueryParam';
 
-import Comment from '../components/comment';
+import CommentTable from '../components/table';
 
 type CommentsProps = {
     /** Is app in read only mode */
@@ -28,6 +29,9 @@ type CommentsProps = {
 
     /** Current module state */
     state: CommentModuleState;
+
+    /** Current search query */
+    searchQuery: string;
 
     /** Add comment in modal box */
     addComment: () => void;
@@ -46,15 +50,29 @@ type CommentsProps = {
 
     /** Delete comment by it's identifier */
     deleteComment: (commentId: string) => void;
+
+    /** Save current search query */
+    setSearchQuery: (searchQuery: string) => void;
 };
 
 /** Comments module main component */
 function Comments(props: CommentsProps): JSX.Element {
-    const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(props.comments);
-    const [searchPattern, setSearchPattern] = useState<string>('');
+    const searchQueryParam = useQueryParam('q') || '';
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : '';
+
+    const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(
+        props.comments.filter(x =>
+            x.message.toLowerCase().includes((props.searchQuery || searchQueryParam).toLocaleLowerCase())
+        )
+    );
 
     const onSearch = useCallback(
         (searchPattern: string) => {
+            const params = new URLSearchParams();
+
             if (isStringEmpty(searchPattern)) {
                 setDisplayedComments([...props.comments]);
             } else {
@@ -62,21 +80,31 @@ function Comments(props: CommentsProps): JSX.Element {
                     [...props.comments].filter(x => x.message.toLowerCase().includes(searchPattern.toLowerCase()));
 
                 setDisplayedComments(filteredComments);
+
+                params.append('q', searchPattern);
             }
 
-            setSearchPattern(searchPattern);
-        }, [props.comments]);
+            navigate({ search: params.toString(), hash: location.hash, });
+
+            props.setSearchQuery(searchPattern);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [location.hash, navigate, props.comments]);
 
     useEffect(() => {
         if (props.state === 'init') {
             props.getComments();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.state]);
 
-    useEffect(() => onSearch(searchPattern), [onSearch, props.comments, searchPattern]);
+    useEffect(() => {
+        if (isNullOrEmpty(props.searchQuery) && !isNullOrEmpty(searchQueryParam)) {
+            props.setSearchQuery(searchQueryParam!);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    const isLoading = useMemo((): boolean => props.state === 'loading', [props.state]);
+    useEffect(() => onSearch(props.searchQuery), [onSearch, props.comments, props.searchQuery]);
 
     const noCommentsMessage: string =
         props.comments.length === 0
@@ -90,7 +118,6 @@ function Comments(props: CommentsProps): JSX.Element {
                 <Button
                     caption="Add comment"
                     type="success"
-                    isLoading={isLoading}
                     onClick={props.addComment}
                     disabled={props.readOnlyMode}
                 />
@@ -98,39 +125,18 @@ function Comments(props: CommentsProps): JSX.Element {
             <div className="block">
                 <Search
                     caption="Search comment by text.."
+                    defaultValue={props.searchQuery}
                     onSearch={onSearch}
                     minCharsToSearch={0}
-                    isLoading={isLoading}
                 />
             </div>
-            <div className="app-comments__items">
-                {displayedComments.length > 0
-                    ? <>
-                        <ListHeaders
-                            columns={['Appearance', 'Comment', 'Actions']}
-                        />
-                        <TransitionGroup role="transition-container">
-                            {displayedComments.map(comment =>
-                                <CSSTransition
-                                    key={comment.id}
-                                    timeout={250}
-                                    classNames="app-comment"
-                                    unmountOnExit
-                                >
-                                    <Comment
-                                        key={comment.id}
-                                        {...props}
-                                        comment={comment}
-                                        isModuleInLoadingState={props.state == 'loading'}
-                                        isReadOnlyMode={props.readOnlyMode === true}
-                                    />
-                                </CSSTransition>
-                            )}
-                        </TransitionGroup>
-                    </>
-                    : <EmptyListPlaceholder message={noCommentsMessage} />
-                }
-            </div>
+            <CommentTable
+                {...props}
+                displayedComments={displayedComments}
+                highlightedCommentId={highlightedCommentId}
+                noCommentsMessage={noCommentsMessage}
+                readOnlyMode={props.readOnlyMode === true}
+            />
         </section>
     );
 }
@@ -144,35 +150,7 @@ export default connect(
         updateComment: updateComment,
         increment: increment,
         showDescription: showDescription,
-        deleteComment: deleteComment
+        deleteComment: deleteComment,
+        setSearchQuery: getSetSearchQueryAction,
     }
 )(Comments);
-
-/** Empty list placeholder */
-const EmptyListPlaceholder = ({ message }: { message: string; }): JSX.Element => {
-    const displayMessage: string =
-        isStringEmpty(message)
-            ? 'No items' : message;
-
-    return (
-        <span className="app-empty-list-placeholder is-unselectable">
-            {displayMessage}
-        </span>
-    );
-};
-
-// TODO: v2 find a better solution
-/** Comments table headers */
-const ListHeaders = ({ columns }: { columns: Array<string>; }): JSX.Element => {
-    return (
-        <div className="app-comments__headers">
-            {columns.map(column =>
-                <span
-                    key={column}
-                >
-                    {column}
-                </span>
-            )}
-        </div>
-    );
-};

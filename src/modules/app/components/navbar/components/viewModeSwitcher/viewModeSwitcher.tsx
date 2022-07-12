@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 
 import './viewModeSwitcher.scss';
 
-import { isUndefined } from '@app/utils/common';
-import { appStorage } from '@app/utils/localStorage';
+import { isUndefined } from '@bodynarf/utils/common';
+import { appStorage } from '@bodynarf/utils/localStorage';
+
+import Icon from '@bodynarf/react.components/components/icon';
 
 import { CompositeAppState } from '@app/redux/rootReducer';
-import { setDarkModeState } from '@app/redux/app/action';
+import { getSetDarkModeStateAction } from '@app/redux/app/actions/setDarkModeState';
 
-import Icon from '@app/sharedComponents/icon';
 
 type ViewModeSwitcherProps = {
     /** Is dark mode currently active */
@@ -41,7 +42,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
     }, [onDarkModeStateChange]);
 
     const onCheckedChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>): void => {
+        (event: ChangeEvent<HTMLInputElement>): void => {
             onDarkModeStateChange(event.target.checked, false);
         }, [onDarkModeStateChange]);
 
@@ -52,7 +53,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
 
     return (
         <div className="app-mode-switcher">
-            <Icon className={sunClassName} />
+            <Icon name={sunClassName} />
             <label className="app-mode-switcher__switch">
                 <input
                     type="checkbox"
@@ -61,10 +62,15 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
                 />
                 <span className="app-mode-switcher__slider"></span>
             </label>
-            <Icon className={moonClassName} />
+            <Icon name={moonClassName} />
         </div>
     );
 }
+
+export default connect(
+    ({ app }: CompositeAppState) => ({ isDarkMode: app.isDarkMode }),
+    { setDarkModeState: getSetDarkModeStateAction }
+)(ViewModeSwitcher);
 
 /**
  * Get dark mode state from prop or local storage
@@ -88,8 +94,3 @@ const getDarkModeState = (isDarkMode?: boolean): boolean => {
 
     return isDarkMode as boolean;
 };
-
-export default connect(
-    ({ app }: CompositeAppState) => ({ isDarkMode: app.isDarkMode }),
-    { setDarkModeState: setDarkModeState }
-)(ViewModeSwitcher);

@@ -1,17 +1,19 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/api";
+import { post } from "@app/utils/delayedApi";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
+import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
+import { setError } from "@app/redux/app/utils";
+
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-import { OpenModal } from "@app/redux/modal/actions";
+
+import { getOpenModalAction } from "@app/redux/modal/actions/open";
 import { ModalAction } from "@app/redux/modal/types";
 
-import { deleteComment as deleteCommentAction, } from "../actions";
-import { CommentsState } from "../types";
-import { getSetIsLoadingAction, setError } from "../utils";
+import { getDeleteCommentAction } from "../actions/deleteComment";
 
 /**
  * Delete specified comment
@@ -19,39 +21,29 @@ import { getSetIsLoadingAction, setError } from "../utils";
  * @returns Delete comment function that can be called with redux dispatcher
  */
 export const deleteComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CommentsState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch({
-            type: OpenModal,
-            params: {
-                modalType: 'confirm',
-                title: 'Confirm delete',
-                buttonCaption: { saveCaption: 'Delete' },
-                message: 'Are you sure want to delete selected comment?',
-                callback: {
-                    saveCallback: (): void => {
-                        dispatch(getSetIsLoadingAction(true));
+        dispatch(getOpenModalAction({
+            modalType: 'confirm',
+            title: 'Confirm delete',
+            buttonCaption: { saveCaption: 'Delete' },
+            message: 'Are you sure want to delete selected comment?',
+            callback: {
+                saveCallback: (): void => {
+                    dispatch(getSetAppIsLoadingAction(true));
 
-                        post(`api/comments/delete`, commentId)
-                            .then(() => {
-                                const { app } = getState();
-                                dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
+                    post(`api/comments/delete`, commentId)
+                        .then(() => {
+                            const { app } = getState();
 
-                                dispatch({
-                                    type: deleteCommentAction,
-                                    payload: {
-                                        commentId: commentId
-                                    }
-                                });
-
-                                dispatch(getSetIsLoadingAction(false));
-                            })
-                            .catch(setError(dispatch, getState));
-                    },
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    cancelCallback: (): void => { }
-                }
+                            dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
+                            dispatch(getDeleteCommentAction(commentId));
+                            dispatch(getSetAppIsLoadingAction(false));
+                        })
+                        .catch(setError(dispatch, getState));
+                },
+                cancelCallback: (): void => { }
             }
-        } as ModalAction);
+        }));
     };
