@@ -2,10 +2,11 @@ import { useCallback, useState } from 'react';
 
 import { connect } from 'react-redux';
 
+import { ButtonType } from '@bodynarf/react.components/components/button/types';
+
 import { NotificationItem, NotificationType } from '@app/models/notification';
 
 import Button from '@bodynarf/react.components/components/button';
-import { ButtonType } from '@app/sharedComponents/button/types';
 
 import { getAddNotificationAction } from '@app/redux/notificator/actions/addNotification';
 import { generateGuid } from '@bodynarf/utils/guid';
