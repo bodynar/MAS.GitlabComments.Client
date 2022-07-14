@@ -38,7 +38,8 @@ const StatsTableComponent = ({
         return (
             <div className="block has-text-centered has-text-grey is-italic is-unselectable">
                 <span style={{ whiteSpace: 'pre-line' }}>
-                    No data found. Please, update date range
+                    No data found
+                    Please, update date range
                 </span>
             </div>
         );
