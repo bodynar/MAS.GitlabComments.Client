@@ -55,8 +55,8 @@ const CommentTable = ({
 
     return (
         <section>
-            <div className="columns ml-1">
-                <div className="column is-1">
+            <div className="columns">
+                <div className="column is-1 ml-2">
                     <span className="is-flex is-justify-content-center">
                         Appearance
                     </span>
