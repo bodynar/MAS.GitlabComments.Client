@@ -56,7 +56,12 @@ type CommentsProps = {
 };
 
 /** Comments module main component */
-function Comments(props: CommentsProps): JSX.Element {
+function Comments({
+    comments, searchQuery,
+    state, readOnlyMode,
+    setSearchQuery, getComments, addComment,
+    updateComment, increment, showDescription, deleteComment
+}: CommentsProps): JSX.Element {
     const searchQueryParam = useQueryParam('q') || '';
     const navigate = useNavigate();
     const location = useLocation();
@@ -64,8 +69,8 @@ function Comments(props: CommentsProps): JSX.Element {
     const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : '';
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(
-        props.comments.filter(x =>
-            x.message.toLowerCase().includes((props.searchQuery || searchQueryParam).toLocaleLowerCase())
+        comments.filter(x =>
+            x.message.toLowerCase().includes((searchQuery || searchQueryParam).toLocaleLowerCase())
         )
     );
 
@@ -74,40 +79,40 @@ function Comments(props: CommentsProps): JSX.Element {
             const params = new URLSearchParams();
 
             if (isStringEmpty(searchPattern)) {
-                setDisplayedComments([...props.comments]);
+                setDisplayedComments([...comments]);
             } else {
-                const filteredComments: Array<CommentModel> =
-                    [...props.comments].filter(x => x.message.toLowerCase().includes(searchPattern.toLowerCase()));
+                if (searchPattern.length >= 3) {
+                    const filteredComments: Array<CommentModel> =
+                        [...comments].filter(x => x.message.toLowerCase().includes(searchPattern.toLowerCase()));
 
-                setDisplayedComments(filteredComments);
+                    setDisplayedComments(filteredComments);
 
-                params.append('q', searchPattern);
+                    params.append('q', searchPattern);
+                }
             }
 
             navigate({ search: params.toString(), hash: location.hash, });
 
-            props.setSearchQuery(searchPattern);
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [location.hash, navigate, props.comments]);
+            setSearchQuery(searchPattern);
+        }, [navigate, location.hash, setSearchQuery, comments]);
 
     useEffect(() => {
-        if (props.state === 'init') {
-            props.getComments();
+        if (state === 'init') {
+            getComments();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.state]);
+    }, [getComments, state]);
 
     useEffect(() => {
-        if (isNullOrEmpty(props.searchQuery) && !isNullOrEmpty(searchQueryParam)) {
-            props.setSearchQuery(searchQueryParam!);
+        if (isNullOrEmpty(searchQuery) && !isNullOrEmpty(searchQueryParam)) {
+            setSearchQuery(searchQueryParam!);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => onSearch(props.searchQuery), [onSearch, props.comments, props.searchQuery]);
+    useEffect(() => onSearch(searchQuery), [onSearch, comments, searchQuery]);
 
     const noCommentsMessage: string =
-        props.comments.length === 0
+        comments.length === 0
             ? 'No comments'
             : `No comments that satisfy your filters found
             Try update your filters`;
@@ -118,24 +123,27 @@ function Comments(props: CommentsProps): JSX.Element {
                 <Button
                     caption="Add comment"
                     type="success"
-                    onClick={props.addComment}
-                    disabled={props.readOnlyMode}
+                    onClick={addComment}
+                    disabled={readOnlyMode}
                 />
             </div>
             <div className="block">
                 <Search
                     caption="Search comment by text.."
-                    defaultValue={props.searchQuery}
+                    defaultValue={searchQuery}
                     onSearch={onSearch}
-                    minCharsToSearch={0}
+                    searchType='byTyping'
                 />
             </div>
             <CommentTable
-                {...props}
                 displayedComments={displayedComments}
                 highlightedCommentId={highlightedCommentId}
                 noCommentsMessage={noCommentsMessage}
-                readOnlyMode={props.readOnlyMode === true}
+                readOnlyMode={readOnlyMode === true}
+                updateComment={updateComment}
+                increment={increment}
+                showDescription={showDescription}
+                deleteComment={deleteComment}
             />
         </section>
     );
