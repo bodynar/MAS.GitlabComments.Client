@@ -35,7 +35,13 @@ const StatsTableComponent = ({
     const label = useMemo(() => getLabel(filter), [filter]);
 
     if (data.length === 0) {
-        return <>No data found. Please, update date range</>;
+        return (
+            <div className="block has-text-centered has-text-grey is-italic is-unselectable">
+                <span style={{ whiteSpace: 'pre-line' }}>
+                    No data found. Please, update date range
+                </span>
+            </div>
+        );
     }
 
     return (
