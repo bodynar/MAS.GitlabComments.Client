@@ -46,7 +46,7 @@ const CommentTable = ({
             : noCommentsMessage;
         return (
             <div className="block has-text-centered has-text-grey is-italic is-unselectable">
-                <span>
+                <span style={{ whiteSpace: 'pre-line' }}>
                     {displayMessage}
                 </span>
             </div>
