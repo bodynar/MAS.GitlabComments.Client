@@ -66,14 +66,12 @@ function Bell({
                 title={title}
             >
                 <Icon name="bell" />
-                {shouldBadgeBeVisible &&
-                    <span
-                        className="app-bell__badge"
-                        onClick={onBellClick}
-                    >
-                        {badgeNumber}
-                    </span>
-                }
+                <span
+                    className="app-bell__badge"
+                    aria-hidden={!shouldBadgeBeVisible}
+                >
+                    {badgeNumber}
+                </span>
             </div>
             <div className={listClassName} aria-hidden={!isListVisible}>
                 <div className="app-bell__list-wrapper">
