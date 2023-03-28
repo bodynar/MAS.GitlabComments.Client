@@ -2,13 +2,12 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { BaseCommentModel } from "@app/models/comment";
 
-import { get, post } from "@app/utils/delayedApi";
+import { get, post } from "@app/utils";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
-import { ModalAction } from "@app/redux/modal/types";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
@@ -24,7 +23,7 @@ import { getUpdateCommentAction } from "../actions/updateComment";
  * @returns Update comment function that can be called with redux dispatcher
  */
 export const updateComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState
     ): void => {
         dispatch(getSetAppIsLoadingAction(true));

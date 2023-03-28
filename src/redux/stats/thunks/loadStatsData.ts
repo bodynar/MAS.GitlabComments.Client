@@ -2,7 +2,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import moment, { unitOfTime } from "moment";
 
-import { get } from "@app/utils/delayedApi";
+import { get } from "@app/utils";
 
 import { StatsRecord } from "@app/models/response/statsRecord";
 

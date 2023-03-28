@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/delayedApi";
+import { post } from "@app/utils";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
@@ -11,9 +11,9 @@ import { setError } from "@app/redux/app/utils";
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
-import { ModalAction } from "@app/redux/modal/types";
 
 import { getDeleteCommentAction } from "../actions/deleteComment";
+import { ModalType } from "@app/redux/modal";
 
 /**
  * Delete specified comment
@@ -21,11 +21,11 @@ import { getDeleteCommentAction } from "../actions/deleteComment";
  * @returns Delete comment function that can be called with redux dispatcher
  */
 export const deleteComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState,
     ): void => {
         dispatch(getOpenModalAction({
-            modalType: "confirm",
+            modalType: ModalType.Confirm,
             title: "Confirm delete",
             buttonCaption: { saveCaption: "Delete" },
             message: "Are you sure want to delete selected comment?",

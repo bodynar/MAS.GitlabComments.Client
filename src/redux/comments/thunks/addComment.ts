@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/delayedApi";
+import { post } from "@app/utils";
 
 import { BaseCommentModel } from "@app/models/comment";
 
@@ -10,7 +10,6 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { setError } from "@app/redux/app/utils";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
-import { ModalAction } from "@app/redux/modal/types";
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
@@ -23,7 +22,7 @@ import { getAddCommentAction } from "../actions/addComment";
  * @returns Add comment function that can be called with redux dispatcher
  */
 export const addComment = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ModalAction | ActionWithPayload>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState,
     ): void => {
         const modalParams = getCommentModalFormConfig();

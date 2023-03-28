@@ -3,7 +3,7 @@ import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
 import { NotificationItem } from "@app/models/notification";
 import { NotificatorState } from "./types";
 
-import { removeByKey } from "@app/utils/array";
+import { removeByKey } from "@app/utils";
 
 import { ActionWithPayload } from "@app/redux/types";
 
