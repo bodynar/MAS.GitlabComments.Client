@@ -2,11 +2,11 @@
  * @constant
  * Open modal redux store action type
  */
-export const OPEN_MODAL = "mas.payments/modal/open";
+export const OPEN_MODAL = "mas.gc/modal/open";
 
 /**
  * @constant
  * Close modal redux store action type
  */
-export const CLOSE_MODAL = "mas.payments/modal/close";
+export const CLOSE_MODAL = "mas.gc/modal/close";
 
