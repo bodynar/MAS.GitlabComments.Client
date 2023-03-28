@@ -5,11 +5,8 @@ import { post } from "@app/utils";
 import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
 import { getSuccessNotificationAction } from "@app/redux/notificator";
-
-import { getOpenModalAction } from "@app/redux/modal";
-
-import { getDeleteCommentAction } from "../actions/deleteComment";
-import { ModalType } from "@app/redux/modal";
+import { getOpenModalAction, ModalType } from "@app/redux/modal";
+import { getDeleteCommentAction } from "@app/redux/comments";
 
 /**
  * Delete specified comment

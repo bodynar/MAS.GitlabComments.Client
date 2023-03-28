@@ -7,7 +7,7 @@ export type CommentModuleState =
     ;
 
 /** Model representing comment module state */
-export type CommentsState = {
+export interface CommentsState {
     /** Current module state */
     state: CommentModuleState;
 
@@ -16,4 +16,4 @@ export type CommentsState = {
 
     /** Current search query */
     searchQuery: string;
-};
+}

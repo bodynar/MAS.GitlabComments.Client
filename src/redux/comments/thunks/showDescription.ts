@@ -6,10 +6,7 @@ import { get } from "@app/utils";
 
 import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
-
-import { getOpenModalAction } from "@app/redux/modal";
-
-import { ModalType } from "@app/redux/modal";
+import { getOpenModalAction, ModalType } from "@app/redux/modal";
 
 /**
  * Show description for specified comment from api

@@ -6,8 +6,7 @@ import { StatsRecord } from "@app/models";
 
 import { CompositeAppState } from "@app/redux";
 import { StatsFilter, getSetStatsFilterAction, loadStatsData, getSetStatsLoadedStateAction } from "@app/redux/stats";
-
-import { showDescription } from "@app/redux/comments/thunks";
+import { showDescription } from "@app/redux/comments";
 
 import StatsFilters from "../components/filter";
 import StatsTableComponent from "../components/table";

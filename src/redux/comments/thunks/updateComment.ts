@@ -7,11 +7,8 @@ import { get, post } from "@app/utils";
 import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 import { getSuccessNotificationAction } from "@app/redux/notificator";
-
 import { getOpenModalAction } from "@app/redux/modal";
-
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
-import { getUpdateCommentAction } from "../actions/updateComment";
+import { getUpdateCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
 
 /**
  * Update specified comment

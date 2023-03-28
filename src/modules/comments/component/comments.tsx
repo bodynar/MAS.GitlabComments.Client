@@ -12,9 +12,7 @@ import Search from "@bodynarf/react.components/components/search";
 import { Comment as CommentModel } from "@app/models";
 
 import { CompositeAppState } from "@app/redux";
-import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from "@app/redux/comments/thunks";
-import { getSetSearchQueryAction } from "@app/redux/comments/actions/setSearchQuery";
-import { CommentModuleState } from "@app/redux/comments/types";
+import { CommentModuleState, getSetSearchQueryAction, getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from "@app/redux/comments";
 
 import { useQueryParam } from "@app/hooks";
 

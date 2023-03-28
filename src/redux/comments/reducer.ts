@@ -1,11 +1,9 @@
 import { isNullOrEmpty, isNullOrUndefined, getPropertyValueWithCheck } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "@app/redux";
-
 import { Comment } from "@app/models";
 
-import { CommentModuleState, CommentsState } from "./types";
-import { AddComment, DeleteComment, Increment, SetComments, SetModuleState, SetSearchQuery, UpdateComment } from "./actions";
+import { ActionWithPayload } from "@app/redux";
+import { ADD_COMMENT, DELETE_COMMENT, INCREMENT, SET_COMMENTS, SET_MODULE_STATE, SET_SEARCH_QUERY, UPDATE_COMMENT, CommentModuleState, CommentsState } from "@app/redux/comments";
 
 /** Initial comment module state */
 const initialState: CommentsState = {
@@ -17,7 +15,7 @@ const initialState: CommentsState = {
 /** Comment module reducer function */
 export default function (state = initialState, action: ActionWithPayload): CommentsState {
     switch (action.type) {
-        case SetModuleState: {
+        case SET_MODULE_STATE: {
             const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, "nextState", false);
 
             if (isNullOrUndefined(nextState)) {
@@ -30,7 +28,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 state: nextState,
             };
         }
-        case AddComment: {
+        case ADD_COMMENT: {
             const comment: Comment = getPropertyValueWithCheck(action.payload, "comment", false);
 
             if (isNullOrUndefined(comment) || isNullOrUndefined(comment.id)) {
@@ -43,7 +41,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 comments: [...state.comments, comment]
             };
         }
-        case SetComments: {
+        case SET_COMMENTS: {
             const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, "comments", false);
 
             if (isNullOrUndefined(comments)) {
@@ -56,7 +54,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 comments: comments
             };
         }
-        case Increment: {
+        case INCREMENT: {
             const commentId: string = getPropertyValueWithCheck(action.payload, "commentId", false);
 
             if (isNullOrEmpty(commentId)) {
@@ -80,7 +78,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 comments: state.comments.sort((x, y) => y.appearanceCount - x.appearanceCount)
             };
         }
-        case UpdateComment: {
+        case UPDATE_COMMENT: {
             const comment: Comment = getPropertyValueWithCheck(action.payload, "comment", false);
 
             if (isNullOrUndefined(comment)) {
@@ -96,7 +94,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 )
             };
         }
-        case DeleteComment: {
+        case DELETE_COMMENT: {
             const commentId: string = getPropertyValueWithCheck(action.payload, "commentId", false);
 
             if (isNullOrEmpty(commentId)) {
@@ -109,7 +107,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
                 comments: state.comments.filter(comment => comment.id !== commentId)
             };
         }
-        case SetSearchQuery: {
+        case SET_SEARCH_QUERY: {
             const searchQuery: string = getPropertyValueWithCheck(action.payload, "searchQuery", false) || "";
 
             return {

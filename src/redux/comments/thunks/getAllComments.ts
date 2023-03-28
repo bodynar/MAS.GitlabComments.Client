@@ -1,16 +1,12 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { get } from "@app/utils";
-
-import { CompositeAppState } from "@app/redux/rootReducer";
-import { ActionWithPayload } from "@app/redux";
-
-import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
-
 import { Comment } from "@app/models";
 
-import { getSetModuleStateAction } from "../actions/setModuleState";
-import { getSetCommentsAction } from "../actions/setComments";
+import { get } from "@app/utils";
+
+import { CompositeAppState, ActionWithPayload } from "@app/redux";
+import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
+import { getSetCommentsAction, getSetModuleStateAction } from "@app/redux/comments";
 
 /**
  * Get all comments from api

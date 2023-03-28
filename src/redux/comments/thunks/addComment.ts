@@ -1,17 +1,14 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils";
-
 import { BaseCommentModel } from "@app/models";
+
+import { post } from "@app/utils";
 
 import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 import { getSuccessNotificationAction } from "@app/redux/notificator";
-
 import { getOpenModalAction } from "@app/redux/modal";
-
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
-import { getAddCommentAction } from "../actions/addComment";
+import { getAddCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
 
 /**
  * Add comment via modal form
