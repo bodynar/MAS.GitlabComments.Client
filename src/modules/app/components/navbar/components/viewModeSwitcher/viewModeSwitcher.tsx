@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import './viewModeSwitcher.scss';
 
 import { isUndefined } from '@bodynarf/utils/common';
-import { appStorage } from '@bodynarf/utils/localStorage';
+import { localStorage } from '@bodynarf/utils';
 
 import Icon from '@bodynarf/react.components/components/icon';
 
@@ -29,7 +29,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
             setDarkModeEnabled(enabled);
 
             if (!suppressSave) {
-                appStorage.saveRecord<boolean>('darkmode-state', enabled);
+                localStorage.saveRecord<boolean>('darkmode-state', enabled);
             }
         }, [setDarkModeState]
     );
@@ -80,11 +80,11 @@ export default connect(
 const getDarkModeState = (isDarkMode?: boolean): boolean => {
     if (isUndefined(isDarkMode)) {
         const hasAlreadyStored: boolean =
-            appStorage.hasRecord('darkmode-state');
+            localStorage.hasRecord('darkmode-state');
 
         if (hasAlreadyStored) {
             const darkModeState: boolean | undefined =
-                appStorage.getRecord<boolean>('darkmode-state');
+                localStorage.getRecord<boolean>('darkmode-state');
 
             return !isUndefined(darkModeState) && (darkModeState as boolean);
         } else {
