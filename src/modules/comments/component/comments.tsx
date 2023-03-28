@@ -16,7 +16,7 @@ import { getAllComments, addComment, updateComment, increment, showDescription, 
 import { getSetSearchQueryAction } from "@app/redux/comments/actions/setSearchQuery";
 import { CommentModuleState } from "@app/redux/comments/types";
 
-import useQueryParam from "@app/hooks/useQueryParam";
+import { useQueryParam } from "@app/hooks";
 
 import CommentTable from "../components/table";
 

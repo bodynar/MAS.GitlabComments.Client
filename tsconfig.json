@@ -53,8 +53,8 @@
 			"@app/constants": [
 				"src/shared/constants"
 			],
-			"@app/hooks/*": [
-				"src/shared/hooks/*"
+			"@app/hooks": [
+				"src/shared/hooks"
 			],
 			"@app/assets/*": [
 				"src/shared/assets/*"

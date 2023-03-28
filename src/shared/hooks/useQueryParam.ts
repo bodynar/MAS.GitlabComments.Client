@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
  * @param paramKey Name of parameter to look
  * @returns Found parameter value of null
  */
-export default function useQueryParam(paramKey: string): string | undefined {
+export function useQueryParam(paramKey: string): string | undefined {
     const { search } = useLocation();
     const params = new URLSearchParams(search);
 
