@@ -1,4 +1,4 @@
-import './gitlabLogo.scss';
+import "./gitlabLogo.scss";
 
 /** Gitlab logo icon component */
 export default function GitlabLogoIcon(): JSX.Element {

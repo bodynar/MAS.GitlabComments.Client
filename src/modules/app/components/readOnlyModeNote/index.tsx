@@ -1,5 +1,5 @@
-import './readOnlyMode.scss';
-import './readOnlyMode.dark.scss';
+import "./readOnlyMode.scss";
+import "./readOnlyMode.dark.scss";
 
 /** Wide note to inform user about read only mode */
 export default function ReadOnlyModeNote(): JSX.Element {

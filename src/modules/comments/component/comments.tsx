@@ -1,24 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { isNullOrEmpty, isStringEmpty } from '@bodynarf/utils/common';
+import { isNullOrEmpty, isStringEmpty } from "@bodynarf/utils/common";
 
-import Button from '@bodynarf/react.components/components/button';
-import Search from '@bodynarf/react.components/components/search';
+import Button from "@bodynarf/react.components/components/button";
+import Search from "@bodynarf/react.components/components/search";
 
-import { Comment as CommentModel } from '@app/models/comment';
+import { Comment as CommentModel } from "@app/models/comment";
 
-import { CompositeAppState } from '@app/redux/rootReducer';
-import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from '@app/redux/comments/thunks';
-import { getSetSearchQueryAction } from '@app/redux/comments/actions/setSearchQuery';
-import { CommentModuleState } from '@app/redux/comments/types';
+import { CompositeAppState } from "@app/redux/rootReducer";
+import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from "@app/redux/comments/thunks";
+import { getSetSearchQueryAction } from "@app/redux/comments/actions/setSearchQuery";
+import { CommentModuleState } from "@app/redux/comments/types";
 
-import useQueryParam from '@app/hooks/useQueryParam';
+import useQueryParam from "@app/hooks/useQueryParam";
 
-import CommentTable from '../components/table';
+import CommentTable from "../components/table";
 
 type CommentsProps = {
     /** Is app in read only mode */
@@ -48,7 +48,7 @@ type CommentsProps = {
     /** Show comment description */
     showDescription: (commentId: string) => void;
 
-    /** Delete comment by it's identifier */
+    /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
 
     /** Save current search query */
@@ -62,11 +62,11 @@ function Comments({
     setSearchQuery, getComments, addComment,
     updateComment, increment, showDescription, deleteComment
 }: CommentsProps): JSX.Element {
-    const searchQueryParam = useQueryParam('q') || '';
+    const searchQueryParam = useQueryParam("q") || "";
     const navigate = useNavigate();
     const location = useLocation();
 
-    const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : '';
+    const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : "";
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(
         comments.filter(x =>
@@ -87,7 +87,7 @@ function Comments({
 
                     setDisplayedComments(filteredComments);
 
-                    params.append('q', searchPattern);
+                    params.append("q", searchPattern);
                 }
             }
 
@@ -97,7 +97,7 @@ function Comments({
         }, [navigate, location.hash, setSearchQuery, comments]);
 
     useEffect(() => {
-        if (state === 'init') {
+        if (state === "init") {
             getComments();
         }
     }, [getComments, state]);
@@ -113,7 +113,7 @@ function Comments({
 
     const noCommentsMessage: string =
         comments.length === 0
-            ? 'No comments'
+            ? "No comments"
             : `No comments that satisfy your filters found
             Try update your filters`;
 
@@ -132,7 +132,7 @@ function Comments({
                     caption="Search comment by text.."
                     defaultValue={searchQuery}
                     onSearch={onSearch}
-                    searchType='byTyping'
+                    searchType="byTyping"
                 />
             </div>
             <CommentTable

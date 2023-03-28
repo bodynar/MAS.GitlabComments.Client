@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-import './style.scss';
-import './style.dark.scss';
+import "./style.scss";
+import "./style.dark.scss";
 
 import { isNullOrUndefined } from "@bodynarf/utils/common";
 

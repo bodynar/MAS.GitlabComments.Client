@@ -1,18 +1,18 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import './notificationItem.scss';
-import './notificationItem.dark.scss';
+import "./notificationItem.scss";
+import "./notificationItem.dark.scss";
 
-import { NotificationHideDelay } from '@app/constants';
+import { NotificationHideDelay } from "@app/constants";
 
-import { NotificationItem, NotificationType } from '@app/models/notification';
+import { NotificationItem, NotificationType } from "@app/models/notification";
 
 /** Map of notification type to bulma class name */
 const typeClassNameMap: Map<NotificationType, string> = new Map([
-    [NotificationType.info, 'is-info'],
-    [NotificationType.success, 'is-success'],
-    [NotificationType.warn, 'is-warning'],
-    [NotificationType.error, 'is-danger'],
+    [NotificationType.info, "is-info"],
+    [NotificationType.success, "is-success"],
+    [NotificationType.warn, "is-warning"],
+    [NotificationType.error, "is-danger"],
 ]);
 
 /** Single notification component configuration */

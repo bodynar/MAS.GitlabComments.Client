@@ -30,12 +30,12 @@ export const showDescription = (commentId: string): ThunkAction<void, CompositeA
                 dispatch(getSetAppIsLoadingAction(false));
 
                 const modalMessage: string = isNullOrEmpty(description)
-                    ? 'Comment does not have any description.'
+                    ? "Comment does not have any description."
                     : description;
 
                 dispatch(getOpenModalAction({
-                    modalType: 'info',
-                    title: 'Comment description',
+                    modalType: "info",
+                    title: "Comment description",
                     message: modalMessage,
                 }));
             })

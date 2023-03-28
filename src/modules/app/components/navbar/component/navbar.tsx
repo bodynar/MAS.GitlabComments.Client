@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
 
-import './navbar.scss';
-import './navbar.dark.scss';
+import "./navbar.scss";
+import "./navbar.dark.scss";
 
 import { isStringEmpty } from "@bodynarf/utils/common";
 
-import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from '../components';
+import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from "../components";
 
-import { menuItems } from '../menu';
+import { menuItems } from "../menu";
 
 type NavbarProps = {
     /** Class for navbar */

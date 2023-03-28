@@ -25,10 +25,10 @@ export const deleteComment = (commentId: string): ThunkAction<void, CompositeApp
         getState: () => CompositeAppState,
     ): void => {
         dispatch(getOpenModalAction({
-            modalType: 'confirm',
-            title: 'Confirm delete',
-            buttonCaption: { saveCaption: 'Delete' },
-            message: 'Are you sure want to delete selected comment?',
+            modalType: "confirm",
+            title: "Confirm delete",
+            buttonCaption: { saveCaption: "Delete" },
+            message: "Are you sure want to delete selected comment?",
             callback: {
                 saveCallback: (): void => {
                     dispatch(getSetAppIsLoadingAction(true));
@@ -37,7 +37,7 @@ export const deleteComment = (commentId: string): ThunkAction<void, CompositeApp
                         .then(() => {
                             const { app } = getState();
 
-                            dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
+                            dispatch(getSuccessNotificationAction("Comment successfully deleted", app.isCurrentTabFocused));
                             dispatch(getDeleteCommentAction(commentId));
                             dispatch(getSetAppIsLoadingAction(false));
                         })

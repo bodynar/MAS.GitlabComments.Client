@@ -37,7 +37,7 @@ const StatsTableComponent = ({
     if (data.length === 0) {
         return (
             <div className="block has-text-centered has-text-grey is-italic is-unselectable">
-                <span style={{ whiteSpace: 'pre-line' }}>
+                <span style={{ whiteSpace: "pre-line" }}>
                     No data found
                     Please, update date range
                 </span>
@@ -93,19 +93,19 @@ const getLabel = (filter: StatsFilter): string => {
         return `Comments appearance updates from ${filter.leftDate!.toDateString()} to ${filter.leftDate!.toDateString()}`;
     }
 
-    let period: unitOfTime.DurationConstructor = 'month';
+    let period: unitOfTime.DurationConstructor = "month";
 
     switch (filter.type) {
         case DateRange.Month:
-            period = 'month';
+            period = "month";
             break;
 
         case DateRange.Week:
-            period = 'week';
+            period = "week";
             break;
 
         case DateRange.Year:
-            period = 'year';
+            period = "year";
             break;
     }
 

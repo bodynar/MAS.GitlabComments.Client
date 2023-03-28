@@ -1,13 +1,13 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 
-import './comment.scss';
-import './comment.dark.scss';
+import "./comment.scss";
+import "./comment.dark.scss";
 
-import { Comment as CommentModel } from '@app/models/comment';
+import { Comment as CommentModel } from "@app/models/comment";
 
-import Button from '@bodynarf/react.components/components/button';
+import Button from "@bodynarf/react.components/components/button";
 
-import { getClassName } from '@bodynarf/utils/component';
+import { getClassName } from "@bodynarf/utils/component";
 
 type CommentProps = {
     /** Is comment should be scrolled into view after render */
@@ -28,7 +28,7 @@ type CommentProps = {
     /** Update specified comment in modal box */
     updateComment: (commentId: string) => void;
 
-    /** Delete comment by it's identifier */
+    /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
 };
 
@@ -75,7 +75,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                 <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
                     <Button
                         type="default"
-                        icon={{ name: 'arrow-up' }}
+                        icon={{ name: "arrow-up" }}
                         title="Increment count"
                         onClick={onIncrementClick}
                         disabled={isReadOnlyMode}
@@ -93,14 +93,14 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: 'info-lg' }}
+                        icon={{ name: "info-lg" }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="warning"
                         outlined={true}
-                        icon={{ name: 'pencil' }}
+                        icon={{ name: "pencil" }}
                         title="Edit"
                         onClick={onUpdateCommentClick}
                         disabled={isReadOnlyMode}
@@ -108,7 +108,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     <Button
                         type="danger"
                         outlined={true}
-                        icon={{ name: 'trash' }}
+                        icon={{ name: "trash" }}
                         title="Delete"
                         onClick={onDeleteCommentClick}
                         disabled={isReadOnlyMode}

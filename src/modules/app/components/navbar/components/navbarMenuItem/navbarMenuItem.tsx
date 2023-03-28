@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 import { getClassName } from "@bodynarf/utils/component";
 
-import './navbarMenuItem.scss';
-import './navbarMenuItem.dark.scss';
+import "./navbarMenuItem.scss";
+import "./navbarMenuItem.dark.scss";
 
 import { MenuItem } from "../../menu";
 
@@ -18,9 +18,9 @@ type NavbarMenuItemProps = {
 /** Navar menu item component */
 export default function NavbarMenuItem({ item, isActive }: NavbarMenuItemProps): JSX.Element {
     const className = getClassName([
-        'app-navbar__item',
-        item.disabled === true ? 'app-navbar__item--disabled' : '',
-        isActive ? 'app-navbar__item--active' : '',
+        "app-navbar__item",
+        item.disabled === true ? "app-navbar__item--disabled" : "",
+        isActive ? "app-navbar__item--active" : "",
     ]);
 
     if (item.disabled === true || isActive) {

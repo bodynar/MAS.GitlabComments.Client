@@ -1,12 +1,12 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
-import './record.scss';
-import './record.dark.scss';
+import "./record.scss";
+import "./record.dark.scss";
 
-import Button from '@bodynarf/react.components/components/button';
+import Button from "@bodynarf/react.components/components/button";
 
-import { StatsRecord } from '@app/models/response/statsRecord';
+import { StatsRecord } from "@app/models/response/statsRecord";
 
 type StatsRecordProps = StatsRecord & {
     /** Show comment description */
@@ -20,7 +20,7 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
         const url = `${window.location.origin}#${commentId}`;
 
         navigator.clipboard.writeText(url).then(() =>
-            navigate({ pathname: '/', hash: commentId })
+            navigate({ pathname: "/", hash: commentId })
         );
     }, [navigate, commentId]);
 
@@ -41,13 +41,13 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: 'info-lg' }}
+                        icon={{ name: "info-lg" }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="link"
-                        icon={{ name: 'link-45deg' }}
+                        icon={{ name: "link-45deg" }}
                         title="Show in list"
                         onClick={onShowClick}
                     />

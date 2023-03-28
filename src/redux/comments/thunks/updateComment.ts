@@ -61,7 +61,7 @@ const getModalSuccessCallback = (
             .then(() => {
                 const { app } = getState();
 
-                dispatch(getSuccessNotificationAction('Comment was updated successfully', app.isCurrentTabFocused));
+                dispatch(getSuccessNotificationAction("Comment was updated successfully", app.isCurrentTabFocused));
                 dispatch(getUpdateCommentAction(comment, commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })

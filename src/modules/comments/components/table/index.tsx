@@ -1,10 +1,10 @@
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import { isStringEmpty } from '@bodynarf/utils/common';
+import { isStringEmpty } from "@bodynarf/utils/common";
 
-import { Comment as CommentModel } from '@app/models/comment';
+import { Comment as CommentModel } from "@app/models/comment";
 
-import Comment from '../comment';
+import Comment from "../comment";
 
 type CommentTableProps = {
     /** Current visible comments */
@@ -16,7 +16,7 @@ type CommentTableProps = {
     /** Is app in read only mode */
     readOnlyMode: boolean;
 
-    /** Current 'no-items' message */
+    /** Current "no-items" message */
     noCommentsMessage: string;
 
     /** Update specified comment in modal box */
@@ -28,7 +28,7 @@ type CommentTableProps = {
     /** Show comment description */
     showDescription: (commentId: string) => void;
 
-    /** Delete comment by it's identifier */
+    /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
 };
 
@@ -42,11 +42,11 @@ const CommentTable = ({
 }: CommentTableProps): JSX.Element => {
     if (displayedComments.length === 0) {
         const displayMessage: string = isStringEmpty(noCommentsMessage)
-            ? 'No items'
+            ? "No items"
             : noCommentsMessage;
         return (
             <div className="block has-text-centered has-text-grey is-italic is-unselectable">
-                <span style={{ whiteSpace: 'pre-line' }}>
+                <span style={{ whiteSpace: "pre-line" }}>
                     {displayMessage}
                 </span>
             </div>

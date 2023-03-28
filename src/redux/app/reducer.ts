@@ -20,7 +20,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
     switch (action.type) {
         case SetTabIsFocused: {
             const isTabFocused: boolean =
-                getPropertyValueWithCheck(action.payload, 'isTabFocused');
+                getPropertyValueWithCheck(action.payload, "isTabFocused");
 
             return {
                 ...state,
@@ -29,7 +29,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
         }
         case SetReadOnlyModeState: {
             const readOnlyMode: boolean =
-                getPropertyValueWithCheck(action.payload, 'readOnlyMode', false) || false;
+                getPropertyValueWithCheck(action.payload, "readOnlyMode", false) || false;
 
             return {
                 ...state,
@@ -38,7 +38,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
         }
         case SetDarkModeState: {
             const isDarkMode: boolean =
-                getPropertyValueWithCheck(action.payload, 'isDarkMode', false) || false;
+                getPropertyValueWithCheck(action.payload, "isDarkMode", false) || false;
 
             return {
                 ...state,
@@ -47,7 +47,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
         }
         case SetIsAppLoadingState: {
             const isLoading: boolean =
-                getPropertyValueWithCheck(action.payload, 'loading', false) || false;
+                getPropertyValueWithCheck(action.payload, "loading", false) || false;
 
             return {
                 ...state,

@@ -27,7 +27,7 @@ export const increment = (commentId: string): ThunkAction<void, CompositeAppStat
             .then(() => {
                 const { app } = getState();
 
-                dispatch(getSuccessNotificationAction('Comment appearence count was updated successfully', app.isCurrentTabFocused));
+                dispatch(getSuccessNotificationAction("Comment appearence count was updated successfully", app.isCurrentTabFocused));
                 dispatch(getIncrementAction(commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })

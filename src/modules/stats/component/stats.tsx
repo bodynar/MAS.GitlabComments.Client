@@ -1,20 +1,20 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { StatsRecord } from '@app/models/response/statsRecord';
+import { StatsRecord } from "@app/models/response/statsRecord";
 
-import { CompositeAppState } from '@app/redux/rootReducer';
+import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { StatsFilter } from '@app/redux/stats/types';
-import { getSetStatsFilterAction } from '@app/redux/stats/actions/setStatsFilter';
-import { loadStatsData } from '@app/redux/stats/thunks/loadStatsData';
-import { getSetStatsLoadedStateAction } from '@app/redux/stats/actions/setStatsLoadingState';
+import { StatsFilter } from "@app/redux/stats/types";
+import { getSetStatsFilterAction } from "@app/redux/stats/actions/setStatsFilter";
+import { loadStatsData } from "@app/redux/stats/thunks/loadStatsData";
+import { getSetStatsLoadedStateAction } from "@app/redux/stats/actions/setStatsLoadingState";
 
-import { showDescription } from '@app/redux/comments/thunks';
+import { showDescription } from "@app/redux/comments/thunks";
 
-import StatsFilters from '../components/filter';
-import StatsTableComponent from '../components/table';
+import StatsFilters from "../components/filter";
+import StatsTableComponent from "../components/table";
 
 type StatsProps = {
     /** Fetched statistics data for specified date range */

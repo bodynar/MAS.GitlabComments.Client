@@ -1,3 +1,3 @@
-import Comments from './component/comments';
+import Comments from "./component/comments";
 
 export default Comments;

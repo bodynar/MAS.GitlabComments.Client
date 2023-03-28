@@ -1,13 +1,13 @@
-import { getPropertyValueWithCheck } from '@bodynarf/utils/object';
+import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
 
-import { NotificationItem } from '@app/models/notification';
-import { NotificatorState } from './types';
+import { NotificationItem } from "@app/models/notification";
+import { NotificatorState } from "./types";
 
-import { removeByKey } from '@app/utils/array';
+import { removeByKey } from "@app/utils/array";
 
-import { ActionWithPayload } from '@app/redux/types';
+import { ActionWithPayload } from "@app/redux/types";
 
-import { AddNotification, HideAllNotifications, HideNotification, SetNotificationsBadgeToZero } from './actions';
+import { AddNotification, HideAllNotifications, HideNotification, SetNotificationsBadgeToZero } from "./actions";
 
 /** Default state of notification module */
 const defaultState: NotificatorState = {
@@ -20,14 +20,14 @@ const defaultState: NotificatorState = {
 export default function (state: NotificatorState = defaultState, action: ActionWithPayload): NotificatorState {
     switch (action.type) {
         case AddNotification: {
-            const addingNotifications: Array<NotificationItem> = getPropertyValueWithCheck(action.payload, 'notifications', false);
+            const addingNotifications: Array<NotificationItem> = getPropertyValueWithCheck(action.payload, "notifications", false);
 
             if (addingNotifications.length === 0) {
                 // TOOD: v2 log warning
                 return state;
             }
 
-            const displayDismissableNotification: boolean = getPropertyValueWithCheck(action.payload, 'displayDismissableNotification', false) || false;
+            const displayDismissableNotification: boolean = getPropertyValueWithCheck(action.payload, "displayDismissableNotification", false) || false;
 
             const notifications: Array<NotificationItem> = displayDismissableNotification
                 ? [...addingNotifications, ...state.notifications]
@@ -48,7 +48,7 @@ export default function (state: NotificatorState = defaultState, action: ActionW
             };
         }
         case HideNotification: {
-            const addingNotifications: Array<string> = getPropertyValueWithCheck(action.payload, 'notificationIds', false);
+            const addingNotifications: Array<string> = getPropertyValueWithCheck(action.payload, "notificationIds", false);
 
 
             if (addingNotifications.length === 0) {

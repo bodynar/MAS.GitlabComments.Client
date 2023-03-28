@@ -23,7 +23,7 @@ const defaultState: StatsState = {
 export default function (state: StatsState = defaultState, action: ActionWithPayload): StatsState {
     switch (action.type) {
         case SetStatsData: {
-            const data: Array<StatsRecord> = getPropertyValueWithCheck<Array<StatsRecord>>(action.payload, 'data') || [];
+            const data: Array<StatsRecord> = getPropertyValueWithCheck<Array<StatsRecord>>(action.payload, "data") || [];
 
             return {
                 ...state,
@@ -31,7 +31,7 @@ export default function (state: StatsState = defaultState, action: ActionWithPay
             };
         }
         case SetStatsFilters: {
-            const filter: StatsFilter = getPropertyValueWithCheck<StatsFilter>(action.payload, 'filter');
+            const filter: StatsFilter = getPropertyValueWithCheck<StatsFilter>(action.payload, "filter");
 
             return {
                 ...state,
@@ -39,7 +39,7 @@ export default function (state: StatsState = defaultState, action: ActionWithPay
             };
         }
         case SetStatsLoadedState: {
-            const loaded: boolean | undefined = getPropertyValue<boolean>(action.payload, 'loaded');
+            const loaded: boolean | undefined = getPropertyValue<boolean>(action.payload, "loaded");
 
             return {
                 ...state,

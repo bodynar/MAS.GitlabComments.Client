@@ -10,16 +10,16 @@ import { AddComment, DeleteComment, Increment, SetComments, SetModuleState, SetS
 
 /** Initial comment module state */
 const initialState: CommentsState = {
-    state: 'init',
+    state: "init",
     comments: [],
-    searchQuery: '',
+    searchQuery: "",
 };
 
 /** Comment module reducer function */
 export default function (state = initialState, action: ActionWithPayload): CommentsState {
     switch (action.type) {
         case SetModuleState: {
-            const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, 'nextState', false);
+            const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, "nextState", false);
 
             if (isNullOrUndefined(nextState)) {
                 // TODO: v2 log warning
@@ -32,7 +32,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case AddComment: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
+            const comment: Comment = getPropertyValueWithCheck(action.payload, "comment", false);
 
             if (isNullOrUndefined(comment) || isNullOrUndefined(comment.id)) {
                 // TODO: v2 log warning
@@ -45,7 +45,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case SetComments: {
-            const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, 'comments', false);
+            const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, "comments", false);
 
             if (isNullOrUndefined(comments)) {
                 // TODO: v2 log warning
@@ -58,7 +58,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case Increment: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+            const commentId: string = getPropertyValueWithCheck(action.payload, "commentId", false);
 
             if (isNullOrEmpty(commentId)) {
                 // TODO: v2 log warning
@@ -82,7 +82,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case UpdateComment: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
+            const comment: Comment = getPropertyValueWithCheck(action.payload, "comment", false);
 
             if (isNullOrUndefined(comment)) {
                 // TODO: v2 log warning
@@ -98,7 +98,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case DeleteComment: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+            const commentId: string = getPropertyValueWithCheck(action.payload, "commentId", false);
 
             if (isNullOrEmpty(commentId)) {
                 // TODO: v2 log warning
@@ -111,7 +111,7 @@ export default function (state = initialState, action: ActionWithPayload): Comme
             };
         }
         case SetSearchQuery: {
-            const searchQuery: string = getPropertyValueWithCheck(action.payload, 'searchQuery', false) || '';
+            const searchQuery: string = getPropertyValueWithCheck(action.payload, "searchQuery", false) || "";
 
             return {
                 ...state,

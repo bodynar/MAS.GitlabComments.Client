@@ -4,7 +4,7 @@ import { ActionWithPayload } from "@app/redux/types";
 import { Increment } from "../actions";
 
 /**
- * Get redux action "Increment comment's appearance count"
+ * Get redux action "Increment comment"s appearance count"
  * @param commentId Identifier of comment
  * @returns State updating action
  */

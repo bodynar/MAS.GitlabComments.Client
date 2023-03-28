@@ -1,6 +1,6 @@
-import './navbar-brand.scss';
+import "./navbar-brand.scss";
 
-import { GitlabLogoIcon } from '../';
+import { GitlabLogoIcon } from "../";
 
 /** Navbar app brand */
 export default function NavbarBrand(): JSX.Element {

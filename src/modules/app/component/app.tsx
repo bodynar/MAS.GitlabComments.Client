@@ -2,9 +2,9 @@ import { useCallback, useEffect } from "react";
 
 import { connect } from "react-redux";
 
-import './app.scss';
-import '../../../shared/styles/globalStyles.scss';
-import '../../../shared/styles/darkStyles.scss';
+import "./app.scss";
+import "../../../shared/styles/globalStyles.scss";
+import "../../../shared/styles/darkStyles.scss";
 
 import { isNullOrUndefined } from "@bodynarf/utils/common";
 
@@ -13,9 +13,9 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { getSetTabIsFocusedAction } from "@app/redux/app/actions/setTabIsFocused";
 import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
 
-import ModalBox from '@app/modules/modalBox';
+import ModalBox from "@app/modules/modalBox";
 
-import Notificator from '../components/notificator/component';
+import Notificator from "../components/notificator/component";
 import Navbar from "../components/navbar/component/navbar";
 import Footer from "../components/footer";
 import AppContent from "../components/content";
@@ -52,18 +52,18 @@ function App({ isLoading, setTabIsFocused, readOnlyMode, getReadOnlyMode, isDark
     }, [getReadOnlyMode, readOnlyMode]);
 
     useEffect(() => {
-        window.addEventListener('focus', onFocus);
-        window.addEventListener('blur', onBlur);
+        window.addEventListener("focus", onFocus);
+        window.addEventListener("blur", onBlur);
 
         return (): void => {
-            window.removeEventListener('focus', onFocus);
-            window.removeEventListener('blur', onBlur);
+            window.removeEventListener("focus", onFocus);
+            window.removeEventListener("blur", onBlur);
         };
     }, [onBlur, onFocus]);
 
     const className: string = isDarkMode === true
-        ? 'app app--dark'
-        : 'app';
+        ? "app app--dark"
+        : "app";
 
     return (
         <main className={className}>

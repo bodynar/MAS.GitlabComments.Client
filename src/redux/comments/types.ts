@@ -2,8 +2,8 @@ import { Comment } from "@app/models/comment";
 
 /** Comments module state */
 export type CommentModuleState =
-    | 'init' /** Comment module initialized */
-    | 'idle' /** Comment module is waiting for user action  */
+    | "init" /** Comment module initialized */
+    | "idle" /** Comment module is waiting for user action  */
     ;
 
 /** Model representing comment module state */

@@ -1,16 +1,16 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import './viewModeSwitcher.scss';
+import "./viewModeSwitcher.scss";
 
-import { isUndefined } from '@bodynarf/utils/common';
-import { localStorage } from '@bodynarf/utils';
+import { isUndefined } from "@bodynarf/utils/common";
+import { localStorage } from "@bodynarf/utils";
 
-import Icon from '@bodynarf/react.components/components/icon';
+import Icon from "@bodynarf/react.components/components/icon";
 
-import { CompositeAppState } from '@app/redux/rootReducer';
-import { getSetDarkModeStateAction } from '@app/redux/app/actions/setDarkModeState';
+import { CompositeAppState } from "@app/redux/rootReducer";
+import { getSetDarkModeStateAction } from "@app/redux/app/actions/setDarkModeState";
 
 
 type ViewModeSwitcherProps = {
@@ -29,7 +29,7 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
             setDarkModeEnabled(enabled);
 
             if (!suppressSave) {
-                localStorage.saveRecord<boolean>('darkmode-state', enabled);
+                localStorage.saveRecord<boolean>("darkmode-state", enabled);
             }
         }, [setDarkModeState]
     );
@@ -48,8 +48,8 @@ function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProp
 
     const [darkModeEnabled, setDarkModeEnabled] = useState(isDarkMode === true);
 
-    const sunClassName: string = darkModeEnabled ? 'sun' : 'sun-fill';
-    const moonClassName: string = !darkModeEnabled ? 'moon' : 'moon-stars-fill';
+    const sunClassName: string = darkModeEnabled ? "sun" : "sun-fill";
+    const moonClassName: string = !darkModeEnabled ? "moon" : "moon-stars-fill";
 
     return (
         <div className="app-mode-switcher">
@@ -80,11 +80,11 @@ export default connect(
 const getDarkModeState = (isDarkMode?: boolean): boolean => {
     if (isUndefined(isDarkMode)) {
         const hasAlreadyStored: boolean =
-            localStorage.hasRecord('darkmode-state');
+            localStorage.hasRecord("darkmode-state");
 
         if (hasAlreadyStored) {
             const darkModeState: boolean | undefined =
-                localStorage.getRecord<boolean>('darkmode-state');
+                localStorage.getRecord<boolean>("darkmode-state");
 
             return !isUndefined(darkModeState) && (darkModeState as boolean);
         } else {

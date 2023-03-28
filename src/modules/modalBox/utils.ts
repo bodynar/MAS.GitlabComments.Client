@@ -74,7 +74,7 @@ export const getInitIsSaveButtonDisabled = (params: ModalParams): boolean => {
 /**
  * Validate modal configuration for `ModalType.Form` type
  * @param modalConfig Modal open configuration
- * @returns Error message if config isn't correct; otherwise - `undefined`
+ * @returns Error message if config isn"t correct; otherwise - `undefined`
  */
 const validateFormModalType = (modalConfig: ModalParams): string | undefined => {
     if (isNullOrUndefined(modalConfig.formData)) {
@@ -105,7 +105,7 @@ const validateFormModalType = (modalConfig: ModalParams): string | undefined => 
 /**
  * Validate modal configuration for `ModalType.Confirm` type
  * @param modalConfig Modal open configuration
- * @returns Error message if config isn't correct; otherwise - `undefined`
+ * @returns Error message if config isn"t correct; otherwise - `undefined`
  */
 const validateConfirmModalType = (modalConfig: ModalParams): string | undefined => {
     if (isNullOrEmpty(modalConfig.message)) {
@@ -125,7 +125,7 @@ const validateConfirmModalType = (modalConfig: ModalParams): string | undefined 
 /**
  * Validate modal configuration for `ModalType.Info` type
  * @param modalConfig Modal open configuration
- * @returns Error message if config isn't correct; otherwise - `undefined`
+ * @returns Error message if config isn"t correct; otherwise - `undefined`
  */
 const validateInfoModalType = (modalConfig: ModalParams): string | undefined => {
     if (isNullOrEmpty(modalConfig.message)) {
