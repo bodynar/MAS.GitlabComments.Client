@@ -3,13 +3,13 @@ import { useCallback, useState } from "react";
 import { connect } from "react-redux";
 
 import { ButtonType } from "@bodynarf/react.components/components/button/types";
+import { generateGuid } from "@bodynarf/utils/guid";
 
 import { NotificationItem, NotificationType } from "@app/models";
 
 import Button from "@bodynarf/react.components/components/button";
 
-import { getAddNotificationAction } from "@app/redux/notificator/actions/addNotification";
-import { generateGuid } from "@bodynarf/utils/guid";
+import { getAddNotificationAction } from "@app/redux/notificator";
 
 /** Notification type to Button type map */
 const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([

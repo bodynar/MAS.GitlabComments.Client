@@ -3,10 +3,8 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { post } from "@app/utils";
 
 import { ActionWithPayload, CompositeAppState } from "@app/redux";
-
 import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
-
-import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
+import { getSuccessNotificationAction } from "@app/redux/notificator";
 
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 

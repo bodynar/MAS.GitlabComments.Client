@@ -1,7 +1,7 @@
+import { AppState } from "@app/redux/app";
+import { NotificatorState } from "@app/redux/notificator";
 import { CommentsState } from "./comments/types";
 import { ModalState } from "./modal/types";
-import { NotificatorState } from "./notificator/types";
-import { AppState } from "./app/types";
 import { StatsState } from "./stats/types";
 
 /** Redux action */

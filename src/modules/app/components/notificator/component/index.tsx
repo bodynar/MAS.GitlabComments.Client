@@ -13,9 +13,7 @@ import { NotificationCountToShowHideAll } from "@app/constants";
 import { NotificationItem } from "@app/models";
 
 import { CompositeAppState } from "@app/redux";
-
-import { getHideNotificationsAction } from "@app/redux/notificator/actions/hideNotification";
-import { getHideAllNotificationsAction } from "@app/redux/notificator/actions/hideAllNotifications";
+import { getHideNotificationsAction, getHideAllNotificationsAction } from "@app/redux/notificator";
 
 import Notification from "../components/notificationItem";
 
