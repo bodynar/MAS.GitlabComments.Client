@@ -2,7 +2,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { post } from "@app/utils";
 
-import { BaseCommentModel } from "@app/models/comment";
+import { BaseCommentModel } from "@app/models";
 
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";

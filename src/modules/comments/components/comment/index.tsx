@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from "react";
 import "./comment.scss";
 import "./comment.dark.scss";
 
-import { Comment as CommentModel } from "@app/models/comment";
+import { Comment as CommentModel } from "@app/models";
 
 import Button from "@bodynarf/react.components/components/button";
 

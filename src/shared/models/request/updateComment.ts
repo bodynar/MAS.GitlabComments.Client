@@ -1,4 +1,4 @@
-import { BaseCommentModel } from "@app/models/comment";
+import { BaseCommentModel } from "@app/models";
 
 /**Model represents container for data to update comment */
 export interface UpdateComment extends BaseCommentModel {

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { ButtonType } from "@bodynarf/react.components/components/button/types";
 
-import { NotificationItem, NotificationType } from "@app/models/notification";
+import { NotificationItem, NotificationType } from "@app/models";
 
 import Button from "@bodynarf/react.components/components/button";
 

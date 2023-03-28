@@ -1,6 +1,6 @@
 import { ActionWithPayload } from "@app/redux/types";
 
-import { NotificationItem } from "@app/models/notification";
+import { NotificationItem } from "@app/models";
 
 import { AddNotification } from "../actions";
 

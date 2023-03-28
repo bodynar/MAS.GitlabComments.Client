@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { connect } from "react-redux";
 
-import { StatsRecord } from "@app/models/response/statsRecord";
+import { StatsRecord } from "@app/models";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 

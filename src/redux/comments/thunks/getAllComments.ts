@@ -8,7 +8,7 @@ import { ActionWithPayload } from "@app/redux/types";
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 import { setError } from "@app/redux/app/utils";
 
-import { Comment } from "@app/models/comment";
+import { Comment } from "@app/models";
 
 import { getSetModuleStateAction } from "../actions/setModuleState";
 import { getSetCommentsAction } from "../actions/setComments";

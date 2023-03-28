@@ -1,4 +1,4 @@
-import { StatsRecord } from "@app/models/response/statsRecord";
+import { StatsRecord } from "@app/models";
 
 /**
  * @enum

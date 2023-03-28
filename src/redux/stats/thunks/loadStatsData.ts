@@ -4,7 +4,7 @@ import moment, { unitOfTime } from "moment";
 
 import { get } from "@app/utils";
 
-import { StatsRecord } from "@app/models/response/statsRecord";
+import { StatsRecord } from "@app/models";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 import { ActionWithPayload } from "@app/redux/types";

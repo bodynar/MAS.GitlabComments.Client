@@ -1,4 +1,4 @@
-import { BaseCommentModel, Comment } from "@app/models/comment";
+import { BaseCommentModel, Comment } from "@app/models";
 
 import { ActionWithPayload } from "@app/redux/types";
 

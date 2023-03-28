@@ -9,7 +9,7 @@ import { isNullOrEmpty, isStringEmpty } from "@bodynarf/utils/common";
 import Button from "@bodynarf/react.components/components/button";
 import Search from "@bodynarf/react.components/components/search";
 
-import { Comment as CommentModel } from "@app/models/comment";
+import { Comment as CommentModel } from "@app/models";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 import { getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from "@app/redux/comments/thunks";

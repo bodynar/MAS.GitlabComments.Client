@@ -1,6 +1,6 @@
 import { generateGuid } from "@bodynarf/utils";
 
-import { NotificationType } from "@app/models/notification";
+import { NotificationType } from "@app/models";
 
 import { ActionWithPayload } from "../types";
 import { getAddNotificationAction } from "./actions/addNotification";

@@ -5,7 +5,7 @@ import "./notificationItem.dark.scss";
 
 import { NotificationHideDelay } from "@app/constants";
 
-import { NotificationItem, NotificationType } from "@app/models/notification";
+import { NotificationItem, NotificationType } from "@app/models";
 
 /** Map of notification type to bulma class name */
 const typeClassNameMap: Map<NotificationType, string> = new Map([

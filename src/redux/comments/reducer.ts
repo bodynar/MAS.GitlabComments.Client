@@ -2,7 +2,7 @@ import { isNullOrEmpty, isNullOrUndefined, getPropertyValueWithCheck } from "@bo
 
 import { ActionWithPayload } from "@app/redux/types";
 
-import { Comment } from "@app/models/comment";
+import { Comment } from "@app/models";
 
 import { CommentModuleState, CommentsState } from "./types";
 import { AddComment, DeleteComment, Increment, SetComments, SetModuleState, SetSearchQuery, UpdateComment } from "./actions";

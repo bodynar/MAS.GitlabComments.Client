@@ -1,6 +1,6 @@
 import { getPropertyValueWithCheck } from "@bodynarf/utils";
 
-import { NotificationItem } from "@app/models/notification";
+import { NotificationItem } from "@app/models";
 import { NotificatorState } from "./types";
 
 import { removeByKey } from "@app/utils";

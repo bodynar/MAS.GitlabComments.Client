@@ -6,7 +6,7 @@ import "./record.dark.scss";
 
 import Button from "@bodynarf/react.components/components/button";
 
-import { StatsRecord } from "@app/models/response/statsRecord";
+import { StatsRecord } from "@app/models";
 
 type StatsRecordProps = StatsRecord & {
     /** Show comment description */

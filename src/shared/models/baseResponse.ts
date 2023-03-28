@@ -1,14 +1,14 @@
 /** Base api response */
-export type BaseResponse = {
+export interface BaseResponse {
     /** Flag determines that api processed with no errors */
     success: boolean;
 
     /** Api process error */
-    erorr: string;  
-};
+    erorr: string;
+}
 
 /** Api response with result */
-export type BaseResponseWithResult<TResult> = BaseResponse & {
+export interface BaseResponseWithResult<TResult> extends BaseResponse {
     /** Api response result */
     result: TResult;
-};
+}

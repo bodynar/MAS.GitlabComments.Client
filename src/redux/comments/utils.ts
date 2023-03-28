@@ -4,7 +4,7 @@ import { isNullOrUndefined } from "@bodynarf/utils";
 
 import { ActionWithPayload } from "@app/redux/types";
 
-import { BaseCommentModel } from "@app/models/comment";
+import { BaseCommentModel } from "@app/models";
 
 import { ModalCallback, ModalCloseData, ModalParams } from "@app/redux/modal/types";
 

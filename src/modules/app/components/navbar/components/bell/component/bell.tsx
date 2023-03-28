@@ -8,7 +8,7 @@ import { useComponentOutsideClick } from "@bodynarf/react.components/hooks/useCo
 import "./bell.scss";
 import "./bell.dark.scss";
 
-import { NotificationHistoryItem } from "@app/models/notification";
+import { NotificationHistoryItem } from "@app/models";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 

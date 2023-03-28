@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import moment, { unitOfTime } from "moment";
 
-import { StatsRecord } from "@app/models/response/statsRecord";
+import { StatsRecord } from "@app/models";
 import { DateRange, StatsFilter } from "@app/redux/stats/types";
 
 import StatsRecordComponent from "../record";

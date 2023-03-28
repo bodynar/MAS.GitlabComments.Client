@@ -2,7 +2,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { isStringEmpty } from "@bodynarf/utils/common";
 
-import { Comment as CommentModel } from "@app/models/comment";
+import { Comment as CommentModel } from "@app/models";
 
 import Comment from "../comment";
 

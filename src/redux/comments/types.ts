@@ -1,4 +1,4 @@
-import { Comment } from "@app/models/comment";
+import { Comment } from "@app/models";
 
 /** Comments module state */
 export type CommentModuleState =

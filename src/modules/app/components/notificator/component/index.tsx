@@ -10,7 +10,7 @@ import "./notificator.scss";
 import "./notificator.dark.scss";
 
 import { NotificationCountToShowHideAll } from "@app/constants";
-import { NotificationItem } from "@app/models/notification";
+import { NotificationItem } from "@app/models";
 
 import { CompositeAppState } from "@app/redux/rootReducer";
 

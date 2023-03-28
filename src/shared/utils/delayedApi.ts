@@ -3,7 +3,7 @@ import moment from "moment";
 import { isNullOrUndefined, isStringEmpty, delayResolve, delayReject, RequestData, safeFetch } from "@bodynarf/utils";
 
 import { LoadingStateHideDelay } from "@app/constants";
-import { BaseResponseWithResult } from "@app/models/response/baseResponse";
+import { BaseResponseWithResult } from "@app/models";
 
 /**
  * Send data to api to process

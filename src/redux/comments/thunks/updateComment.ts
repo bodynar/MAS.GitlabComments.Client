@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { BaseCommentModel } from "@app/models/comment";
+import { BaseCommentModel } from "@app/models";
 
 import { get, post } from "@app/utils";
 
