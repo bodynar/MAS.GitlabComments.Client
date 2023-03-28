@@ -1,5 +1,4 @@
-import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils/common";
-import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { isNullOrEmpty, isNullOrUndefined, getPropertyValueWithCheck } from "@bodynarf/utils";
 
 import { ActionWithPayload } from "@app/redux/types";
 

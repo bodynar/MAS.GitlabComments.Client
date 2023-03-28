@@ -1,4 +1,4 @@
-import { generateGuid } from "@bodynarf/utils/guid";
+import { generateGuid } from "@bodynarf/utils";
 
 import { NotificationType } from "@app/models/notification";
 

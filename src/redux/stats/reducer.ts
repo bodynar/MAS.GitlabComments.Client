@@ -1,4 +1,4 @@
-import { getPropertyValue, getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { getPropertyValue, getPropertyValueWithCheck } from "@bodynarf/utils";
 
 import { StatsRecord } from "@app/models/response/statsRecord";
 

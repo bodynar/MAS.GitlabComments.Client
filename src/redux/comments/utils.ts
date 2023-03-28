@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { isNullOrUndefined } from "@bodynarf/utils/common";
+import { isNullOrUndefined } from "@bodynarf/utils";
 
 import { ActionWithPayload } from "@app/redux/types";
 

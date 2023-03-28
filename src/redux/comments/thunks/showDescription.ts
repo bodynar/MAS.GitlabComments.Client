@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { isNullOrEmpty } from "@bodynarf/utils/common";
+import { isNullOrEmpty } from "@bodynarf/utils";
 
 import { get } from "@app/utils";
 

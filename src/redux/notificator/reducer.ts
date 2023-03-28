@@ -1,4 +1,4 @@
-import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { getPropertyValueWithCheck } from "@bodynarf/utils";
 
 import { NotificationItem } from "@app/models/notification";
 import { NotificatorState } from "./types";

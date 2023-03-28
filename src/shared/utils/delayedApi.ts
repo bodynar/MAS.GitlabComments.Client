@@ -1,8 +1,6 @@
 import moment from "moment";
 
-import { isNullOrUndefined, isStringEmpty } from "@bodynarf/utils/common";
-import { delayResolve, delayReject } from "@bodynarf/utils/function";
-import { RequestData, safeFetch } from "@bodynarf/utils/api";
+import { isNullOrUndefined, isStringEmpty, delayResolve, delayReject, RequestData, safeFetch } from "@bodynarf/utils";
 
 import { LoadingStateHideDelay } from "@app/constants";
 import { BaseResponseWithResult } from "@app/models/response/baseResponse";
