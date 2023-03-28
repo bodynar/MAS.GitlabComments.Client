@@ -10,7 +10,7 @@ import { CompositeAppState } from "@app/redux/rootReducer";
 import { setError } from "@app/redux/app/utils";
 
 import { ModalAction } from "@app/redux/modal/types";
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
+import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 
 import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 

@@ -1,21 +1,21 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import { isNullOrUndefined } from '@bodynarf/utils/common';
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import './common.style.scss';
+import "./style.scss";
 
-import { ModalFormConfiguration } from '../types';
+import { ModalFormConfiguration } from "@app/models/modal";
 
-import Text from '../components/text/text';
-import Multiline from '../components/multiline/multiline';
+import ModalFormText from "../components/text";
+import Multiline from "../components/multiline";
 
-type ModalFormProps = {
+interface ModalFormProps {
     /** Form configuration */
     formConfig: ModalFormConfiguration;
 
     /** Handler of field calculating validation result */
     setSaveButtonDisabled: (isValid: boolean) => void;
-};
+}
 
 /** Field validation state */
 interface FormFieldValidationState {
@@ -30,9 +30,9 @@ interface FormFieldValidationState {
  * Modal form container component
  * @throws Form configuration does not contain any field
  */
-export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps): JSX.Element => {
+const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps): JSX.Element => {
     if (formConfig.fields.length === 0) {
-        throw new Error('No field provided for ModalForm');
+        throw new Error("No field provided for ModalForm");
     }
 
     const requiredFields: Array<FormFieldValidationState> =
@@ -66,13 +66,13 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
                 && <h3>{formConfig.caption}</h3>
             }
             {formConfig.fields.map(fieldConfig => {
-                if (fieldConfig.type === 'text') {
-                    return <Text
+                if (fieldConfig.type === "text") {
+                    return <ModalFormText
                         key={fieldConfig.name}
                         fieldConfig={fieldConfig}
                         setFieldValidState={setFieldValidState}
                     />;
-                } else if (fieldConfig.type === 'multiline') {
+                } else if (fieldConfig.type === "multiline") {
                     return <Multiline
                         key={fieldConfig.name}
                         fieldConfig={fieldConfig}
@@ -87,3 +87,5 @@ export const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps)
         </>
     );
 };
+
+export default ModalForm;

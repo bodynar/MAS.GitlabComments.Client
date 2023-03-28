@@ -7,7 +7,7 @@ import { get, post } from "@app/utils/delayedApi";
 import { ActionWithPayload } from "@app/redux/types";
 import { CompositeAppState } from "@app/redux/rootReducer";
 
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
+import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 import { ModalAction } from "@app/redux/modal/types";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";

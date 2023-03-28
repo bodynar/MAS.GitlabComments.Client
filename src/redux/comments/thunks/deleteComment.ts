@@ -10,7 +10,7 @@ import { setError } from "@app/redux/app/utils";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
+import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 import { ModalAction } from "@app/redux/modal/types";
 
 import { getDeleteCommentAction } from "../actions/deleteComment";

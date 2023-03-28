@@ -37,6 +37,9 @@
 			"@app/redux/*": [
 				"src/redux/*"
 			],
+			"@app/redux": [
+				"src/redux"
+			],
 			"@app/modules/*": [
 				"src/modules/*"
 			],
