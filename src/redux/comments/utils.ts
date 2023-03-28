@@ -3,12 +3,11 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { isNullOrUndefined } from "@bodynarf/utils";
 
 import { BaseCommentModel } from "@app/models";
+import { ModalFormItem, ModalFormItemType } from "@app/models/modal";
 
 import { CompositeAppState, ActionWithPayload } from "@app/redux";
 import { getSetAppIsLoadingAction } from "@app/redux/app";
-import { ModalCallback, ModalCloseData, ModalParams } from "@app/redux/modal/types";
-
-import { ModalFormItem } from "@app/modules/modalBox/components/modalForm";
+import { ModalCallback, ModalCloseData, ModalParams, ModalType } from "@app/redux/modal";
 
 /**
  * Get comment form configuration for form in modal box
@@ -23,21 +22,21 @@ export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel):
         [
             {
                 name: "Comment",
-                type: "text",
+                type: ModalFormItemType.Text,
                 caption: "Comment",
                 isRequired: true,
                 value: isCommentModelDefined ? commentShortModel?.message as string : undefined
             },
             {
                 name: "Description",
-                type: "multiline",
+                type: ModalFormItemType.Multiline,
                 caption: "Description",
                 value: isCommentModelDefined ? commentShortModel?.description as string : undefined
             },
         ];
 
     const modalParams: ModalParams = {
-        modalType: "form",
+        modalType: ModalType.Form,
         title: isCommentModelDefined ? "Update comment" : "Add comment",
         formData: { fields: modalFields },
     };

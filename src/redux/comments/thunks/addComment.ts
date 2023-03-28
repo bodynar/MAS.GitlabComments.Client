@@ -8,7 +8,7 @@ import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 import { getSuccessNotificationAction } from "@app/redux/notificator";
 
-import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
+import { getOpenModalAction } from "@app/redux/modal";
 
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
 import { getAddCommentAction } from "../actions/addComment";

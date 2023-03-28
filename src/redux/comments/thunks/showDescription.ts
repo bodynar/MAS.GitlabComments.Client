@@ -7,7 +7,7 @@ import { get } from "@app/utils";
 import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 
-import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
+import { getOpenModalAction } from "@app/redux/modal";
 
 import { ModalType } from "@app/redux/modal";
 

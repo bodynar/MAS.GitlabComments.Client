@@ -6,7 +6,7 @@ import { ActionWithPayload, CompositeAppState } from "@app/redux";
 import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
 import { getSuccessNotificationAction } from "@app/redux/notificator";
 
-import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
+import { getOpenModalAction } from "@app/redux/modal";
 
 import { getDeleteCommentAction } from "../actions/deleteComment";
 import { ModalType } from "@app/redux/modal";
