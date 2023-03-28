@@ -9,7 +9,7 @@ import { isStringEmpty } from "@bodynarf/utils";
 import "./style.scss";
 import "./style.dark.scss";
 
-import { NotificationCountToShowHideAll } from "@app/constants";
+import { NOTIFICATION_COUNT_TO_SHOW_HIDE_ALL_BUTTON } from "@app/constants";
 import { NotificationItem } from "@app/models";
 
 import { CompositeAppState } from "@app/redux";
@@ -44,7 +44,7 @@ function Notificator({
 
     return (
         <TransitionGroup className="app-notificator">
-            {notifications.length > NotificationCountToShowHideAll &&
+            {notifications.length > NOTIFICATION_COUNT_TO_SHOW_HIDE_ALL_BUTTON &&
                 <CSSTransition
                     key="app-notificator__cleaner"
                     timeout={250}

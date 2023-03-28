@@ -2,7 +2,7 @@ import moment from "moment";
 
 import { isNullOrUndefined, isStringEmpty, delayResolve, delayReject, RequestData, safeFetch } from "@bodynarf/utils";
 
-import { LoadingStateHideDelay } from "@app/constants";
+import { LOADINH_STATE_HIDE_DELAY, REQUEST_TIMEOUT } from "@app/constants";
 import { BaseResponseWithResult } from "@app/models";
 
 /**
@@ -53,7 +53,7 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
 const fetchWithDelay = async<TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
     const start = moment();
 
-    return safeFetch(uri, requestParams)
+    return safeFetch(uri, requestParams, { timeout: REQUEST_TIMEOUT })
         .then((textResponse: string) => {
             if (isStringEmpty(textResponse)) {
                 return new Promise<TResult>((_, r) => r("No data loaded"));
@@ -74,19 +74,19 @@ const fetchWithDelay = async<TResult>(uri: string, requestParams: RequestInit): 
 
             const duration = moment.duration(end.diff(start)).asSeconds();
 
-            return duration > LoadingStateHideDelay
+            return duration > LOADINH_STATE_HIDE_DELAY
                 ? new Promise<TResult>(resolve => resolve(result))
-                : delayResolve<TResult>(Math.abs(LoadingStateHideDelay - duration), result);
+                : delayResolve<TResult>(Math.abs(LOADINH_STATE_HIDE_DELAY - duration), result);
         })
         .catch(error => {
             const end = moment();
 
             const duration = moment.duration(end.diff(start)).asSeconds();
 
-            if (duration > LoadingStateHideDelay) {
+            if (duration > LOADINH_STATE_HIDE_DELAY) {
                 throw error;
             } else {
-                return delayReject(Math.abs(LoadingStateHideDelay - duration), error);
+                return delayReject(Math.abs(LOADINH_STATE_HIDE_DELAY - duration), error);
             }
         });
 };

@@ -3,7 +3,7 @@ import { useCallback, useEffect } from "react";
 import "./style.scss";
 import "./style.dark.scss";
 
-import { NotificationHideDelay } from "@app/constants";
+import { NOTIFICATION_HIDE_DELAY } from "@app/constants";
 
 import { NotificationItem, NotificationType } from "@app/models";
 
@@ -32,7 +32,7 @@ export default function Notification({
     const hide = useCallback(() => onHideClick(item.id), [item.id, onHideClick]);
 
     useEffect(() => {
-        const timer = setTimeout(hide, NotificationHideDelay);
+        const timer = setTimeout(hide, NOTIFICATION_HIDE_DELAY);
 
         return (): void => { clearTimeout(timer); };
     }, [hide]);
