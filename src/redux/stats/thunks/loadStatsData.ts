@@ -2,17 +2,13 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import moment, { unitOfTime } from "moment";
 
-import { get } from "@app/utils";
-
 import { StatsRecord } from "@app/models";
+
+import { get } from "@app/utils";
 
 import { CompositeAppState, ActionWithPayload } from "@app/redux";
 import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
-
-import { getSetStatsDataAction } from "../actions/setStatsData";
-
-import { DateRange, StatsFilter } from "../types";
-import { getSetStatsLoadedStateAction } from "../actions/setStatsLoadingState";
+import { getSetStatsDataAction, DateRange, StatsFilter, getSetStatsLoadedStateAction } from "@app/redux/stats";
 
 /**
  * Get fetch stats data redux action
@@ -42,7 +38,6 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
                 );
 
                 dispatch(getSetAppIsLoadingAction(false));
-
                 dispatch(getSetStatsLoadedStateAction(true));
             })
             .catch(error => {

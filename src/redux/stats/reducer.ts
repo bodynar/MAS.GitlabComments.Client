@@ -2,9 +2,8 @@ import { getPropertyValue, getPropertyValueWithCheck } from "@bodynarf/utils";
 
 import { StatsRecord } from "@app/models";
 
-import { ActionWithPayload } from "../types";
-import { SetStatsData, SetStatsFilters, SetStatsLoadedState } from "./actions";
-import { DateRange, StatsFilter, StatsState } from "./types";
+import { ActionWithPayload } from "@app/redux";
+import { SET_STATS_DATA, SET_STATS_FILTER, SET_STATS_LOADED_STATE, DateRange, StatsFilter, StatsState } from "@app/redux/stats";
 
 /** Default stats module state */
 const defaultState: StatsState = {
@@ -22,7 +21,7 @@ const defaultState: StatsState = {
  */
 export default function (state: StatsState = defaultState, action: ActionWithPayload): StatsState {
     switch (action.type) {
-        case SetStatsData: {
+        case SET_STATS_DATA: {
             const data: Array<StatsRecord> = getPropertyValueWithCheck<Array<StatsRecord>>(action.payload, "data") || [];
 
             return {
@@ -30,7 +29,7 @@ export default function (state: StatsState = defaultState, action: ActionWithPay
                 data
             };
         }
-        case SetStatsFilters: {
+        case SET_STATS_FILTER: {
             const filter: StatsFilter = getPropertyValueWithCheck<StatsFilter>(action.payload, "filter");
 
             return {
@@ -38,7 +37,7 @@ export default function (state: StatsState = defaultState, action: ActionWithPay
                 filter: filter
             };
         }
-        case SetStatsLoadedState: {
+        case SET_STATS_LOADED_STATE: {
             const loaded: boolean | undefined = getPropertyValue<boolean>(action.payload, "loaded");
 
             return {

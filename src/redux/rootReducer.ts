@@ -3,8 +3,8 @@ import { combineReducers } from "redux";
 import commentsReducer from "./comments/reducer";
 import modalBoxReducer from "./modal/reducer";
 import notificatorReducer from "@app/redux/notificator/reducer";
-import appReducer from "./app/reducer";
-import statsReducer from "./stats/reducer";
+import appReducer from "@app/redux/app/reducer";
+import statsReducer from "@app/redux/stats/reducer";
 
 import { CompositeAppState } from "./types";
 

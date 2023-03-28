@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 import { StatsRecord } from "@app/models";
 
 import { CompositeAppState } from "@app/redux";
-
-import { StatsFilter } from "@app/redux/stats/types";
-import { getSetStatsFilterAction } from "@app/redux/stats/actions/setStatsFilter";
-import { loadStatsData } from "@app/redux/stats/thunks/loadStatsData";
-import { getSetStatsLoadedStateAction } from "@app/redux/stats/actions/setStatsLoadingState";
+import { StatsFilter, getSetStatsFilterAction, loadStatsData, getSetStatsLoadedStateAction } from "@app/redux/stats";
 
 import { showDescription } from "@app/redux/comments/thunks";
 

@@ -2,16 +2,16 @@
  * @constant
  * Store fetched stats data
  */
-export const SetStatsData = "stats/setData";
+export const SET_STATS_DATA = "stats/setData";
 
 /**
  * @constant
  * Store selected stats filter
  */
-export const SetStatsFilters = "stats/setFilters";
+export const SET_STATS_FILTER = "stats/setFilter";
 
 /**
  * @constant
  * Save current stats loaded state
  */
-export const SetStatsLoadedState = "stats/setLoaded";
+export const SET_STATS_LOADED_STATE = "stats/setLoaded";

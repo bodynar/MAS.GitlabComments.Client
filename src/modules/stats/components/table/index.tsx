@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import moment, { unitOfTime } from "moment";
 
 import { StatsRecord } from "@app/models";
-import { DateRange, StatsFilter } from "@app/redux/stats/types";
+import { DateRange, StatsFilter } from "@app/redux/stats";
 
 import StatsRecordComponent from "../record";
 

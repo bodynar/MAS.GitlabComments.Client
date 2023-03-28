@@ -9,7 +9,7 @@ import Dropdown from "@bodynarf/react.components/components/dropdown";
 import Date from "@bodynarf/react.components/components/primitives/date";
 import Button from "@bodynarf/react.components/components/button";
 
-import { DateRange, StatsFilter } from "@app/redux/stats/types";
+import { DateRange, StatsFilter } from "@app/redux/stats";
 
 type StatsFiltersProps = {
     /** Current stats module filter */
@@ -95,7 +95,7 @@ const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, set
         <div className="block">
             <div className="block is-flex is-align-items-center">
                 <Dropdown
-                    caption="Date range type"
+                    placeholder="Date range type"
                     hideOnOuterClick={true}
                     deselectable={true}
                     items={dateRangeOptions}

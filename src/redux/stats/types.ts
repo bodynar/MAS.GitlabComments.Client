@@ -21,7 +21,7 @@ export enum DateRange {
 }
 
 /** Statistics filter data */
-export type StatsFilter = {
+export interface StatsFilter {
     /** Type of selected date range */
     type: DateRange;
 
@@ -30,10 +30,10 @@ export type StatsFilter = {
 
     /** Right date-boundary */
     rightDate?: Date;
-};
+}
 
 /** Statistics module state */
-export type StatsState = {
+export interface StatsState {
     /** Fetched statistics data for specified date range */
     data: Array<StatsRecord>;
 
@@ -42,4 +42,4 @@ export type StatsState = {
 
     /** Is stats data loaded */
     loaded?: boolean;
-};
+}
