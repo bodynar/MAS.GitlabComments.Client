@@ -4,8 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-import { isNullOrEmpty, isStringEmpty } from "@bodynarf/utils/common";
-
+import { isNullOrEmpty, isStringEmpty } from "@bodynarf/utils";
 import Button from "@bodynarf/react.components/components/button";
 import Search from "@bodynarf/react.components/components/search";
 

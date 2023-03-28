@@ -2,11 +2,11 @@ import { useCallback, useEffect } from "react";
 
 import { connect } from "react-redux";
 
+import { isNullOrUndefined } from "@bodynarf/utils";
+
 import "./app.scss";
 import "../../../shared/styles/globalStyles.scss";
 import "../../../shared/styles/darkStyles.scss";
-
-import { isNullOrUndefined } from "@bodynarf/utils/common";
 
 import { CompositeAppState } from "@app/redux";
 import { getSetTabIsFocusedAction, getReadOnlyMode } from "@app/redux/app";

@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Button from "@bodynarf/react.components/components/button";
+
 import "./record.scss";
 import "./record.dark.scss";
-
-import Button from "@bodynarf/react.components/components/button";
 
 import { StatsRecord } from "@app/models";
 

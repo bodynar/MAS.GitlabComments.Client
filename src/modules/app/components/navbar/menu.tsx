@@ -1,4 +1,4 @@
-import { isStringEmpty } from "@bodynarf/utils/common";
+import { isStringEmpty } from "@bodynarf/utils";
 
 import Comments from "@app/modules/comments/index";
 import Stats from "@app/modules/stats/component/stats";

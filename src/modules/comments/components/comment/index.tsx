@@ -1,13 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 
+import { getClassName } from "@bodynarf/utils";
+import Button from "@bodynarf/react.components/components/button";
+
 import "./comment.scss";
 import "./comment.dark.scss";
 
 import { Comment as CommentModel } from "@app/models";
-
-import Button from "@bodynarf/react.components/components/button";
-
-import { getClassName } from "@bodynarf/utils/component";
 
 type CommentProps = {
     /** Is comment should be scrolled into view after render */

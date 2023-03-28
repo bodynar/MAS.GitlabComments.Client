@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { connect } from "react-redux";
 
 import Icon from "@bodynarf/react.components/components/icon";
-import { useComponentOutsideClick } from "@bodynarf/react.components/hooks/useComponentOutsideClick";
+import { useComponentOutsideClick } from "@bodynarf/react.components";
 
 import "./bell.scss";
 import "./bell.dark.scss";

@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
+import { isNullOrUndefined } from "@bodynarf/utils";
+import Button from "@bodynarf/react.components/components/button";
+
 import "./style.scss";
 import "./style.dark.scss";
 
-import { isNullOrUndefined } from "@bodynarf/utils/common";
-
-import Button from "@bodynarf/react.components/components/button";
-
-import { CompositeAppState } from "@app/redux/rootReducer";
+import { CompositeAppState } from "@app/redux";
 import { closeModal, ModalCallback, ModalCloseData, ModalParams, ModalType } from "@app/redux/modal";
 
 import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "../utils";

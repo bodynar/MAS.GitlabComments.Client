@@ -1,10 +1,9 @@
 import { version } from "package.json";
 
-import "./footer.scss";
-
-import { isStringEmpty } from "@bodynarf/utils/common";
-
+import { isStringEmpty } from "@bodynarf/utils";
 import Anchor from "@bodynarf/react.components/components/anchor";
+
+import "./footer.scss";
 
 type FooterProps = {
     /** Class for navbar */

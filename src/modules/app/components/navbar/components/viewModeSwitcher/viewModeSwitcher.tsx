@@ -2,11 +2,10 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import { connect } from "react-redux";
 
-import "./viewModeSwitcher.scss";
-
 import { isUndefined, localStorage } from "@bodynarf/utils";
-
 import Icon from "@bodynarf/react.components/components/icon";
+
+import "./viewModeSwitcher.scss";
 
 import { CompositeAppState } from "@app/redux";
 import { getSetDarkModeStateAction } from "@app/redux/app";

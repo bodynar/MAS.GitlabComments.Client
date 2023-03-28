@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 
+import { isStringEmpty } from "@bodynarf/utils";
+
 import "./navbar.scss";
 import "./navbar.dark.scss";
-
-import { isStringEmpty } from "@bodynarf/utils/common";
 
 import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from "../components";
 
