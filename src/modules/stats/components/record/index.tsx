@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
 import "./style.scss";
@@ -41,13 +42,13 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: "info-lg" }}
+                        icon={{ name: "info-lg", size: ElementSize.Medium  }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="link"
-                        icon={{ name: "link-45deg" }}
+                        icon={{ name: "link-45deg", size: ElementSize.Medium  }}
                         title="Show in list"
                         onClick={onShowClick}
                     />

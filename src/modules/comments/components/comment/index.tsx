@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 
 import { getClassName } from "@bodynarf/utils";
+import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
 import "./style.scss";
@@ -77,7 +78,7 @@ export default function Comment({
                 <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
                     <Button
                         type="default"
-                        icon={{ name: "arrow-up" }}
+                        icon={{ name: "arrow-up", size: ElementSize.Medium }}
                         title="Increment count"
                         onClick={onIncrementClick}
                         disabled={isReadOnlyMode}
@@ -95,14 +96,14 @@ export default function Comment({
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: "info-lg" }}
+                        icon={{ name: "info-lg", size: ElementSize.Medium  }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="warning"
                         outlined={true}
-                        icon={{ name: "pencil" }}
+                        icon={{ name: "pencil", size: ElementSize.Medium  }}
                         title="Edit"
                         onClick={onUpdateCommentClick}
                         disabled={isReadOnlyMode}
@@ -110,7 +111,7 @@ export default function Comment({
                     <Button
                         type="danger"
                         outlined={true}
-                        icon={{ name: "trash" }}
+                        icon={{ name: "trash", size: ElementSize.Medium  }}
                         title="Delete"
                         onClick={onDeleteCommentClick}
                         disabled={isReadOnlyMode}

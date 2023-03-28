@@ -3,6 +3,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
 
 import { isUndefined, localStorage } from "@bodynarf/utils";
+import { ElementSize } from "@bodynarf/react.components";
 import Icon from "@bodynarf/react.components/components/icon";
 
 import "./style.scss";
@@ -53,7 +54,10 @@ function ViewModeSwitcher({
 
     return (
         <div className="app-mode-switcher">
-            <Icon name={sunClassName} />
+            <Icon
+                name={sunClassName}
+                size={ElementSize.Medium}
+            />
             <label className="app-mode-switcher__switch">
                 <input
                     type="checkbox"
@@ -62,7 +66,10 @@ function ViewModeSwitcher({
                 />
                 <span className="app-mode-switcher__slider"></span>
             </label>
-            <Icon name={moonClassName} />
+            <Icon
+                name={moonClassName}
+                size={ElementSize.Medium}
+            />
         </div>
     );
 }

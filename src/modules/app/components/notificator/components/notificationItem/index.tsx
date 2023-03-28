@@ -29,9 +29,7 @@ export default function Notification({
     item,
     onHideClick,
 }: NotificationProps): JSX.Element {
-    const hide = useCallback(() => {
-        onHideClick(item.id);
-    }, [item.id, onHideClick]);
+    const hide = useCallback(() => onHideClick(item.id), [item.id, onHideClick]);
 
     useEffect(() => {
         const timer = setTimeout(hide, NotificationHideDelay);
