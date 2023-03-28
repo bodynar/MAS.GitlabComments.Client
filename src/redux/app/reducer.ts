@@ -1,9 +1,8 @@
 import { getPropertyValueWithCheck } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "../types";
-import { SetDarkModeState, SetIsAppLoadingState, SetReadOnlyModeState, SetTabIsFocused } from "./actions";
+import { ActionWithPayload } from "@app/redux";
+import { AppState, SET_DARK_MODE_STATE, SET_IS_APP_IN_LOADING_STATE, SET_READONLY_MODE_STATE, SET_TAB_IS_FOCUSED } from "@app/redux/app";
 
-import { AppState } from "./types";
 
 const defaultState: AppState = {
     isCurrentTabFocused: true,
@@ -18,7 +17,7 @@ const defaultState: AppState = {
  */
 export default function (state: AppState = defaultState, action: ActionWithPayload): AppState {
     switch (action.type) {
-        case SetTabIsFocused: {
+        case SET_TAB_IS_FOCUSED: {
             const isTabFocused: boolean =
                 getPropertyValueWithCheck(action.payload, "isTabFocused");
 
@@ -27,7 +26,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
                 isCurrentTabFocused: isTabFocused
             };
         }
-        case SetReadOnlyModeState: {
+        case SET_READONLY_MODE_STATE: {
             const readOnlyMode: boolean =
                 getPropertyValueWithCheck(action.payload, "readOnlyMode", false) || false;
 
@@ -36,7 +35,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
                 readOnlyMode: readOnlyMode
             };
         }
-        case SetDarkModeState: {
+        case SET_DARK_MODE_STATE: {
             const isDarkMode: boolean =
                 getPropertyValueWithCheck(action.payload, "isDarkMode", false) || false;
 
@@ -45,7 +44,7 @@ export default function (state: AppState = defaultState, action: ActionWithPaylo
                 isDarkMode: isDarkMode
             };
         }
-        case SetIsAppLoadingState: {
+        case SET_IS_APP_IN_LOADING_STATE: {
             const isLoading: boolean =
                 getPropertyValueWithCheck(action.payload, "loading", false) || false;
 

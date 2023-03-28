@@ -1,6 +1,6 @@
 import { StatsRecord } from "@app/models";
 
-import { ActionWithPayload } from "@app/redux/types";
+import { ActionWithPayload } from "@app/redux";
 
 import { SetStatsData } from "../actions";
 

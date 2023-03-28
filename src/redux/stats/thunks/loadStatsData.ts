@@ -6,11 +6,8 @@ import { get } from "@app/utils";
 
 import { StatsRecord } from "@app/models";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
-import { ActionWithPayload } from "@app/redux/types";
-import { setError } from "@app/redux/app/utils";
-
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
+import { CompositeAppState, ActionWithPayload } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 
 import { getSetStatsDataAction } from "../actions/setStatsData";
 

@@ -5,9 +5,9 @@ import { NotificatorState } from "./types";
 
 import { removeByKey } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
 
 import { AddNotification, HideAllNotifications, HideNotification, SetNotificationsBadgeToZero } from "./actions";
+import { ActionWithPayload } from "@app/redux";
 
 /** Default state of notification module */
 const defaultState: NotificatorState = {

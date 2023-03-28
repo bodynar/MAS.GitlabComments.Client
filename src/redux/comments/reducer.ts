@@ -1,6 +1,6 @@
 import { isNullOrEmpty, isNullOrUndefined, getPropertyValueWithCheck } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
+import { ActionWithPayload } from "@app/redux";
 
 import { Comment } from "@app/models";
 

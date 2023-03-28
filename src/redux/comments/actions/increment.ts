@@ -1,5 +1,5 @@
 
-import { ActionWithPayload } from "@app/redux/types";
+import { ActionWithPayload } from "@app/redux";
 
 import { Increment } from "../actions";
 

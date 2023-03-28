@@ -1,4 +1,4 @@
-import { ActionWithPayload } from "@app/redux/types";
+import { ActionWithPayload } from "@app/redux";
 
 import { SetModuleState } from "../actions";
 import { CommentModuleState } from "../types";

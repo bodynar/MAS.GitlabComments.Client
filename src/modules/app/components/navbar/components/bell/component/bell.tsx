@@ -10,7 +10,7 @@ import "./bell.dark.scss";
 
 import { NotificationHistoryItem } from "@app/models";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
+import { CompositeAppState } from "@app/redux";
 
 import { setNotificationsBadgeToZero } from "@app/redux/notificator/actions/setNotificationsBadgeToZero";
 

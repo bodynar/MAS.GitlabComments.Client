@@ -4,11 +4,8 @@ import { post } from "@app/utils";
 
 import { BaseCommentModel } from "@app/models";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { setError } from "@app/redux/app/utils";
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 

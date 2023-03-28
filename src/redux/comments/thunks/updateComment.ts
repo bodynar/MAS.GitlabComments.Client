@@ -4,15 +4,12 @@ import { BaseCommentModel } from "@app/models";
 
 import { get, post } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-
-import { setError } from "@app/redux/app/utils";
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 
 import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
 import { getUpdateCommentAction } from "../actions/updateComment";

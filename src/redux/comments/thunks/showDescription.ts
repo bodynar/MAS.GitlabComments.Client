@@ -4,14 +4,11 @@ import { isNullOrEmpty } from "@bodynarf/utils";
 
 import { get } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { setError } from "@app/redux/app/utils";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
 
 import { getOpenModalAction } from "@app/redux/modal/actionCreators/open";
 
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
 import { ModalType } from "@app/redux/modal";
 
 /**

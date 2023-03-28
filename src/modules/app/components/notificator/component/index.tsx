@@ -4,7 +4,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import { connect } from "react-redux";
 
-import { isStringEmpty } from "@bodynarf/utils/common";
+import { isStringEmpty } from "@bodynarf/utils";
 
 import "./notificator.scss";
 import "./notificator.dark.scss";
@@ -12,7 +12,7 @@ import "./notificator.dark.scss";
 import { NotificationCountToShowHideAll } from "@app/constants";
 import { NotificationItem } from "@app/models";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
+import { CompositeAppState } from "@app/redux";
 
 import { getHideNotificationsAction } from "@app/redux/notificator/actions/hideNotification";
 import { getHideAllNotificationsAction } from "@app/redux/notificator/actions/hideAllNotifications";

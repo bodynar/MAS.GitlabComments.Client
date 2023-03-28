@@ -2,11 +2,9 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { post } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
 
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-import { setError } from "@app/redux/app/utils";
+import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
 
 import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
 

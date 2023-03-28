@@ -2,16 +2,13 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-
 import { BaseCommentModel } from "@app/models";
 
+import { CompositeAppState, ActionWithPayload } from "@app/redux";
+import { getSetAppIsLoadingAction } from "@app/redux/app";
 import { ModalCallback, ModalCloseData, ModalParams } from "@app/redux/modal/types";
 
 import { ModalFormItem } from "@app/modules/modalBox/components/modalForm";
-
-import { CompositeAppState } from "../rootReducer";
-import { getSetAppIsLoadingAction } from "../app/actions/setAppIsLoading";
 
 /**
  * Get comment form configuration for form in modal box

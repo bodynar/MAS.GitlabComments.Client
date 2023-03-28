@@ -2,11 +2,8 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { get } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { getSetReadOnlyModeAction } from "../actions/setReadOnlyMode";
-import { getSetAppIsLoadingAction } from "../actions/setAppIsLoading";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { getSetAppIsLoadingAction, getSetReadOnlyModeAction } from "@app/redux/app";
 
 /**
  * Get application read only mode state

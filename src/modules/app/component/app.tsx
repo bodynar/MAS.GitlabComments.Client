@@ -8,10 +8,8 @@ import "../../../shared/styles/darkStyles.scss";
 
 import { isNullOrUndefined } from "@bodynarf/utils/common";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { getSetTabIsFocusedAction } from "@app/redux/app/actions/setTabIsFocused";
-import { getReadOnlyMode } from "@app/redux/app/thunks/getReadOnlyMode";
+import { CompositeAppState } from "@app/redux";
+import { getSetTabIsFocusedAction, getReadOnlyMode } from "@app/redux/app";
 
 import ModalBox from "@app/modules/modalBox";
 

@@ -4,14 +4,12 @@ import { connect } from "react-redux";
 
 import "./viewModeSwitcher.scss";
 
-import { isUndefined } from "@bodynarf/utils/common";
-import { localStorage } from "@bodynarf/utils";
+import { isUndefined, localStorage } from "@bodynarf/utils";
 
 import Icon from "@bodynarf/react.components/components/icon";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
-import { getSetDarkModeStateAction } from "@app/redux/app/actions/setDarkModeState";
-
+import { CompositeAppState } from "@app/redux";
+import { getSetDarkModeStateAction } from "@app/redux/app";
 
 type ViewModeSwitcherProps = {
     /** Is dark mode currently active */

@@ -1,6 +1,6 @@
 import { BaseCommentModel, Comment } from "@app/models";
 
-import { ActionWithPayload } from "@app/redux/types";
+import { ActionWithPayload } from "@app/redux";
 
 import { AddComment } from "../actions";
 

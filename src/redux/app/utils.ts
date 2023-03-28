@@ -1,10 +1,8 @@
 import { ThunkDispatch } from "redux-thunk";
 
 import { getErrorNotificationAction } from "../notificator/utils";
-import { CompositeAppState } from "../rootReducer";
-import { Action } from "../types";
-
-import { getSetAppIsLoadingAction } from "./actions/setAppIsLoading";
+import { CompositeAppState, Action } from "@app/redux";
+import { getSetAppIsLoadingAction } from "@app/redux/app";
 
 /**
  * Create dispatch-based action to set app error state

@@ -1,4 +1,4 @@
-import { ActionWithPayload } from "@app/redux/types";
+import { ActionWithPayload } from "@app/redux";
 
 import { SetStatsFilters } from "../actions";
 import { StatsFilter } from "../types";
