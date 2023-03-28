@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import "./content.scss";
+import "./style.scss";
 
 import loading from "@app/assets/loading01.svg";
 
@@ -9,7 +9,7 @@ import { menuItems } from "../navbar/menu";
 import ReadOnlyModeNote from "../readOnlyModeNote";
 import DevelopmentPanel from "../devPanel";
 
-type AppContentProps = {
+interface AppContentProps {
     /** 
      * Is app currently loading something important.
      * If so - covers content with loading gif block
@@ -18,16 +18,18 @@ type AppContentProps = {
 
     /** Is application in read only mode */
     isReadOnly: boolean;
-};
+}
 
 /**
  * Block of application main content
  */
-const AppContent = ({ isLoading, isReadOnly }: AppContentProps): JSX.Element => {
+const AppContent = ({
+    isLoading, isReadOnly,
+}: AppContentProps): JSX.Element => {
     return (
         <>
             {import.meta.env.DEV &&
-                <DevelopmentPanel/>
+                <DevelopmentPanel />
             }
             {isReadOnly &&
                 <ReadOnlyModeNote />

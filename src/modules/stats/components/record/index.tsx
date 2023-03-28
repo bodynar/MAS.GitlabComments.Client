@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "@bodynarf/react.components/components/button";
 
-import "./record.scss";
-import "./record.dark.scss";
+import "./style.scss";
+import "./style.dark.scss";
 
 import { StatsRecord } from "@app/models";
 
-type StatsRecordProps = StatsRecord & {
+interface StatsRecordProps extends StatsRecord {
     /** Show comment description */
     showDescription: (commentId: string) => void;
-};
+}
 
 const StatsRecordComponent = ({ commentId, text: commentText, count, showDescription }: StatsRecordProps): JSX.Element => {
     const navigate = useNavigate();

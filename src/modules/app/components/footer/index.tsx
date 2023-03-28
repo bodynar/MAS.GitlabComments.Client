@@ -3,18 +3,20 @@ import { version } from "package.json";
 import { isStringEmpty } from "@bodynarf/utils";
 import Anchor from "@bodynarf/react.components/components/anchor";
 
-import "./footer.scss";
+import "./style.scss";
 
-type FooterProps = {
+interface FooterProps {
     /** Class for navbar */
     className: string;
-};
+}
 
 /**
  * App footer component
  * @throws Classname prop parameter is empty
  */
-export default function Footer({ className }: FooterProps): JSX.Element {
+export default function Footer({
+    className,
+}: FooterProps): JSX.Element {
     if (isStringEmpty(className)) {
         throw new Error("className is empty");
     }

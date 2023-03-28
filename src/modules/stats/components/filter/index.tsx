@@ -11,7 +11,7 @@ import Button from "@bodynarf/react.components/components/button";
 
 import { DateRange, StatsFilter } from "@app/redux/stats";
 
-type StatsFiltersProps = {
+interface StatsFiltersProps {
     /** Current stats module filter */
     filter: StatsFilter;
 
@@ -26,7 +26,7 @@ type StatsFiltersProps = {
 
     /** Set is stats data loaded */
     setIsLoaded: (loaded?: boolean) => void;
-};
+}
 
 const today = moment();
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { isNullOrUndefined } from "@bodynarf/utils";
 
-import "./app.scss";
+import "./style.scss";
 import "../../../shared/styles/globalStyles.scss";
 import "../../../shared/styles/darkStyles.scss";
 
@@ -14,11 +14,11 @@ import { getSetTabIsFocusedAction, getReadOnlyMode } from "@app/redux/app";
 import ModalBox from "@app/modules/modalBox";
 
 import Notificator from "../components/notificator/component";
-import Navbar from "../components/navbar/component/navbar";
+import Navbar from "../components/navbar/component";
 import Footer from "../components/footer";
 import AppContent from "../components/content";
 
-type AppProps = {
+interface AppProps {
     /** 
      * Is app currently loading something important.
      * If so - covers content with loading gif block
@@ -36,10 +36,13 @@ type AppProps = {
 
     /** Read readonly mode value and save it in store */
     getReadOnlyMode: () => void;
-};
+}
 
 /** Root app component */
-function App({ isLoading, setTabIsFocused, readOnlyMode, getReadOnlyMode, isDarkMode }: AppProps): JSX.Element {
+function App({
+    isLoading, isDarkMode, readOnlyMode,
+    setTabIsFocused, getReadOnlyMode,
+}: AppProps): JSX.Element {
     const onFocus = useCallback(() => setTabIsFocused(true), [setTabIsFocused]);
     const onBlur = useCallback(() => setTabIsFocused(false), [setTabIsFocused]);
 
@@ -90,4 +93,3 @@ export default connect(
         getReadOnlyMode: getReadOnlyMode,
     }
 )(App);
-

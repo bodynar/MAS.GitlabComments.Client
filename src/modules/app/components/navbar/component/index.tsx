@@ -2,23 +2,25 @@ import { useLocation } from "react-router-dom";
 
 import { isStringEmpty } from "@bodynarf/utils";
 
-import "./navbar.scss";
-import "./navbar.dark.scss";
+import "./style.scss";
+import "./style.dark.scss";
 
 import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from "../components";
 
 import { menuItems } from "../menu";
 
-type NavbarProps = {
+interface NavbarProps {
     /** Class for navbar */
     className: string;
-};
+}
 
 /**
  * App navigation bar component
  * @throws Classname prop parameter is empty
  */
-export default function Navbar({ className }: NavbarProps): JSX.Element {
+export default function Navbar({
+    className,
+}: NavbarProps): JSX.Element {
     if (isStringEmpty(className)) {
         throw new Error("className is empty");
     }

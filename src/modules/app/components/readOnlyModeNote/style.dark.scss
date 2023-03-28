@@ -1,0 +1,13 @@
+.app--dark {
+    .app-readonly-warning {
+        background-color: #585858;
+
+        .message-header {
+            background-color: #ffdd5780;
+        }
+
+        .message-body {
+            color: white;
+        }
+    }
+}

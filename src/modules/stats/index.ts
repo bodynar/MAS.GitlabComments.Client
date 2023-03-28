@@ -1,3 +1,1 @@
-import Stats from "./component/stats";
-
-export default Stats;
+export { default } from "./component";

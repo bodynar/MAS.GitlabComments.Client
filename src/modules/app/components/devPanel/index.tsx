@@ -18,12 +18,14 @@ const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([
     ["error", "danger"],
 ]);
 
-type DevelopmentPanelProps = {
+interface DevelopmentPanelProps {
     /** Show notification */
     show: (notification: NotificationItem, notifyOnBadge: boolean) => void;
-};
+}
 
-const DevelopmentPanel = ({ show }: DevelopmentPanelProps): JSX.Element => {
+const DevelopmentPanel = ({
+    show,
+}: DevelopmentPanelProps): JSX.Element => {
     const [types, _] = useState(Object.keys(NotificationType));
 
     const onBtnClick = useCallback(

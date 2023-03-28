@@ -6,7 +6,7 @@ import { Comment as CommentModel } from "@app/models";
 
 import Comment from "../comment";
 
-type CommentTableProps = {
+interface CommentTableProps {
     /** Current visible comments */
     displayedComments: Array<CommentModel>;
 
@@ -30,7 +30,7 @@ type CommentTableProps = {
 
     /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
-};
+}
 
 /** Comments list component */
 const CommentTable = ({

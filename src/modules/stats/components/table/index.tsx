@@ -8,7 +8,7 @@ import { DateRange, StatsFilter } from "@app/redux/stats";
 import StatsRecordComponent from "../record";
 
 /** Type of incoming StatsTableComponent props */
-type StatsTableComponentProps = {
+interface StatsTableComponentProps {
     /** Statistics data for specified date range */
     data: Array<StatsRecord>;
 
@@ -20,7 +20,7 @@ type StatsTableComponentProps = {
 
     /** Show comment description */
     showDescription: (commentId: string) => void;
-};
+}
 
 const today = moment();
 

@@ -5,17 +5,17 @@ import { connect } from "react-redux";
 import Icon from "@bodynarf/react.components/components/icon";
 import { useComponentOutsideClick } from "@bodynarf/react.components";
 
-import "./bell.scss";
-import "./bell.dark.scss";
+import "./style.scss";
+import "./style.dark.scss";
 
 import { NotificationHistoryItem } from "@app/models";
 
 import { CompositeAppState } from "@app/redux";
 import { setNotificationsBadgeToZero } from "@app/redux/notificator";
 
-import BellList from "../components/bellList/bellList";
+import BellList from "../components/bellList";
 
-type BellProps = {
+interface BellProps {
     /** All notifications in current session */
     notifications: Array<NotificationHistoryItem>;
 
@@ -24,7 +24,7 @@ type BellProps = {
 
     /** Handler of open notifications list action  */
     onListOpened: () => void;
-};
+}
 
 /** Bell with notifications component */
 function Bell({

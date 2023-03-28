@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 
 import { isStringEmpty } from "@bodynarf/utils";
 
-import "./notificator.scss";
-import "./notificator.dark.scss";
+import "./style.scss";
+import "./style.dark.scss";
 
 import { NotificationCountToShowHideAll } from "@app/constants";
 import { NotificationItem } from "@app/models";
@@ -17,7 +17,7 @@ import { getHideNotificationsAction, getHideAllNotificationsAction } from "@app/
 
 import Notification from "../components/notificationItem";
 
-type NotificatorProps = {
+interface NotificatorProps {
     /** Active notifications */
     notifications: Array<NotificationItem>;
 
@@ -26,10 +26,13 @@ type NotificatorProps = {
 
     /** Hide all active notifications */
     hideAll: () => void;
-};
+}
 
 /** Container component for notifications */
-function Notificator({ notifications, hideNotifications, hideAll }: NotificatorProps): JSX.Element {
+function Notificator({
+    notifications,
+    hideNotifications, hideAll
+}: NotificatorProps): JSX.Element {
     const hideNotification = useCallback(
         (notificationId: string): void => {
             if (!isStringEmpty(notificationId)) {

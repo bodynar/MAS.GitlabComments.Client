@@ -1,7 +1,7 @@
 import { isStringEmpty } from "@bodynarf/utils";
 
-import Comments from "@app/modules/comments/index";
-import Stats from "@app/modules/stats/component/stats";
+import Comments from "@app/modules/comments";
+import Stats from "@app/modules/stats";
 
 /** Model for navbar menu items */
 export interface MenuItem {

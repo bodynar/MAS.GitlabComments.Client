@@ -5,21 +5,24 @@ import { connect } from "react-redux";
 import { isUndefined, localStorage } from "@bodynarf/utils";
 import Icon from "@bodynarf/react.components/components/icon";
 
-import "./viewModeSwitcher.scss";
+import "./style.scss";
 
 import { CompositeAppState } from "@app/redux";
 import { getSetDarkModeStateAction } from "@app/redux/app";
 
-type ViewModeSwitcherProps = {
+interface ViewModeSwitcherProps {
     /** Is dark mode currently active */
     isDarkMode?: boolean;
 
     /** Set new state for dark mode setting */
     setDarkModeState: (isDarkMode: boolean) => void;
-};
+}
 
 /** App view mode switcher. From light mode to dark mode */
-function ViewModeSwitcher({ isDarkMode, setDarkModeState }: ViewModeSwitcherProps): JSX.Element {
+function ViewModeSwitcher({
+    isDarkMode,
+    setDarkModeState,
+}: ViewModeSwitcherProps): JSX.Element {
     const onDarkModeStateChange = useCallback(
         (enabled: boolean, suppressSave: boolean) => {
             setDarkModeState(enabled);

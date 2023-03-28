@@ -3,12 +3,12 @@ import { useState, useCallback, useEffect } from "react";
 import { getClassName } from "@bodynarf/utils";
 import Button from "@bodynarf/react.components/components/button";
 
-import "./comment.scss";
-import "./comment.dark.scss";
+import "./style.scss";
+import "./style.dark.scss";
 
 import { Comment as CommentModel } from "@app/models";
 
-type CommentProps = {
+interface CommentProps {
     /** Is comment should be scrolled into view after render */
     shouldBeScrolledTo: boolean;
 
@@ -29,14 +29,17 @@ type CommentProps = {
 
     /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
-};
+}
 
 /** Comment component */
-export default function Comment({ shouldBeScrolledTo, comment, increment, showDescription, updateComment, deleteComment, isReadOnlyMode }: CommentProps): JSX.Element {
-    const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
-    const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
-    const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
-    const onDeleteCommentClick = useCallback(() => { deleteComment(comment.id); }, [comment.id, deleteComment]);
+export default function Comment({
+    shouldBeScrolledTo, isReadOnlyMode, comment,
+    increment, showDescription, updateComment, deleteComment,
+}: CommentProps): JSX.Element {
+    const onIncrementClick = useCallback(() => increment(comment.id), [comment.id, increment]);
+    const onShowDescriptionClick = useCallback(() => showDescription(comment.id), [comment.id, showDescription]);
+    const onUpdateCommentClick = useCallback(() => updateComment(comment.id), [comment.id, updateComment]);
+    const onDeleteCommentClick = useCallback(() => deleteComment(comment.id), [comment.id, deleteComment]);
 
     const [highlighted, setHighlighted] = useState(false);
 
