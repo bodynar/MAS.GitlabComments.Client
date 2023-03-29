@@ -90,7 +90,7 @@ export default StatsTableComponent;
  */
 const getLabel = (filter: StatsFilter): string => {
     if (filter.type === DateRange.Manual) {
-        return `Comments appearance updates from ${filter.leftDate!.toDateString()} to ${filter.leftDate!.toDateString()}`;
+        return `Comments appearance updates from ${filter.leftDate!.toDateString()} to ${filter.rightDate!.toDateString()}`;
     }
 
     let period: unitOfTime.DurationConstructor = "month";
