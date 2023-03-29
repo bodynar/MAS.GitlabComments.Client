@@ -1,22 +1,14 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { BaseCommentModel } from "@app/models/comment";
+import { BaseCommentModel } from "@app/models";
 
-import { get, post } from "@app/utils/delayedApi";
+import { get, post } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
-import { ModalAction } from "@app/redux/modal/types";
-
-import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-
-import { setError } from "@app/redux/app/utils";
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
-import { getUpdateCommentAction } from "../actions/updateComment";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
+import { getSuccessNotificationAction } from "@app/redux/notificator";
+import { getOpenModalAction } from "@app/redux/modal";
+import { getUpdateCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
 
 /**
  * Update specified comment
@@ -24,7 +16,7 @@ import { getUpdateCommentAction } from "../actions/updateComment";
  * @returns Update comment function that can be called with redux dispatcher
  */
 export const updateComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState
     ): void => {
         dispatch(getSetAppIsLoadingAction(true));
@@ -61,7 +53,7 @@ const getModalSuccessCallback = (
             .then(() => {
                 const { app } = getState();
 
-                dispatch(getSuccessNotificationAction('Comment was updated successfully', app.isCurrentTabFocused));
+                dispatch(getSuccessNotificationAction("Comment was updated successfully", app.isCurrentTabFocused));
                 dispatch(getUpdateCommentAction(comment, commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })

@@ -1,17 +1,17 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from "react";
 
-import moment from 'moment';
+import moment from "moment";
 
-import { isNullOrUndefined } from '@bodynarf/utils/common';
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { SelectableItem } from '@bodynarf/react.components/components/dropdown/types';
-import Dropdown from '@bodynarf/react.components/components/dropdown';
-import Date from '@bodynarf/react.components/components/primitives/date';
-import Button from '@bodynarf/react.components/components/button';
+import { SelectableItem } from "@bodynarf/react.components";
+import Dropdown from "@bodynarf/react.components/components/dropdown";
+import Date from "@bodynarf/react.components/components/primitives/date";
+import Button from "@bodynarf/react.components/components/button";
 
-import { DateRange, StatsFilter } from '@app/redux/stats/types';
+import { DateRange, StatsFilter } from "@app/redux/stats";
 
-type StatsFiltersProps = {
+interface StatsFiltersProps {
     /** Current stats module filter */
     filter: StatsFilter;
 
@@ -26,7 +26,7 @@ type StatsFiltersProps = {
 
     /** Set is stats data loaded */
     setIsLoaded: (loaded?: boolean) => void;
-};
+}
 
 const today = moment();
 
@@ -86,8 +86,8 @@ const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, set
             setFilterButtonDisabled(!isValid);
         }, [setStatsFilter, filter, loaded, setIsLoaded]);
 
-    const onLeftDateChange = useCallback((value?: Date) => onDateChange('leftDate', value, value, filter.rightDate), [filter.rightDate, onDateChange]);
-    const onRightDateChange = useCallback((value?: Date) => onDateChange('rightDate', value, filter.leftDate, value), [filter.leftDate, onDateChange]);
+    const onLeftDateChange = useCallback((value?: Date) => onDateChange("leftDate", value, value, filter.rightDate), [filter.rightDate, onDateChange]);
+    const onRightDateChange = useCallback((value?: Date) => onDateChange("rightDate", value, filter.leftDate, value), [filter.leftDate, onDateChange]);
 
     const dateRange = useMemo(() => getDateRange(filterRange), [filterRange]);
 
@@ -95,7 +95,7 @@ const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, set
         <div className="block">
             <div className="block is-flex is-align-items-center">
                 <Dropdown
-                    caption="Date range type"
+                    placeholder="Date range type"
                     hideOnOuterClick={true}
                     deselectable={true}
                     items={dateRangeOptions}
@@ -198,28 +198,28 @@ const isButtonDisabled = (filter: StatsFilter): boolean => {
  */
 const getDateRange = (filterRange?: SelectableItem): string => {
     if (isNullOrUndefined(filterRange)) {
-        return '';
+        return "";
     }
 
     const { value } = filterRange!;
 
     if (value == DateRange.Manual) {
-        return '';
+        return "";
     }
 
-    let period: moment.unitOfTime.DurationConstructor = 'month';
+    let period: moment.unitOfTime.DurationConstructor = "month";
 
     switch (value) {
         case DateRange.Month:
-            period = 'month';
+            period = "month";
             break;
 
         case DateRange.Week:
-            period = 'week';
+            period = "week";
             break;
 
         case DateRange.Year:
-            period = 'year';
+            period = "year";
             break;
     }
 

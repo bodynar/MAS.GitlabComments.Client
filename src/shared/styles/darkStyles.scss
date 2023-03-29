@@ -1,5 +1,5 @@
 .app--dark {
-    .app-input {
+    .bbr-input {
         label {
             color: white;
         }
@@ -65,7 +65,7 @@
         }
     }
 
-    .app-dropdown {
+    .bbr-dropdown {
         span.dropdown-item {
             color: gray;
             text-align: center;
@@ -79,7 +79,7 @@
                 color: #d1cfcf;
             }
 
-            .app-icon {
+            .bbr-icon {
                 color: rgb(201, 201, 201);
                 &:hover {
                     color: white;
@@ -110,7 +110,7 @@
         }
     }
 
-    .app-search input[type="search"] {
+    .bbr-search input[type="search"] {
         background-color: #585858;
         color: white;
 
@@ -119,7 +119,7 @@
         }
     }
 
-    .app-anchor {
+    .bbr-anchor {
         &:not(&--unhoverable):hover {
             text-decoration: underline;
             color: #5c9bff;

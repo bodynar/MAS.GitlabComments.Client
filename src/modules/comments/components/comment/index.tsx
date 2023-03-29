@@ -1,15 +1,15 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 
-import './comment.scss';
-import './comment.dark.scss';
+import { getClassName } from "@bodynarf/utils";
+import { ElementSize } from "@bodynarf/react.components";
+import Button from "@bodynarf/react.components/components/button";
 
-import { Comment as CommentModel } from '@app/models/comment';
+import "./style.scss";
+import "./style.dark.scss";
 
-import Button from '@bodynarf/react.components/components/button';
+import { Comment as CommentModel } from "@app/models";
 
-import { getClassName } from '@bodynarf/utils/component';
-
-type CommentProps = {
+interface CommentProps {
     /** Is comment should be scrolled into view after render */
     shouldBeScrolledTo: boolean;
 
@@ -28,16 +28,19 @@ type CommentProps = {
     /** Update specified comment in modal box */
     updateComment: (commentId: string) => void;
 
-    /** Delete comment by it's identifier */
+    /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
-};
+}
 
 /** Comment component */
-export default function Comment({ shouldBeScrolledTo, comment, increment, showDescription, updateComment, deleteComment, isReadOnlyMode }: CommentProps): JSX.Element {
-    const onIncrementClick = useCallback(() => { increment(comment.id); }, [comment.id, increment]);
-    const onShowDescriptionClick = useCallback(() => { showDescription(comment.id); }, [comment.id, showDescription]);
-    const onUpdateCommentClick = useCallback(() => { updateComment(comment.id); }, [comment.id, updateComment]);
-    const onDeleteCommentClick = useCallback(() => { deleteComment(comment.id); }, [comment.id, deleteComment]);
+export default function Comment({
+    shouldBeScrolledTo, isReadOnlyMode, comment,
+    increment, showDescription, updateComment, deleteComment,
+}: CommentProps): JSX.Element {
+    const onIncrementClick = useCallback(() => increment(comment.id), [comment.id, increment]);
+    const onShowDescriptionClick = useCallback(() => showDescription(comment.id), [comment.id, showDescription]);
+    const onUpdateCommentClick = useCallback(() => updateComment(comment.id), [comment.id, updateComment]);
+    const onDeleteCommentClick = useCallback(() => deleteComment(comment.id), [comment.id, deleteComment]);
 
     const [highlighted, setHighlighted] = useState(false);
 
@@ -75,7 +78,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                 <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
                     <Button
                         type="default"
-                        icon={{ name: 'arrow-up' }}
+                        icon={{ name: "arrow-up", size: ElementSize.Medium }}
                         title="Increment count"
                         onClick={onIncrementClick}
                         disabled={isReadOnlyMode}
@@ -93,14 +96,14 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: 'info-lg' }}
+                        icon={{ name: "info-lg", size: ElementSize.Medium  }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="warning"
                         outlined={true}
-                        icon={{ name: 'pencil' }}
+                        icon={{ name: "pencil", size: ElementSize.Medium  }}
                         title="Edit"
                         onClick={onUpdateCommentClick}
                         disabled={isReadOnlyMode}
@@ -108,7 +111,7 @@ export default function Comment({ shouldBeScrolledTo, comment, increment, showDe
                     <Button
                         type="danger"
                         outlined={true}
-                        icon={{ name: 'trash' }}
+                        icon={{ name: "trash", size: ElementSize.Medium  }}
                         title="Delete"
                         onClick={onDeleteCommentClick}
                         disabled={isReadOnlyMode}

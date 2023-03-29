@@ -1,7 +1,7 @@
-import { isStringEmpty } from "@bodynarf/utils/common";
+import { isStringEmpty } from "@bodynarf/utils";
 
-import Comments from "@app/modules/comments/index";
-import Stats from '@app/modules/stats/component/stats';
+import Comments from "@app/modules/comments";
+import Stats from "@app/modules/stats";
 
 /** Model for navbar menu items */
 export interface MenuItem {
@@ -24,15 +24,15 @@ export interface MenuItem {
 /** Static navbar menu */
 export const menuItems: Array<MenuItem> = [
     {
-        name: 'Comments',
-        caption: 'Comments',
-        link: '/',
+        name: "Comments",
+        caption: "Comments",
+        link: "/",
         component: <Comments />,
     },
     {
-        name: 'stats',
-        caption: 'Statistics',
-        link: '/stats/',
+        name: "stats",
+        caption: "Statistics",
+        link: "/stats/",
         component: <Stats />,
     }
 ].filter(x => !isStringEmpty(x.name) && !isStringEmpty(x.link));

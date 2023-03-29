@@ -1,0 +1,13 @@
+.app--dark {
+    .app-bell {
+        &__list {
+            background-color: #585858;
+            color: white;
+        }
+        
+        &__empty-list {
+            color: white;
+        }
+    }
+    
+}

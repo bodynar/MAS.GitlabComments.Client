@@ -1,18 +1,12 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { isNullOrEmpty } from "@bodynarf/utils/common";
+import { isNullOrEmpty } from "@bodynarf/utils";
 
-import { get } from "@app/utils/delayedApi";
+import { get } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { setError } from "@app/redux/app/utils";
-
-import { ModalAction } from "@app/redux/modal/types";
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
-
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
+import { getOpenModalAction, ModalType } from "@app/redux/modal";
 
 /**
  * Show description for specified comment from api
@@ -20,7 +14,7 @@ import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading
  * @returns Show description function that can be called with redux dispatcher
  */
 export const showDescription = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState,
     ): void => {
         dispatch(getSetAppIsLoadingAction(true));
@@ -30,12 +24,12 @@ export const showDescription = (commentId: string): ThunkAction<void, CompositeA
                 dispatch(getSetAppIsLoadingAction(false));
 
                 const modalMessage: string = isNullOrEmpty(description)
-                    ? 'Comment does not have any description.'
+                    ? "Comment does not have any description."
                     : description;
 
                 dispatch(getOpenModalAction({
-                    modalType: 'info',
-                    title: 'Comment description',
+                    modalType: ModalType.Info,
+                    title: "Comment description",
                     message: modalMessage,
                 }));
             })

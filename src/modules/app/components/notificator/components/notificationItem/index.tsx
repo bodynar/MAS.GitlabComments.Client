@@ -1,37 +1,38 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from "react";
 
-import './notificationItem.scss';
-import './notificationItem.dark.scss';
+import "./style.scss";
+import "./style.dark.scss";
 
-import { NotificationHideDelay } from '@app/constants';
+import { NOTIFICATION_HIDE_DELAY } from "@app/constants";
 
-import { NotificationItem, NotificationType } from '@app/models/notification';
+import { NotificationItem, NotificationType } from "@app/models";
 
 /** Map of notification type to bulma class name */
 const typeClassNameMap: Map<NotificationType, string> = new Map([
-    [NotificationType.info, 'is-info'],
-    [NotificationType.success, 'is-success'],
-    [NotificationType.warn, 'is-warning'],
-    [NotificationType.error, 'is-danger'],
+    [NotificationType.info, "is-info"],
+    [NotificationType.success, "is-success"],
+    [NotificationType.warn, "is-warning"],
+    [NotificationType.error, "is-danger"],
 ]);
 
 /** Single notification component configuration */
-type NotificationProps = {
+interface NotificationProps {
     /** Notification configuration */
     item: NotificationItem;
 
     /** Close notification click handler */
     onHideClick: (notificationId: string) => void;
-};
+}
 
 /** Single notification component */
-export default function Notification({ item, onHideClick }: NotificationProps): JSX.Element {
-    const hide = useCallback(() => {
-        onHideClick(item.id);
-    }, [item.id, onHideClick]);
+export default function Notification({
+    item,
+    onHideClick,
+}: NotificationProps): JSX.Element {
+    const hide = useCallback(() => onHideClick(item.id), [item.id, onHideClick]);
 
     useEffect(() => {
-        const timer = setTimeout(hide, NotificationHideDelay);
+        const timer = setTimeout(hide, NOTIFICATION_HIDE_DELAY);
 
         return (): void => { clearTimeout(timer); };
     }, [hide]);

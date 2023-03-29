@@ -1,30 +1,31 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { ButtonType } from '@bodynarf/react.components/components/button/types';
+import { ButtonType } from "@bodynarf/react.components";
+import { generateGuid } from "@bodynarf/utils";
+import Button from "@bodynarf/react.components/components/button";
 
-import { NotificationItem, NotificationType } from '@app/models/notification';
+import { NotificationItem, NotificationType } from "@app/models";
 
-import Button from '@bodynarf/react.components/components/button';
-
-import { getAddNotificationAction } from '@app/redux/notificator/actions/addNotification';
-import { generateGuid } from '@bodynarf/utils/guid';
+import { getAddNotificationAction } from "@app/redux/notificator";
 
 /** Notification type to Button type map */
 const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([
-    ['info', 'info'],
-    ['success', 'success'],
-    ['warn', 'warning'],
-    ['error', 'danger'],
+    ["info", "info"],
+    ["success", "success"],
+    ["warn", "warning"],
+    ["error", "danger"],
 ]);
 
-type DevelopmentPanelProps = {
+interface DevelopmentPanelProps {
     /** Show notification */
     show: (notification: NotificationItem, notifyOnBadge: boolean) => void;
-};
+}
 
-const DevelopmentPanel = ({ show }: DevelopmentPanelProps): JSX.Element => {
+const DevelopmentPanel = ({
+    show,
+}: DevelopmentPanelProps): JSX.Element => {
     const [types, _] = useState(Object.keys(NotificationType));
 
     const onBtnClick = useCallback(
@@ -32,7 +33,7 @@ const DevelopmentPanel = ({ show }: DevelopmentPanelProps): JSX.Element => {
             show({
                 id: generateGuid(),
                 createdAt: new Date(),
-                message: 'Test message in DEV mode\nNew line content\nLorem ipsum dorem dolores',
+                message: "Test message in DEV mode\nNew line content\nLorem ipsum dorem dolores",
                 type: type as NotificationType
             }, true);
         }, [show]);

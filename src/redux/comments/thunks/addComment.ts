@@ -1,29 +1,21 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/delayedApi";
+import { BaseCommentModel } from "@app/models";
 
-import { BaseCommentModel } from "@app/models/comment";
+import { post } from "@app/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { setError } from "@app/redux/app/utils";
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-
-import { ModalAction } from "@app/redux/modal/types";
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
-
-import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
-import { getAddCommentAction } from "../actions/addComment";
+import { ActionWithPayload, CompositeAppState } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
+import { getSuccessNotificationAction } from "@app/redux/notificator";
+import { getOpenModalAction } from "@app/redux/modal";
+import { getAddCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
 
 /**
  * Add comment via modal form
  * @returns Add comment function that can be called with redux dispatcher
  */
 export const addComment = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ModalAction | ActionWithPayload>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
         getState: () => CompositeAppState,
     ): void => {
         const modalParams = getCommentModalFormConfig();
@@ -51,7 +43,7 @@ const getModalSuccessCallback = (
             .then((commentId: string) => {
                 const { app } = getState();
 
-                dispatch(getSuccessNotificationAction('Comment was added successfully', app.isCurrentTabFocused));
+                dispatch(getSuccessNotificationAction("Comment was added successfully", app.isCurrentTabFocused));
                 dispatch(getAddCommentAction(newComment, commentId));
                 dispatch(getSetAppIsLoadingAction(false));
             })

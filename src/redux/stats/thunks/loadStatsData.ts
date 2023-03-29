@@ -2,20 +2,13 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import moment, { unitOfTime } from "moment";
 
-import { get } from "@app/utils/delayedApi";
+import { StatsRecord } from "@app/models";
 
-import { StatsRecord } from "@app/models/response/statsRecord";
+import { get } from "@app/utils";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
-import { ActionWithPayload } from "@app/redux/types";
-import { setError } from "@app/redux/app/utils";
-
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-
-import { getSetStatsDataAction } from "../actions/setStatsData";
-
-import { DateRange, StatsFilter } from "../types";
-import { getSetStatsLoadedStateAction } from "../actions/setStatsLoadingState";
+import { CompositeAppState, ActionWithPayload } from "@app/redux";
+import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
+import { getSetStatsDataAction, DateRange, StatsFilter, getSetStatsLoadedStateAction } from "@app/redux/stats";
 
 /**
  * Get fetch stats data redux action
@@ -36,16 +29,15 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
                 dispatch(
                     getSetStatsDataAction(
                         rawData.map(x => ({
-                            commentId: x['commentId'],
-                            text: x['commentText'],
-                            count: x['count'],
+                            commentId: x["commentId"],
+                            text: x["commentText"],
+                            count: x["count"],
                         }) as StatsRecord)
                             .sort(({ count }, y) => y.count - count)
                     )
                 );
 
                 dispatch(getSetAppIsLoadingAction(false));
-
                 dispatch(getSetStatsLoadedStateAction(true));
             })
             .catch(error => {
@@ -63,33 +55,33 @@ const getSearchParams = (filter: StatsFilter): string => {
     const params = new URLSearchParams();
 
     if (filter.type === DateRange.Manual) {
-        const leftDate = moment(filter.leftDate!).startOf('date');
-        const rightDate = moment(filter.rightDate!).startOf('date');
+        const leftDate = moment(filter.leftDate!).startOf("date");
+        const rightDate = moment(filter.rightDate!).startOf("date");
 
-        params.append('endDate', rightDate.format());
-        params.append('startDate', leftDate.format());
+        params.append("endDate", rightDate.format());
+        params.append("startDate", leftDate.format());
     } else {
-        const rightDate = moment().startOf('date');
-        let period: unitOfTime.DurationConstructor = 'month';
+        const rightDate = moment().startOf("date");
+        let period: unitOfTime.DurationConstructor = "month";
 
         switch (filter.type) {
             case DateRange.Month:
-                period = 'month';
+                period = "month";
                 break;
 
             case DateRange.Week:
-                period = 'week';
+                period = "week";
                 break;
 
             case DateRange.Year:
-                period = 'year';
+                period = "year";
                 break;
         }
 
         const leftDate = rightDate.clone().add(-1, period);
 
-        params.append('endDate', rightDate.format());
-        params.append('startDate', leftDate.format());
+        params.append("endDate", rightDate.format());
+        params.append("startDate", leftDate.format());
     }
 
     return `?${params}`;

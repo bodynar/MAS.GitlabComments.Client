@@ -1,9 +1,8 @@
-import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { getPropertyValueWithCheck } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "../types";
-import { SetDarkModeState, SetIsAppLoadingState, SetReadOnlyModeState, SetTabIsFocused } from "./actions";
+import { ActionWithPayload } from "@app/redux";
+import { AppState, SET_DARK_MODE_STATE, SET_IS_APP_IN_LOADING_STATE, SET_READONLY_MODE_STATE, SET_TAB_IS_FOCUSED } from "@app/redux/app";
 
-import { AppState } from "./types";
 
 const defaultState: AppState = {
     isCurrentTabFocused: true,
@@ -18,36 +17,36 @@ const defaultState: AppState = {
  */
 export default function (state: AppState = defaultState, action: ActionWithPayload): AppState {
     switch (action.type) {
-        case SetTabIsFocused: {
+        case SET_TAB_IS_FOCUSED: {
             const isTabFocused: boolean =
-                getPropertyValueWithCheck(action.payload, 'isTabFocused');
+                getPropertyValueWithCheck(action.payload, "isTabFocused");
 
             return {
                 ...state,
                 isCurrentTabFocused: isTabFocused
             };
         }
-        case SetReadOnlyModeState: {
+        case SET_READONLY_MODE_STATE: {
             const readOnlyMode: boolean =
-                getPropertyValueWithCheck(action.payload, 'readOnlyMode', false) || false;
+                getPropertyValueWithCheck(action.payload, "readOnlyMode", false) || false;
 
             return {
                 ...state,
                 readOnlyMode: readOnlyMode
             };
         }
-        case SetDarkModeState: {
+        case SET_DARK_MODE_STATE: {
             const isDarkMode: boolean =
-                getPropertyValueWithCheck(action.payload, 'isDarkMode', false) || false;
+                getPropertyValueWithCheck(action.payload, "isDarkMode", false) || false;
 
             return {
                 ...state,
                 isDarkMode: isDarkMode
             };
         }
-        case SetIsAppLoadingState: {
+        case SET_IS_APP_IN_LOADING_STATE: {
             const isLoading: boolean =
-                getPropertyValueWithCheck(action.payload, 'loading', false) || false;
+                getPropertyValueWithCheck(action.payload, "loading", false) || false;
 
             return {
                 ...state,

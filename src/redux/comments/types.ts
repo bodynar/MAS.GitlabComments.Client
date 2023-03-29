@@ -1,13 +1,13 @@
-import { Comment } from "@app/models/comment";
+import { Comment } from "@app/models";
 
 /** Comments module state */
 export type CommentModuleState =
-    | 'init' /** Comment module initialized */
-    | 'idle' /** Comment module is waiting for user action  */
+    | "init" /** Comment module initialized */
+    | "idle" /** Comment module is waiting for user action  */
     ;
 
 /** Model representing comment module state */
-export type CommentsState = {
+export interface CommentsState {
     /** Current module state */
     state: CommentModuleState;
 
@@ -16,4 +16,4 @@ export type CommentsState = {
 
     /** Current search query */
     searchQuery: string;
-};
+}

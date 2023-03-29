@@ -1,25 +1,23 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { isStringEmpty } from '@bodynarf/utils/common';
+import { isStringEmpty } from "@bodynarf/utils";
 
-import './notificator.scss';
-import './notificator.dark.scss';
+import "./style.scss";
+import "./style.dark.scss";
 
-import { NotificationCountToShowHideAll } from '@app/constants';
-import { NotificationItem } from '@app/models/notification';
+import { NOTIFICATION_COUNT_TO_SHOW_HIDE_ALL_BUTTON } from "@app/constants";
+import { NotificationItem } from "@app/models";
 
-import { CompositeAppState } from '@app/redux/rootReducer';
+import { CompositeAppState } from "@app/redux";
+import { getHideNotificationsAction, getHideAllNotificationsAction } from "@app/redux/notificator";
 
-import { getHideNotificationsAction } from '@app/redux/notificator/actions/hideNotification';
-import { getHideAllNotificationsAction } from '@app/redux/notificator/actions/hideAllNotifications';
+import Notification from "../components/notificationItem";
 
-import Notification from '../components/notificationItem';
-
-type NotificatorProps = {
+interface NotificatorProps {
     /** Active notifications */
     notifications: Array<NotificationItem>;
 
@@ -28,10 +26,13 @@ type NotificatorProps = {
 
     /** Hide all active notifications */
     hideAll: () => void;
-};
+}
 
 /** Container component for notifications */
-function Notificator({ notifications, hideNotifications, hideAll }: NotificatorProps): JSX.Element {
+function Notificator({
+    notifications,
+    hideNotifications, hideAll
+}: NotificatorProps): JSX.Element {
     const hideNotification = useCallback(
         (notificationId: string): void => {
             if (!isStringEmpty(notificationId)) {
@@ -43,7 +44,7 @@ function Notificator({ notifications, hideNotifications, hideAll }: NotificatorP
 
     return (
         <TransitionGroup className="app-notificator">
-            {notifications.length > NotificationCountToShowHideAll &&
+            {notifications.length > NOTIFICATION_COUNT_TO_SHOW_HIDE_ALL_BUTTON &&
                 <CSSTransition
                     key="app-notificator__cleaner"
                     timeout={250}

@@ -1,21 +1,21 @@
 /** Save loaded comments into state */
-export const SetComments = "comments/setComments";
+export const SET_COMMENTS = "mas.gc/comments/setComments";
 
 /** Increment appearance count of specified comment action type */
-export const Increment = "comments/increment";
+export const INCREMENT = "mas.gc/comments/increment";
 
 /** Add new comment action type */
-export const AddComment = "comments/addComment";
+export const ADD_COMMENT = "mas.gc/comments/addComment";
 
 /** Update specified comment action type*/
-export const UpdateComment = "comments/updateComment";
+export const UPDATE_COMMENT = "mas.gc/comments/updateComment";
 
 /** Delete specified comment action type */
-export const DeleteComment = "comments/deleteComment";
+export const DELETE_COMMENT = "mas.gc/comments/deleteComment";
 
 /** Set comments module state action type */
-export const SetModuleState = "comments/setModuleState";
+export const SET_MODULE_STATE = "mas.gc/comments/setModuleState";
 
 /** Set comments module search query action type */
-export const SetSearchQuery = "comments/setSearchQuery";
+export const SET_SEARCH_QUERY = "mas.gc/comments/setSearchQuery";
 

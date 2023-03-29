@@ -1,17 +1,18 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
-import './record.scss';
-import './record.dark.scss';
+import { ElementSize } from "@bodynarf/react.components";
+import Button from "@bodynarf/react.components/components/button";
 
-import Button from '@bodynarf/react.components/components/button';
+import "./style.scss";
+import "./style.dark.scss";
 
-import { StatsRecord } from '@app/models/response/statsRecord';
+import { StatsRecord } from "@app/models";
 
-type StatsRecordProps = StatsRecord & {
+interface StatsRecordProps extends StatsRecord {
     /** Show comment description */
     showDescription: (commentId: string) => void;
-};
+}
 
 const StatsRecordComponent = ({ commentId, text: commentText, count, showDescription }: StatsRecordProps): JSX.Element => {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
         const url = `${window.location.origin}#${commentId}`;
 
         navigator.clipboard.writeText(url).then(() =>
-            navigate({ pathname: '/', hash: commentId })
+            navigate({ pathname: "/", hash: commentId })
         );
     }, [navigate, commentId]);
 
@@ -41,13 +42,13 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: 'info-lg' }}
+                        icon={{ name: "info-lg", size: ElementSize.Medium  }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
                     />
                     <Button
                         type="link"
-                        icon={{ name: 'link-45deg' }}
+                        icon={{ name: "link-45deg", size: ElementSize.Medium  }}
                         title="Show in list"
                         onClick={onShowClick}
                     />

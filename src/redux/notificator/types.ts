@@ -1,4 +1,4 @@
-import { NotificationHistoryItem, NotificationItem } from "@app/models/notification";
+import { NotificationHistoryItem, NotificationItem } from "@app/models";
 
 /** State of notification module */
 export type NotificatorState = {
