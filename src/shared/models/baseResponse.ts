@@ -4,7 +4,7 @@ export interface BaseResponse {
     success: boolean;
 
     /** Api process error */
-    erorr: string;
+    error: string;
 }
 
 /** Api response with result */
