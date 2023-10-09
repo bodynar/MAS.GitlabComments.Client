@@ -1,31 +1,36 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { Comment } from "@app/models";
+import { Comment } from "@app/models/comments";
 
-import { get } from "@app/utils";
-
-import { CompositeAppState, ActionWithPayload } from "@app/redux";
-import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
-import { getSetCommentsAction, getSetModuleStateAction } from "@app/redux/comments";
+import { CompositeAppState } from "@app/redux";
+import { setIsLoadingState } from "@app/redux/app";
+import { getNotifications } from "@app/redux/notificator";
+import { setComments, setModuleState } from "@app/redux/comments/actions";
+import { getAllComments } from "@app/core/comments";
 
 /**
  * Get all comments from api
  * @returns Get all comments function that can be called with redux dispatcher
  */
-export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
-        getState: () => CompositeAppState
+export const getAllCommentsAsync = (): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (
+        dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
     ): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+        dispatch(setIsLoadingState(true));
 
-        get<Array<Comment>>(`/api/comments/getAll`)
+        const [, showError] = getNotifications(dispatch);
+
+        getAllComments()
             .then((comments: Array<Comment>) => {
-                dispatch(getSetCommentsAction(comments));
-                dispatch(getSetAppIsLoadingAction(false));
-                dispatch(getSetModuleStateAction("idle"));
+                dispatch(setComments(comments));
+
+                dispatch(setIsLoadingState(false));
+                dispatch(setModuleState("idle"));
             })
             .catch(error => {
-                dispatch(getSetModuleStateAction("idle"));
-                setError(dispatch, getState)(error);
+                dispatch(setModuleState("idle"));
+
+                showError(error, true, true);
             });
     };

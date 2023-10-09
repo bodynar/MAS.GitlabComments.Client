@@ -3,7 +3,7 @@ import moment from "moment";
 import "./style.scss";
 import "./style.dark.scss";
 
-import { NotificationHistoryItem, NotificationType } from "@app/models";
+import { NotificationHistoryItem, NotificationType } from "@app/models/notification";
 
 interface NotificationStoryRecordProps {
     /** Notification item for displaying */

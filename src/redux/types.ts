@@ -4,20 +4,6 @@ import { StatsState } from "@app/redux/stats";
 import { CommentsState } from "@app/redux/comments";
 import { ModalState } from "@app/redux/modal";
 
-/** Redux action */
-export interface Action {
-    /** Unique action code */
-    type: string;
-}
-
-/** Redux action with some extra payload */
-export interface ActionWithPayload extends Action {
-    /** Action payload data */
-    payload: {
-        [extraProps: string]: unknown;
-    };
-}
-
 /** Global application state */
 export interface CompositeAppState {
     /** Modal box state */

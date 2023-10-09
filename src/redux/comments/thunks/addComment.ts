@@ -1,31 +1,34 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { BaseCommentModel } from "@app/models";
+import { EditCommentModel } from "@app/models/comments";
 
-import { post } from "@app/utils";
+import { addComment } from "@app/core/comments";
 
-import { ActionWithPayload, CompositeAppState } from "@app/redux";
-import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
-import { getSuccessNotificationAction } from "@app/redux/notificator";
-import { getOpenModalAction } from "@app/redux/modal";
-import { getAddCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
+import { CompositeAppState } from "@app/redux";
+import { setIsLoadingState } from "@app/redux/app";
+import { getNotifications } from "@app/redux/notificator";
+import { open } from "@app/redux/modal";
+import { addComment as addCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
 
 /**
  * Add comment via modal form
  * @returns Add comment function that can be called with redux dispatcher
  */
-export const addComment = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
+export const addCommentAsync = (): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
         const modalParams = getCommentModalFormConfig();
         const modalSuccessCallback = getModalSuccessCallback(getState);
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
-        dispatch(getOpenModalAction({
-            ...modalParams,
-            callback: { ...modalCallback },
-        }));
+        dispatch(
+            open({
+                ...modalParams,
+                callback: { ...modalCallback },
+            })
+        );
     };
 
 /**
@@ -35,18 +38,25 @@ export const addComment = (): ThunkAction<void, CompositeAppState, unknown, Acti
  */
 const getModalSuccessCallback = (
     getState: () => CompositeAppState,
-) => (newComment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> => {
+) => (newComment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+        dispatch(setIsLoadingState(true));
 
-        post<string>(`api/comments/add`, newComment)
+        const [success, error] = getNotifications(dispatch);
+
+        addComment(newComment)
             .then((commentId: string) => {
                 const { app } = getState();
 
-                dispatch(getSuccessNotificationAction("Comment was added successfully", app.isCurrentTabFocused));
-                dispatch(getAddCommentAction(newComment, commentId));
-                dispatch(getSetAppIsLoadingAction(false));
+                success("Comment was added successfully", true, app.isCurrentTabFocused);
+                dispatch(
+                    addCommentAction({
+                        ...newComment,
+                        appearanceCount: 1,
+                        id: commentId
+                    })
+                );
             })
-            .catch(setError(dispatch, getState));
+            .catch(error);
     };
 };

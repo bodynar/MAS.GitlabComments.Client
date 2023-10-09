@@ -1,35 +1,23 @@
-import { isNullOrUndefined, getPropertyValueWithCheck } from "@bodynarf/utils";
+import { createReducer } from "@reduxjs/toolkit";
 
-import { ActionWithPayload } from "@app/redux";
-import { ModalParams, ModalState, OPEN_MODAL, CLOSE_MODAL } from "@app/redux/modal";
+import { ModalState, close, open } from "@app/redux/modal";
 
 /** Initial state of modal module */
 const initialState: ModalState = {
     isOpen: false
 };
 
-/** Modal box module reducer function */
-export default function (state = initialState, action: ActionWithPayload): ModalState {
-    switch (action.type) {
-        case OPEN_MODAL: {
-            const modalParams: ModalParams = getPropertyValueWithCheck(action.payload, "params", false);
-
-            if (isNullOrUndefined(modalParams)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            return {
-                isOpen: true,
-                modalParams
-            };
-        }
-        case CLOSE_MODAL: {
-            return {
-                isOpen: false
-            };
-        }
-        default:
-            return state;
+/** Modal box module reducer */
+export const reducer = createReducer(initialState,
+    (builder) => {
+        builder
+            .addCase(close, (state) => {
+                state.isOpen = false;
+            })
+            .addCase(open, (state, { payload }) => {
+                state.isOpen = true;
+                state.modalParams = { ...payload };
+            })
+            ;
     }
-}
+);

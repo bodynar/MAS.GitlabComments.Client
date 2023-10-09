@@ -10,4 +10,6 @@ export interface BaseFieldProps {
      * Required for changing modal form save button accessibility.
     */
     setFieldValidState: (fieldName: string, isValid: boolean) => void;
+
+    updateFormValue: (field: string, value: string | undefined) => void;
 }

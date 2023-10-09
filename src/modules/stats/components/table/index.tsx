@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import moment, { unitOfTime } from "moment";
 
 import { StatsRecord } from "@app/models";
-import { DateRange, StatsFilter } from "@app/redux/stats";
+import { DateRange, StatsFilter } from "@app/models/stats";
 
 import StatsRecordComponent from "../record";
 
@@ -26,7 +26,7 @@ const today = moment();
 
 /** 
  * Statistics table component.
- * Represents data about comments apperance increment during specified date range
+ * Represents data about comments appearance increment during specified date range
 */
 const StatsTableComponent = ({
     data, filter,

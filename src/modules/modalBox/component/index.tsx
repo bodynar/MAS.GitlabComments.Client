@@ -7,8 +7,10 @@ import Button from "@bodynarf/react.components/components/button";
 import "./style.scss";
 import "./style.dark.scss";
 
+import { ModalCallback, ModalCloseData, ModalParams, ModalType } from "@app/models/modal";
+
 import { CompositeAppState } from "@app/redux";
-import { closeModal, ModalCallback, ModalCloseData, ModalParams, ModalType } from "@app/redux/modal";
+import { closeModal } from "@app/redux/modal";
 
 import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "../utils";
 import ModalBody from "../components/body";
@@ -42,12 +44,26 @@ const ModalBox = ({
     }
 
     const [isSaveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
+    const [formData, setFormData] = useState<Map<string, string | undefined>>(new Map());
 
     useEffect(() => {
         if (isOpen) {
             const initIsSaveButtonDisabled: boolean = getInitIsSaveButtonDisabled(params!);
             setSaveButtonDisabled(initIsSaveButtonDisabled);
         }
+    }, [isOpen, params]);
+
+    useEffect(() => {
+        if (!isOpen || params!.modalType !== ModalType.Form) {
+            return;
+        }
+
+        setFormData(
+            new Map(
+                params!.formData!.fields.map(x => [x.name, x.value])
+            )
+        );
+
     }, [isOpen, params]);
 
     const onCloseClick = useCallback(() => closeModal({ closeCode: "cancel" }, params!.callback), [closeModal, params]);
@@ -59,14 +75,14 @@ const ModalBox = ({
 
         const closeConfig: ModalCloseData = { closeCode: "save" };
 
-        if (params!.modalType === "form") {
+        if (params!.modalType === ModalType.Form) {
             closeConfig.formData = {
-                fields: params!.formData!.fields.map(x => ({ name: x.name, value: x.value }))
+                fields: Array.from(formData.entries()).map(([name, value]) => ({ name, value }))
             };
         }
 
         closeModal(closeConfig, params!.callback);
-    }, [closeModal, isSaveButtonDisabled, params]);
+    }, [closeModal, formData, isSaveButtonDisabled, params]);
 
     if (!isOpen) {
         return <></>;
@@ -90,6 +106,8 @@ const ModalBox = ({
                     <ModalBody
                         {...params!}
                         setSaveButtonDisabled={setSaveButtonDisabled}
+                        formValues={formData}
+                        updateFormValues={setFormData}
                     />
                 </section>
                 <footer className="modal-card-foot">

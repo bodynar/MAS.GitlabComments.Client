@@ -6,7 +6,7 @@ import { ModalFormItemValidation } from "@app/models/modal";
  * Validate field value
  * @param value Field value which needs to be validated
  * @param validationCfg Field validation configuration
- * @returns Validation error if field value is not valid; otherwise undefuned
+ * @returns Validation error if field value is not valid; otherwise undefined
  */
 export const getFieldValueValidationError = (value: string, validationCfg?: ModalFormItemValidation): string | undefined => {
     let validationError = "Value is required";
@@ -14,8 +14,8 @@ export const getFieldValueValidationError = (value: string, validationCfg?: Moda
         (value: string): string | undefined => isStringEmpty(value) ? validationError : undefined;
 
     if (!isNullOrUndefined(validationCfg)) {
-        if (!isNullOrEmpty(validationCfg!.customRequiredvalidationError)) {
-            validationError = validationCfg!.customRequiredvalidationError as string;
+        if (!isNullOrEmpty(validationCfg!.customRequiredValidationError)) {
+            validationError = validationCfg!.customRequiredValidationError as string;
         }
 
         if (!isNullOrUndefined(validationCfg!.customValidation)) {

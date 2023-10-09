@@ -1,20 +1,25 @@
-import { createStore, applyMiddleware } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import thunkMiddleware from "redux-thunk";
-import { createLogger } from "redux-logger";
 
-import rootReducer from "./rootReducer";
+import { reducer as commentsReducer } from "@app/redux/comments/reducer";
+import { reducer as modalBoxReducer } from "@app/redux/modal/reducer";
+import { reducer as notificatorReducer } from "@app/redux/notificator/reducer";
+import { reducer as appReducer } from "@app/redux/app/reducer";
+import { reducer as statsReducer } from "@app/redux/stats/reducer";
 
-/**
- * Redux middleware to provide thunk execution.
- * During development mode also provides redux store changes logger
-*/
-const middleWare =
-    import.meta.env.PRODUCTION
-        ? applyMiddleware(thunkMiddleware)
-        : applyMiddleware(thunkMiddleware, createLogger());
+import { CompositeAppState } from ".";
 
-/** Global application store */
-export default createStore(
-    rootReducer,
-    middleWare
-);
+const store = configureStore<CompositeAppState>({
+    reducer: {
+        comments: commentsReducer,
+        modal: modalBoxReducer,
+        notificator: notificatorReducer,
+        app: appReducer,
+        stats: statsReducer,
+    },
+    middleware: [
+        thunkMiddleware,
+    ]
+});
+
+export default store;

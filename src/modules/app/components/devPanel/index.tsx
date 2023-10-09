@@ -6,9 +6,9 @@ import { ButtonType } from "@bodynarf/react.components";
 import { generateGuid } from "@bodynarf/utils";
 import Button from "@bodynarf/react.components/components/button";
 
-import { NotificationItem, NotificationType } from "@app/models";
+import { NotificationDisplayItem, NotificationType } from "@app/models/notification";
 
-import { getAddNotificationAction } from "@app/redux/notificator";
+import { addNotification } from "@app/redux/notificator";
 
 /** Notification type to Button type map */
 const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([
@@ -20,22 +20,25 @@ const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([
 
 interface DevelopmentPanelProps {
     /** Show notification */
-    show: (notification: NotificationItem, notifyOnBadge: boolean) => void;
+    show: (notifications: Array<NotificationDisplayItem>) => void;
 }
 
 const DevelopmentPanel = ({
     show,
 }: DevelopmentPanelProps): JSX.Element => {
-    const [types, _] = useState(Object.keys(NotificationType));
+    const [types] = useState(
+        Object.values(NotificationType).filter(x => typeof x === "string") as Array<string>
+    );
 
     const onBtnClick = useCallback(
         (type: string) => {
-            show({
+            show([{
                 id: generateGuid(),
                 createdAt: new Date(),
                 message: "Test message in DEV mode\nNew line content\nLorem ipsum dorem dolores",
-                type: type as NotificationType
-            }, true);
+                type: NotificationType[type as keyof typeof NotificationType],
+                important: true,
+            }]);
         }, [show]);
 
     return (
@@ -64,5 +67,5 @@ const DevelopmentPanel = ({
 
 /** Development panel */
 export default connect(_ => ({}), {
-    show: getAddNotificationAction
+    show: addNotification
 })(DevelopmentPanel);

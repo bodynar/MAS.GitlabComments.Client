@@ -1,4 +1,4 @@
-import { NotificationHistoryItem } from "@app/models";
+import { NotificationHistoryItem } from "@app/models/notification";
 
 import NotificationStoryRecord from "../notificationStoryRecord";
 

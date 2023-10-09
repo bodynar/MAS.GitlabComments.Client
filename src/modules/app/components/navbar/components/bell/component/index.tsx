@@ -8,7 +8,7 @@ import { ElementSize, useComponentOutsideClick } from "@bodynarf/react.component
 import "./style.scss";
 import "./style.dark.scss";
 
-import { NotificationHistoryItem } from "@app/models";
+import { NotificationHistoryItem } from "@app/models/notification";
 
 import { CompositeAppState } from "@app/redux";
 import { setNotificationsBadgeToZero } from "@app/redux/notificator";

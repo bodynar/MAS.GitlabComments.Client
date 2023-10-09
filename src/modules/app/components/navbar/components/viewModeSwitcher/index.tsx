@@ -9,7 +9,8 @@ import Icon from "@bodynarf/react.components/components/icon";
 import "./style.scss";
 
 import { CompositeAppState } from "@app/redux";
-import { getSetDarkModeStateAction } from "@app/redux/app";
+import { setDarkMode } from "@app/redux/app";
+import { getDarkModeState } from "@app/core/app";
 
 interface ViewModeSwitcherProps {
     /** Is dark mode currently active */
@@ -36,7 +37,7 @@ function ViewModeSwitcher({
     );
 
     useEffect(() => {
-        const darkModeState = getDarkModeState(isDarkMode);
+        const darkModeState = readDarkModeState(isDarkMode);
 
         onDarkModeStateChange(darkModeState, true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +77,7 @@ function ViewModeSwitcher({
 
 export default connect(
     ({ app }: CompositeAppState) => ({ isDarkMode: app.isDarkMode }),
-    { setDarkModeState: getSetDarkModeStateAction }
+    { setDarkModeState: setDarkMode }
 )(ViewModeSwitcher);
 
 /**
@@ -84,20 +85,10 @@ export default connect(
  * @param isDarkMode Current state of dark mode
  * @returns Flag representing dark mode state
  */
-const getDarkModeState = (isDarkMode?: boolean): boolean => {
-    if (isUndefined(isDarkMode)) {
-        const hasAlreadyStored: boolean =
-            localStorage.hasRecord("darkmode-state");
-
-        if (hasAlreadyStored) {
-            const darkModeState: boolean | undefined =
-                localStorage.getRecord<boolean>("darkmode-state");
-
-            return !isUndefined(darkModeState) && (darkModeState as boolean);
-        } else {
-            return false;
-        }
+const readDarkModeState = (isDarkMode?: boolean): boolean => {
+    if (!isUndefined(isDarkMode)) {
+        return isDarkMode as boolean;
     }
 
-    return isDarkMode as boolean;
+    return getDarkModeState();
 };

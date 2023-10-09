@@ -9,7 +9,10 @@ import { getFieldValueValidationError } from "../../utils";
 import { BaseFieldProps } from "../basePropsType";
 
 /** Single line text editor component */
-export default function ModalFormText({ fieldConfig, setFieldValidState }: BaseFieldProps): JSX.Element {
+export default function ModalFormText({
+	fieldConfig,
+	setFieldValidState, updateFormValue,
+}: BaseFieldProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || "");
 	const [isDirty, setIsDirty] = useState<boolean>(false);
 	const [validationError, setValidationError] = useState<string | undefined>();
@@ -33,10 +36,10 @@ export default function ModalFormText({ fieldConfig, setFieldValidState }: BaseF
 				isFieldDirty = true;
 			}
 
-			fieldConfig.value = newValue;
+			updateFormValue(fieldConfig.name, newValue);
 			setValue(newValue ?? "");
 			validate(newValue ?? "", isFieldDirty);
-		}, [fieldConfig, isDirty, validate, value]
+		}, [fieldConfig.name, isDirty, updateFormValue, validate, value]
 	);
 
 	const labelClassName: string = getClassName([

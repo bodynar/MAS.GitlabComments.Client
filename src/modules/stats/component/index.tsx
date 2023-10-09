@@ -2,11 +2,11 @@ import { useCallback } from "react";
 
 import { connect } from "react-redux";
 
-import { StatsRecord } from "@app/models";
+import { StatsRecord, StatsFilter } from "@app/models/stats";
 
 import { CompositeAppState } from "@app/redux";
-import { StatsFilter, getSetStatsFilterAction, loadStatsData, getSetStatsLoadedStateAction } from "@app/redux/stats";
-import { showDescription } from "@app/redux/comments";
+import { loadStatsData, setFilter, setLoaded } from "@app/redux/stats";
+import { showInformationAsync } from "@app/redux/comments";
 
 import StatsFilters from "../components/filter";
 import StatsTableComponent from "../components/table";
@@ -74,8 +74,8 @@ const Stats = ({
 export default connect(
     ({ stats }: CompositeAppState) => ({ ...stats }),
     {
-        setStatsFilter: getSetStatsFilterAction,
-        setIsLoaded: getSetStatsLoadedStateAction,
-        loadStatsData, showDescription,
+        setStatsFilter: setFilter,
+        setIsLoaded: setLoaded,
+        loadStatsData, showInformationAsync,
     }
 )(Stats);

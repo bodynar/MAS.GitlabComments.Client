@@ -1,13 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 
-import { getClassName } from "@bodynarf/utils";
+import { emptyFn, getClassName } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
 import "./style.scss";
 import "./style.dark.scss";
 
-import { Comment as CommentModel } from "@app/models";
+import { Comment as CommentModel } from "@app/models/comments";
 
 interface CommentProps {
     /** Is comment should be scrolled into view after render */
@@ -68,7 +68,7 @@ export default function Comment({
             }
         }
 
-        return () => { };
+        return emptyFn;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

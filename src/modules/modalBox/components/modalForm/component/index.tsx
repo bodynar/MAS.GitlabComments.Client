@@ -15,6 +15,9 @@ interface ModalFormProps {
 
     /** Handler of field calculating validation result */
     setSaveButtonDisabled: (isValid: boolean) => void;
+
+    /** Save new form item value */
+    updateFormValue: (field: string, value: string | undefined) => void;
 }
 
 /** Field validation state */
@@ -30,7 +33,10 @@ interface FormFieldValidationState {
  * Modal form container component
  * @throws Form configuration does not contain any field
  */
-const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps): JSX.Element => {
+const ModalForm = ({
+    formConfig,
+    setSaveButtonDisabled, updateFormValue
+}: ModalFormProps): JSX.Element => {
     if (formConfig.fields.length === 0) {
         throw new Error("No field provided for ModalForm");
     }
@@ -71,12 +77,14 @@ const ModalForm = ({ formConfig, setSaveButtonDisabled }: ModalFormProps): JSX.E
                         key={fieldConfig.name}
                         fieldConfig={fieldConfig}
                         setFieldValidState={setFieldValidState}
+                        updateFormValue={updateFormValue}
                     />;
                 } else if (fieldConfig.type === "multiline") {
                     return <Multiline
                         key={fieldConfig.name}
                         fieldConfig={fieldConfig}
                         setFieldValidState={setFieldValidState}
+                        updateFormValue={updateFormValue}
                     />;
                 }
                 else {

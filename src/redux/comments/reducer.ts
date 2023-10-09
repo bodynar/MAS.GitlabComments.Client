@@ -1,9 +1,11 @@
-import { isNullOrEmpty, isNullOrUndefined, getPropertyValueWithCheck } from "@bodynarf/utils";
+import { createReducer } from "@reduxjs/toolkit";
 
-import { Comment } from "@app/models";
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "@app/redux";
-import { ADD_COMMENT, DELETE_COMMENT, INCREMENT, SET_COMMENTS, SET_MODULE_STATE, SET_SEARCH_QUERY, UPDATE_COMMENT, CommentModuleState, CommentsState } from "@app/redux/comments";
+import { Comment } from "@app/models/comments";
+
+import { CommentsState, setModuleState } from "@app/redux/comments";
+import { addComment, deleteComment, increment, setComments, setSearchQuery, updateComment } from "./actions";
 
 /** Initial comment module state */
 const initialState: CommentsState = {
@@ -12,110 +14,47 @@ const initialState: CommentsState = {
     searchQuery: "",
 };
 
-/** Comment module reducer function */
-export default function (state = initialState, action: ActionWithPayload): CommentsState {
-    switch (action.type) {
-        case SET_MODULE_STATE: {
-            const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, "nextState", false);
+/** App container module reducer */
+export const reducer = createReducer(initialState,
+    (builder) => {
+        builder
+            .addCase(setModuleState, (state, { payload }) => {
+                state.state = payload;
+            })
+            .addCase(addComment, (state, { payload }) => {
+                state.comments = [...state.comments, payload];
+            })
+            .addCase(setComments, (state, { payload }) => {
+                state.comments = payload;
+            })
+            .addCase(increment, (state, { payload }) => {
+                const specifiedComment: Comment | undefined =
+                    state.comments.find(({ id }) => id === payload);
 
-            if (isNullOrUndefined(nextState)) {
-                // TODO: v2 log warning
-                return state;
-            }
+                if (isNullOrUndefined(specifiedComment)) {
+                    return;
+                }
 
-            return {
-                ...state,
-                state: nextState,
-            };
-        }
-        case ADD_COMMENT: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, "comment", false);
+                specifiedComment!.appearanceCount += 1;
 
-            if (isNullOrUndefined(comment) || isNullOrUndefined(comment.id)) {
-                // TODO: v2 log warning
-                return state;
-            }
+                state.comments = state.comments.sort((x, y) => y.appearanceCount - x.appearanceCount);
+            })
+            .addCase(updateComment, (state, { payload }) => {
+                const [data, id] = payload;
 
-            return {
-                ...state,
-                comments: [...state.comments, comment]
-            };
-        }
-        case SET_COMMENTS: {
-            const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, "comments", false);
-
-            if (isNullOrUndefined(comments)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            return {
-                ...state,
-                comments: comments
-            };
-        }
-        case INCREMENT: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, "commentId", false);
-
-            if (isNullOrEmpty(commentId)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            const specifiedComment: Comment | undefined =
-                state.comments.find(({ id }) => id === commentId);
-
-            if (isNullOrUndefined(specifiedComment)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            (specifiedComment as Comment).appearanceCount += 1;
-            // TODO: v2 when increment - sort in view
-
-            return {
-                ...state,
-                comments: state.comments.sort((x, y) => y.appearanceCount - x.appearanceCount)
-            };
-        }
-        case UPDATE_COMMENT: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, "comment", false);
-
-            if (isNullOrUndefined(comment)) {
-                // TODO: v2 log warning
-                return state;
-            }
-            return {
-                ...state,
-                comments: state.comments.map(x =>
-                    x.id === comment.id
-                        ? { ...x, ...comment }
-                        : x
-                )
-            };
-        }
-        case DELETE_COMMENT: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, "commentId", false);
-
-            if (isNullOrEmpty(commentId)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            return {
-                ...state,
-                comments: state.comments.filter(comment => comment.id !== commentId)
-            };
-        }
-        case SET_SEARCH_QUERY: {
-            const searchQuery: string = getPropertyValueWithCheck(action.payload, "searchQuery", false) || "";
-
-            return {
-                ...state,
-                searchQuery
-            };
-        }
-        default:
-            return state;
+                state.comments =
+                    state.comments.map(x =>
+                        x.id === id
+                            ? { ...x, ...data }
+                            : x
+                    );
+            })
+            .addCase(deleteComment, (state, { payload }) => {
+                state.comments = state.comments.filter(({ id }) => id !== payload);
+            })
+            .addCase(setSearchQuery, (state, { payload }) => {
+                state.searchQuery = payload;
+            })
+            ;
     }
-}
+);

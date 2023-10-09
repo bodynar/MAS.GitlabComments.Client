@@ -1,11 +1,13 @@
+import { createAction } from "@reduxjs/toolkit";
+
+/** Set app loading state flag */
+export const setIsLoadingState = createAction<boolean>("mas.gc/setAppIsLoading");
+
 /** Set tab is focused */
-export const SET_TAB_IS_FOCUSED = "mas.gc/setTabIsFocused";
+export const setTabIsFocused = createAction<boolean>("mas.gc/setTabIsFocused");
 
 /** Set application readonly mode state */
-export const SET_READONLY_MODE_STATE = "mas.gc/setReadOnlyMode";
+export const setReadOnlyMode = createAction<boolean>("mas.gc/setReadOnlyMode");
 
 /** Set dark mode state for app */
-export const SET_DARK_MODE_STATE = "mas.gc/setDarkMode";
-
-/** Set app loading state */
-export const SET_IS_APP_IN_LOADING_STATE = "mas.gc/setAppIsLoading";
+export const setDarkMode = createAction<boolean>("mas.gc/setDarkMode");

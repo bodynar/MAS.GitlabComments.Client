@@ -1,12 +1,16 @@
+import { createAction } from "@reduxjs/toolkit";
+
+import { ModalParams } from "@app/models/modal";
+
 /**
  * @constant
  * Open modal redux store action type
  */
-export const OPEN_MODAL = "mas.gc/modal/open";
+export const open = createAction<ModalParams>("mas.gc/modal/open");
 
 /**
  * @constant
  * Close modal redux store action type
  */
-export const CLOSE_MODAL = "mas.gc/modal/close";
+export const close = createAction("mas.gc/modal/close");
 

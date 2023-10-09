@@ -9,7 +9,7 @@ import "../../../shared/styles/globalStyles.scss";
 import "../../../shared/styles/darkStyles.scss";
 
 import { CompositeAppState } from "@app/redux";
-import { getSetTabIsFocusedAction, getReadOnlyMode } from "@app/redux/app";
+import { getReadOnlyMode, setTabIsFocused } from "@app/redux/app";
 
 import ModalBox from "@app/modules/modalBox";
 
@@ -89,7 +89,7 @@ export default connect(
         isLoading: app.loading,
     }),
     {
-        setTabIsFocused: getSetTabIsFocusedAction,
+        setTabIsFocused: setTabIsFocused,
         getReadOnlyMode: getReadOnlyMode,
     }
 )(App);

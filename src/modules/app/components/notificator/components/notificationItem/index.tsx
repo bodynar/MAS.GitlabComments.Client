@@ -5,7 +5,8 @@ import "./style.dark.scss";
 
 import { NOTIFICATION_HIDE_DELAY } from "@app/constants";
 
-import { NotificationItem, NotificationType } from "@app/models";
+import { NotificationDisplayItem, NotificationType } from "@app/models/notification";
+import { emptyFn } from "@bodynarf/utils";
 
 /** Map of notification type to bulma class name */
 const typeClassNameMap: Map<NotificationType, string> = new Map([
@@ -18,7 +19,7 @@ const typeClassNameMap: Map<NotificationType, string> = new Map([
 /** Single notification component configuration */
 interface NotificationProps {
     /** Notification configuration */
-    item: NotificationItem;
+    item: NotificationDisplayItem;
 
     /** Close notification click handler */
     onHideClick: (notificationId: string) => void;
@@ -32,10 +33,14 @@ export default function Notification({
     const hide = useCallback(() => onHideClick(item.id), [item.id, onHideClick]);
 
     useEffect(() => {
-        const timer = setTimeout(hide, NOTIFICATION_HIDE_DELAY);
+        if (!item.important) {
+            const timer = setTimeout(hide, NOTIFICATION_HIDE_DELAY);
 
-        return (): void => { clearTimeout(timer); };
-    }, [hide]);
+            return (): void => { clearTimeout(timer); };
+        }
+
+        return emptyFn;
+    }, [hide, item.important]);
 
     return (
         <div className={`app-notificator__item notification ${typeClassNameMap.get(item.type)}`}>

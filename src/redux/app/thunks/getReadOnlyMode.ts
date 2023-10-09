@@ -1,23 +1,24 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { get } from "@app/utils";
+import { getFlag } from "@app/core/app";
 
-import { ActionWithPayload, CompositeAppState } from "@app/redux";
-import { getSetAppIsLoadingAction, getSetReadOnlyModeAction } from "@app/redux/app";
+import { CompositeAppState } from "@app/redux";
+import { setReadOnlyMode, setIsLoadingState } from "@app/redux/app";
 
 /**
  * Get application read only mode state
  * @returns Get application read only mode state function that can be called with redux dispatcher
  */
-export const getReadOnlyMode = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+export const getReadOnlyMode = (): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): void => {
+        dispatch(setIsLoadingState(true));
 
-        get<boolean>(`/api/app/getIsReadOnly`)
+        getFlag()
             .then((readOnlyMode: boolean) => {
-                dispatch(getSetReadOnlyModeAction(readOnlyMode || false));
+                dispatch(setReadOnlyMode(readOnlyMode ?? false));
 
-                dispatch(getSetAppIsLoadingAction(false));
+                dispatch(setIsLoadingState(false));
             })
-            .catch(() => dispatch(getSetAppIsLoadingAction(false)));
+            .catch(() => dispatch(setIsLoadingState(false)));
     };

@@ -10,16 +10,16 @@ import "./style.scss";
 import "./style.dark.scss";
 
 import { NOTIFICATION_COUNT_TO_SHOW_HIDE_ALL_BUTTON } from "@app/constants";
-import { NotificationItem } from "@app/models";
+import { NotificationDisplayItem } from "@app/models/notification";
 
 import { CompositeAppState } from "@app/redux";
-import { getHideNotificationsAction, getHideAllNotificationsAction } from "@app/redux/notificator";
+import { hideAllNotifications, hideNotification } from "@app/redux/notificator";
 
 import Notification from "../components/notificationItem";
 
 interface NotificatorProps {
     /** Active notifications */
-    notifications: Array<NotificationItem>;
+    notifications: Array<NotificationDisplayItem>;
 
     /** Hide notification handler */
     hideNotifications: (notificationIds: Array<string>) => void;
@@ -80,7 +80,7 @@ function Notificator({
 export default connect(
     ({ notificator }: CompositeAppState) => ({ ...notificator }),
     {
-        hideNotifications: getHideNotificationsAction,
-        hideAll: getHideAllNotificationsAction
+        hideNotifications: hideNotification,
+        hideAll: hideAllNotifications
     }
 )(Notificator);

@@ -1,42 +1,49 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils";
+import { deleteComment } from "@app/core/comments";
 
-import { ActionWithPayload, CompositeAppState } from "@app/redux";
-import { getSetAppIsLoadingAction, setError } from "@app/redux/app";
-import { getSuccessNotificationAction } from "@app/redux/notificator";
-import { getOpenModalAction, ModalType } from "@app/redux/modal";
-import { getDeleteCommentAction } from "@app/redux/comments";
+import { ModalType } from "@app/models/modal";
+
+import { CompositeAppState } from "@app/redux";
+import { setIsLoadingState } from "@app/redux/app";
+import { getNotifications, } from "@app/redux/notificator";
+import { deleteComment as deleteCommentAction } from "@app/redux/comments";
+import { open } from "@app/redux/modal";
 
 /**
  * Delete specified comment
  * @param commentId Comment identifier value
  * @returns Delete comment function that can be called with redux dispatcher
  */
-export const deleteComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
+export const deleteCommentAsync = (commentId: string): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch(getOpenModalAction({
-            modalType: ModalType.Confirm,
-            title: "Confirm delete",
-            buttonCaption: { saveCaption: "Delete" },
-            message: "Are you sure want to delete selected comment?",
-            callback: {
-                saveCallback: (): void => {
-                    dispatch(getSetAppIsLoadingAction(true));
+        const [success, error] = getNotifications(dispatch);
 
-                    post(`api/comments/delete`, commentId)
-                        .then(() => {
-                            const { app } = getState();
+        dispatch(
+            open({
+                modalType: ModalType.Confirm,
+                title: "Confirm delete",
+                buttonCaption: { saveCaption: "Delete" },
+                message: "Are you sure want to delete selected comment?",
+                callback: {
+                    saveCallback: (): void => {
+                        dispatch(setIsLoadingState(true));
 
-                            dispatch(getSuccessNotificationAction("Comment successfully deleted", app.isCurrentTabFocused));
-                            dispatch(getDeleteCommentAction(commentId));
-                            dispatch(getSetAppIsLoadingAction(false));
-                        })
-                        .catch(setError(dispatch, getState));
-                },
-                cancelCallback: (): void => { }
-            }
-        }));
+                        deleteComment(commentId)
+                            .then(() => {
+                                const { app } = getState();
+
+                                success("Comment successfully deleted", true, app.isCurrentTabFocused);
+                                dispatch(deleteCommentAction(commentId));
+                                dispatch(setIsLoadingState(false));
+                            })
+                            .catch(error);
+                    },
+                    cancelCallback: (): void => { } // todo: what will be if do not define this?
+                }
+            })
+        );
     };

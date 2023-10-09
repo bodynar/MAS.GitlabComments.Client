@@ -2,7 +2,7 @@ import { isNullOrEmpty, isNullOrUndefined, isStringEmpty } from "@bodynarf/utils
 
 import { ModalFormItem } from "@app/models/modal";
 
-import { ModalParams, ModalType } from "@app/redux/modal";
+import { ModalParams, ModalType } from "@app/models/modal";
 
 /**
  * Get button captions for modal box depending on modal params

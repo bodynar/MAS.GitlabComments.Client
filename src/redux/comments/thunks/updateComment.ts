@@ -1,39 +1,43 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { BaseCommentModel } from "@app/models";
+import { EditCommentModel } from "@app/models/comments";
+import { getComment, updateComment } from "@app/core/comments";
 
-import { get, post } from "@app/utils";
-
-import { ActionWithPayload, CompositeAppState } from "@app/redux";
-import { setError, getSetAppIsLoadingAction } from "@app/redux/app";
-import { getSuccessNotificationAction } from "@app/redux/notificator";
-import { getOpenModalAction } from "@app/redux/modal";
-import { getUpdateCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
+import { CompositeAppState } from "@app/redux";
+import { setIsLoadingState } from "@app/redux/app";
+import { getNotifications } from "@app/redux/notificator";
+import { open } from "@app/redux/modal";
+import { updateComment as updateCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
 
 /**
  * Update specified comment
  * @param commentId Comment identifier value
  * @returns Update comment function that can be called with redux dispatcher
  */
-export const updateComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
+export const updateCommentAsync = (commentId: string): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState
     ): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+        dispatch(setIsLoadingState(true));
 
-        get<BaseCommentModel>(`/api/comments/get?commentId=${commentId}`)
+        const [, error] = getNotifications(dispatch);
+
+        getComment(commentId)
             .then(comment => {
-                dispatch(getSetAppIsLoadingAction(false));
+                dispatch(setIsLoadingState(false));
 
                 const modalParams = getCommentModalFormConfig(comment);
                 const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
                 const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
-                dispatch(getOpenModalAction({
-                    ...modalParams, callback: { ...modalCallback },
-                }));
+                dispatch(
+                    open({
+                        ...modalParams, callback: { ...modalCallback },
+                    })
+                );
             })
-            .catch(setError(dispatch, getState));
+            .catch(error);
     };
 
 /**
@@ -45,18 +49,20 @@ export const updateComment = (commentId: string): ThunkAction<void, CompositeApp
 const getModalSuccessCallback = (
     commentId: string,
     getState: () => CompositeAppState,
-) => (comment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> => {
+) => (comment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+        dispatch(setIsLoadingState(true));
 
-        post(`api/comments/update`, { ...comment, id: commentId })
+        const [success, error] = getNotifications(dispatch);
+
+        updateComment(comment, commentId)
             .then(() => {
                 const { app } = getState();
 
-                dispatch(getSuccessNotificationAction("Comment was updated successfully", app.isCurrentTabFocused));
-                dispatch(getUpdateCommentAction(comment, commentId));
-                dispatch(getSetAppIsLoadingAction(false));
+                success("Comment was updated successfully", app.isCurrentTabFocused);
+                dispatch(updateCommentAction([comment, commentId]));
+                dispatch(setIsLoadingState(false));
             })
-            .catch(setError(dispatch, getState));
+            .catch(error);
     };
 };

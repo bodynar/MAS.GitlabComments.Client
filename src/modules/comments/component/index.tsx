@@ -8,10 +8,10 @@ import { isNullOrEmpty, isStringEmpty } from "@bodynarf/utils";
 import Button from "@bodynarf/react.components/components/button";
 import Search from "@bodynarf/react.components/components/search";
 
-import { Comment as CommentModel } from "@app/models";
+import { Comment as CommentModel } from "@app/models/comments";
 
 import { CompositeAppState } from "@app/redux";
-import { CommentModuleState, getSetSearchQueryAction, getAllComments, addComment, updateComment, increment, showDescription, deleteComment } from "@app/redux/comments";
+import { CommentModuleState, getAllCommentsAsync, setSearchQuery, showInformationAsync, addCommentAsync, deleteCommentAsync, incrementAsync, updateCommentAsync } from "@app/redux/comments";
 
 import { useQueryParam } from "@app/hooks";
 
@@ -150,12 +150,12 @@ function Comments({
 export default connect(
     ({ comments, app }: CompositeAppState) => ({ ...comments, readOnlyMode: app.readOnlyMode }),
     {
-        addComment: addComment,
-        getComments: getAllComments,
-        updateComment: updateComment,
-        increment: increment,
-        showDescription: showDescription,
-        deleteComment: deleteComment,
-        setSearchQuery: getSetSearchQueryAction,
+        addComment: addCommentAsync,
+        getComments: getAllCommentsAsync,
+        updateComment: updateCommentAsync,
+        increment: incrementAsync,
+        showDescription: showInformationAsync,
+        deleteComment: deleteCommentAsync,
+        setSearchQuery: setSearchQuery,
     }
 )(Comments);
