@@ -40,15 +40,6 @@ export const updateComment = (comment: EditCommentModel, commentId: string): Pro
 };
 
 /**
- * Get specified comment data
- * @param commentId Identifier of comment
- * @returns Promise with comment data
- */
-export const getComment = (commentId: string): Promise<EditCommentModel> => {
-    return get<EditCommentModel>(`/api/comments/get?commentId=${commentId}`);
-};
-
-/**
  * Get list of all comments
  * @returns Promise with array of comments
  */

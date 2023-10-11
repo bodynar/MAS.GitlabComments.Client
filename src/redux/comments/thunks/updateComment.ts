@@ -1,8 +1,10 @@
 import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
+import { isNullOrUndefined } from "@bodynarf/utils";
+
 import { EditCommentModel } from "@app/models/comments";
-import { getComment, getEditModalConfig, updateComment } from "@app/core/comments";
+import { getEditModalConfig, updateComment } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { setIsLoadingState } from "@app/redux/app";
@@ -19,25 +21,22 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
     (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState
     ): void => {
-        dispatch(setIsLoadingState(true));
+        const comment = getState().comments.comments.find(({ id }) => id === commentId);
 
         const [, error] = getNotifications(dispatch);
 
-        getComment(commentId)
-            .then(comment => {
-                dispatch(setIsLoadingState(false));
+        if (isNullOrUndefined(comment)) {
+            error("Comment data not found. Refresh current page and try again.", true, true);
+            return;
+        }
 
-                const modalParams = getEditModalConfig(comment);
-                const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
-                const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
+        const modalParams = getEditModalConfig(comment);
+        const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
+        const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
-                dispatch(
-                    open({
-                        ...modalParams, callback: { ...modalCallback },
-                    })
-                );
-            })
-            .catch(error);
+        dispatch(
+            open({ ...modalParams, callback: { ...modalCallback } })
+        );
     };
 
 /**
