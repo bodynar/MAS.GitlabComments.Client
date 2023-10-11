@@ -1,3 +1,11 @@
 .app-modal {
-    
+    .select select[disabled],
+    [disabled].textarea,
+    [disabled].input,
+    fieldset[disabled] .select select,
+    .select fieldset[disabled] select,
+    fieldset[disabled] .textarea,
+    fieldset[disabled] .input {
+        cursor: auto;
+    }
 }

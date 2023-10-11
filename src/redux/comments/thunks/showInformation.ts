@@ -1,12 +1,13 @@
 import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils";
+import { isNullOrUndefined } from "@bodynarf/utils";
+
+import { getViewModalConfig } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { getNotifications } from "@app/redux/notificator";
 import { open } from "@app/redux/modal";
-import { ModalType } from "@app/models/modal";
 
 /**
  * Get all comments from api
@@ -26,15 +27,9 @@ export const showInformationAsync = (commentId: string): ThunkAction<void, Compo
             return;
         }
 
-        const modalMessage: string = isNullOrEmpty(comment!.description)
-            ? 'Comment does not have any description.'
-            : comment!.description!;
-// TODO: redo
+        const modalParams = getViewModalConfig(comment!);
+
         dispatch(
-            open({
-                modalType: ModalType.Info,
-                title: 'Comment description',
-                message: modalMessage,
-            })
+            open({ ...modalParams })
         );
     };

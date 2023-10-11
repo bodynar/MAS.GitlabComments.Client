@@ -3,13 +3,13 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { EditCommentModel } from "@app/models/comments";
 
-import { addComment } from "@app/core/comments";
+import { addComment, getEditModalConfig } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { setIsLoadingState } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { open } from "@app/redux/modal";
-import { addComment as addCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
+import { addComment as addCommentAction, getCommentModalFormCallbackConfig } from "@app/redux/comments";
 
 /**
  * Add comment via modal form
@@ -19,7 +19,7 @@ export const addCommentAsync = (): ThunkAction<void, CompositeAppState, unknown,
     (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
-        const modalParams = getCommentModalFormConfig();
+        const modalParams = getEditModalConfig();
         const modalSuccessCallback = getModalSuccessCallback(getState);
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 

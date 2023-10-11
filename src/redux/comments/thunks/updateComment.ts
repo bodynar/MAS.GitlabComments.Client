@@ -2,13 +2,13 @@ import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { EditCommentModel } from "@app/models/comments";
-import { getComment, updateComment } from "@app/core/comments";
+import { getComment, getEditModalConfig, updateComment } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { setIsLoadingState } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { open } from "@app/redux/modal";
-import { updateComment as updateCommentAction, getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "@app/redux/comments";
+import { updateComment as updateCommentAction, getCommentModalFormCallbackConfig } from "@app/redux/comments";
 
 /**
  * Update specified comment
@@ -27,7 +27,7 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
             .then(comment => {
                 dispatch(setIsLoadingState(false));
 
-                const modalParams = getCommentModalFormConfig(comment);
+                const modalParams = getEditModalConfig(comment);
                 const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
                 const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
