@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 
 import { isNullOrUndefined } from "@bodynarf/utils";
@@ -45,6 +45,21 @@ const ModalBox = ({
 
     const [isSaveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
     const [formData, setFormData] = useState<Map<string, string | undefined>>(new Map());
+    const isSaveButtonVisible = useMemo(() => {
+        if (!isOpen) {
+            return false;
+        }
+
+        if (params!.modalType === ModalType.Info) {
+            return false;
+        }
+
+        if (params!.modalType === ModalType.Form && params!.formData!.readonly) {
+            return false;
+        }
+
+        return true;
+    }, [isOpen, params]);
 
     useEffect(() => {
         if (isOpen) {
@@ -111,7 +126,7 @@ const ModalBox = ({
                     />
                 </section>
                 <footer className="modal-card-foot">
-                    {params!.modalType !== ModalType.Info
+                    {isSaveButtonVisible
                         &&
                         <Button
                             key="modal-success-btn"

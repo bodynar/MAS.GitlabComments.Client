@@ -10,7 +10,7 @@ import { BaseFieldProps } from "../basePropsType";
 
 /** Single line text editor component */
 export default function ModalFormText({
-	fieldConfig,
+	fieldConfig, readonly,
 	setFieldValidState, updateFormValue,
 }: BaseFieldProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || "");
@@ -55,7 +55,7 @@ export default function ModalFormText({
 			onValueChange={onValueChange}
 			defaultValue={value}
 			placeholder={fieldConfig.caption}
-			disabled={fieldConfig.disabled}
+			disabled={fieldConfig.disabled ?? readonly}
 			name={fieldConfig.name}
 			label={{
 				className: labelClassName,

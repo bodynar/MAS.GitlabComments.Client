@@ -5,6 +5,9 @@ export interface ModalFormConfiguration {
     /** Form fields configuration */
     fields: Array<ModalFormItem>;
 
+    /** Is form in read only mode */
+    readonly: boolean;
+
     /** Optional caption. Will be shown if provided */
     caption?: string;
 }

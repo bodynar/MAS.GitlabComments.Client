@@ -93,8 +93,10 @@ const validateFormModalType = (modalConfig: ModalParams): string | undefined => 
         return `Form configuration contains invalid fields: [${invalidItems.map(({ name }) => name).join(", ")}].`;
     }
 
-    if (isNullOrUndefined(modalConfig.callback)
-        || isNullOrUndefined(modalConfig.callback!.saveCallback)
+    if (!modalConfig.formData!.readonly
+        && (isNullOrUndefined(modalConfig.callback)
+            || isNullOrUndefined(modalConfig.callback!.saveCallback)
+        )
     ) {
         return "Callback is not defined.";
     }
