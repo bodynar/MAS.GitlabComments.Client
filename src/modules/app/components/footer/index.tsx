@@ -1,6 +1,7 @@
 import { version } from "package.json";
 
 import { isStringEmpty } from "@bodynarf/utils";
+import { ElementSize } from "@bodynarf/react.components";
 import Anchor from "@bodynarf/react.components/components/anchor";
 
 import "./style.scss";
@@ -32,7 +33,11 @@ export default function Footer({
                     Contact author via mail:
                     <Anchor
                         href="mailto:bodynar@gmail.com?subject=GitlabComments - Question&Body="
-                        icon={{ name: "envelope", position: "right" }}
+                        icon={{
+                            name: "envelope",
+                            position: "right",
+                            size: ElementSize.Medium,
+                        }}
                     />
                 </span>
                 <span className="app-footer__line">
@@ -40,7 +45,11 @@ export default function Footer({
                     <Anchor
                         href="https://github.com/bodynar/MAS.GitlabComments.Client/issues/new?assignees=bodynar&labels=&template=bug_report.md&title=%5BBug%5D"
                         className="footer__icon"
-                        icon={{ name: "github", position: "right" }}
+                        icon={{
+                            name: "github",
+                            position: "right",
+                            size: ElementSize.Medium
+                        }}
                         target={"_blank"}
                     />
                 </span>
