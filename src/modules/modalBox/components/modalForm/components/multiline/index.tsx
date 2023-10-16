@@ -11,7 +11,7 @@ import { BaseFieldProps } from "../basePropsType";
 /** Multiline form editor component */
 export default function ModalFormMultiline({
 	fieldConfig, readonly,
-	setFieldValidState, updateFormValue,
+	updateFormValue,
 }: BaseFieldProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || "");
 	const [isDirty, setIsDirty] = useState<boolean>(false);
@@ -23,9 +23,8 @@ export default function ModalFormMultiline({
 				const error: string | undefined = getFieldValueValidationError(value, fieldConfig.validationConfiguration);
 
 				setValidationError(error);
-				setFieldValidState(fieldConfig.name, isNullOrUndefined(error));
 			}
-		}, [fieldConfig.isRequired, fieldConfig.name, fieldConfig.validationConfiguration, setFieldValidState]);
+		}, [fieldConfig.isRequired, fieldConfig.validationConfiguration]);
 
 	const onValueChange = useCallback(
 		(newValue?: string) => {

@@ -1,7 +1,10 @@
+import { useCallback } from "react";
+
+import { isNullOrEmpty } from "@bodynarf/utils";
+
 import { ModalParams, ModalType } from "@app/models/modal";
 
 import ModalForm from "@app/modules/modalBox/components/modalForm";
-import { useCallback } from "react";
 
 /** Modal body prop types */
 interface ModalBodyProps extends ModalParams {
@@ -22,7 +25,6 @@ const ModalBody = ({
     modalType,
     formData, message,
     setSaveButtonDisabled,
-
     formValues, updateFormValues
 }: ModalBodyProps): JSX.Element => {
     const updateFormValue = useCallback(
@@ -30,13 +32,20 @@ const ModalBody = ({
             formValues.set(field, value);
 
             updateFormValues(formValues);
-        }, [formValues, updateFormValues]);
+
+            setSaveButtonDisabled(
+                formData!.fields
+                    .filter(({ isRequired }) => isRequired ?? false)
+                    .map(({ name }) => formValues.get(name) ?? undefined)
+                    .some(isNullOrEmpty)
+            );
+
+        }, [formData, formValues, setSaveButtonDisabled, updateFormValues]);
 
     if (modalType === ModalType.Form) {
         return (
             <ModalForm
                 formConfig={formData!}
-                setSaveButtonDisabled={setSaveButtonDisabled}
                 updateFormValue={updateFormValue}
             />
         );

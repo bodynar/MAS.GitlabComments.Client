@@ -1,5 +1,3 @@
-import { useCallback, useState } from "react";
-
 import { isNullOrUndefined } from "@bodynarf/utils";
 
 import "./style.scss";
@@ -14,20 +12,8 @@ interface ModalFormProps {
     /** Form configuration */
     formConfig: ModalFormConfiguration;
 
-    /** Handler of field calculating validation result */
-    setSaveButtonDisabled: (isValid: boolean) => void;
-
     /** Save new form item value */
     updateFormValue: (field: string, value: string | undefined) => void;
-}
-
-/** Field validation state */
-interface FormFieldValidationState {
-    /** Field name */
-    fieldName: string;
-
-    /** Validation status */
-    isValid: boolean;
 }
 
 /**
@@ -35,37 +21,11 @@ interface FormFieldValidationState {
  * @throws Form configuration does not contain any field
  */
 const ModalForm = ({
-    formConfig,
-    setSaveButtonDisabled, updateFormValue
+    formConfig, updateFormValue
 }: ModalFormProps): JSX.Element => {
     if (formConfig.fields.length === 0) {
         throw new Error("No field provided for ModalForm");
     }
-
-    const requiredFields: Array<FormFieldValidationState> =
-        formConfig.fields
-            .filter(field => field.isRequired === true)
-            .map(({ name }) => ({ fieldName: name, isValid: false }));
-
-    const [fieldValidStates, setFieldValidStates] = useState<Array<FormFieldValidationState>>(requiredFields);
-
-    const setFieldValidState = useCallback(
-        (fieldName: string, isValid: boolean) => {
-            if (isValid) {
-                const hasInvalidField: boolean =
-                    fieldValidStates.some(x => x.fieldName !== fieldName && !x.isValid);
-
-                setSaveButtonDisabled(hasInvalidField);
-            } else {
-                setSaveButtonDisabled(true);
-            }
-
-            const updatedStatesArray: Array<FormFieldValidationState> =
-                fieldValidStates.map(x =>
-                    x.fieldName === fieldName ? ({ fieldName, isValid }) : x);
-
-            setFieldValidStates([...updatedStatesArray]);
-        }, [fieldValidStates, setSaveButtonDisabled]);
 
     return (
         <>
@@ -75,7 +35,6 @@ const ModalForm = ({
             {formConfig.fields.map(fieldConfig => {
                 const config: BaseFieldProps = {
                     fieldConfig: fieldConfig,
-                    setFieldValidState: setFieldValidState,
                     updateFormValue: updateFormValue,
                     readonly: formConfig.readonly ?? false,
                 };
