@@ -8,11 +8,11 @@ import "./style.scss";
 import "./style.dark.scss";
 
 import { ModalCallback, ModalCloseData, ModalParams, ModalType } from "@app/models/modal";
+import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "@app/core/modal";
 
 import { CompositeAppState } from "@app/redux";
 import { closeModal } from "@app/redux/modal";
 
-import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } from "../utils";
 import ModalBody from "../components/body";
 
 interface ModalBoxProps {
