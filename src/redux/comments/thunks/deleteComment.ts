@@ -42,7 +42,6 @@ export const deleteCommentAsync = (commentId: string): ThunkAction<void, Composi
                             })
                             .catch(error);
                     },
-                    cancelCallback: (): void => { } // todo: what will be if do not define this?
                 }
             })
         );
