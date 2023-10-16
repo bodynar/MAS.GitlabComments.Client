@@ -21,7 +21,7 @@ export const getCommentModalFormCallbackConfig = (
 ): ModalCallback => {
     return {
         saveCallback: (modalData: ModalCloseData): void => {
-            const message: string | undefined = modalData.formData?.fields.find(x => x.name === "Comment")?.value;
+            const message: string | undefined = modalData.formData?.fields.find(x => x.name === "message")?.value;
 
             if (isNullOrUndefined(message)) {
                 throw new Error("Comment message is empty after modal form with required flag");
@@ -29,8 +29,8 @@ export const getCommentModalFormCallbackConfig = (
 
             const comment: EditCommentModel = {
                 message: message as string,
-                description: modalData.formData?.fields.find(x => x.name === "Description")?.value,
-                commentWithLinkToRule: modalData.formData?.fields.find(x => x.name === "CommentWithLinkToRule")?.value!,
+                description: modalData.formData?.fields.find(x => x.name === "description")?.value,
+                commentWithLinkToRule: modalData.formData?.fields.find(x => x.name === "commentWithLinkToRule")?.value!,
             };
 
             dispatch(action(comment));
