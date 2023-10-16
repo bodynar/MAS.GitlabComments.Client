@@ -18,7 +18,7 @@ export const displaySuccess = (
     return (message: string, removeLoadingState: boolean = true, important: boolean = false) => {
         dispatch(
             addNotification(
-                [getSuccessNotification(message, important)]
+                [getSuccessNotification(message, important)] // TODO: check all calls. not all must be important
             )
         );
 
