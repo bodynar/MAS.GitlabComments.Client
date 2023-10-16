@@ -43,6 +43,11 @@ export const updateComment = (comment: EditCommentModel, commentId: string): Pro
  * Get list of all comments
  * @returns Promise with array of comments
  */
-export const getAllComments = (): Promise<Array<Comment>> => {
-    return get<Array<Comment>>(`/api/comments/getAll`);
+export const getAllComments = async (): Promise<Array<Comment>> => {
+    const comments = await get<Array<Comment>>(`/api/comments/getAll`);
+
+    return comments.map(x => ({
+        ...x,
+        blocked: false,
+    }));
 };

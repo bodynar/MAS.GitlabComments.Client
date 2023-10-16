@@ -24,3 +24,9 @@ export const setModuleState = createAction<CommentModuleState>("mas.gc/comments/
 /** Set comments module search query action type */
 export const setSearchQuery = createAction<string>("mas.gc/comments/setSearchQuery");
 
+/** Block comment actions */
+export const blockComment = createAction<string>("mas.gc/comments/blockComment");
+
+/** Unblock comment actions */
+export const unblockComment = createAction<string>("mas.gc/comments/unblockComment");
+

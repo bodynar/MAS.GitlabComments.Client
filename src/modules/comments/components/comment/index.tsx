@@ -81,7 +81,8 @@ export default function Comment({
                         icon={{ name: "arrow-up", size: ElementSize.Medium }}
                         title="Increment count"
                         onClick={onIncrementClick}
-                        disabled={isReadOnlyMode}
+                        disabled={isReadOnlyMode || comment.blocked}
+                        isLoading={comment.blocked}
                     />
                     <span className="ml-2">
                         {comment.appearanceCount}
@@ -96,25 +97,29 @@ export default function Comment({
                     <Button
                         type="info"
                         outlined={true}
-                        icon={{ name: "info-lg", size: ElementSize.Medium  }}
+                        icon={{ name: "info-lg", size: ElementSize.Medium }}
                         title="Show description"
                         onClick={onShowDescriptionClick}
+                        disabled={comment.blocked}
+                        isLoading={comment.blocked}
                     />
                     <Button
                         type="warning"
                         outlined={true}
-                        icon={{ name: "pencil", size: ElementSize.Medium  }}
+                        icon={{ name: "pencil", size: ElementSize.Medium }}
                         title="Edit"
                         onClick={onUpdateCommentClick}
-                        disabled={isReadOnlyMode}
+                        disabled={isReadOnlyMode || comment.blocked}
+                        isLoading={comment.blocked}
                     />
                     <Button
                         type="danger"
                         outlined={true}
-                        icon={{ name: "trash", size: ElementSize.Medium  }}
+                        icon={{ name: "trash", size: ElementSize.Medium }}
                         title="Delete"
                         onClick={onDeleteCommentClick}
-                        disabled={isReadOnlyMode}
+                        disabled={isReadOnlyMode || comment.blocked}
+                        isLoading={comment.blocked}
                     />
                 </div>
             </div>

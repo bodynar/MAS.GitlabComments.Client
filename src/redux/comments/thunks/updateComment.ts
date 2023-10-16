@@ -7,10 +7,9 @@ import { EditCommentModel } from "@app/models/comments";
 import { getEditModalConfig, updateComment } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { open } from "@app/redux/modal";
-import { updateComment as updateCommentAction, getCommentModalFormCallbackConfig } from "@app/redux/comments";
+import { updateComment as updateCommentAction, getCommentModalFormCallbackConfig, blockComment, unblockComment } from "@app/redux/comments";
 
 /**
  * Update specified comment
@@ -50,7 +49,7 @@ const getModalSuccessCallback = (
     getState: () => CompositeAppState,
 ) => (comment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
-        dispatch(setIsLoadingState(true));
+        dispatch(blockComment(commentId));
 
         const [success, error] = getNotifications(dispatch);
 
@@ -60,7 +59,7 @@ const getModalSuccessCallback = (
 
                 success("Comment was updated successfully", app.isCurrentTabFocused);
                 dispatch(updateCommentAction([comment, commentId]));
-                dispatch(setIsLoadingState(false));
+                dispatch(unblockComment(commentId));
             })
             .catch(error);
     };

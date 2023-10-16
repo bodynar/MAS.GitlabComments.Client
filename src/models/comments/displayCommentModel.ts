@@ -7,4 +7,7 @@ export interface Comment extends EditCommentModel {
 
     /** Appearance count */
     appearanceCount: number;
+
+    /** Currently blocked to interact with */
+    blocked: boolean;
 }

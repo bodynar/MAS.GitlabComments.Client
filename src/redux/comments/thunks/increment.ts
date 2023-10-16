@@ -4,9 +4,8 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { increment } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
-import { increment as incrementAction } from "@app/redux/comments";
+import { blockComment, increment as incrementAction, unblockComment } from "@app/redux/comments";
 
 /**
  * Increment appearance count in specified comment
@@ -17,7 +16,7 @@ export const incrementAsync = (commentId: string): ThunkAction<void, CompositeAp
     (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch(setIsLoadingState(true));
+        dispatch(blockComment(commentId));
 
         const [success, error] = getNotifications(dispatch);
 
@@ -27,7 +26,7 @@ export const incrementAsync = (commentId: string): ThunkAction<void, CompositeAp
 
                 success("Comment appearance count was updated successfully", app.isCurrentTabFocused);
                 dispatch(incrementAction(commentId));
-                dispatch(setIsLoadingState(false));
+                dispatch(unblockComment(commentId));
             })
             .catch(error);
     };

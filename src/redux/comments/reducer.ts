@@ -5,7 +5,7 @@ import { isNullOrUndefined } from "@bodynarf/utils";
 import { Comment } from "@app/models/comments";
 
 import { CommentsState, setModuleState } from "@app/redux/comments";
-import { addComment, deleteComment, increment, setComments, setSearchQuery, updateComment } from "./actions";
+import { addComment, blockComment, deleteComment, increment, setComments, setSearchQuery, unblockComment, updateComment } from "./actions";
 
 /** Initial comment module state */
 const initialState: CommentsState = {
@@ -26,6 +26,26 @@ export const reducer = createReducer(initialState,
             })
             .addCase(setComments, (state, { payload }) => {
                 state.comments = payload;
+            })
+            .addCase(blockComment, (state, { payload }) => {
+                const specifiedComment: Comment | undefined =
+                    state.comments.find(({ id }) => id === payload);
+
+                if (isNullOrUndefined(specifiedComment)) {
+                    return;
+                }
+
+                specifiedComment!.blocked = true;
+            })
+            .addCase(unblockComment, (state, { payload }) => {
+                const specifiedComment: Comment | undefined =
+                    state.comments.find(({ id }) => id === payload);
+
+                if (isNullOrUndefined(specifiedComment)) {
+                    return;
+                }
+
+                specifiedComment!.blocked = false;
             })
             .addCase(increment, (state, { payload }) => {
                 const specifiedComment: Comment | undefined =
