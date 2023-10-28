@@ -37,10 +37,13 @@ export default function Comment({
     shouldBeScrolledTo, isReadOnlyMode, comment,
     increment, showDescription, updateComment, deleteComment,
 }: CommentProps): JSX.Element {
-    const onIncrementClick = useCallback(() => increment(comment.id), [comment.id, increment]);
     const onShowDescriptionClick = useCallback(() => showDescription(comment.id), [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => updateComment(comment.id), [comment.id, updateComment]);
     const onDeleteCommentClick = useCallback(() => deleteComment(comment.id), [comment.id, deleteComment]);
+    const onIncrementClick = useCallback(() => {
+        navigator.clipboard.writeText(comment.commentWithLinkToRule);
+        increment(comment.id);
+    }, [comment.commentWithLinkToRule, comment.id, increment]);
 
     const [highlighted, setHighlighted] = useState(false);
 
