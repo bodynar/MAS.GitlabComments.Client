@@ -26,7 +26,7 @@ export const reducer = createReducer(defaultState,
                     return;
                 }
 
-                removeByKey(state.notifications, x => x.id, payload);
+                state.notifications = removeByKey(state.notifications, x => x.id, payload);
             })
             .addCase(addNotification, (state, { payload }) => {
                 const addingNotifications = payload.filter(({ id }) => !state.notifications.some(x => x.id === id));
