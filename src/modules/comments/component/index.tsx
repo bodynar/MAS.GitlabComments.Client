@@ -136,7 +136,7 @@ function Comments({
                 displayedComments={displayedComments}
                 highlightedCommentId={highlightedCommentId}
                 noCommentsMessage={noCommentsMessage}
-                readOnlyMode={readOnlyMode === true}
+                readOnlyMode={readOnlyMode ?? false}
                 updateComment={updateComment}
                 increment={increment}
                 showDescription={showDescription}

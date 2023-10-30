@@ -85,7 +85,7 @@ const CommentTable = ({
                             key={comment.id}
                             comment={comment}
                             shouldBeScrolledTo={highlightedCommentId === comment.id}
-                            isReadOnlyMode={readOnlyMode === true}
+                            isReadOnlyMode={readOnlyMode ?? false}
                             updateComment={updateComment}
                             increment={increment}
                             showDescription={showDescription}

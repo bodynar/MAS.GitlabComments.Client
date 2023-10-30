@@ -80,12 +80,12 @@ export default function Comment({
             <div className="column is-1 my-auto">
                 <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
                     <Button
-                        type="default"
-                        icon={{ name: "arrow-up", size: ElementSize.Medium }}
+                        type="ghost"
                         title="Increment count"
                         onClick={onIncrementClick}
-                        disabled={isReadOnlyMode || comment.blocked}
                         isLoading={comment.blocked}
+                        icon={{ name: "chevron-up", size: ElementSize.Medium }}
+                        disabled={isReadOnlyMode || comment.blocked}
                     />
                     <span className="ml-2">
                         {comment.appearanceCount}
@@ -98,31 +98,31 @@ export default function Comment({
             <div className="column is-2 my-auto">
                 <div className="buttons is-justify-content-center">
                     <Button
+                        outlined
                         type="info"
-                        outlined={true}
-                        icon={{ name: "info-lg", size: ElementSize.Medium }}
                         title="Show description"
-                        onClick={onShowDescriptionClick}
                         disabled={comment.blocked}
                         isLoading={comment.blocked}
+                        onClick={onShowDescriptionClick}
+                        icon={{ name: "info-lg", size: ElementSize.Medium }}
                     />
                     <Button
-                        type="warning"
-                        outlined={true}
-                        icon={{ name: "pencil", size: ElementSize.Medium }}
+                        outlined
                         title="Edit"
+                        type="warning"
+                        isLoading={comment.blocked}
                         onClick={onUpdateCommentClick}
                         disabled={isReadOnlyMode || comment.blocked}
-                        isLoading={comment.blocked}
+                        icon={{ name: "pencil", size: ElementSize.Medium }}
                     />
                     <Button
+                        outlined
                         type="danger"
-                        outlined={true}
-                        icon={{ name: "trash", size: ElementSize.Medium }}
                         title="Delete"
+                        isLoading={comment.blocked}
                         onClick={onDeleteCommentClick}
                         disabled={isReadOnlyMode || comment.blocked}
-                        isLoading={comment.blocked}
+                        icon={{ name: "trash", size: ElementSize.Medium }}
                     />
                 </div>
             </div>
