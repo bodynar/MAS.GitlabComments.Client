@@ -5,9 +5,9 @@ import { isStringEmpty } from "@bodynarf/utils";
 import "./style.scss";
 import "./style.dark.scss";
 
-import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from "../components";
+import { menuItems } from "@app/modules/app/routes";
 
-import { menuItems } from "../menu";
+import { NavbarBrand, Bell, NavbarMenuItem, ViewModeSwitcher } from "../components";
 
 interface NavbarProps {
     /** Class for navbar */

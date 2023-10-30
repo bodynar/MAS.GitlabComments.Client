@@ -2,8 +2,7 @@ import { useMemo } from "react";
 
 import moment, { unitOfTime } from "moment";
 
-import { StatsRecord } from "@app/models";
-import { DateRange, StatsFilter } from "@app/models/stats";
+import { DateRange, StatsFilter, StatsRecord } from "@app/models/stats";
 
 import StatsRecordComponent from "../record";
 
@@ -83,6 +82,7 @@ const StatsTableComponent = ({
 
 export default StatsTableComponent;
 
+// TODO: to core
 /**
  * Get stats table label according to specified filter
  * @param filter Current stats filter

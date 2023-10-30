@@ -76,6 +76,7 @@ export default connect(
     {
         setStatsFilter: setFilter,
         setIsLoaded: setLoaded,
-        loadStatsData, showInformationAsync,
+        showDescription: showInformationAsync,
+        loadStatsData,
     }
 )(Stats);

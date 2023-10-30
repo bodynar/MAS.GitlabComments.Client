@@ -53,7 +53,8 @@ const getModalSuccessCallback = (
                     addCommentAction({
                         ...newComment,
                         appearanceCount: 1,
-                        id: commentId
+                        id: commentId,
+                        blocked: false,
                     })
                 );
             })

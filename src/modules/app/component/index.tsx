@@ -13,8 +13,8 @@ import { getReadOnlyMode, setTabIsFocused } from "@app/redux/app";
 
 import ModalBox from "@app/modules/modalBox";
 
-import Notificator from "../components/notificator/component";
-import Navbar from "../components/navbar/component";
+import Notificator from "../components/notificator";
+import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import AppContent from "../components/content";
 

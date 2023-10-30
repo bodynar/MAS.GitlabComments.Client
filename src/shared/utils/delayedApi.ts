@@ -2,7 +2,7 @@ import moment from "moment";
 
 import { isNullOrUndefined, isStringEmpty, delayResolve, delayReject, RequestData, safeFetch } from "@bodynarf/utils";
 
-import { LOADINH_STATE_HIDE_DELAY, REQUEST_TIMEOUT } from "@app/constants";
+import { LOADING_STATE_HIDE_DELAY, REQUEST_TIMEOUT } from "@app/constants";
 import { BaseResponseWithResult } from "@app/models";
 
 /**
@@ -74,19 +74,19 @@ const fetchWithDelay = async<TResult>(uri: string, requestParams: RequestInit): 
 
             const duration = moment.duration(end.diff(start)).asSeconds();
 
-            return duration > LOADINH_STATE_HIDE_DELAY
+            return duration > LOADING_STATE_HIDE_DELAY
                 ? new Promise<TResult>(resolve => resolve(result))
-                : delayResolve<TResult>(Math.abs(LOADINH_STATE_HIDE_DELAY - duration), result);
+                : delayResolve<TResult>(Math.abs(LOADING_STATE_HIDE_DELAY - duration), result);
         })
         .catch(error => {
             const end = moment();
 
             const duration = moment.duration(end.diff(start)).asSeconds();
 
-            if (duration > LOADINH_STATE_HIDE_DELAY) {
+            if (duration > LOADING_STATE_HIDE_DELAY) {
                 throw error;
             } else {
-                return delayReject(Math.abs(LOADINH_STATE_HIDE_DELAY - duration), error);
+                return delayReject(Math.abs(LOADING_STATE_HIDE_DELAY - duration), error);
             }
         });
 };

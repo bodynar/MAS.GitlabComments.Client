@@ -16,10 +16,10 @@ export const NOTIFICATION_COUNT_TO_SHOW_HIDE_ALL_BUTTON = cfg.Notification.Items
  * @constant
  * Delay before loading state gif will be hidden
  */
-export const LOADINH_STATE_HIDE_DELAY: number = cfg.Request.LoaderMinSecondsLife * 1000;
+export const LOADING_STATE_HIDE_DELAY: number = cfg.Request.LoaderMinSecondsLife * 1000;
 
 /**
  * @constant
- * Max lenght of performing request before aborting (in seconds)
+ * Max length of performing request before aborting (in seconds)
  */
 export const REQUEST_TIMEOUT: number = cfg.Request.Timeout * 1000;
