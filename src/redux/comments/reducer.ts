@@ -5,13 +5,18 @@ import { isNullOrUndefined } from "@bodynarf/utils";
 import { Comment } from "@app/models/comments";
 
 import { CommentsState, setModuleState } from "@app/redux/comments";
-import { addComment, blockComment, deleteComment, increment, setComments, setSearchQuery, unblockComment, updateComment } from "./actions";
+import {
+    addComment, deleteComment, increment, updateComment,
+    setComments, setSearchQuery, setIncompleteCount,
+    blockComment, unblockComment,
+} from "./actions";
 
 /** Initial comment module state */
 const initialState: CommentsState = {
     state: "init",
     comments: [],
     searchQuery: "",
+    incompleteCommentsCount: 0,
 };
 
 /** App container module reducer */
@@ -26,6 +31,9 @@ export const reducer = createReducer(initialState,
             })
             .addCase(setComments, (state, { payload }) => {
                 state.comments = payload;
+            })
+            .addCase(setIncompleteCount, (state, { payload }) => {
+                state.incompleteCommentsCount = payload;
             })
             .addCase(blockComment, (state, { payload }) => {
                 const specifiedComment: Comment | undefined =

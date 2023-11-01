@@ -1,7 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 
 import { EditCommentModel, Comment } from "@app/models/comments";
-import { CommentModuleState } from "@app/redux/comments";
+import { CommentModuleInitState } from "@app/redux/comments";
 
 /** Save loaded comments into state */
 export const setComments = createAction<Array<Comment>>("mas.gc/comments/setComments");
@@ -19,7 +19,7 @@ export const updateComment = createAction<[EditCommentModel, string]>("mas.gc/co
 export const deleteComment = createAction<string>("mas.gc/comments/deleteComment");
 
 /** Set comments module state action type */
-export const setModuleState = createAction<CommentModuleState>("mas.gc/comments/setModuleState");
+export const setModuleState = createAction<CommentModuleInitState>("mas.gc/comments/setModuleState");
 
 /** Set comments module search query action type */
 export const setSearchQuery = createAction<string>("mas.gc/comments/setSearchQuery");
@@ -30,3 +30,5 @@ export const blockComment = createAction<string>("mas.gc/comments/blockComment")
 /** Unblock comment actions */
 export const unblockComment = createAction<string>("mas.gc/comments/unblockComment");
 
+/** Set current incomplete comments count */
+export const setIncompleteCount = createAction<number>("mas.gc/comments/setIncompleteCount");

@@ -11,7 +11,7 @@ import Search from "@bodynarf/react.components/components/search";
 import { Comment as CommentModel } from "@app/models/comments";
 
 import { CompositeAppState } from "@app/redux";
-import { CommentModuleState, getAllCommentsAsync, setSearchQuery, showInformationAsync, addCommentAsync, deleteCommentAsync, incrementAsync, updateCommentAsync } from "@app/redux/comments";
+import { CommentModuleInitState, getAllCommentsAsync, setSearchQuery, showInformationAsync, addCommentAsync, deleteCommentAsync, incrementAsync, updateCommentAsync } from "@app/redux/comments";
 
 import { useQueryParam } from "@app/hooks";
 
@@ -25,7 +25,7 @@ interface CommentsProps {
     comments: Array<CommentModel>;
 
     /** Current module state */
-    state: CommentModuleState;
+    state: CommentModuleInitState;
 
     /** Current search query */
     searchQuery: string;
