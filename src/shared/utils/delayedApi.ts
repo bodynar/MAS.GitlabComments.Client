@@ -11,14 +11,17 @@ import { BaseResponseWithResult } from "@app/models";
  * @param requestData Request data
  * @returns {Promise<TResult>} Promise with api processing result
  */
-export const post = async <TResult>(uri: string, requestData: RequestData): Promise<TResult> => {
+export const post = async <TResult>(uri: string, requestData?: RequestData): Promise<TResult> => {
     const requestParams: RequestInit = {
         method: "POST",
         headers: {
             "content-type": "application/json",
         },
-        body: JSON.stringify(requestData)
     };
+// TODO: merge with get
+    if (!isNullOrUndefined(requestData)) {
+        requestParams.body = JSON.stringify(requestData);
+    }
 
     return fetchWithDelay<TResult>(uri, requestParams);
 };
