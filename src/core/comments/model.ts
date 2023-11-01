@@ -1,4 +1,4 @@
-import { Comment, EditCommentModel } from "@app/models/comments";
+import { Comment, EditCommentModel, IncompleteComment } from "@app/models/comments";
 
 import { post, get } from "@app/utils";
 
@@ -41,7 +41,7 @@ export const updateComment = (comment: EditCommentModel, commentId: string): Pro
 
 /**
  * Get list of all comments
- * @returns Promise with array of comments
+ * @returns Promise with array of all comments
  */
 export const getAllComments = async (): Promise<Array<Comment>> => {
     const comments = await get<Array<Comment>>(`/api/comments/getAll`);
@@ -50,4 +50,28 @@ export const getAllComments = async (): Promise<Array<Comment>> => {
         ...x,
         blocked: false,
     }));
+};
+
+/**
+ * Get incomplete comments
+ * @returns Promise with array of incomplete comments
+ */
+export const getIncomplete = async (): Promise<Array<IncompleteComment>> => {
+    return await get<Array<IncompleteComment>>(`/api/comments/getIncomplete`);
+};
+
+/**
+ * Update incomplete comments
+ * @returns Promise with empty result
+ */
+export const updateIncomplete = async (): Promise<void> => {
+    return post(`api/comments/updateIncomplete`);
+};
+
+/**
+ * Update comments table
+ * @returns Promise with empty result
+ */
+export const updateTable = async (): Promise<void> => {
+    return post(`api/comments/updateCommentTable`);
 };
