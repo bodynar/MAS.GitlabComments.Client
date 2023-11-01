@@ -5,7 +5,7 @@ import { getClassName } from "@bodynarf/utils";
 import "./style.scss";
 import "./style.dark.scss";
 
-import { MenuItem } from "../../menu";
+import { MenuItem } from "@app/models/app";
 
 interface NavbarMenuItemProps {
     /** Menu item configuration */

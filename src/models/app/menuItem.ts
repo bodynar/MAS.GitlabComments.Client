@@ -14,4 +14,10 @@ export interface MenuItem {
 
     /** Which component should be rendered as module */
     component: JSX.Element;
+
+    /** Order position */
+    order: number;
+
+    /** Manual display component */
+    customDisplay?: JSX.Element;
 }

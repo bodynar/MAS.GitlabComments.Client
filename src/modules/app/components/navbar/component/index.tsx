@@ -1,7 +1,5 @@
 import { useLocation } from "react-router-dom";
 
-import { isStringEmpty } from "@bodynarf/utils";
-
 import "./style.scss";
 import "./style.dark.scss";
 
@@ -16,15 +14,10 @@ interface NavbarProps {
 
 /**
  * App navigation bar component
- * @throws Classname prop parameter is empty
  */
 export default function Navbar({
     className,
 }: NavbarProps): JSX.Element {
-    if (isStringEmpty(className)) {
-        throw new Error("className is empty");
-    }
-
     const { pathname } = useLocation();
     const activeItem = menuItems.find(({ link }) => pathname === link)?.name || menuItems[0].name;
 
@@ -37,13 +30,17 @@ export default function Navbar({
             <NavbarBrand />
             <div className="navbar-menu" >
                 <div className="navbar-start">
-                    {menuItems.map(menuItem =>
-                        <NavbarMenuItem
-                            key={menuItem.name}
-                            item={menuItem}
-                            isActive={menuItem.name === activeItem}
-                        />
-                    )}
+                    {menuItems
+                        .sort((x, y) => x.order - y.order)
+                        .map(menuItem =>
+                            menuItem.customDisplay
+                            ??
+                            <NavbarMenuItem
+                                key={menuItem.name}
+                                item={menuItem}
+                                isActive={menuItem.name === activeItem}
+                            />
+                        )}
                 </div>
                 <div className="navbar-end">
                     <ViewModeSwitcher />
