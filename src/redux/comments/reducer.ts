@@ -16,7 +16,6 @@ const initialState: CommentsState = {
     state: "init",
     comments: [],
     searchQuery: "",
-    incompleteCommentsCount: 0,
 };
 
 /** App container module reducer */

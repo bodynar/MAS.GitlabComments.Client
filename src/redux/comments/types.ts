@@ -18,5 +18,5 @@ export interface CommentsState {
     searchQuery: string;
 
     /** Amount of incomplete comments */
-    incompleteCommentsCount: number;
+    incompleteCommentsCount?: number;
 }
