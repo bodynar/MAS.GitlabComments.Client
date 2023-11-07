@@ -32,3 +32,6 @@ export const unblockComment = createAction<string>("mas.gc/comments/unblockComme
 
 /** Set current incomplete comments count */
 export const setIncompleteCount = createAction<number>("mas.gc/comments/setIncompleteCount");
+
+/** Set flag representing possibility of updating comments table */
+export const setCanUpdateTable = createAction<boolean>("mas.gc/comments/setCanUpdateTable");

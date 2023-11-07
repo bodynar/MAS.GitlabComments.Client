@@ -8,7 +8,7 @@ import { CommentsState, setModuleState } from "@app/redux/comments";
 import {
     addComment, deleteComment, increment, updateComment,
     setComments, setSearchQuery, setIncompleteCount,
-    blockComment, unblockComment,
+    blockComment, unblockComment, setCanUpdateTable,
 } from "./actions";
 
 /** Initial comment module state */
@@ -16,6 +16,7 @@ const initialState: CommentsState = {
     state: "init",
     comments: [],
     searchQuery: "",
+    canUpdateTable: true,
 };
 
 /** App container module reducer */
@@ -33,6 +34,9 @@ export const reducer = createReducer(initialState,
             })
             .addCase(setIncompleteCount, (state, { payload }) => {
                 state.incompleteCommentsCount = payload;
+            })
+            .addCase(setCanUpdateTable, (state, { payload }) => {
+                state.canUpdateTable = payload;
             })
             .addCase(blockComment, (state, { payload }) => {
                 const specifiedComment: Comment | undefined =

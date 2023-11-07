@@ -19,4 +19,7 @@ export interface CommentsState {
 
     /** Amount of incomplete comments */
     incompleteCommentsCount?: number;
+
+    /** Update comments table definition access flag */
+    canUpdateTable: boolean;
 }
