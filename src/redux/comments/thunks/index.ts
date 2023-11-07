@@ -6,3 +6,4 @@ export * from "./increment";
 export * from "./showInformation";
 export * from "./updateComment";
 export * from "./updateIncomplete";
+export * from "./updateTable";
