@@ -6,9 +6,6 @@ import Tabs, { TabItem } from "@bodynarf/react.components/components/tabs";
 import VariablesList from "../components/variables";
 import CommentsManagePanel from "../components/comments";
 
-interface UserModuleProps {
-}
-
 /**
  * @constant
  * @description User module tabs
@@ -34,11 +31,11 @@ const tabContentMap = new Map<string, JSX.Element>([
 ]);
 
 /** User module main component */
-const UserModule = (_: UserModuleProps): JSX.Element => {
+const UserModule = (): JSX.Element => {
     const [activeTab, setActiveTab] = useState<TabItem>(tabs[0]);
     const onTabChange = useCallback(setActiveTab, [setActiveTab]);
 
-    // TODO: colour + content (+ store + async API)
+    // TODO: colour
 
     return (
         <>
