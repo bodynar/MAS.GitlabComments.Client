@@ -1,10 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { AppState, setDarkMode, setIsLoadingState, setReadOnlyMode, setTabIsFocused } from "@app/redux/app";
+import { AppState, setDarkMode, setIsLoadingState, setReadOnlyMode, setTabIsFocused, setVariables } from "@app/redux/app";
 
 const defaultState: AppState = {
     isCurrentTabFocused: true,
     loading: false,
+    isDarkMode: false,
+    variables: [],
 };
 
 /** App container module reducer */
@@ -22,6 +24,9 @@ export const reducer = createReducer(defaultState,
             })
             .addCase(setDarkMode, (state, { payload }) => {
                 state.isDarkMode = payload;
+            })
+            .addCase(setVariables, (state, { payload }) => {
+                state.variables = payload;
             })
             ;
     }
