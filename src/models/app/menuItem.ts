@@ -19,5 +19,5 @@ export interface MenuItem {
     order: number;
 
     /** Manual display component */
-    customDisplay?: JSX.Element;
+    customDisplay?: React.ReactNode;
 }

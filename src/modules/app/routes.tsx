@@ -14,7 +14,7 @@ export const menuItems: Array<MenuItem> = [
         name: "userModule",
         caption: "User",
         link: "/user/",
-        customDisplay: <UserModuleRef />,
+        customDisplay: <UserModuleRef key="user-module-ref"/>,
         component: <UserModule />
     },
     {
