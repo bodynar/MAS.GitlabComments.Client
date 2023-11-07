@@ -50,7 +50,8 @@ function App({
         if (isNullOrUndefined(readOnlyMode)) {
             getReadOnlyMode();
         }
-    }, [getReadOnlyMode, readOnlyMode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         window.addEventListener("focus", onFocus);
