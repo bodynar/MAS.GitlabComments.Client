@@ -35,8 +35,6 @@ const UserModule = (): JSX.Element => {
     const [activeTab, setActiveTab] = useState<TabItem>(tabs[0]);
     const onTabChange = useCallback(setActiveTab, [setActiveTab]);
 
-    // TODO: colour
-
     return (
         <>
             <Tabs
