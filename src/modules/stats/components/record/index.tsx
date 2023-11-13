@@ -7,7 +7,7 @@ import Button from "@bodynarf/react.components/components/button";
 import "./style.scss";
 import "./style.dark.scss";
 
-import { StatsRecord } from "@app/models";
+import { StatsRecord } from "@app/models/stats";
 
 interface StatsRecordProps extends StatsRecord {
     /** Show comment description */
