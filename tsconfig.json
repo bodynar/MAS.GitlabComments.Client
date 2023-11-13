@@ -50,12 +50,9 @@
 			"@app/modules/*": [
 				"src/modules/*"
 			],
-			"@app/sharedComponents/*": [
-				"src/components/*",
-				"src/components/primitives/*"
-			],
-			"@app/icons/*": [
-				"src/icons/*"
+			"@app/components/*": [
+				"src/shared/components/*",
+				"src/shared/components/primitives/*"
 			],
 			"@app/constants": [
 				"src/shared/constants"
