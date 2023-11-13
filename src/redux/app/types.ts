@@ -15,7 +15,7 @@ export interface AppState {
     readOnlyMode?: boolean;
 
     /** Is dark mode active */
-    isDarkMode: boolean;
+    isDarkMode?: boolean;
 
     /** System variables */
     variables: Array<SysVariable>;

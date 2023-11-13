@@ -5,7 +5,6 @@ import { AppState, setDarkMode, setIsLoadingState, setReadOnlyMode, setTabIsFocu
 const defaultState: AppState = {
     isCurrentTabFocused: true,
     loading: false,
-    isDarkMode: false,
     variables: [],
 };
 
