@@ -125,4 +125,18 @@
             color: #5c9bff;
         }
     }
+
+    .bbr-table {
+        background-color: transparent;
+        color: inherit;
+
+        thead td,
+        thead th {
+            color: inherit;
+        }
+
+        &.is-striped tbody tr:not(.is-selected):nth-child(even) {
+            background-color: rgb(48, 48, 48);
+        }
+    }
 }
