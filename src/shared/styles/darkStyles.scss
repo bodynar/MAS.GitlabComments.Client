@@ -139,4 +139,24 @@
             background-color: rgb(48, 48, 48);
         }
     }
+
+    .bbr-tabs {
+        ul {
+            border-bottom-color: hsl(0deg, 0%, 50%);
+        }
+        &__tab {
+            &.is-active a {
+                color: rgb(93, 122, 255);
+                border-bottom-color: rgb(93, 122, 255);
+            }
+            &:not(.is-active) a {
+                color: inherit;
+                border-bottom-color: transparent;
+
+                &:hover {
+                    border-bottom-color: rgba(255, 255, 255, 0.75);
+                }
+            }
+        }
+    }
 }
