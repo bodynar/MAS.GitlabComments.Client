@@ -12,18 +12,7 @@ import { BaseResponseWithResult } from "@app/models";
  * @returns {Promise<TResult>} Promise with api processing result
  */
 export const post = async <TResult>(uri: string, requestData?: RequestData): Promise<TResult> => {
-    const requestParams: RequestInit = {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-        },
-    };
-// TODO: merge with get
-    if (!isNullOrUndefined(requestData)) {
-        requestParams.body = JSON.stringify(requestData);
-    }
-
-    return fetchWithDelay<TResult>(uri, requestParams);
+    return fetchWithDelay<TResult>(uri, "POST", requestData);
 };
 
 /**
@@ -33,18 +22,7 @@ export const post = async <TResult>(uri: string, requestData?: RequestData): Pro
  * @returns {Promise<TResult>} Promise with api get result
  */
 export const get = async <TResult>(uri: string, requestData?: RequestData): Promise<TResult> => {
-    const requestParams: RequestInit = {
-        method: "GET",
-        headers: {
-            "content-type": "application/json",
-        }
-    };
-
-    if (!isNullOrUndefined(requestData)) {
-        requestParams.body = JSON.stringify(requestData);
-    }
-
-    return fetchWithDelay<TResult>(uri, requestParams);
+    return fetchWithDelay<TResult>(uri, "GET", requestData);
 };
 
 /**
@@ -53,7 +31,18 @@ export const get = async <TResult>(uri: string, requestData?: RequestData): Prom
  * @param requestParams Request data
  * @returns {Promise<TResult>} Promise with api get result
  */
-const fetchWithDelay = async<TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
+const fetchWithDelay = async<TResult>(uri: string, method: "GET" | "POST", requestData?: RequestData): Promise<TResult> => {
+    const requestParams: RequestInit = {
+        method,
+        headers: {
+            "content-type": "application/json",
+        }
+    };
+
+    if (!isNullOrUndefined(requestData)) {
+        requestParams.body = JSON.stringify(requestData);
+    }
+    // TODO: test
     const start = moment();
 
     return safeFetch(uri, requestParams, { timeout: REQUEST_TIMEOUT })
