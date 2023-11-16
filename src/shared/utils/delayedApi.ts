@@ -42,7 +42,7 @@ const fetchWithDelay = async<TResult>(uri: string, method: "GET" | "POST", reque
     if (!isNullOrUndefined(requestData)) {
         requestParams.body = JSON.stringify(requestData);
     }
-    // TODO: test
+
     const start = moment();
 
     return safeFetch(uri, requestParams, { timeout: REQUEST_TIMEOUT })
@@ -57,7 +57,7 @@ const fetchWithDelay = async<TResult>(uri: string, method: "GET" | "POST", reque
                     ? result.result
                     : new Promise<TResult>((_, r) => r(result.error));
             } catch (error) {
-                console.error(`Error occured during fetching "${uri}": [${error}]. Textual response: ${textResponse}`);
+                console.error(`Error occurred during fetching "${uri}": [${error}]. Textual response: ${textResponse}`);
                 return new Promise<TResult>((_, r) => r("Invalid server response. Please, contact administrator."));
             }
         })
