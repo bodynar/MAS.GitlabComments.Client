@@ -1,6 +1,7 @@
 import { Comment, EditCommentModel } from "@app/models/comments";
 
 import { post, get } from "@app/utils";
+import { isStringEmpty } from "@bodynarf/utils";
 
 /**
  * Save new comment to database
@@ -50,4 +51,24 @@ export const getAllComments = async (): Promise<Array<Comment>> => {
         ...x,
         blocked: false,
     }));
+};
+
+/**
+ * Filter comments by search query
+ * @param comments Array of comments
+ * @param search Search query string
+ * @returns Subarray of comments
+ */
+export const search = (comments: Array<Comment>, search: string): Array<Comment> => {
+    if (isStringEmpty(search) || search.length < 3) {
+        return comments;
+    }
+
+    const loweredSearchPattern = search.toLowerCase();
+
+    return comments
+        .filter(({ message, commentWithLinkToRule }) =>
+            message.toLowerCase().includes(loweredSearchPattern)
+            || commentWithLinkToRule.toLowerCase().includes(loweredSearchPattern)
+        );
 };

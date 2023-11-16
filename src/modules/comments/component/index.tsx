@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-
 import { useNavigate, useLocation } from "react-router-dom";
-
 import { connect } from "react-redux";
 
-import { isNullOrEmpty, isStringEmpty } from "@bodynarf/utils";
+import { isNullOrEmpty } from "@bodynarf/utils";
 import Button from "@bodynarf/react.components/components/button";
 import Search from "@bodynarf/react.components/components/search";
 
 import { Comment as CommentModel } from "@app/models/comments";
+import { search } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { CommentModuleInitState, getAllCommentsAsync, setSearchQuery, showInformationAsync, addCommentAsync, deleteCommentAsync, incrementAsync, updateCommentAsync } from "@app/redux/comments";
@@ -74,18 +73,12 @@ function Comments({
     const onSearch = useCallback(
         (searchPattern: string) => {
             const params = new URLSearchParams();
+            const filteredComments = search(comments, searchPattern);
 
-            if (isStringEmpty(searchPattern)) {
-                setDisplayedComments([...comments]);
-            } else {
-                if (searchPattern.length >= 3) {
-                    const filteredComments: Array<CommentModel> =
-                        [...comments].filter(x => x.message.toLowerCase().includes(searchPattern.toLowerCase()));
+            setDisplayedComments(filteredComments);
 
-                    setDisplayedComments(filteredComments);
-
-                    params.append("q", searchPattern);
-                }
+            if (searchPattern.length >= 3) {
+                params.append("q", searchPattern);
             }
 
             navigate({ search: params.toString(), hash: location.hash, });
