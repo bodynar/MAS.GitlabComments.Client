@@ -40,9 +40,15 @@ export default function Comment({
     const onShowDescriptionClick = useCallback(() => showDescription(comment.id), [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => updateComment(comment.id), [comment.id, updateComment]);
     const onDeleteCommentClick = useCallback(() => deleteComment(comment.id), [comment.id, deleteComment]);
+
+    const [tippyVisible, setTippyVisible] = useState(false);
+    const [tippyFadeOut, setTippyFadeOut] = useState(false);
+
     const onIncrementClick = useCallback(() => {
         navigator.clipboard.writeText(comment.commentWithLinkToRule);
         increment(comment.id);
+
+        setTippyVisible(true);
     }, [comment.commentWithLinkToRule, comment.id, increment]);
 
     const [highlighted, setHighlighted] = useState(false);
@@ -75,10 +81,42 @@ export default function Comment({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        if (tippyVisible) {
+            // eslint-disable-next-line no-undef
+            const timers: Array<NodeJS.Timeout> = [];
+
+            const timer = setTimeout(() => {
+                setTippyFadeOut(true);
+
+                timers.push(
+                    setTimeout(() => {
+                        setTippyFadeOut(false);
+                        setTippyVisible(false);
+                    }, 1 * 1000)
+                );
+            }, 3 * 1000);
+
+            timers.unshift(timer);
+
+            return () => timers.forEach(x => clearTimeout(x));
+        }
+
+        return undefined;
+    }, [tippyVisible]);
+
     return (
         <div className={className} id={comment.id}>
             <div className="column is-1 my-auto">
-                <div className="is-flex is-justify-content-center is-align-content-space-around  is-align-items-center">
+                <div
+                    className="is-flex is-justify-content-center is-align-content-space-around is-align-items-center"
+                    data-tippy-container
+                >
+                    {tippyVisible &&
+                        <div className={`tippy ${tippyFadeOut ? "fade-out" : "fade-in"}`}>
+                            Copied to clipboard
+                        </div>
+                    }
                     <Button
                         type="ghost"
                         title="Increment count"
@@ -126,6 +164,6 @@ export default function Comment({
                     />
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
