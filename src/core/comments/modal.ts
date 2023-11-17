@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "@bodynarf/utils";
+import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils";
 
 import { EditCommentModel } from "@app/models/comments";
 import { ModalFormItem, ModalFormItemType, ModalParams, ModalType } from "@app/models/modal";
@@ -8,6 +8,34 @@ import { ModalFormItem, ModalFormItemType, ModalParams, ModalType } from "@app/m
  * @constant
 */
 const requiredFields = ["message", "commentWithLinkToRule"];
+
+/**
+ * Get length validator function
+ * @param maxLength Maximum allowed value length
+ * @param minLength Minimum allowed value length
+ * @returns Validator function
+ */
+const getLengthValidator = (maxLength: number, minLength: number = 0): (value: string) => string | undefined => {
+    if (maxLength <= minLength) {
+        throw new Error(`maxLength "${maxLength}" must be greater that minLength "${minLength}"`);
+    }
+
+    return (value: string): string | undefined => {
+        if (isNullOrEmpty(value)) {
+            return undefined;
+        }
+
+        if (value.length > maxLength) {
+            return `Value must be ${maxLength} symbols long max`;
+        }
+
+        if (minLength > 0 && value.length > minLength) {
+            return `Value must be at least ${minLength} symbols long`;
+        }
+
+        return undefined;
+    };
+};
 
 /**
  * Map column name to form field config
@@ -21,6 +49,9 @@ const modalFormConfig: Map<string, ModalFormItem> =
                 name: "message",
                 type: ModalFormItemType.Text,
                 caption: "Comment",
+                validationConfiguration: {
+                    customValidation: getLengthValidator(128),
+                },
             }
         ],
         [
@@ -29,6 +60,7 @@ const modalFormConfig: Map<string, ModalFormItem> =
                 name: "commentWithLinkToRule",
                 type: ModalFormItemType.Text,
                 caption: "Link to rule",
+
             },
         ],
         [
@@ -96,5 +128,3 @@ export const getViewModalConfig = (comment: EditCommentModel): ModalParams => {
         },
     };
 };
-
-
