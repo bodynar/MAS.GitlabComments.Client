@@ -45,6 +45,7 @@ const fetchWithDelay = async<TResult>(uri: string, method: "GET" | "POST", reque
 
     const start = moment();
 
+    // TODO: use v2 and switch from <TResult> to ApiResult<TResult>
     return safeFetch(uri, requestParams, { timeout: REQUEST_TIMEOUT })
         .then((textResponse: string) => {
             if (isStringEmpty(textResponse)) {
