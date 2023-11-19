@@ -105,6 +105,8 @@ export default function Comment({
         return undefined;
     }, [tippyVisible]);
 
+    // todo: add number display
+
     return (
         <div className={className} id={comment.id}>
             <div className="column is-1 my-auto">
