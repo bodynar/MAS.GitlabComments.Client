@@ -16,13 +16,13 @@ import { getNotifications } from "@app/redux/notificator";
  * @returns Redux action to fetch stats data and update stats module state
  */
 export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeAppState, unknown, Action> =>
-    (
-        dispatch: ThunkDispatch<CompositeAppState, unknown, Action>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+        getState: () => CompositeAppState,
     ): void => {
         dispatch(setIsLoadingState(true));
         dispatch(setLoaded(false));
 
-        const [, showError] = getNotifications(dispatch);
+        const [, showError] = getNotifications(dispatch, getState);
 
         read(filter)
             .then((rawData: Array<any>) => {
@@ -42,6 +42,6 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
             })
             .catch(error => {
                 dispatch(setLoaded());
-                showError(error, true, true);
+                showError(error);
             });
     };

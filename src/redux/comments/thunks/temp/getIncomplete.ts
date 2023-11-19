@@ -14,19 +14,17 @@ import { setIncompleteCount } from "@app/redux/comments";
  * @returns Get all incomplete comments function that can be called with redux dispatcher
  */
 export const getIncompleteAsync = (): ThunkAction<void, CompositeAppState, unknown, Action> =>
-    (
-        dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+        getState: () => CompositeAppState,
     ): void => {
         dispatch(setIsLoadingState(true));
 
-        const [, showError] = getNotifications(dispatch);
+        const [, showError] = getNotifications(dispatch, getState);
 
         getIncomplete()
             .then((comments: Array<IncompleteComment>) => {
                 dispatch(setIncompleteCount(comments.length));
                 dispatch(setIsLoadingState(false));
             })
-            .catch(error => {
-                showError(error, true, true);
-            });
+            .catch(showError);
     };

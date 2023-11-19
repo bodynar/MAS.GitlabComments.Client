@@ -22,10 +22,10 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
     ): void => {
         const comment = getState().comments.comments.find(({ id }) => id === commentId);
 
-        const [, error] = getNotifications(dispatch);
+        const [, error] = getNotifications(dispatch, getState);
 
         if (isNullOrUndefined(comment)) {
-            error("Comment data not found. Refresh current page and try again.", true, true);
+            error("Comment data not found. Refresh current page and try again.", true);
             return;
         }
 
@@ -51,13 +51,11 @@ const getModalSuccessCallback = (
     return (dispatch): void => {
         dispatch(blockComment(commentId));
 
-        const [success, error] = getNotifications(dispatch);
+        const [success, error] = getNotifications(dispatch, getState);
 
         updateComment(comment, commentId)
             .then(() => {
-                const { app } = getState();
-
-                success("Comment was updated successfully", app.isCurrentTabFocused);
+                success("Comment was updated successfully");
                 dispatch(updateCommentAction([comment, commentId]));
                 dispatch(unblockComment(commentId));
             })

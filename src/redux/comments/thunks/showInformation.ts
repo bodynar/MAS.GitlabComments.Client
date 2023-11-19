@@ -14,16 +14,15 @@ import { open } from "@app/redux/modal";
  * @returns Get all comments function that can be called with redux dispatcher
  */
 export const showInformationAsync = (commentId: string): ThunkAction<void, CompositeAppState, unknown, Action> =>
-    (
-        dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
         const comment = getState().comments.comments.find(({ id }) => id === commentId);
 
-        const [, error] = getNotifications(dispatch);
+        const [, error] = getNotifications(dispatch, getState);
 
         if (isNullOrUndefined(comment)) {
-            error("Comment data not found. Refresh current page and try again.", true, true);
+            error("Comment data not found. Refresh current page and try again.", true);
             return;
         }
 

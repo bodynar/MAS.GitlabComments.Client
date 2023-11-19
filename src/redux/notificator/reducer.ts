@@ -35,7 +35,9 @@ export const reducer = createReducer(defaultState,
                     return;
                 }
 
-                state.historyBadgeCount += 1;
+
+
+                state.historyBadgeCount += addingNotifications.filter(({ important }) => important).length;
                 state.history = [...state.history, ...addingNotifications];
                 state.notifications = [...addingNotifications, ...state.notifications];
             })

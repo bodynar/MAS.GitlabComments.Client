@@ -10,19 +10,23 @@ import { ShowSuccessFn, addNotification } from "@app/redux/notificator";
 /**
  * Create dispatch-based action to display success message
  * @param dispatch Redux store dispatcher
+ * @param getState Function that provides current app global state
  * @returns Redux store action displaying success message
  */
 export const displaySuccess = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+    getState?: () => CompositeAppState,
 ): ShowSuccessFn => {
-    return (message: string, removeLoadingState: boolean = true, important: boolean = false) => {
+    return (message: string, important?: boolean, removeLoadingState?: boolean) => {
+        const isImportant = important ?? !getState?.call(undefined).app.isCurrentTabFocused ?? false;
+
         dispatch(
             addNotification(
-                [getSuccessNotification(message, important)] // TODO: check all calls. not all must be important
+                [getSuccessNotification(message, isImportant)]
             )
         );
 
-        if (removeLoadingState) {
+        if (removeLoadingState ?? true) {
             dispatch(setIsLoadingState(false));
         }
     };

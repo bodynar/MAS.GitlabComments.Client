@@ -18,13 +18,11 @@ export const incrementAsync = (commentId: string): ThunkAction<void, CompositeAp
     ): void => {
         dispatch(blockComment(commentId));
 
-        const [success, error] = getNotifications(dispatch);
+        const [success, error] = getNotifications(dispatch, getState);
 
         increment(commentId)
             .then(() => {
-                const { app } = getState();
-
-                success("Comment appearance count was updated successfully", app.isCurrentTabFocused);
+                success("Comment appearance count was updated successfully");
                 dispatch(incrementAction(commentId));
                 dispatch(unblockComment(commentId));
             })

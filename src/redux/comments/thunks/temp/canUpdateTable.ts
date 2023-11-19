@@ -13,19 +13,17 @@ import { setCanUpdateTable } from "@app/redux/comments";
  * @returns Function that can be called with redux dispatcher
  */
 export const canUpdateTableAsync = (): ThunkAction<void, CompositeAppState, unknown, Action> =>
-    (
-        dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+        getState: () => CompositeAppState,
     ): void => {
         dispatch(setIsLoadingState(true));
 
-        const [, showError] = getNotifications(dispatch);
+        const [, showError] = getNotifications(dispatch, getState);
 
         canUpdateTable()
             .then((result: boolean) => {
                 dispatch(setCanUpdateTable(result));
                 dispatch(setIsLoadingState(false));
             })
-            .catch(error => {
-                showError(error, true, true);
-            });
+            .catch(showError);
     };

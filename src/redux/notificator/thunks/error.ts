@@ -10,23 +10,27 @@ import { ShowErrorFn, addNotification } from "@app/redux/notificator";
 /**
  * Create dispatch-based action to display error message
  * @param dispatch Redux store dispatcher
+ * @param getState Function that provides current app global state
  * @returns Redux store action displaying error message
  */
 export const displayError = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+    getState?: () => CompositeAppState,
 ): ShowErrorFn => {
-    return (error: Error | string, removeLoadingState: boolean = true, important: boolean = false) => {
+    return (error: Error | string, important?: boolean, removeLoadingState?: boolean) => {
         const errorMessage = (error as Error)?.message ?? (error as string);
 
         console.error(errorMessage);
 
+        const isImportant = important ?? !getState?.call(undefined).app.isCurrentTabFocused ?? false;
+
         dispatch(
             addNotification(
-                [getErrorNotification(errorMessage, important)]
+                [getErrorNotification(errorMessage, isImportant)]
             )
         );
 
-        if (removeLoadingState) {
+        if (removeLoadingState ?? true) {
             dispatch(setIsLoadingState(false));
         }
     };

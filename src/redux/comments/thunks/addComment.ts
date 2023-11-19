@@ -42,13 +42,11 @@ const getModalSuccessCallback = (
     return (dispatch): void => {
         dispatch(setIsLoadingState(true));
 
-        const [success, error] = getNotifications(dispatch);
+        const [success, error] = getNotifications(dispatch, getState);
 
         addComment(newComment)
             .then((commentId: string) => {
-                const { app } = getState();
-
-                success("Comment was added successfully", true, app.isCurrentTabFocused);
+                success("Comment was added successfully");
                 dispatch(
                     addCommentAction({
                         ...newComment,

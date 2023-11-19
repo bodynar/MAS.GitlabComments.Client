@@ -20,7 +20,7 @@ export const deleteCommentAsync = (commentId: string): ThunkAction<void, Composi
     (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
-        const [success, error] = getNotifications(dispatch);
+        const [success, error] = getNotifications(dispatch, getState);
 
         dispatch(
             open({
@@ -34,9 +34,7 @@ export const deleteCommentAsync = (commentId: string): ThunkAction<void, Composi
 
                         deleteComment(commentId)
                             .then(() => {
-                                const { app } = getState();
-
-                                success("Comment successfully deleted", true, app.isCurrentTabFocused);
+                                success("Comment successfully deleted");
                                 dispatch(deleteCommentAction(commentId));
                                 dispatch(setIsLoadingState(false));
                             })
