@@ -2,7 +2,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { Action } from "@reduxjs/toolkit";
 
 import { CompositeAppState } from "@app/redux";
-import { displayError, displaySuccess, ShowErrorFn, ShowSuccessFn } from "@app/redux/notificator";
+import { getDisplayErrorFn, getDisplaySuccessFn, ShowErrorFn, ShowSimpleMessageFn } from "@app/redux/notificator";
 
 /**
  * Get success or error notification
@@ -14,9 +14,9 @@ import { displayError, displaySuccess, ShowErrorFn, ShowSuccessFn } from "@app/r
 export const getNotifications = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
     getState?: () => CompositeAppState,
-): [ShowSuccessFn, ShowErrorFn] => {
+): [ShowSimpleMessageFn, ShowErrorFn] => {
     return [
-        displaySuccess(dispatch, getState),
-        displayError(dispatch, getState),
+        getDisplaySuccessFn(dispatch, getState),
+        getDisplayErrorFn(dispatch, getState),
     ];
 };

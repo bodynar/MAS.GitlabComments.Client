@@ -13,7 +13,7 @@ import { ShowErrorFn, addNotification } from "@app/redux/notificator";
  * @param getState Function that provides current app global state
  * @returns Redux store action displaying error message
  */
-export const displayError = (
+export const getDisplayErrorFn = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
     getState?: () => CompositeAppState,
 ): ShowErrorFn => {

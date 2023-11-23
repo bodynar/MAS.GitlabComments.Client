@@ -16,7 +16,7 @@ export interface NotificatorState {
 type ShowNotificationFn<TMessage> = (message: TMessage, important?: boolean, removeLoadingState?: boolean) => void;
 
 /** Success notification show function type */
-export type ShowSuccessFn = ShowNotificationFn<string>;
+export type ShowSimpleMessageFn = ShowNotificationFn<string>;
 
 /** Error notification show function type */
 export type ShowErrorFn = ShowNotificationFn<Error | string>;
