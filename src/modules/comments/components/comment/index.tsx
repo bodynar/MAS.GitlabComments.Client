@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
+import { connect } from "react-redux";
 
-import { emptyFn, getClassName } from "@bodynarf/utils";
+import { emptyFn, getClassName, isNullOrEmpty } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
@@ -8,8 +9,9 @@ import "./style.scss";
 import "./style.dark.scss";
 
 import { Comment as CommentModel } from "@app/models/comments";
+import { displayWarn } from "@app/redux/notificator";
 
-interface CommentProps {
+export interface CommentProps {
     /** Is comment should be scrolled into view after render */
     shouldBeScrolledTo: boolean;
 
@@ -30,13 +32,17 @@ interface CommentProps {
 
     /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
+
+    /** Display warn message */
+    warn: (message: string) => void;
 }
 
 /** Comment component */
-export default function Comment({
+const Comment = ({
     shouldBeScrolledTo, isReadOnlyMode, comment,
     increment, showDescription, updateComment, deleteComment,
-}: CommentProps): JSX.Element {
+    warn,
+}: CommentProps): JSX.Element => {
     const onShowDescriptionClick = useCallback(() => showDescription(comment.id), [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => updateComment(comment.id), [comment.id, updateComment]);
     const onDeleteCommentClick = useCallback(() => deleteComment(comment.id), [comment.id, deleteComment]);
@@ -45,11 +51,17 @@ export default function Comment({
     const [tippyFadeOut, setTippyFadeOut] = useState(false);
 
     const onIncrementClick = useCallback(() => {
-        navigator.clipboard.writeText(comment.commentWithLinkToRule);
+        let copyText = comment.commentWithLinkToRule;
+        if (isNullOrEmpty(copyText)) {
+            warn("Comment doesn't have Reference to rule. Please, update comment. Until then a message will be copied");
+            copyText = comment.message;
+        }
+
+        navigator.clipboard.writeText(copyText);
         increment(comment.id);
 
         setTippyVisible(true);
-    }, [comment.commentWithLinkToRule, comment.id, increment]);
+    }, [comment.commentWithLinkToRule, comment.id, comment.message, increment, warn]);
 
     const [highlighted, setHighlighted] = useState(false);
 
@@ -168,4 +180,11 @@ export default function Comment({
             </div>
         </div >
     );
-}
+};
+
+export default connect(
+    null,
+    {
+        warn: displayWarn,
+    }
+)(Comment);
