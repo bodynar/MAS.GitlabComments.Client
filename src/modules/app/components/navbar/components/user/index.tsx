@@ -24,8 +24,10 @@ const UserModuleRef = (): JSX.Element => {
     const className = getClassName([
         "app-navbar__item",
         "app-user-ref",
-        isUserModuleOpened ? "app-user-ref--active" : ""
+        isUserModuleOpened ? "app-navbar__item--active" : ""
     ]);
+    
+    // TODO: fix active menu item switch icon color
 
     return (
         <div
