@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-
 import { connect } from "react-redux";
 
 import Icon from "@bodynarf/react.components/components/icon";
@@ -53,9 +52,9 @@ function Bell({
     const shouldBadgeBeVisible: boolean = notificationBadge > 0;
     const badgeNumber: string = notificationBadge > 9 ? "9+" : `${notificationBadge}`;
     const title: string = shouldBadgeBeVisible ? `${badgeNumber} new notifications` : "No new notifications";
-    const listClassName: string = !shouldBadgeBeVisible
-        ? "app-bell__list app-bell__list--empty"
-        : "app-bell__list";
+    const listClassName: string = notifications.length > 0
+        ? "app-bell__list"
+        : "app-bell__list app-bell__list--empty";
 
     return (
         <div className="app-bell">
