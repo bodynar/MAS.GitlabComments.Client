@@ -1,5 +1,7 @@
 import { useLocation } from "react-router-dom";
 
+import { getClassName } from "@bodynarf/utils";
+
 import "./style.scss";
 import "./style.dark.scss";
 
@@ -21,9 +23,16 @@ export default function Navbar({
     const { pathname } = useLocation();
     const activeItem = menuItems.find(({ link }) => pathname === link)?.name || menuItems[0].name;
 
+    const containerClassName = getClassName([
+        className,
+        "app-navbar",
+        "navbar",
+        "is-link"
+    ]);
+
     return (
         <nav
-            className={`${className} app-navbar navbar is-link`}
+            className={containerClassName}
             role="navigation"
             aria-label="main navigation"
         >

@@ -1,6 +1,6 @@
 import { version } from "package.json";
 
-import { isStringEmpty } from "@bodynarf/utils";
+import { getClassName } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Anchor from "@bodynarf/react.components/components/anchor";
 
@@ -13,17 +13,19 @@ interface FooterProps {
 
 /**
  * App footer component
- * @throws Classname prop parameter is empty
  */
 export default function Footer({
     className,
 }: FooterProps): JSX.Element {
-    if (isStringEmpty(className)) {
-        throw new Error("className is empty");
-    }
+    const containerClassName = getClassName([
+        className,
+        "app-footer",
+        "is-italic",
+        "mt-4"
+    ]);
 
     return (
-        <footer className={`${className} app-footer`}>
+        <footer className={containerClassName}>
             <div className="app-footer__left">
                 You are viewing GitlabComments app version {version}.{"\n"}
                 Gitlab logo icon is owned by GitLab Inc.

@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 
 import { connect } from "react-redux";
 
-import { isNullOrUndefined } from "@bodynarf/utils";
+import { getClassName, isNullOrUndefined } from "@bodynarf/utils";
 
 import "./style.scss";
 import "../../../shared/styles/globalStyles.scss";
@@ -50,7 +50,7 @@ function App({
         if (isNullOrUndefined(readOnlyMode)) {
             getReadOnlyMode();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -63,9 +63,11 @@ function App({
         };
     }, [onBlur, onFocus]);
 
-    const className: string = isDarkMode === true
-        ? "app app--dark"
-        : "app";
+    const className = getClassName([
+        "app",
+        (isDarkMode ?? false) ? "app--dark" : "",
+        isLoading ? "app--loading" : "",
+    ]);
 
     return (
         <main className={className}>

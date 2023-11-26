@@ -1,8 +1,6 @@
 import { useCallback } from "react";
-
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-
 import { connect } from "react-redux";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import { isStringEmpty } from "@bodynarf/utils";
 
