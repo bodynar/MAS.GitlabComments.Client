@@ -34,7 +34,9 @@ const modalFormConfig: Map<string, ModalFormItem> =
                 name: "commentWithLinkToRule",
                 type: ModalFormItemType.Text,
                 caption: "Link to rule",
-
+                validationConfiguration: {
+                    customValidators: [getLengthValidator(128)],
+                }
             },
         ],
         [
