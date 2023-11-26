@@ -2,6 +2,9 @@
 $transition-duration: 0.15s;
 $transition-function: ease-in;
 
+/* box style */
+$border-radius: 4px;
+
 /* animation */
 $animation-duration: 0.3s;
 
@@ -9,14 +12,20 @@ $animation-duration: 0.3s;
 
 $color-white: #fff;
 $color-black: #000;
+$color-grey: #808080;
 
 $color-info: #3e8ed0;
 $color-success: #48c78e;
+$color-danger: #f14668;
 
 $color-info-hover: #3488ce;
 $color-success-hover: #3ec487;
+$color-danger-hover: #f03a5f;
 
 /* dark */
+$color-dark-background: #1e1e1e;
+$color-dark-navbar: #234f95;
+
 $color-dark-warn: #CC8B00;
 $color-dark-danger: #B12E48;
 $color-dark-success: #287a44;

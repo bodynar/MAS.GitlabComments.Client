@@ -1,8 +1,14 @@
+@use "src/shared/styles/variables.scss";
+
 .app--dark {
     .notification-story-item {
+
+        &:hover .notification-story-item__description span {
+            color: variables.$color-white;
+        }
         &__description {
             span {
-                color: white;
+                color: variables.$color-white;
             }
         }
     }

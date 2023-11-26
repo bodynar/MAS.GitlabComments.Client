@@ -1,5 +1,7 @@
+@use "src/shared/styles/variables.scss";
+
 .app-navbar {
-    transition: 0.15s ease-in-out;
+    transition: variables.$transition-duration variables.$transition-function;
     transition-property: background-color;
 
     position: sticky;

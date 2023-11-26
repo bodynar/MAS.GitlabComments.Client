@@ -1,5 +1,7 @@
+@use "src/shared/styles/variables.scss";
+
 .app--dark {
     .app-navbar {
-        background-color: #234f95;
+        background-color: variables.$color-dark-navbar;
     }
 }

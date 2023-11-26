@@ -2,7 +2,7 @@
 
 .app-comment-item {
     border: 1px solid rgba(variables.$color-black, 0.25);
-    border-radius: 4px;
+    border-radius: variables.$border-radius;
 
     transition-timing-function: variables.$transition-function;
     transition-duration: variables.$transition-duration;

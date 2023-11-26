@@ -1,3 +1,5 @@
+@use "src/shared/styles/variables.scss";
+
 .app-mode-switcher {
     display: flex;
     align-items: center;
@@ -14,16 +16,10 @@
             height: 0;
 
             &:checked + .app-mode-switcher__slider {
-                background-color: #2196f3;
-            }
-
-            &:focus + .app-mode-switcher__slider {
-                box-shadow: 0 0 1px #2196f3;
+                background-color: variables.$color-dark-info-hover;
             }
 
             &:checked + .app-mode-switcher__slider:before {
-                -webkit-transform: translateX(1.5rem);
-                -ms-transform: translateX(1.5rem);
                 transform: translateX(1.5rem);
             }
         }
@@ -36,21 +32,21 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-        border-radius: 34px;
+        background-color: variables.$color-dark-input-placeholder;
+        transition: variables.$transition-duration variables.$transition-function background-color;
+        border-radius: 2rem;
 
         &:before {
             position: absolute;
             content: "";
             height: 1rem;
             width: 1rem;
+
             left: 4px;
             bottom: 4px;
-            background-color: white;
-            -webkit-transition: 0.4s;
-            transition: 0.4s;
+
+            background-color: variables.$color-white;
+            transition: variables.$transition-duration variables.$transition-function;
             border-radius: 50%;
         }
     }

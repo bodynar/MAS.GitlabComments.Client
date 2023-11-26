@@ -1,3 +1,5 @@
+@use "src/shared/styles/variables.scss";
+
 .app-bell {
     margin: 0.25rem 0;
 
@@ -8,14 +10,14 @@
 
         padding: 0.5rem;
 
-        border-radius: 4px;
-        transition: 0.2s ease-in-out background-color;
+        border-radius: variables.$border-radius;
+        transition: variables.$transition-duration variables.$transition-function background-color;
         cursor: pointer;
         user-select: none;
 
         &:hover,
         &--opened {
-            background-color: rgba(0, 0, 0, 0.125);
+            background-color: rgba(variables.$color-black, 0.125);
         }
 
         &::after {
@@ -29,12 +31,12 @@
 
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
-            border-bottom: 8px solid rgba(0, 0, 0, 0.275);
+            border-bottom: 8px solid rgba(variables.$color-black, 0.275);
 
             visibility: collapse;
             opacity: 0;
 
-            transition: 0.15s ease-in;
+            transition: variables.$transition-duration variables.$transition-function;
             transition-property: opacity, visibility;
         }
 
@@ -57,19 +59,19 @@
 
         margin-top: 0.5rem;
 
-        background: white;
-        color: black;
-        border: 1px solid rgba(0, 0, 0, 0.275);
-        border-radius: 4px;
+        background: variables.$color-white;
+        color: variables.$color-black;
+        border: 1px solid rgba(variables.$color-black, 0.275);
+        border-radius: variables.$border-radius;
 
-        transition: 0.15s ease-in;
+        transition: variables.$transition-duration variables.$transition-function;
         transition-property: opacity, visibility;
 
         z-index: 100;
 
         &-wrapper {
             min-height: 10vh;
-            max-height: 35vh;
+            max-height: calc(35vh - 0.5rem);
             overflow-x: auto;
         }
 
@@ -85,7 +87,7 @@
     }
 
     &__empty-list {
-        color: gray;
+        color: variables.$color-grey;
         padding: 0.5rem;
         display: block;
     }
@@ -98,7 +100,7 @@
         min-width: 1.25rem;
         min-height: 1.125rem;
 
-        background: #f24667;
+        background: variables.$color-danger;
         border-radius: 50%;
         font-size: 0.75em;
         text-align: center;

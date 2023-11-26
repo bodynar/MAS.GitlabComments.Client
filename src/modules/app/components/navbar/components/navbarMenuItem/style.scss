@@ -1,28 +1,29 @@
+@use "src/shared/styles/variables.scss";
+
 .app-navbar__item {
     align-items: center;
     display: flex;
     cursor: pointer;
-    flex-grow: 0;
-    flex-shrink: 0;
-    line-height: 1.5;
+
     padding: 0.5rem 0.75rem;
     position: relative;
-    color: #fff;
+    color: variables.$color-white;
 
-    transition: background-color 0.125s ease-in-out, color 0.125s ease-in-out;
+    transition: variables.$transition-duration variables.$transition-function;
+    transition-property: background-color, color;
 
     &:not(&--disabled):not(&--active) {
         &:hover {
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.125);
+            color: variables.$color-white;
+            background-color: rgba(variables.$color-black, 0.125);
         }
         &:active {
-            background-color: rgba(0, 0, 0, 0.25);
+            background-color: rgba(variables.$color-black, 0.25);
         }
     }
 
     &:hover:not(&--active) {
-        color: #fff;
+        color: variables.$color-white;
     }
 
     &--disabled {
@@ -31,7 +32,7 @@
 
     &--active {
         cursor: default;
-        color: #000;
-        background-color: #fff;
+        color: variables.$color-black;
+        background-color: variables.$color-white;
     }
 }

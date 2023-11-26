@@ -1,3 +1,5 @@
+@use "src/shared/styles/variables.scss";
+
 .app-navbar {
     &__brand {
         margin: 0 0.5rem 0 0.75rem;
@@ -6,7 +8,7 @@
         padding: 0.25rem 0.5rem;
     }
     &__name {
-        color: white;
+        color: variables.$color-white;
         margin-left: 0.5rem;
         font-size: 1.25rem;
     }

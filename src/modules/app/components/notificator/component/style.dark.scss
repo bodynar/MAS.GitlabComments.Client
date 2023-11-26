@@ -1,11 +1,13 @@
+@use "src/shared/styles/variables.scss";
+
 .app--dark {
     .app-notificator {
         &__cleaner {
-            border-color: #1c81bd;
-            background-color: #1e1e1e;
+            border-color: rgba(variables.$color-dark-input-placeholder, 0.5);
+            background-color: variables.$color-dark-input-background;
 
             &:hover {
-                box-shadow: inset #00fdc3 0px 0px 3px 1px;
+                border-color: variables.$color-white;
             }
         }
     }

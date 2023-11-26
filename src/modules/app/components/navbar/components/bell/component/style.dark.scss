@@ -1,12 +1,14 @@
+@use "src/shared/styles/variables.scss";
+
 .app--dark {
     .app-bell {
         &__list {
-            background-color: #585858;
-            color: white;
+            background-color: variables.$color-dark-input-background;
+            color: variables.$color-white;
         }
         
         &__empty-list {
-            color: white;
+            color: variables.$color-white;
         }
     }
     
