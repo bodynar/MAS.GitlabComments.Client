@@ -1,4 +1,4 @@
-@use "../../../../shared/styles/variables.scss" as variables;
+@use "../../../../shared/styles/variables.scss";
 
 .app-comment {
     margin-right: 0;
@@ -6,13 +6,14 @@
 
     &--highlighted {
         animation-name: highlighted;
-        animation-duration: 3.5s;
+        animation-duration: 1.5s;
+        animation-iteration-count: 3;
     }
 
     @keyframes highlighted {
         50% {
-            border-color: rgb(50, 115, 220, 0.75);
-            background-color: rgb(66, 132, 239, 0.15);
+            border-color: rgb(variables.$color-info, 0.75);
+            background-color: rgb(variables.$color-info, 0.15);
         }
     }
 
@@ -26,14 +27,12 @@
     }
     &-enter-active {
         opacity: 1;
-        transition: opacity 0.2s ease-in;
     }
     &-exit {
         opacity: 1;
     }
     &-exit-active {
         opacity: 0;
-        transition: opacity 0.2s ease-in;
     }
 }
 
@@ -42,8 +41,8 @@
     width: 5rem;
 
     border-radius: 4px;
-    background: rgba(0, 0, 0, 0.875);
-    color: white;
+    background: rgba(variables.$color-black, 0.875);
+    color: variables.$color-white;
     font-size: 0.75rem;
 
     position: absolute;
@@ -75,7 +74,7 @@
 
         border-style: solid;
         border-width: 0.25rem 0 0.25rem 0.25rem;
-        border-color: transparent transparent transparent rgba(0, 0, 0, 0.875);
+        border-color: transparent transparent transparent rgba(variables.$color-black, 0.875);
 
         transition: variables.$transition-duration variables.$transition-function opacity;
     }
