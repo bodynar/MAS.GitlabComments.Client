@@ -25,10 +25,12 @@ export default function NotificationStoryRecord({
     const createdAt: string = moment(item.createdAt).format("DD MMMM HH:mm");
 
     return (
-        <li className="notification-story-item">
+        <li
+            className="notification-story-item"
+            style={{ borderLeftColor: typeColorMap.get(item.type) }}
+        >
             <div
                 className="notification-story-item__description"
-                style={{ borderColor: typeColorMap.get(item.type) }}
             >
                 <span>{createdAt}</span>
                 <p>
