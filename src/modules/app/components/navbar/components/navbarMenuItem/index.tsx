@@ -25,7 +25,7 @@ export default function NavbarMenuItem({
         isActive ? "app-navbar__item--active" : "",
     ]);
 
-    if (item.disabled === true || isActive) {
+    if (item.disabled === true) {
         return (
             <span
                 className={className}
