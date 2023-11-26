@@ -5,8 +5,8 @@ import { emptyFn, getClassName, isNullOrEmpty } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
+import "@app/styles/comments/comment.scss";
 import "./style.scss";
-import "./style.dark.scss";
 
 import { Comment as CommentModel } from "@app/models/comments";
 import { displayWarn } from "@app/redux/notificator";
@@ -67,6 +67,7 @@ const Comment = ({
 
     const className = getClassName([
         "app-comment",
+        "app-comment-item",
         "columns",
         "ml-1",
         highlighted ? "app-comment--highlighted" : ""

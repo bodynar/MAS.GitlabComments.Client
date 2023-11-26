@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
-import "./style.scss";
-import "./style.dark.scss";
+import "@app/styles/comments/comment.scss";
 
 import { StatsRecord } from "@app/models/stats";
 
@@ -28,7 +27,7 @@ const StatsRecordComponent = ({ commentId, text: commentText, count, showDescrip
     const onShowDescriptionClick = useCallback(() => showDescription(commentId), [commentId, showDescription]);
 
     return (
-        <div className="app-stats-record columns ml-1">
+        <div className="app-comment-item columns ml-1">
             <div className="column is-2 m-auto has-text-centered">
                 +{count}
             </div>
