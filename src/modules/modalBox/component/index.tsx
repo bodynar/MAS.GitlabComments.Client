@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { isNullOrUndefined } from "@bodynarf/utils";
 import Button from "@bodynarf/react.components/components/button";
 
-import "./style.scss";
 import "./style.dark.scss";
 
 import { ModalCallback, ModalCloseData, ModalParams, ModalType } from "@app/models/modal";

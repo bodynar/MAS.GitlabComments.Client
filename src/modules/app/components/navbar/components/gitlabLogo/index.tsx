@@ -1,5 +1,3 @@
-import "./style.scss";
-
 /** Gitlab logo icon component */
 export default function GitlabLogoIcon(): JSX.Element {
     return (

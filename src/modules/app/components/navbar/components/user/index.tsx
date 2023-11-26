@@ -5,8 +5,6 @@ import { getClassName } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Icon from "@bodynarf/react.components/components/icon/component";
 
-import "./style.scss";
-
 /** User module ref icon component */
 const UserModuleRef = (): JSX.Element => {
     const navigate = useNavigate();
