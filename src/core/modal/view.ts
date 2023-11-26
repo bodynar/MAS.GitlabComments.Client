@@ -41,6 +41,8 @@ export const getInitIsSaveButtonDisabled = (params: ModalParams): boolean => {
         && !isNullOrUndefined(params.formData)
     ) {
         return params.formData!.fields
+            .filter(({ validationConfiguration }) => !isNullOrUndefined(validationConfiguration))
+            .map(({ validationConfiguration, value }) => ({ value, isRequired: validationConfiguration?.required ?? false }))
             .some(({ isRequired, value }) =>
                 (isRequired ?? false) && isNullOrEmpty(value)
             );

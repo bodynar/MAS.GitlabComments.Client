@@ -35,7 +35,7 @@ const ModalBody = ({
 
             setSaveButtonDisabled(
                 formData!.fields
-                    .filter(({ isRequired }) => isRequired ?? false)
+                    .filter(({ validationConfiguration }) => validationConfiguration?.required ?? false)
                     .map(({ name }) => formValues.get(name) ?? undefined)
                     .some(isNullOrEmpty)
             );

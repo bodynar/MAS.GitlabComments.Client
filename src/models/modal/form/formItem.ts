@@ -11,9 +11,6 @@ export interface ModalFormItem extends ModalFormItemData {
     /** Should field be readonly */
     disabled?: boolean;
 
-    /** Should field be required */
-    isRequired?: boolean;
-
-    /** Validation configuration. If provided field will be marked as required */
+    /** Form item validation configuration */
     validationConfiguration?: ModalFormItemValidation;
 }

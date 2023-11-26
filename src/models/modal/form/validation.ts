@@ -1,11 +1,11 @@
 /** Form field validation configuration */
 export interface ModalFormItemValidation {
-    /** Custom required validation error */
-    customRequiredValidationError?: string;
+    /** Is value required */
+    required?: boolean;
 
-    /** 
-     * Custom validation.
-     * Function that validates current value. Should return error if value isn"t valid; otherwise - undefined
-    */
-    customValidation?: (value: string) => string | undefined;
+    /** Manual validators */
+    customValidators: Array<FormItemValidator>;
 }
+
+/** Form item validation function */
+export type FormItemValidator = (value: string) => string | undefined;

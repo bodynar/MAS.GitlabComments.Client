@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
 
-import { isNullOrUndefined, getClassName } from "@bodynarf/utils";
+import { getClassName, isNullOrUndefined } from "@bodynarf/utils";
 import { ValidationStatus } from "@bodynarf/react.components";
 import Text from "@bodynarf/react.components/components/primitives/text";
 
-import { getFieldValueValidationError } from "../../utils";
+import { validateFieldValue } from "@app/core/modal";
 
 import { BaseFieldProps } from "../basePropsType";
 
@@ -15,16 +15,16 @@ export default function ModalFormText({
 }: BaseFieldProps): JSX.Element {
 	const [value, setValue] = useState<string>(fieldConfig.value || "");
 	const [isDirty, setIsDirty] = useState<boolean>(false);
-	const [validationError, setValidationError] = useState<string | undefined>();
+	const [validationErrors, setValidationErrors] = useState<Array<string>>([]);
 
 	const validate = useCallback(
 		(value: string, isDirty: boolean) => {
-			if (isDirty && fieldConfig.isRequired === true) {
-				const error: string | undefined = getFieldValueValidationError(value, fieldConfig.validationConfiguration);
+			if (isDirty && !isNullOrUndefined(fieldConfig.validationConfiguration)) {
+				const errors = validateFieldValue(value, fieldConfig.validationConfiguration!);
 
-				setValidationError(error);
+				setValidationErrors(errors);
 			}
-		}, [fieldConfig.isRequired, fieldConfig.validationConfiguration]);
+		}, [fieldConfig.validationConfiguration]);
 
 	const onValueChange = useCallback(
 		(newValue?: string) => {
@@ -42,12 +42,13 @@ export default function ModalFormText({
 	);
 
 	const labelClassName: string = getClassName([
-		fieldConfig.isRequired === true ? "is-required" : "",
+		(fieldConfig.validationConfiguration?.required ?? false) ? "is-required" : "",
 	]);
 
-	const validationState = isNullOrUndefined(validationError)
-		? { status: ValidationStatus.None, messages: [] }
-		: { status: ValidationStatus.Invalid, messages: [validationError!] };
+	const validationState = {
+		messages: validationErrors,
+		status: validationErrors.length === 0 ? ValidationStatus.None : ValidationStatus.Invalid,
+	};
 
 	return (
 		<Text

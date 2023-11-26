@@ -1,41 +1,15 @@
-import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils";
+import { isNullOrUndefined } from "@bodynarf/utils";
 
 import { EditCommentModel } from "@app/models/comments";
 import { ModalFormItem, ModalFormItemType, ModalParams, ModalType } from "@app/models/modal";
+
+import { getLengthValidator } from "@app/core/modal";
 
 /**
  * List of required comment entity fields
  * @constant
 */
 const requiredFields = ["message", "commentWithLinkToRule"];
-
-/**
- * Get length validator function
- * @param maxLength Maximum allowed value length
- * @param minLength Minimum allowed value length
- * @returns Validator function
- */
-const getLengthValidator = (maxLength: number, minLength: number = 0): (value: string) => string | undefined => {
-    if (maxLength <= minLength) {
-        throw new Error(`maxLength "${maxLength}" must be greater that minLength "${minLength}"`);
-    }
-
-    return (value: string): string | undefined => {
-        if (isNullOrEmpty(value)) {
-            return undefined;
-        }
-
-        if (value.length > maxLength) {
-            return `Value must be ${maxLength} symbols long max`;
-        }
-
-        if (minLength > 0 && value.length > minLength) {
-            return `Value must be at least ${minLength} symbols long`;
-        }
-
-        return undefined;
-    };
-};
 
 /**
  * Map column name to form field config
@@ -50,7 +24,7 @@ const modalFormConfig: Map<string, ModalFormItem> =
                 type: ModalFormItemType.Text,
                 caption: "Comment",
                 validationConfiguration: {
-                    customValidation: getLengthValidator(128),
+                    customValidators: [getLengthValidator(128)],
                 },
             }
         ],
@@ -89,13 +63,21 @@ export const getEditModalConfig = (
     modalFormConfig.forEach((config, key) => {
         const isRequired = requiredFields.includes(key);
 
-        formConfig.push({
+        const item = {
             ...config,
-            isRequired,
             value: isCommentModelDefined
                 ? comment![key as keyof EditCommentModel]
                 : "",
-        });
+        };
+
+        if (isRequired) {
+            item.validationConfiguration = {
+                ...item.validationConfiguration!,
+                required: true,
+            };
+        }
+
+        formConfig.push(item);
     });
 
     return {
