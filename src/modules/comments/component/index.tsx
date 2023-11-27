@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { isNullOrEmpty } from "@bodynarf/utils";
+import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 import Search from "@bodynarf/react.components/components/search";
 
@@ -12,11 +13,15 @@ import { search } from "@app/core/comments";
 import { CompositeAppState } from "@app/redux";
 import { CommentModuleInitState, getAllCommentsAsync, setSearchQuery, showInformationAsync, addCommentAsync, deleteCommentAsync, incrementAsync, updateCommentAsync } from "@app/redux/comments";
 
-import { useQueryParam } from "@app/hooks";
+import { useDebounceHandler, useQueryParam } from "@app/hooks";
 
 import CommentTable from "../components/table";
 
+/** Comments module component props */
 interface CommentsProps {
+    /** Is application in loading state */
+    loading: boolean;
+
     /** Is app in read only mode */
     readOnlyMode?: boolean;
 
@@ -33,7 +38,7 @@ interface CommentsProps {
     addComment: () => void;
 
     /** Get all comments */
-    getComments: () => void;
+    getComments: () => Promise<void>;
 
     /** Update specified comment in modal box */
     updateComment: (commentId: string) => void;
@@ -53,6 +58,7 @@ interface CommentsProps {
 
 /** Comments module main component */
 function Comments({
+    loading,
     comments, searchQuery,
     state, readOnlyMode,
     setSearchQuery, getComments, addComment,
@@ -85,6 +91,8 @@ function Comments({
 
             setSearchQuery(searchPattern);
         }, [navigate, location.hash, setSearchQuery, comments]);
+
+    const [debounce, onReloadClick] = useDebounceHandler(getComments, 3);
 
     useEffect(() => {
         if (state === "init") {
@@ -125,6 +133,18 @@ function Comments({
                     searchType="byTyping"
                 />
             </div>
+            {state !== "init" &&
+                <Button
+                    type="default"
+                    caption="Reload"
+                    className="mb-2"
+                    isLoading={loading}
+                    disabled={!debounce}
+                    onClick={onReloadClick}
+                    size={ElementSize.Small}
+                    icon={{ name: "arrow-clockwise" }}
+                />
+            }
             <CommentTable
                 displayedComments={displayedComments}
                 highlightedCommentId={highlightedCommentId}
@@ -141,7 +161,11 @@ function Comments({
 
 /** Comments module main component */
 export default connect(
-    ({ comments, app }: CompositeAppState) => ({ ...comments, readOnlyMode: app.readOnlyMode }),
+    ({ comments, app }: CompositeAppState) => ({
+        ...comments,
+        readOnlyMode: app.readOnlyMode,
+        loading: app.loading,
+    }),
     {
         addComment: addCommentAsync,
         getComments: getAllCommentsAsync,
