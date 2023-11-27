@@ -68,8 +68,9 @@ const Comment = ({
     const className = getClassName([
         "app-comment",
         "app-comment-item",
-        "columns",
-        "ml-1",
+        "comments-table",
+        "my-2",
+        "p-3",
         highlighted ? "app-comment--highlighted" : ""
     ]);
 
@@ -118,20 +119,19 @@ const Comment = ({
         return undefined;
     }, [tippyVisible]);
 
-    // todo: add number display
-
     return (
-        <div className={className} id={comment.id}>
-            <div className="column is-1 my-auto">
-                <div
-                    className="is-flex is-justify-content-center is-align-content-space-around is-align-items-center"
-                    data-tippy-container
-                >
-                    {tippyVisible &&
-                        <div className={`tippy ${tippyFadeOut ? "fade-out" : "fade-in"}`}>
-                            Copied to clipboard
-                        </div>
-                    }
+        <div
+            id={comment.id}
+            data-tippy-container
+            className={className}
+        >
+            {tippyVisible &&
+                <div className={`tippy ${tippyFadeOut ? "fade-out" : "fade-in"}`}>
+                    Copied to clipboard
+                </div>
+            }
+            <div className="comments-table__appearance">
+                <div className="is-flex is-justify-content-center is-align-items-center">
                     <Button
                         type="ghost"
                         title="Increment count"
@@ -140,15 +140,18 @@ const Comment = ({
                         icon={{ name: "chevron-up", size: ElementSize.Medium }}
                         disabled={isReadOnlyMode || comment.blocked}
                     />
-                    <span className="ml-2">
+                    <span>
                         {comment.appearanceCount}
                     </span>
                 </div>
             </div>
-            <p className="column m-auto">
+            <span className="comments-table__number">
+                {comment.number}
+            </span>
+            <p className="comments-table__content">
                 {comment.message}
             </p>
-            <div className="column is-2 my-auto">
+            <div className="comments-table__actions my-auto">
                 <div className="buttons is-justify-content-center">
                     <Button
                         outlined

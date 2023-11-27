@@ -10,4 +10,7 @@ export interface Comment extends EditCommentModel {
 
     /** Currently blocked to interact with */
     blocked: boolean;
+
+    /** Unique comment number */
+    number?: string;
 }

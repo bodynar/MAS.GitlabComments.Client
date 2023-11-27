@@ -17,7 +17,7 @@
         }
     }
 
-    [data-tippy-container] {
+    &[data-tippy-container] {
         position: relative;
     }
 
@@ -47,7 +47,7 @@
 
     position: absolute;
     z-index: 1;
-    left: -115%;
+    left: calc(0% - 5rem - 0.25rem - 2px); // width, padding, border * 2
 
     text-align: center;
     transition: variables.$transition-duration variables.$transition-function opacity;

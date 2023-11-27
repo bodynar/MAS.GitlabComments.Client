@@ -2,6 +2,8 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { isStringEmpty } from "@bodynarf/utils";
 
+import "@app/styles/comments/comments.scss";
+
 import { Comment as CommentModel } from "@app/models/comments";
 
 import Comment from "../comment";
@@ -55,25 +57,22 @@ const CommentTable = ({
 
     return (
         <section>
-            <div className="columns">
-                <div className="column is-1 ml-2">
-                    <span className="is-flex is-justify-content-center">
-                        Appearance
-                    </span>
-                </div>
-                <div className="column ml-2">
-                    <span>
-                        Comment
-                    </span>
-                </div>
-                <div className="column is-2">
-                    <span className="is-flex is-justify-content-center">
-                        Actions
-                    </span>
-                </div>
+            <div className="comments-table my-2 px-2">
+                <span className="comments-table__appearance">
+                    Appearance
+                </span>
+                <span className="comments-table__number">
+                    Number
+                </span>
+                <span className="comments-table__content">
+                    Comment
+                </span>
+                <span className="comments-table__actions">
+                    Actions
+                </span>
             </div>
 
-            <TransitionGroup role="transition-container">
+            <TransitionGroup>
                 {displayedComments.map(comment =>
                     <CSSTransition
                         key={comment.id}
