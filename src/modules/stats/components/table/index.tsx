@@ -4,7 +4,10 @@ import moment, { unitOfTime } from "moment";
 
 import { DateRange, StatsFilter, StatsRecord } from "@app/models/stats";
 
+import "@app/styles/comments/comments.scss";
+
 import StatsRecordComponent from "../record";
+
 
 /** Type of incoming StatsTableComponent props */
 interface StatsTableComponentProps {
@@ -53,18 +56,19 @@ const StatsTableComponent = ({
             </div>
 
             <div className="block">
-                <div className="columns">
-                    <div className="column is-2">
-                        <span className="is-flex is-justify-content-center">
-                            Increment count
-                        </span>
-                    </div>
-                    <span className="column">Comment</span>
-                    <div className="column is-2">
-                        <span className="is-flex is-justify-content-center">
-                            Actions
-                        </span>
-                    </div>
+                <div className="comments-table my-2 px-2">
+                    <span className="comments-table__appearance has-text-centered">
+                        Increment count
+                    </span>
+                    <span className="comments-table__number">
+                        Number
+                    </span>
+                    <span className="comments-table__content">
+                        Comment
+                    </span>
+                    <span className="comments-table__actions">
+                        Actions
+                    </span>
                 </div>
                 <div className="block">
                     {data.map(x =>

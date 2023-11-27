@@ -8,4 +8,7 @@ export interface StatsRecord {
 
     /** Comment increment amount during specified range */
     count: number;
+
+    /** Unique comment number */
+    number: string;
 }

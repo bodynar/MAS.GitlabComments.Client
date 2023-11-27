@@ -29,9 +29,8 @@ export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeA
                 dispatch(
                     setData(
                         rawData.map(x => ({
-                            commentId: x["commentId"],
+                            ...x,
                             text: x["commentText"],
-                            count: x["count"],
                         }) as StatsRecord)
                             .sort(({ count }, y) => y.count - count)
                     )
