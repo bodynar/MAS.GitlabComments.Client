@@ -1,6 +1,8 @@
 import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
+import { isNullOrUndefined } from "@bodynarf/utils";
+
 import { deleteComment } from "@app/core/comments";
 
 import { ModalType } from "@app/models/modal";
@@ -22,19 +24,25 @@ export const deleteCommentAsync = (commentId: string): ThunkAction<void, Composi
     ): void => {
         const [success, error] = getNotifications(dispatch, getState);
 
+        const comment = getState().comments.comments.filter(({ id }) => id === commentId).pop();
+
+        if (isNullOrUndefined(comment)) {
+            error("Comment not found. Try refreshing your page");
+        }
+
         dispatch(
             open({
                 modalType: ModalType.Confirm,
-                title: "Confirm delete",
+                title: "Confirm deleting comment",
                 buttonCaption: { saveCaption: "Delete" },
-                message: "Are you sure want to delete selected comment?",
+                message: `Are you sure want to delete comment ${comment!.number}?`,
                 callback: {
                     saveCallback: (): void => {
                         dispatch(setIsLoadingState(true));
 
                         deleteComment(commentId)
                             .then(() => {
-                                success("Comment successfully deleted");
+                                success(`Comment ${comment!.number} successfully deleted`);
                                 dispatch(deleteCommentAction(commentId));
                                 dispatch(setIsLoadingState(false));
                             })

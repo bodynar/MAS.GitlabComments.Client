@@ -30,7 +30,7 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
         }
 
         const modalParams = getEditModalConfig(comment);
-        const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
+        const modalSuccessCallback = getModalSuccessCallback(commentId, comment!.number!, getState);
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
         dispatch(
@@ -41,11 +41,13 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
 /**
  * Get comment modal callback for success action
  * @param commentId Comment identifier
+ * @param number Comment unique number
  * @param getState Function providing root state
  * @returns Callback for success action for modal with comment
  */
 const getModalSuccessCallback = (
     commentId: string,
+    number: string,
     getState: () => CompositeAppState,
 ) => (comment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
@@ -55,7 +57,7 @@ const getModalSuccessCallback = (
 
         updateComment(comment, commentId)
             .then(() => {
-                success("Comment was updated successfully");
+                success(`Comment ${number} was updated successfully`);
                 dispatch(updateCommentAction([comment, commentId]));
                 dispatch(unblockComment(commentId));
             })

@@ -22,7 +22,9 @@ export const incrementAsync = (commentId: string): ThunkAction<void, CompositeAp
 
         increment(commentId)
             .then(() => {
-                success("Comment appearance count was updated successfully");
+                const comment = getState().comments.comments.filter(({ id }) => id === commentId).pop()!;
+
+                success(`Comment ${comment.number} appearance count was updated successfully`);
                 dispatch(incrementAction(commentId));
                 dispatch(unblockComment(commentId));
             })
