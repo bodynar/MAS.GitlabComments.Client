@@ -45,13 +45,14 @@ const getModalSuccessCallback = (
         const [success, error] = getNotifications(dispatch, getState);
 
         addComment(newComment)
-            .then((commentId: string) => {
-                success("Comment was added successfully");
+            .then(({ id, number }) => {
+                success(`Comment ${number} was added successfully`);
                 dispatch(
                     addCommentAction({
                         ...newComment,
                         appearanceCount: 1,
-                        id: commentId,
+                        number,
+                        id,
                         blocked: false,
                     })
                 );

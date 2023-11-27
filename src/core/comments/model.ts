@@ -1,4 +1,4 @@
-import { Comment, EditCommentModel } from "@app/models/comments";
+import { Comment, EditCommentModel, NewComment } from "@app/models/comments";
 
 import { post, get } from "@app/utils";
 import { isStringEmpty } from "@bodynarf/utils";
@@ -6,10 +6,10 @@ import { isStringEmpty } from "@bodynarf/utils";
 /**
  * Save new comment to database
  * @param comment New comment data
- * @returns Promise with new comment identifier
+ * @returns Promise with new comment data
  */
-export const addComment = (comment: EditCommentModel): Promise<string> => {
-    return post<string>(`api/comments/add`, comment);
+export const addComment = (comment: EditCommentModel): Promise<NewComment> => {
+    return post<NewComment>(`api/comments/add`, comment);
 };
 
 /**
