@@ -1,13 +1,11 @@
 import { useMemo } from "react";
 
-import moment, { unitOfTime } from "moment";
-
-import { DateRange, StatsFilter, StatsRecord } from "@app/models/stats";
-
 import "@app/styles/comments/comments.scss";
 
-import StatsRecordComponent from "../record";
+import { StatsFilter, StatsRecord } from "@app/models/stats";
+import { getLabel } from "@app/core/stats";
 
+import StatsRecordComponent from "../record";
 
 /** Type of incoming StatsTableComponent props */
 interface StatsTableComponentProps {
@@ -23,8 +21,6 @@ interface StatsTableComponentProps {
     /** Show comment description */
     showDescription: (commentId: string) => void;
 }
-
-const today = moment();
 
 /** 
  * Statistics table component.
@@ -85,35 +81,3 @@ const StatsTableComponent = ({
 };
 
 export default StatsTableComponent;
-
-// TODO: to core
-/**
- * Get stats table label according to specified filter
- * @param filter Current stats filter
- * @returns Label for stats table
- */
-const getLabel = (filter: StatsFilter): string => {
-    if (filter.type === DateRange.Manual) {
-        return `Comments appearance updates from ${filter.leftDate!.toDateString()} to ${filter.rightDate!.toDateString()}`;
-    }
-
-    let period: unitOfTime.DurationConstructor = "month";
-
-    switch (filter.type) {
-        case DateRange.Month:
-            period = "month";
-            break;
-
-        case DateRange.Week:
-            period = "week";
-            break;
-
-        case DateRange.Year:
-            period = "year";
-            break;
-    }
-
-    const leftDate = today.clone().add(-1, period);
-
-    return `Comments appearance updates for last ${filter.type} (${leftDate.format("DD.MM.YYYY")} - ${today.format("DD.MM.YYYY")})`;
-};
