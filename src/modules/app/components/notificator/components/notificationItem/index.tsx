@@ -35,7 +35,6 @@ export default function Notification({
     useEffect(() => {
         if (!item.important) {
             const timer = setTimeout(hide, NOTIFICATION_HIDE_DELAY);
-            // TODO: Do not hide when mouse hover. Hide after mouse leave + 0.5sec
 
             return (): void => { clearTimeout(timer); };
         }
