@@ -40,8 +40,7 @@ const CommentsManagePanel = ({
             getIncomplete();
             checkCanUpdateTable();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [checkCanUpdateTable, getIncomplete, incompleteCount]);
 
     return (
         <section>
@@ -49,7 +48,7 @@ const CommentsManagePanel = ({
                 <div className="message-body">
                     <strong>Beware!</strong>
                     <br />
-                    Comments tab panel will be removed in <strong>v1.4</strong>
+                    Comments tab panel will be removed in <strong>v1.5</strong>
                 </div>
             </section>
             <div className="columns">
