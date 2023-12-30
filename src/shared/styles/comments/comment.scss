@@ -1,0 +1,31 @@
+@use "../variables.scss";
+
+.app-comment-item {
+    min-height: 4.125rem;;
+    border: 1px solid rgba(variables.$color-black, 0.25);
+    border-radius: variables.$border-radius;
+
+    transition-timing-function: variables.$transition-function;
+    transition-duration: variables.$transition-duration;
+    transition-property: border-color, background-color, opacity;
+
+    &:hover {
+        border-color: variables.$color-info;
+        background-color: rgba(variables.$color-info, 0.05);
+    }
+
+    &:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.app--dark {
+    .app-comment-item {
+        border-color: rgba(variables.$color-white, 0.25);
+
+        &:hover {
+            border-color: variables.$color-dark-ghost-hover;
+            background-color: rgba(variables.$color-dark-ghost-hover, 0.05);
+        }
+    }
+}

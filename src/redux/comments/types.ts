@@ -1,19 +1,25 @@
-import { Comment } from "@app/models/comment";
+import { Comment } from "@app/models/comments";
 
 /** Comments module state */
-export type CommentModuleState =
-    | 'init' /** Comment module initialized */
-    | 'idle' /** Comment module is waiting for user action  */
+export type CommentModuleInitState =
+    | "init" /** Comment module initialized */
+    | "idle" /** Comment module is waiting for user action  */
     ;
 
 /** Model representing comment module state */
-export type CommentsState = {
+export interface CommentsState {
     /** Current module state */
-    state: CommentModuleState;
+    state: CommentModuleInitState;
 
     /** Loaded comments */
     comments: Array<Comment>;
 
     /** Current search query */
     searchQuery: string;
-};
+
+    /** Amount of incomplete comments */
+    incompleteCommentsCount?: number;
+
+    /** Update comments table definition access flag */
+    canUpdateTable: boolean;
+}

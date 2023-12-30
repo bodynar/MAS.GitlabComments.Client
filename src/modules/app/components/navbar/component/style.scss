@@ -1,0 +1,14 @@
+@use "src/shared/styles/variables.scss";
+
+.app-navbar {
+    transition: variables.$transition-duration variables.$transition-function;
+    transition-property: background-color;
+
+    position: sticky;
+    top: 0;
+
+    .navbar-end {
+        margin-right: 1.75rem;
+        gap: 1.25rem;
+    }
+}

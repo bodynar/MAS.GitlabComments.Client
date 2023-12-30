@@ -1,5 +1,7 @@
+import { SysVariable } from "@app/models/app";
+
 /** Root application state */
-export type AppState = {
+export interface AppState {
     /** Is browser tab with app is in focus */
     isCurrentTabFocused: boolean;
 
@@ -14,4 +16,7 @@ export type AppState = {
 
     /** Is dark mode active */
     isDarkMode?: boolean;
-};
+
+    /** System variables */
+    variables: Array<SysVariable>;
+}

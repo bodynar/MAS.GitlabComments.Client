@@ -1,0 +1,37 @@
+@use "src/shared/styles/variables.scss";
+
+.app-notificator__item {
+    max-height: 12.5rem;
+    overflow: auto;
+    max-width: 17.5rem;
+    font-size: 0.95rem;
+
+    transition: variables.$transition-duration variables.$transition-function;
+    transition-property: color, background-color;
+
+    white-space: pre-line;
+
+    &-enter {
+        opacity: 0;
+        right: -100%;
+    }
+    &-enter-active {
+        opacity: 1;
+        right: 0;
+        transition:
+            opacity variables.$transition-duration variables.$transition-function,
+            right variables.$transition-duration variables.$transition-function;
+    }
+    &-exit {
+        opacity: 1;
+        right: 0;
+    }
+    &-exit-active {
+        opacity: 0;
+        right: -110%;
+
+        transition:
+            opacity variables.$transition-duration variables.$transition-function,
+            right variables.$transition-duration variables.$transition-function;
+    }
+}

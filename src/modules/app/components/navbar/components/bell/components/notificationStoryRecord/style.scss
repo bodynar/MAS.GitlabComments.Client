@@ -1,0 +1,37 @@
+@use "src/shared/styles/variables.scss";
+
+.notification-story-item {
+    padding: 0.25rem;
+
+    border-bottom: 1px solid rgba(variables.$color-black, 0.275);
+    border-left-style: solid;
+    border-left-width: 5px;
+
+    transition: variables.$transition-duration variables.$transition-function background-color;
+
+    &:last-of-type {
+        border-bottom-width: 0;
+        border-bottom-left-radius: variables.$border-radius;
+    }
+    &:first-of-type {
+        border-top-left-radius: variables.$border-radius;
+    }
+
+    &:hover {
+        background-color: rgba(variables.$color-black, 0.125);
+
+        & .notification-story-item__description span {
+            color: variables.$color-black;
+        }
+    }
+
+    &__description {
+        padding-left: 0.25rem;
+
+        span {
+            font-size: 0.9rem;
+            color: variables.$color-grey;
+            font-style: italic;
+        }
+    }
+}

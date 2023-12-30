@@ -1,0 +1,19 @@
+@use "src/shared/styles/variables.scss";
+
+.app--dark {
+    .app-notificator__item {
+        &.is-danger {
+            background-color: variables.$color-dark-danger;
+        }
+        &.is-success {
+            background-color: variables.$color-dark-success;
+        }
+        &.is-info {
+            background-color: variables.$color-dark-info;
+        }
+        &.is-warning {
+            background-color: variables.$color-dark-warn;
+            color: variables.$color-white;
+        }
+    }
+}

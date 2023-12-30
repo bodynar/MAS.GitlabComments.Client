@@ -1,61 +1,32 @@
-import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { createReducer } from "@reduxjs/toolkit";
 
-import { ActionWithPayload } from "../types";
-import { SetDarkModeState, SetIsAppLoadingState, SetReadOnlyModeState, SetTabIsFocused } from "./actions";
-
-import { AppState } from "./types";
+import { AppState, setDarkMode, setIsLoadingState, setReadOnlyMode, setTabIsFocused, setVariables } from "@app/redux/app";
 
 const defaultState: AppState = {
     isCurrentTabFocused: true,
-    loading: false
+    loading: false,
+    variables: [],
 };
 
-/**
- * Update application state depending on dispatched action
- * @param state Current state
- * @param action Dispatched action
- * @returns Updated state
- */
-export default function (state: AppState = defaultState, action: ActionWithPayload): AppState {
-    switch (action.type) {
-        case SetTabIsFocused: {
-            const isTabFocused: boolean =
-                getPropertyValueWithCheck(action.payload, 'isTabFocused');
-
-            return {
-                ...state,
-                isCurrentTabFocused: isTabFocused
-            };
-        }
-        case SetReadOnlyModeState: {
-            const readOnlyMode: boolean =
-                getPropertyValueWithCheck(action.payload, 'readOnlyMode', false) || false;
-
-            return {
-                ...state,
-                readOnlyMode: readOnlyMode
-            };
-        }
-        case SetDarkModeState: {
-            const isDarkMode: boolean =
-                getPropertyValueWithCheck(action.payload, 'isDarkMode', false) || false;
-
-            return {
-                ...state,
-                isDarkMode: isDarkMode
-            };
-        }
-        case SetIsAppLoadingState: {
-            const isLoading: boolean =
-                getPropertyValueWithCheck(action.payload, 'loading', false) || false;
-
-            return {
-                ...state,
-                loading: isLoading
-            };
-        }
-        default: {
-            return state;
-        }
+/** App container module reducer */
+export const reducer = createReducer(defaultState,
+    (builder) => {
+        builder
+            .addCase(setIsLoadingState, (state, { payload }) => {
+                state.loading = payload;
+            })
+            .addCase(setTabIsFocused, (state, { payload }) => {
+                state.isCurrentTabFocused = payload;
+            })
+            .addCase(setReadOnlyMode, (state, { payload }) => {
+                state.readOnlyMode = payload;
+            })
+            .addCase(setDarkMode, (state, { payload }) => {
+                state.isDarkMode = payload;
+            })
+            .addCase(setVariables, (state, { payload }) => {
+                state.variables = payload;
+            })
+            ;
     }
-}
+);

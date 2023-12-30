@@ -1,0 +1,15 @@
+@use "src/shared/styles/variables.scss";
+
+.app--dark {
+    .app-readonly-warning {
+        background-color: variables.$color-dark-input-background;
+
+        .message-header {
+            background-color: variables.$color-dark-warn-hover;
+        }
+
+        .message-body {
+            color: variables.$color-white;
+        }
+    }
+}

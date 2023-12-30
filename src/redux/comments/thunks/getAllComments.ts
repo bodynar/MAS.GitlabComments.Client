@@ -1,36 +1,36 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { get } from "@app/utils/delayedApi";
+import { Comment } from "@app/models/comments";
 
-import { CompositeAppState } from "@app/redux/rootReducer";
-import { ActionWithPayload } from "@app/redux/types";
-
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-import { setError } from "@app/redux/app/utils";
-
-import { Comment } from "@app/models/comment";
-
-import { getSetModuleStateAction } from "../actions/setModuleState";
-import { getSetCommentsAction } from "../actions/setComments";
+import { CompositeAppState } from "@app/redux";
+import { setIsLoadingState } from "@app/redux/app";
+import { getNotifications } from "@app/redux/notificator";
+import { setComments, setModuleState } from "@app/redux/comments/actions";
+import { getAllComments } from "@app/core/comments";
 
 /**
  * Get all comments from api
  * @returns Get all comments function that can be called with redux dispatcher
  */
-export const getAllComments = (): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
-        getState: () => CompositeAppState
-    ): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+export const getAllCommentsAsync = (): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+        getState: () => CompositeAppState,
+    ): Promise<void> => {
+        dispatch(setIsLoadingState(true));
 
-        get<Array<Comment>>(`/api/comments/getAll`)
+        const [, showError] = getNotifications(dispatch, getState);
+
+        return getAllComments()
             .then((comments: Array<Comment>) => {
-                dispatch(getSetCommentsAction(comments));
-                dispatch(getSetAppIsLoadingAction(false));
-                dispatch(getSetModuleStateAction("idle"));
+                dispatch(setComments(comments));
+
+                dispatch(setIsLoadingState(false));
+                dispatch(setModuleState("idle"));
             })
             .catch(error => {
-                dispatch(getSetModuleStateAction("idle"));
-                setError(dispatch, getState)(error);
+                dispatch(setModuleState("idle"));
+
+                showError(error);
             });
     };

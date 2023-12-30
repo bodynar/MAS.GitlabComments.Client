@@ -1,0 +1,38 @@
+@use "src/shared/styles/variables.scss";
+
+.app-navbar__item {
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+
+    padding: 0.5rem 0.75rem;
+    position: relative;
+    color: variables.$color-white;
+
+    transition: variables.$transition-duration variables.$transition-function;
+    transition-property: background-color, color;
+
+    &:not(&--disabled):not(&--active) {
+        &:hover {
+            color: variables.$color-white;
+            background-color: rgba(variables.$color-black, 0.125);
+        }
+        &:active {
+            background-color: rgba(variables.$color-black, 0.25);
+        }
+    }
+
+    &:hover:not(&--active) {
+        color: variables.$color-white;
+    }
+
+    &--disabled {
+        cursor: not-allowed;
+    }
+
+    &--active {
+        cursor: default;
+        color: variables.$color-black;
+        background-color: variables.$color-white;
+    }
+}

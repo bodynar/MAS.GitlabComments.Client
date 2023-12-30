@@ -1,15 +1,17 @@
+@use "./variables.scss";
+
 .app--dark {
-    .app-input {
+    .bbr-input {
         label {
-            color: white;
+            color: variables.$color-white;
         }
         input,
         textarea {
-            background-color: #585858;
-            color: white;
+            background-color: variables.$color-dark-input-background;
+            color: variables.$color-white;
 
             &::-webkit-input-placeholder {
-                color: #d1cfcf;
+                color: variables.$color-dark-input-placeholder;
             }
 
             &[type="date"]::-webkit-calendar-picker-indicator {
@@ -20,109 +22,157 @@
 
     .title,
     .subtitle {
-        color: white;
+        color: variables.$color-white;
     }
 
     .button:not(.is-outlined) {
         &:not([disabled]) {
             &.is-danger {
-                background-color: #b12e48;
+                background-color: variables.$color-dark-danger;
                 &:hover {
-                    background-color: #f03a5f;
+                    background-color: variables.$color-dark-danger-hover;
                 }
             }
             &.is-success {
-                background-color: #287a44;
+                background-color: variables.$color-dark-success;
                 &:hover {
-                    background-color: #3ec46d;
+                    background-color: variables.$color-dark-success-hover;
                 }
             }
             &.is-info {
-                background-color: #286c99;
+                background-color: variables.$color-dark-info;
 
                 &:hover {
-                    background-color: #238cd1;
+                    background-color: variables.$color-dark-info-hover;
                 }
             }
             &.is-warning {
-                background-color: #9d8426;
-                color: white;
+                background-color: variables.$color-dark-warn;
 
                 &:hover {
-                    background-color: #ffdb4a;
-                    color: black;
+                    background-color: variables.$color-dark-warn-hover;
+                }
+            }
+            &.is-primary {
+                background-color: variables.$color-dark-primary;
+
+                &:hover {
+                    background-color: variables.$color-dark-primary-hover;
+                }
+            }
+            &.is-ghost {
+                color: variables.$color-dark-ghost;
+                
+                &:hover {
+                    color: variables.$color-dark-ghost-hover;
                 }
             }
         }
         &.is-default {
-            background-color: #6a6a6a;
-            color: white;
+            background-color: variables.$color-dark-input-background;
+            color: variables.$color-white;
 
             &:hover:not([disabled]) {
-                background-color: #fff;
-                color: #363636;
+                background-color: variables.$color-white;
+                color: variables.$color-black;
             }
         }
     }
 
-    .app-dropdown {
-        span.dropdown-item {
-            color: gray;
-            text-align: center;
-        }
-
+    .bbr-dropdown {
         &__label {
-            background-color: #585858;
-            color: white;
+            background-color: variables.$color-dark-input-background;
+            border-color: variables.$color-dark-input-placeholder;
+            color: variables.$color-white;
 
-            &--default span {
-                color: #d1cfcf;
+            &:hover {
+                border-color: variables.$color-white
             }
 
-            .app-icon {
-                color: rgb(201, 201, 201);
+            &--default span {
+                color: variables.$color-dark-input-placeholder !important;
+            }
+
+            .bbr-icon {
+                color: variables.$color-dark-input-placeholder;
                 &:hover {
-                    color: white;
+                    color: variables.$color-white !important;
                 }
             }
         }
 
         .dropdown-content {
-            background-color: rgb(88, 88, 88);
-            border: 1px solid #1c81bd;
+            background-color: variables.$color-dark-input-background;
+            border: 1px solid variables.$color-dark-input-placeholder;
 
-            box-shadow: 0 0.5em 1em -0.125em rgb(255, 255, 255, 0.3), 0 0px 0 1px rgb(10, 10, 10, 0.02);
+            box-shadow:
+                0 0.5em 1em -0.125em rgb(255, 255, 255, 0.15),
+                0 0px 0 1px rgb(10, 10, 10, 0.02);
         }
 
         &-item {
-            color: white !important;
+            color: variables.$color-white !important;
             &:hover {
-                background-color: rgba(0, 0, 0, 0.35);
+                background-color: rgba(variables.$color-black, 0.35);
             }
             &:active {
-                background-color: rgba(0, 0, 0, 0.5);
+                background-color: rgba(variables.$color-black, 0.5);
             }
 
             &.is-active {
-                background-color: #234f95;
-                color: #fff;
+                background-color: variables.$color-dark-info;
+                color: variables.$color-white;
             }
         }
     }
 
-    .app-search input[type="search"] {
-        background-color: #585858;
-        color: white;
+    .bbr-search input[type="search"] {
+        background-color: variables.$color-dark-input-background;
+        color: variables.$color-white;
 
         &::-webkit-input-placeholder {
-            color: #d1cfcf;
+            color: variables.$color-dark-input-placeholder;
         }
     }
 
-    .app-anchor {
+    .bbr-anchor {
         &:not(&--unhoverable):hover {
             text-decoration: underline;
-            color: #5c9bff;
+            color: variables.$color-dark-info-hover;
+        }
+    }
+
+    .bbr-table {
+        background-color: transparent;
+        color: inherit;
+
+        thead td,
+        thead th {
+            color: inherit;
+        }
+
+        &.is-striped tbody tr:not(.is-selected):nth-child(even) {
+            background-color: variables.$color-dark-input-background;
+        }
+    }
+
+    .bbr-tabs {
+        ul {
+            border-bottom-color: variables.$color-dark-input-background;
+        }
+        &__tab {
+            &.is-active a {
+                color: variables.$color-dark-info-hover;
+                border-bottom-color: variables.$color-dark-info-hover;
+            }
+            &:not(.is-active) a {
+                color: inherit;
+                border-bottom-color: transparent;
+
+                &:hover {
+                    border-bottom-color: variables.$color-dark-input-placeholder;
+                }
+            }
         }
     }
 }

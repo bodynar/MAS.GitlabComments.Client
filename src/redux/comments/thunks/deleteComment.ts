@@ -1,49 +1,54 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { post } from "@app/utils/delayedApi";
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
+import { deleteComment } from "@app/core/comments";
 
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-import { setError } from "@app/redux/app/utils";
+import { ModalType } from "@app/models/modal";
 
-import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
-import { ModalAction } from "@app/redux/modal/types";
-
-import { getDeleteCommentAction } from "../actions/deleteComment";
+import { CompositeAppState } from "@app/redux";
+import { setIsLoadingState } from "@app/redux/app";
+import { getNotifications, } from "@app/redux/notificator";
+import { deleteComment as deleteCommentAction } from "@app/redux/comments";
+import { open } from "@app/redux/modal";
 
 /**
  * Delete specified comment
  * @param commentId Comment identifier value
  * @returns Delete comment function that can be called with redux dispatcher
  */
-export const deleteComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
+export const deleteCommentAsync = (commentId: string): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
-        dispatch(getOpenModalAction({
-            modalType: 'confirm',
-            title: 'Confirm delete',
-            buttonCaption: { saveCaption: 'Delete' },
-            message: 'Are you sure want to delete selected comment?',
-            callback: {
-                saveCallback: (): void => {
-                    dispatch(getSetAppIsLoadingAction(true));
+        const [success, error] = getNotifications(dispatch, getState);
 
-                    post(`api/comments/delete`, commentId)
-                        .then(() => {
-                            const { app } = getState();
+        const comment = getState().comments.comments.filter(({ id }) => id === commentId).pop();
 
-                            dispatch(getSuccessNotificationAction('Comment successfully deleted', app.isCurrentTabFocused));
-                            dispatch(getDeleteCommentAction(commentId));
-                            dispatch(getSetAppIsLoadingAction(false));
-                        })
-                        .catch(setError(dispatch, getState));
-                },
-                cancelCallback: (): void => { }
-            }
-        }));
+        if (isNullOrUndefined(comment)) {
+            error("Comment not found. Try refreshing your page");
+        }
+
+        dispatch(
+            open({
+                modalType: ModalType.Confirm,
+                title: "Confirm deleting comment",
+                buttonCaption: { saveCaption: "Delete" },
+                message: `Are you sure want to delete comment ${comment!.number}?`,
+                callback: {
+                    saveCallback: (): void => {
+                        dispatch(setIsLoadingState(true));
+
+                        deleteComment(commentId)
+                            .then(() => {
+                                success(`Comment ${comment!.number} successfully deleted`);
+                                dispatch(deleteCommentAction(commentId));
+                                dispatch(setIsLoadingState(false));
+                            })
+                            .catch(error);
+                    },
+                }
+            })
+        );
     };

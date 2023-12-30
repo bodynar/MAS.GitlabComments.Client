@@ -1,52 +1,13 @@
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Action } from "@reduxjs/toolkit";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { isNullOrUndefined } from '@bodynarf/utils/common';
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { ActionWithPayload } from '@app/redux/types';
+import { EditCommentModel } from "@app/models/comments";
 
-import { BaseCommentModel } from '@app/models/comment';
+import { CompositeAppState } from "@app/redux";
 
-import { ModalCallback, ModalCloseData, ModalParams } from '@app/redux/modal/types';
-
-import { ModalFormItem } from '@app/modules/modalBox/components/modalForm';
-
-import { CompositeAppState } from '../rootReducer';
-import { getSetAppIsLoadingAction } from '../app/actions/setAppIsLoading';
-
-/**
- * Get comment form configuration for form in modal box
- * @param commentShortModel Comment data model, optional
- * @returns Modal params configuration for modal with comment forn
- */
-export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel): ModalParams => {
-    const isCommentModelDefined =
-        !isNullOrUndefined(commentShortModel);
-
-    const modalFields: Array<ModalFormItem> =
-        [
-            {
-                name: 'Comment',
-                type: 'text',
-                caption: 'Comment',
-                isRequired: true,
-                value: isCommentModelDefined ? commentShortModel?.message as string : undefined
-            },
-            {
-                name: 'Description',
-                type: 'multiline',
-                caption: 'Description',
-                value: isCommentModelDefined ? commentShortModel?.description as string : undefined
-            },
-        ];
-
-    const modalParams: ModalParams = {
-        modalType: 'form',
-        title: isCommentModelDefined ? 'Update comment' : 'Add comment',
-        formData: { fields: modalFields },
-    };
-
-    return modalParams;
-};
+import { ModalCallback, ModalCloseData } from "@app/models/modal";
 
 /**
  * Get modal callback configuration with custom callback
@@ -55,28 +16,24 @@ export const getCommentModalFormConfig = (commentShortModel?: BaseCommentModel):
  * @returns Modal callback configuration
  */
 export const getCommentModalFormCallbackConfig = (
-    dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload>,
-    action: (updateComment: BaseCommentModel) => ThunkAction<void, CompositeAppState, unknown, ActionWithPayload>
+    dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
+    action: (updateComment: EditCommentModel) => ThunkAction<void, CompositeAppState, unknown, Action>
 ): ModalCallback => {
     return {
         saveCallback: (modalData: ModalCloseData): void => {
-            dispatch(getSetAppIsLoadingAction(false));
-
-            const message: string | undefined = modalData.formData?.fields.find(x => x.name === 'Comment')?.value;
+            const message: string | undefined = modalData.formData?.fields.find(x => x.name === "message")?.value;
 
             if (isNullOrUndefined(message)) {
-                throw new Error('Comment message is empty after modal form with required flag');
+                throw new Error("Comment message is empty after modal form with required flag");
             }
 
-            const comment: BaseCommentModel = {
+            const comment: EditCommentModel = {
                 message: message as string,
-                description: modalData.formData?.fields.find(x => x.name === 'Description')?.value
+                description: modalData.formData?.fields.find(x => x.name === "description")?.value,
+                commentWithLinkToRule: modalData.formData?.fields.find(x => x.name === "commentWithLinkToRule")?.value!,
             };
 
             dispatch(action(comment));
-        },
-        cancelCallback: (): void => {
-            dispatch(getSetAppIsLoadingAction(false));
         },
     };
 };

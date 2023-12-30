@@ -1,124 +1,91 @@
-import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils/common";
-import { getPropertyValueWithCheck } from "@bodynarf/utils/object";
+import { createReducer } from "@reduxjs/toolkit";
 
-import { ActionWithPayload } from "@app/redux/types";
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { Comment } from "@app/models/comment";
+import { Comment } from "@app/models/comments";
 
-import { CommentModuleState, CommentsState } from "./types";
-import { AddComment, DeleteComment, Increment, SetComments, SetModuleState, SetSearchQuery, UpdateComment } from "./actions";
+import { CommentsState, setModuleState } from "@app/redux/comments";
+import {
+    addComment, deleteComment, increment, updateComment,
+    setComments, setSearchQuery, setIncompleteCount,
+    blockComment, unblockComment, setCanUpdateTable,
+} from "./actions";
 
 /** Initial comment module state */
 const initialState: CommentsState = {
-    state: 'init',
+    state: "init",
     comments: [],
-    searchQuery: '',
+    searchQuery: "",
+    canUpdateTable: true,
 };
 
-/** Comment module reducer function */
-export default function (state = initialState, action: ActionWithPayload): CommentsState {
-    switch (action.type) {
-        case SetModuleState: {
-            const nextState: CommentModuleState = getPropertyValueWithCheck(action.payload, 'nextState', false);
+/** App container module reducer */
+export const reducer = createReducer(initialState,
+    (builder) => {
+        builder
+            .addCase(setModuleState, (state, { payload }) => {
+                state.state = payload;
+            })
+            .addCase(addComment, (state, { payload }) => {
+                state.comments = [...state.comments, payload];
+            })
+            .addCase(setComments, (state, { payload }) => {
+                state.comments = payload;
+            })
+            .addCase(setIncompleteCount, (state, { payload }) => {
+                state.incompleteCommentsCount = payload;
+            })
+            .addCase(setCanUpdateTable, (state, { payload }) => {
+                state.canUpdateTable = payload;
+            })
+            .addCase(blockComment, (state, { payload }) => {
+                const specifiedComment: Comment | undefined =
+                    state.comments.find(({ id }) => id === payload);
 
-            if (isNullOrUndefined(nextState)) {
-                // TODO: v2 log warning
-                return state;
-            }
+                if (isNullOrUndefined(specifiedComment)) {
+                    return;
+                }
 
-            return {
-                ...state,
-                state: nextState,
-            };
-        }
-        case AddComment: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
+                specifiedComment!.blocked = true;
+            })
+            .addCase(unblockComment, (state, { payload }) => {
+                const specifiedComment: Comment | undefined =
+                    state.comments.find(({ id }) => id === payload);
 
-            if (isNullOrUndefined(comment) || isNullOrUndefined(comment.id)) {
-                // TODO: v2 log warning
-                return state;
-            }
+                if (isNullOrUndefined(specifiedComment)) {
+                    return;
+                }
 
-            return {
-                ...state,
-                comments: [...state.comments, comment]
-            };
-        }
-        case SetComments: {
-            const comments: Array<Comment> = getPropertyValueWithCheck(action.payload, 'comments', false);
+                specifiedComment!.blocked = false;
+            })
+            .addCase(increment, (state, { payload }) => {
+                const specifiedComment: Comment | undefined =
+                    state.comments.find(({ id }) => id === payload);
 
-            if (isNullOrUndefined(comments)) {
-                // TODO: v2 log warning
-                return state;
-            }
+                if (isNullOrUndefined(specifiedComment)) {
+                    return;
+                }
 
-            return {
-                ...state,
-                comments: comments
-            };
-        }
-        case Increment: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
+                specifiedComment!.appearanceCount += 1;
 
-            if (isNullOrEmpty(commentId)) {
-                // TODO: v2 log warning
-                return state;
-            }
+                state.comments = state.comments.sort((x, y) => y.appearanceCount - x.appearanceCount);
+            })
+            .addCase(updateComment, (state, { payload }) => {
+                const [data, id] = payload;
 
-            const specifiedComment: Comment | undefined =
-                state.comments.find(({ id }) => id === commentId);
-
-            if (isNullOrUndefined(specifiedComment)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            (specifiedComment as Comment).appearanceCount += 1;
-            // TODO: v2 when increment - sort in view
-
-            return {
-                ...state,
-                comments: state.comments.sort((x, y) => y.appearanceCount - x.appearanceCount)
-            };
-        }
-        case UpdateComment: {
-            const comment: Comment = getPropertyValueWithCheck(action.payload, 'comment', false);
-
-            if (isNullOrUndefined(comment)) {
-                // TODO: v2 log warning
-                return state;
-            }
-            return {
-                ...state,
-                comments: state.comments.map(x =>
-                    x.id === comment.id
-                        ? { ...x, ...comment }
-                        : x
-                )
-            };
-        }
-        case DeleteComment: {
-            const commentId: string = getPropertyValueWithCheck(action.payload, 'commentId', false);
-
-            if (isNullOrEmpty(commentId)) {
-                // TODO: v2 log warning
-                return state;
-            }
-
-            return {
-                ...state,
-                comments: state.comments.filter(comment => comment.id !== commentId)
-            };
-        }
-        case SetSearchQuery: {
-            const searchQuery: string = getPropertyValueWithCheck(action.payload, 'searchQuery', false) || '';
-
-            return {
-                ...state,
-                searchQuery
-            };
-        }
-        default:
-            return state;
+                state.comments =
+                    state.comments.map(x =>
+                        x.id === id
+                            ? { ...x, ...data }
+                            : x
+                    );
+            })
+            .addCase(deleteComment, (state, { payload }) => {
+                state.comments = state.comments.filter(({ id }) => id !== payload);
+            })
+            .addCase(setSearchQuery, (state, { payload }) => {
+                state.searchQuery = payload;
+            })
+            ;
     }
-}
+);

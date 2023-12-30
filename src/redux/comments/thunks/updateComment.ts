@@ -1,70 +1,66 @@
+import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { BaseCommentModel } from "@app/models/comment";
+import { isNullOrUndefined } from "@bodynarf/utils";
 
-import { get, post } from "@app/utils/delayedApi";
+import { EditCommentModel } from "@app/models/comments";
+import { getEditModalConfig, updateComment } from "@app/core/comments";
 
-import { ActionWithPayload } from "@app/redux/types";
-import { CompositeAppState } from "@app/redux/rootReducer";
-
-import { getOpenModalAction } from "@app/redux/modal/actions/open";
-import { ModalAction } from "@app/redux/modal/types";
-
-import { getSuccessNotificationAction } from "@app/redux/notificator/utils";
-
-import { setError } from "@app/redux/app/utils";
-import { getSetAppIsLoadingAction } from "@app/redux/app/actions/setAppIsLoading";
-
-import { getCommentModalFormCallbackConfig, getCommentModalFormConfig } from "../utils";
-import { getUpdateCommentAction } from "../actions/updateComment";
+import { CompositeAppState } from "@app/redux";
+import { getNotifications } from "@app/redux/notificator";
+import { open } from "@app/redux/modal";
+import { updateComment as updateCommentAction, getCommentModalFormCallbackConfig, blockComment, unblockComment } from "@app/redux/comments";
 
 /**
  * Update specified comment
  * @param commentId Comment identifier value
  * @returns Update comment function that can be called with redux dispatcher
  */
-export const updateComment = (commentId: string): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, ActionWithPayload | ModalAction>,
+export const updateCommentAsync = (commentId: string): ThunkAction<void, CompositeAppState, unknown, Action> =>
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState
     ): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+        const comment = getState().comments.comments.find(({ id }) => id === commentId);
 
-        get<BaseCommentModel>(`/api/comments/get?commentId=${commentId}`)
-            .then(comment => {
-                dispatch(getSetAppIsLoadingAction(false));
+        const [, error] = getNotifications(dispatch, getState);
 
-                const modalParams = getCommentModalFormConfig(comment);
-                const modalSuccessCallback = getModalSuccessCallback(commentId, getState);
-                const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
+        if (isNullOrUndefined(comment)) {
+            error("Comment data not found. Refresh current page and try again.", true);
+            return;
+        }
 
-                dispatch(getOpenModalAction({
-                    ...modalParams, callback: { ...modalCallback },
-                }));
-            })
-            .catch(setError(dispatch, getState));
+        const modalParams = getEditModalConfig(comment);
+        const modalSuccessCallback = getModalSuccessCallback(commentId, comment!.number!, getState);
+        const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
+
+        dispatch(
+            open({ ...modalParams, callback: { ...modalCallback } })
+        );
     };
 
 /**
  * Get comment modal callback for success action
  * @param commentId Comment identifier
+ * @param number Comment unique number
  * @param getState Function providing root state
  * @returns Callback for success action for modal with comment
  */
 const getModalSuccessCallback = (
     commentId: string,
+    number: string,
     getState: () => CompositeAppState,
-) => (comment: BaseCommentModel): ThunkAction<void, CompositeAppState, unknown, ActionWithPayload> => {
+) => (comment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
-        dispatch(getSetAppIsLoadingAction(true));
+        dispatch(blockComment(commentId));
 
-        post(`api/comments/update`, { ...comment, id: commentId })
+        const [success, error] = getNotifications(dispatch, getState);
+
+        updateComment(comment, commentId)
             .then(() => {
-                const { app } = getState();
-
-                dispatch(getSuccessNotificationAction('Comment was updated successfully', app.isCurrentTabFocused));
-                dispatch(getUpdateCommentAction(comment, commentId));
-                dispatch(getSetAppIsLoadingAction(false));
+                success(`Comment ${number} was updated successfully`);
+                dispatch(updateCommentAction([comment, commentId]));
+                dispatch(unblockComment(commentId));
             })
-            .catch(setError(dispatch, getState));
+            .catch(error);
     };
 };

@@ -1,0 +1,13 @@
+@use "src/shared/styles/variables.scss";
+
+.app-readonly-warning {
+    transition: variables.$transition-duration variables.$transition-function background-color;
+
+    .message-header {
+        transition: variables.$transition-duration variables.$transition-function background-color;
+    }
+
+    .message-body {
+        transition: variables.$transition-duration variables.$transition-function color;
+    }
+}

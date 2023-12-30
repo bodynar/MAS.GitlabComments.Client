@@ -1,15 +1,8 @@
-import { getAllComments } from './getAllComments';
-import { addComment } from './addComment';
-import { updateComment } from './updateComment';
-import { increment } from './increment';
-import { showDescription } from './showDescription';
-import { deleteComment } from './deleteComment';
+export * from "./temp";
 
-export {
-    getAllComments,
-    addComment,
-    updateComment,
-    increment,
-    showDescription,
-    deleteComment
-};
+export * from "./addComment";
+export * from "./deleteComment";
+export * from "./getAllComments";
+export * from "./increment";
+export * from "./showInformation";
+export * from "./updateComment";

@@ -1,8 +1,8 @@
-import NavbarBrand from './navbarBrand/navbar-brand';
-import Bell from './bell/component/bell';
-import NavbarMenuItem from "./navbarMenuItem/navbarMenuItem";
-import ViewModeSwitcher from './viewModeSwitcher/viewModeSwitcher';
-import GitlabLogoIcon from './gitlabLogo';
+import NavbarBrand from "./navbarBrand";
+import Bell from "./bell/component";
+import NavbarMenuItem from "./navbarMenuItem";
+import ViewModeSwitcher from "./viewModeSwitcher";
+import GitlabLogoIcon from "./gitlabLogo";
 
 export {
     NavbarBrand,

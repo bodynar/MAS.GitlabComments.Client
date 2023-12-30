@@ -1,12 +1,14 @@
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import { isStringEmpty } from '@bodynarf/utils/common';
+import { isStringEmpty } from "@bodynarf/utils";
 
-import { Comment as CommentModel } from '@app/models/comment';
+import "@app/styles/comments/comments.scss";
 
-import Comment from '../comment';
+import { Comment as CommentModel } from "@app/models/comments";
 
-type CommentTableProps = {
+import Comment from "../comment";
+
+interface CommentTableProps {
     /** Current visible comments */
     displayedComments: Array<CommentModel>;
 
@@ -16,7 +18,7 @@ type CommentTableProps = {
     /** Is app in read only mode */
     readOnlyMode: boolean;
 
-    /** Current 'no-items' message */
+    /** Current "no-items" message */
     noCommentsMessage: string;
 
     /** Update specified comment in modal box */
@@ -28,9 +30,9 @@ type CommentTableProps = {
     /** Show comment description */
     showDescription: (commentId: string) => void;
 
-    /** Delete comment by it's identifier */
+    /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
-};
+}
 
 /** Comments list component */
 const CommentTable = ({
@@ -42,11 +44,11 @@ const CommentTable = ({
 }: CommentTableProps): JSX.Element => {
     if (displayedComments.length === 0) {
         const displayMessage: string = isStringEmpty(noCommentsMessage)
-            ? 'No items'
+            ? "No items"
             : noCommentsMessage;
         return (
             <div className="block has-text-centered has-text-grey is-italic is-unselectable">
-                <span>
+                <span style={{ whiteSpace: "pre-line" }}>
                     {displayMessage}
                 </span>
             </div>
@@ -55,25 +57,22 @@ const CommentTable = ({
 
     return (
         <section>
-            <div className="columns ml-1">
-                <div className="column is-1">
-                    <span className="is-flex is-justify-content-center">
-                        Appearance
-                    </span>
-                </div>
-                <div className="column ml-2">
-                    <span>
-                        Comment
-                    </span>
-                </div>
-                <div className="column is-2">
-                    <span className="is-flex is-justify-content-center">
-                        Actions
-                    </span>
-                </div>
+            <div className="comments-table my-2 px-2">
+                <span className="comments-table__appearance">
+                    Appearance
+                </span>
+                <span className="comments-table__number">
+                    Number
+                </span>
+                <span className="comments-table__content">
+                    Comment
+                </span>
+                <span className="comments-table__actions">
+                    Actions
+                </span>
             </div>
 
-            <TransitionGroup role="transition-container">
+            <TransitionGroup>
                 {displayedComments.map(comment =>
                     <CSSTransition
                         key={comment.id}
@@ -85,7 +84,7 @@ const CommentTable = ({
                             key={comment.id}
                             comment={comment}
                             shouldBeScrolledTo={highlightedCommentId === comment.id}
-                            isReadOnlyMode={readOnlyMode === true}
+                            isReadOnlyMode={readOnlyMode ?? false}
                             updateComment={updateComment}
                             increment={increment}
                             showDescription={showDescription}

@@ -1,40 +1,44 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { ButtonType } from '@bodynarf/react.components/components/button/types';
+import { ButtonType } from "@bodynarf/react.components";
+import { generateGuid } from "@bodynarf/utils";
+import Button from "@bodynarf/react.components/components/button";
 
-import { NotificationItem, NotificationType } from '@app/models/notification';
+import { NotificationDisplayItem, NotificationType } from "@app/models/notification";
 
-import Button from '@bodynarf/react.components/components/button';
-
-import { getAddNotificationAction } from '@app/redux/notificator/actions/addNotification';
-import { generateGuid } from '@bodynarf/utils/guid';
+import { addNotification } from "@app/redux/notificator";
 
 /** Notification type to Button type map */
 const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([
-    ['info', 'info'],
-    ['success', 'success'],
-    ['warn', 'warning'],
-    ['error', 'danger'],
+    ["info", "info"],
+    ["success", "success"],
+    ["warn", "warning"],
+    ["error", "danger"],
 ]);
 
-type DevelopmentPanelProps = {
+interface DevelopmentPanelProps {
     /** Show notification */
-    show: (notification: NotificationItem, notifyOnBadge: boolean) => void;
-};
+    show: (notifications: Array<NotificationDisplayItem>) => void;
+}
 
-const DevelopmentPanel = ({ show }: DevelopmentPanelProps): JSX.Element => {
-    const [types, _] = useState(Object.keys(NotificationType));
+const DevelopmentPanel = ({
+    show,
+}: DevelopmentPanelProps): JSX.Element => {
+    const [types] = useState(
+        Object.values(NotificationType).filter(x => typeof x === "string") as Array<string>
+    );
 
     const onBtnClick = useCallback(
         (type: string) => {
-            show({
+            show([{
                 id: generateGuid(),
                 createdAt: new Date(),
-                message: 'Test message in DEV mode\nNew line content\nLorem ipsum dorem dolores',
-                type: type as NotificationType
-            }, true);
+                message: "Test message in DEV mode\nNew line content\nLorem ipsum dorem dolores",
+                type: NotificationType[type as keyof typeof NotificationType],
+                important: true,
+            }]);
         }, [show]);
 
     return (
@@ -63,5 +67,5 @@ const DevelopmentPanel = ({ show }: DevelopmentPanelProps): JSX.Element => {
 
 /** Development panel */
 export default connect(_ => ({}), {
-    show: getAddNotificationAction
+    show: addNotification
 })(DevelopmentPanel);
