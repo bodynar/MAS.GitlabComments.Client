@@ -97,7 +97,6 @@ const Comment = ({
 
     useEffect(() => {
         if (tippyVisible) {
-            // eslint-disable-next-line no-undef
             const timers: Array<NodeJS.Timeout> = [];
 
             const timer = setTimeout(() => {
