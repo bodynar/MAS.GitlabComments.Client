@@ -64,7 +64,7 @@ function Comments({
     setSearchQuery, getComments, addComment,
     updateComment, increment, showDescription, deleteComment
 }: CommentsProps): JSX.Element {
-    const searchQueryParam = useQueryParam("q") || "";
+    const searchQueryParam = useQueryParam("q") ?? "";
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -104,10 +104,13 @@ function Comments({
         if (isNullOrEmpty(searchQuery) && !isNullOrEmpty(searchQueryParam)) {
             setSearchQuery(searchQueryParam!);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [searchQuery, searchQueryParam, setSearchQuery]);
 
-    useEffect(() => onSearch(searchQuery), [onSearch, comments, searchQuery]);
+    useEffect(() => {
+        if (state === "idle") {
+            onSearch(searchQuery);
+        }
+    }, [onSearch, comments, searchQuery, state]);
 
     const noCommentsMessage: string =
         comments.length === 0
@@ -127,11 +130,17 @@ function Comments({
             </div>
             <div className="block">
                 <Search
-                    caption="Search comment by text.."
-                    defaultValue={searchQuery}
+                    key={state}
                     onSearch={onSearch}
                     searchType="byTyping"
+                    defaultValue={searchQuery}
+                    caption="Search comment.."
                 />
+                {searchQuery.length < 3 &&
+                    <span className="help has-text-grey is-italic">
+                        Search will be performed when there are at least 3 characters
+                    </span>
+                }
             </div>
             {state !== "init" &&
                 <Button
