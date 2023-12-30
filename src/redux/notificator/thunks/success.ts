@@ -18,7 +18,7 @@ export const getDisplaySuccessFn = (
     getState?: () => CompositeAppState,
 ): ShowSimpleMessageFn => {
     return (message: string, important?: boolean, removeLoadingState?: boolean) => {
-        const isImportant = important ?? !getState?.call(undefined).app.isCurrentTabFocused ?? false;
+        const isImportant = important ?? getState?.call(undefined).app.isCurrentTabFocused ?? false;
 
         dispatch(
             addNotification(

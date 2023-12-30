@@ -12,7 +12,12 @@ export interface NotificatorState {
     historyBadgeCount: number;
 }
 
-/** Function that can display notification */
+/**
+ * Function that can display notification
+ * @param message Message to display
+ * @param important Should message stay on screen until manual user close action
+ * @param removeLoadingState Should app loading state be removed
+ */
 type ShowNotificationFn<TMessage> = (message: TMessage, important?: boolean, removeLoadingState?: boolean) => void;
 
 /** Success notification show function type */

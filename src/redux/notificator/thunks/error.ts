@@ -22,7 +22,7 @@ export const getDisplayErrorFn = (
 
         console.error(errorMessage);
 
-        const isImportant = important ?? !getState?.call(undefined).app.isCurrentTabFocused ?? false;
+        const isImportant = important ?? getState?.().app.isCurrentTabFocused ?? false;
 
         dispatch(
             addNotification(
