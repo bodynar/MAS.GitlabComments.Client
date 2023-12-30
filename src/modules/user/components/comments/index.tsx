@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { emptyFn, isUndefined } from "@bodynarf/utils";
 import Number from "@bodynarf/react.components/components/primitives/number";
 import Button from "@bodynarf/react.components/components/button/component";
+import Icon from "@bodynarf/react.components/components/icon";
 
 import { CompositeAppState } from "@app/redux";
 import { canUpdateTableAsync, getIncompleteAsync, updateIncompleteAsync, updateTableAsync } from "@app/redux/comments";
@@ -48,9 +49,18 @@ const CommentsManagePanel = ({
                 <div className="message-body">
                     <strong>Beware!</strong>
                     <br />
-                    Comments tab panel will be removed in <strong>v1.5</strong>
+                    This tab will be removed in <strong>v1.5</strong>
                 </div>
             </section>
+            <div className="my-5 box">
+                <p>
+                    <Icon name="question-circle" className="mr-2" />
+                    After transition from <strong>v1.3</strong> to <strong>v1.4</strong> Comments table received a Number column.
+                    And this column must have unique value.
+                    <br />
+                    But this constraint cannot be set on existed set of data during service update. Hence update of table will be performed in run-time mode. By using button bellow.
+                </p>
+            </div>
             <div className="columns">
                 <div className="column">
                     <label>
@@ -91,7 +101,7 @@ const CommentsManagePanel = ({
                     <div className="column">
                         <p className="is-italic">
                             Seems like you&apos;ve already updated table definition
-                            <br/>
+                            <br />
                             .. or it could be an error on service, if you sure that you haven&apos;t used that button before
                         </p>
                     </div>
