@@ -1,6 +1,6 @@
 {
   "name": "mas.gitlabcomments.client",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Trivial web app to track gitlab popular MR comments. Client part",
   "repository": {
     "type": "git",
