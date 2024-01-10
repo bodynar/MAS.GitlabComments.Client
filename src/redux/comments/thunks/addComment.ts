@@ -16,11 +16,9 @@ import { addComment as addCommentAction, getCommentModalFormCallbackConfig } fro
  * @returns Add comment function that can be called with redux dispatcher
  */
 export const addCommentAsync = (): ThunkAction<void, CompositeAppState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
-        getState: () => CompositeAppState,
-    ): void => {
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): void => {
         const modalParams = getEditModalConfig();
-        const modalSuccessCallback = getModalSuccessCallback(getState);
+        const modalSuccessCallback = getModalSuccessCallback();
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
         dispatch(
@@ -37,12 +35,11 @@ export const addCommentAsync = (): ThunkAction<void, CompositeAppState, unknown,
  * @returns Callback for success action for modal with comment
  */
 const getModalSuccessCallback = (
-    getState: () => CompositeAppState,
 ) => (newComment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
         dispatch(setIsLoadingState(true));
 
-        const [success, error] = getNotifications(dispatch, getState);
+        const [success, error] = getNotifications(dispatch);
 
         addComment(newComment)
             .then(({ id, number }) => {

@@ -8,15 +8,13 @@ import { getDisplayErrorFn, getDisplaySuccessFn, ShowErrorFn, ShowSimpleMessageF
  * Get success or error notification
  * @description If `getState` parameter is provided - notification could be mark as important
  * @param dispatch Redux store dispatcher
- * @param getState Function that provides current app global state
  * @returns Pair of functions that can display notifications in success or error state
  */
 export const getNotifications = (
-    dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
-    getState?: () => CompositeAppState,
+    dispatch: ThunkDispatch<CompositeAppState, unknown, Action>
 ): [ShowSimpleMessageFn, ShowErrorFn] => {
     return [
-        getDisplaySuccessFn(dispatch, getState),
-        getDisplayErrorFn(dispatch, getState),
+        getDisplaySuccessFn(dispatch),
+        getDisplayErrorFn(dispatch),
     ];
 };

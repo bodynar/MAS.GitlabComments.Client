@@ -19,7 +19,7 @@ export const showInformationAsync = (commentId: string): ThunkAction<void, Compo
     ): void => {
         const comment = getState().comments.comments.find(({ id }) => id === commentId);
 
-        const [, error] = getNotifications(dispatch, getState);
+        const [, error] = getNotifications(dispatch);
 
         if (isNullOrUndefined(comment)) {
             error("Comment data not found. Refresh current page and try again.", true);

@@ -18,7 +18,7 @@ export const incrementAsync = (commentId: string): ThunkAction<void, CompositeAp
     ): void => {
         dispatch(blockComment(commentId));
 
-        const [success, error] = getNotifications(dispatch, getState);
+        const [success, error] = getNotifications(dispatch);
 
         increment(commentId)
             .then(() => {

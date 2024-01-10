@@ -34,7 +34,7 @@ export interface CommentProps {
     deleteComment: (commentId: string) => void;
 
     /** Display warn message */
-    warn: (message: string) => void;
+    warn: (message: string, important: boolean) => void;
 }
 
 /** Comment component */
@@ -53,7 +53,7 @@ const Comment = ({
     const onIncrementClick = useCallback(() => {
         let copyText = comment.commentWithLinkToRule;
         if (isNullOrEmpty(copyText)) {
-            warn("Comment doesn't have Reference to rule. Please, update comment. Until then a message will be copied");
+            warn("Comment doesn't have Reference to rule. Please, update comment. Until then a message will be copied", true);
             copyText = comment.message;
         }
 
@@ -133,11 +133,12 @@ const Comment = ({
                 <div className="is-flex is-justify-content-center is-align-items-center">
                     <Button
                         type="ghost"
+                        className="mr-1"
                         title="Increment count"
                         onClick={onIncrementClick}
                         isLoading={comment.blocked}
-                        icon={{ name: "chevron-up", size: ElementSize.Medium }}
                         disabled={isReadOnlyMode || comment.blocked}
+                        icon={{ name: "chevron-up", size: ElementSize.Medium }}
                     />
                     <span>
                         {comment.appearanceCount}
