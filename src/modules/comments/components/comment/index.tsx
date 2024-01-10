@@ -133,11 +133,12 @@ const Comment = ({
                 <div className="is-flex is-justify-content-center is-align-items-center">
                     <Button
                         type="ghost"
+                        className="mr-1"
                         title="Increment count"
                         onClick={onIncrementClick}
                         isLoading={comment.blocked}
-                        icon={{ name: "chevron-up", size: ElementSize.Medium }}
                         disabled={isReadOnlyMode || comment.blocked}
+                        icon={{ name: "chevron-up", size: ElementSize.Medium }}
                     />
                     <span>
                         {comment.appearanceCount}
