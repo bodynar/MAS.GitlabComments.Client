@@ -22,7 +22,7 @@ export const deleteCommentAsync = (commentId: string): ThunkAction<void, Composi
     (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
         getState: () => CompositeAppState,
     ): void => {
-        const [success, error] = getNotifications(dispatch, getState);
+        const [success, error] = getNotifications(dispatch);
 
         const comment = getState().comments.comments.filter(({ id }) => id === commentId).pop();
 

@@ -15,10 +15,10 @@ import { ShowSimpleMessageFn, addNotification } from "@app/redux/notificator";
 export const getDisplayWarnFn = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
 ): ShowSimpleMessageFn => {
-    return (message: string) => {
+    return (message: string, important: boolean = false) => {
         dispatch(
             addNotification(
-                [getWarningNotification(message)]
+                [getWarningNotification(message, important)]
             )
         );
     };
@@ -27,11 +27,12 @@ export const getDisplayWarnFn = (
 /**
  * Create redux thunk to display warn notifications
  * @param message Message to display
+ * @param important Should message stay on screen until manual user close action
  * @returns Redux thunk
  */
-export const displayWarn = (message: string): ThunkAction<void, CompositeAppState, unknown, Action> =>
+export const displayWarn = (message: string, important: boolean = false): ThunkAction<void, CompositeAppState, unknown, Action> =>
     (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): void => {
         const fn = getDisplayWarnFn(dispatch);
 
-        fn(message);
+        fn(message, important);
     };

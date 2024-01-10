@@ -34,7 +34,7 @@ export interface CommentProps {
     deleteComment: (commentId: string) => void;
 
     /** Display warn message */
-    warn: (message: string) => void;
+    warn: (message: string, important: boolean) => void;
 }
 
 /** Comment component */
@@ -53,7 +53,7 @@ const Comment = ({
     const onIncrementClick = useCallback(() => {
         let copyText = comment.commentWithLinkToRule;
         if (isNullOrEmpty(copyText)) {
-            warn("Comment doesn't have Reference to rule. Please, update comment. Until then a message will be copied");
+            warn("Comment doesn't have Reference to rule. Please, update comment. Until then a message will be copied", true);
             copyText = comment.message;
         }
 

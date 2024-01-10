@@ -14,12 +14,10 @@ import { getAllComments } from "@app/core/comments";
  * @returns Get all comments function that can be called with redux dispatcher
  */
 export const getAllCommentsAsync = (): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
-        getState: () => CompositeAppState,
-    ): Promise<void> => {
+    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
         dispatch(setIsLoadingState(true));
 
-        const [, showError] = getNotifications(dispatch, getState);
+        const [, showError] = getNotifications(dispatch);
 
         return getAllComments()
             .then((comments: Array<Comment>) => {

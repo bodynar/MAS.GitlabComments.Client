@@ -22,7 +22,7 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
     ): void => {
         const comment = getState().comments.comments.find(({ id }) => id === commentId);
 
-        const [, error] = getNotifications(dispatch, getState);
+        const [, error] = getNotifications(dispatch);
 
         if (isNullOrUndefined(comment)) {
             error("Comment data not found. Refresh current page and try again.", true);
@@ -30,7 +30,7 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
         }
 
         const modalParams = getEditModalConfig(comment);
-        const modalSuccessCallback = getModalSuccessCallback(commentId, comment!.number!, getState);
+        const modalSuccessCallback = getModalSuccessCallback(commentId, comment!.number!);
         const modalCallback = getCommentModalFormCallbackConfig(dispatch, modalSuccessCallback);
 
         dispatch(
@@ -48,12 +48,11 @@ export const updateCommentAsync = (commentId: string): ThunkAction<void, Composi
 const getModalSuccessCallback = (
     commentId: string,
     number: string,
-    getState: () => CompositeAppState,
 ) => (comment: EditCommentModel): ThunkAction<void, CompositeAppState, unknown, Action> => {
     return (dispatch): void => {
         dispatch(blockComment(commentId));
 
-        const [success, error] = getNotifications(dispatch, getState);
+        const [success, error] = getNotifications(dispatch);
 
         updateComment(comment, commentId)
             .then(() => {
