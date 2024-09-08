@@ -75,7 +75,7 @@ const Comment = ({
     ]);
 
     useEffect(() => {
-        if (shouldBeScrolledTo) {
+        if (shouldBeScrolledTo) { // todo: rework
             const element = document.getElementById(comment.id);
 
             if (element) {
@@ -92,7 +92,7 @@ const Comment = ({
         }
 
         return emptyFn;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

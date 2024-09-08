@@ -1,32 +1,48 @@
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 
 import moment from "moment";
+
+import { isNullish } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button/component";
+import Table from "@bodynarf/react.components/components/table/component";
 
 import { SysVariable } from "@app/models/app";
 
-import { loadSysVariablesAsync } from "@app/redux/app";
+import { loadSysVariablesAsync, performVariableActionAsync } from "@app/redux/app";
 import { CompositeAppState } from "@app/redux/types";
 
-import Table from "@app/components/table";
+import "./style.scss";
+
+/** Table header row captions */
+const tableHeadings = [
+    "Position", "Caption",
+    "System code", "Data type",
+    "Current value", "Last updated on",
+    "Action",
+].map(caption => ({ caption, sortable: false }));
 
 /** System variables list component props */
-interface VariablesListProps {
+type VariablesListProps = {
     /** System variables */
     variables: Array<SysVariable>;
 
     /** Load system variables */
     loadSysVariables: () => void;
-}
+
+    /**
+     * Perform an action with system variable
+     * @param variableCode System variable code
+     */
+    performAction: (variableCode: string) => void;
+};
 
 /** System variables list */
-const VariablesList = ({
+const VariablesList: FC<VariablesListProps> = ({
     variables,
-    loadSysVariables,
-}: VariablesListProps): JSX.Element => {
-
+    loadSysVariables, performAction,
+}) => {
     useEffect(() => {
         if (variables.length === 0) {
             loadSysVariables();
@@ -35,6 +51,7 @@ const VariablesList = ({
     }, []);
 
     const onReloadClick = useCallback(() => loadSysVariables(), [loadSysVariables]);
+    const onActionClick = useCallback((variableCode: string) => performAction(variableCode), [performAction]);
 
     return (
         <section>
@@ -47,23 +64,19 @@ const VariablesList = ({
             />
             {variables.length > 0 &&
                 <Table
-                    zebra={true}
-                    fullWidth={true}
-                    headings={tableHeadings}
-                    headerBorderless={true}
+                    zebra
+                    fullWidth
+                    headerBorderless
                     className="mt-2"
+                    headings={tableHeadings}
                 >
                     {variables.map((x, i) =>
-                        <tr
+                        <VariableRow
                             key={x.code}
-                        >
-                            <td>#{(i + 1).toLocaleString('en-US', { minimumIntegerDigits: 2 })}</td>
-                            <td>{x.caption}</td>
-                            <td className="is-italic">{x.code}</td>
-                            <td>{x.type}</td>
-                            <td>{x.value?.toString()}</td>
-                            <td>{moment(x.modifiedOn).format("DD MMM YYYY | HH:mm")}</td>
-                        </tr>
+                            item={x}
+                            performAction={onActionClick}
+                            position={i + 1}
+                        />
                     )}
                 </Table>
             }
@@ -77,12 +90,51 @@ export default connect(
         variables: app.variables
     }),
     {
-        loadSysVariables: loadSysVariablesAsync
+        loadSysVariables: loadSysVariablesAsync,
+        performAction: performVariableActionAsync,
     }
 )(VariablesList);
 
-const tableHeadings = [
-    "Position", "Caption",
-    "System code", "Data type",
-    "Current value", "Last updated on",
-].map(caption => ({ caption }));
+/** Props of `VariableRow` */
+type VariableRowProps = {
+    /** System variable */
+    item: SysVariable;
+
+    /** Position in variables queue */
+    position: number;
+
+    /**
+     * Perform an action with system variable
+     * @param variableCode System variable code
+     */
+    performAction: (variableCode: string) => void;
+};
+
+const VariableRow: FC<VariableRowProps> = ({
+    item, performAction, position,
+}) => {
+    const onActionClick = useCallback(() => performAction(item.code), [item.code, performAction]);
+
+    return (
+        <tr
+            key={item.code}
+            className={isNullish(item.actionCaption) ? undefined : "has-action"}
+        >
+            <td>#{position.toLocaleString('en-US', { minimumIntegerDigits: 2 })}</td>
+            <td>{item.caption}</td>
+            <td className="is-italic">{item.code}</td>
+            <td>{item.type}</td>
+            <td>{item.value?.toString()}</td>
+            <td>{moment(item.modifiedOn).format("DD MMM YYYY | HH:mm")}</td>
+            <td>{!isNullish(item.actionCaption)
+                &&
+                <Button
+                    light
+                    type="primary"
+                    onClick={onActionClick}
+                    caption={item.actionCaption}
+                />
+            }</td>
+        </tr>
+    );
+};

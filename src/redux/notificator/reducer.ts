@@ -1,7 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { removeByKey } from "@app/utils";
-
 import { NotificatorState, addNotification, hideAllNotifications, hideNotification, setNotificationsBadgeToZero } from "@app/redux/notificator";
 
 /** Default state of notification module */
@@ -26,7 +24,7 @@ export const reducer = createReducer(defaultState,
                     return;
                 }
 
-                state.notifications = removeByKey(state.notifications, x => x.id, payload);
+                state.notifications = state.notifications.filter(({ id }) => !payload.includes(id));
             })
             .addCase(addNotification, (state, { payload }) => {
                 const addingNotifications = payload.filter(({ id }) => !state.notifications.some(x => x.id === id));
@@ -34,8 +32,6 @@ export const reducer = createReducer(defaultState,
                 if (addingNotifications.length === 0) {
                     return;
                 }
-
-
 
                 state.historyBadgeCount += addingNotifications.filter(({ important }) => important).length;
                 state.history = [...state.history, ...addingNotifications];

@@ -1,7 +1,7 @@
 import { version } from "package.json";
 
 import { getClassName } from "@bodynarf/utils";
-import { ElementSize } from "@bodynarf/react.components";
+import { ElementPosition, ElementSize } from "@bodynarf/react.components";
 import Anchor from "@bodynarf/react.components/components/anchor";
 
 import "./style.scss";
@@ -37,7 +37,7 @@ export default function Footer({
                         href="mailto:bodynar@gmail.com?subject=GitlabComments - Question&Body="
                         icon={{
                             name: "envelope",
-                            position: "right",
+                            position: ElementPosition.Right,
                             size: ElementSize.Medium,
                         }}
                     />
@@ -49,7 +49,7 @@ export default function Footer({
                         className="footer__icon"
                         icon={{
                             name: "github",
-                            position: "right",
+                            position: ElementPosition.Right,
                             size: ElementSize.Medium
                         }}
                         target={"_blank"}

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { FC, useCallback, useState } from "react";
 
 import { connect } from "react-redux";
 
@@ -18,14 +18,13 @@ const notificationTypeToButtonTypeMap = new Map<string, ButtonType>([
     ["error", "danger"],
 ]);
 
-interface DevelopmentPanelProps {
+type DevelopmentPanelProps = {
     /** Show notification */
     show: (notifications: Array<NotificationDisplayItem>) => void;
-}
+};
 
-const DevelopmentPanel = ({
-    show,
-}: DevelopmentPanelProps): JSX.Element => {
+/** Dev panel with "show notification" buttons */
+const DevelopmentPanel: FC<DevelopmentPanelProps> = ({ show }) => {
     const [types] = useState(
         Object.values(NotificationType).filter(x => typeof x === "string") as Array<string>
     );
@@ -66,6 +65,7 @@ const DevelopmentPanel = ({
 };
 
 /** Development panel */
-export default connect(_ => ({}), {
-    show: addNotification
-})(DevelopmentPanel);
+export default connect(
+    _ => ({}),
+    { show: addNotification } as Pick<DevelopmentPanelProps, "show">
+)(DevelopmentPanel);

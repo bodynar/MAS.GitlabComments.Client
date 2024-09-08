@@ -2,12 +2,12 @@ import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { Comment } from "@app/models/comments";
+import { getAllComments } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { setIsLoadingState } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { setComments, setModuleState } from "@app/redux/comments/actions";
-import { getAllComments } from "@app/core/comments";
 
 /**
  * Get all comments from api
@@ -21,7 +21,11 @@ export const getAllCommentsAsync = (): ThunkAction<Promise<void>, CompositeAppSt
 
         return getAllComments()
             .then((comments: Array<Comment>) => {
-                dispatch(setComments(comments));
+                dispatch(
+                    setComments(
+                        comments.map(x => ({ ...x, number: x.number ?? "" }))
+                    )
+                );
 
                 dispatch(setIsLoadingState(false));
                 dispatch(setModuleState("idle"));

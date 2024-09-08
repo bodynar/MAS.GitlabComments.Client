@@ -1,0 +1,100 @@
+@use "src/shared/styles/variables.scss";
+
+.ret-tokens-block {
+    position: fixed;
+    left: 0.5rem;
+    top: 3.5rem;
+
+    width: 12.5rem;
+
+    padding: 0.5rem;
+    padding-right: 0;
+
+    &__caption {
+        .bbr-icon.is-clickable {
+            transition-property: transform;
+            transform: rotate(180deg);
+        }
+    }
+
+    &:not(.is-collapsed) {
+        .ret-tokens-block__list {
+            max-height: 15rem;
+        }
+
+        .ret-tokens-block__caption {
+            .bbr-icon.is-clickable {
+                transform: rotate(0deg);
+            }
+        }
+    }
+
+    &__list {
+        overflow: auto;
+        margin-right: 0.125rem;
+
+        max-height: 0;
+
+        transition-timing-function: variables.$transition-function;
+        transition-duration: variables.$transition-duration;
+        transition-property: max-height, opacity, margin-top;
+
+        ul {
+            padding-right: 0.25rem;
+        }
+
+        &::-webkit-scrollbar {
+            width: 4px;
+
+            &-track {
+                background: rgba(variables.$color-black, 0.125);
+                border-radius: 2px;
+            }
+            &-thumb {
+                background: rgba(variables.$color-black, 0.25);
+                border-radius: 2px;
+            }
+        }
+
+        .ret-token-item {
+            transition-timing-function: variables.$transition-function;
+            transition-duration: variables.$transition-duration;
+            transition-property: background-color, border-color;
+
+            border-bottom: 1px solid transparent;
+
+            &:hover {
+                background-color: rgba(variables.$color-info, 0.05);
+                border-color: variables.$color-info;
+            }
+
+            .bbr-icon {
+                opacity: 0.5;
+
+                transition-timing-function: variables.$transition-function;
+                transition-duration: variables.$transition-duration;
+                transition-property: opacity;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            &:not(:last-of-type):not(:hover) {
+                border-color: rgba(variables.$color-black, 0.125);
+            }
+
+            &.is-disabled {
+                .bbr-icon {
+                    opacity: 1;
+
+                    color: variables.$color-info;
+
+                    &::before {
+                        animation: spinAround 0.5s infinite linear;
+                    }
+                }
+            }
+        }
+    }
+}
