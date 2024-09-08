@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
 
-import { generateGuid } from "@bodynarf/utils";
 import Tabs, { TabItem } from "@bodynarf/react.components/components/tabs";
 
 import VariablesList from "../components/variables";
 import CommentsManagePanel from "../components/comments";
+import MergeCommentsComponent from "../components/mergeComments";
 
 /**
  * @constant
@@ -12,11 +12,15 @@ import CommentsManagePanel from "../components/comments";
  */
 const tabs: Array<TabItem> = [
     {
-        id: generateGuid(),
+        id: "merge-comments",
+        caption: "Merge comments",
+    },
+    {
+        id: "manage-comments",
         caption: "Comments manage",
     },
     {
-        id: generateGuid(),
+        id: "sysVars",
         caption: "Variables",
     }
 ];
@@ -26,8 +30,9 @@ const tabs: Array<TabItem> = [
  * @description Tab identifier to component map
  */
 const tabContentMap = new Map<string, JSX.Element>([
-    [tabs[0].id, <CommentsManagePanel key="comments" />],
-    [tabs[1].id, <VariablesList key="sysVars" />],
+    ["merge-comments", <MergeCommentsComponent key="merge-comments" />],
+    ["manage-comments", <CommentsManagePanel key="comments" />],
+    ["sysVars", <VariablesList key="sysVars" />],
 ]);
 
 /** User module main component */
@@ -41,9 +46,11 @@ const UserModule = (): JSX.Element => {
                 items={tabs}
                 onActiveItemChange={onTabChange}
             />
-            {tabContentMap.has(activeTab.id)
-                && tabContentMap.get(activeTab.id)!
-            }
+            <section aria-label={activeTab.id}>
+                {tabContentMap.has(activeTab.id)
+                    && tabContentMap.get(activeTab.id)!
+                }
+            </section>
         </>
     );
 };

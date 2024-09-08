@@ -1,7 +1,8 @@
+import { isStringEmpty } from "@bodynarf/utils";
+
 import { Comment, EditCommentModel, NewComment } from "@app/models/comments";
 
 import { post, get } from "@app/utils";
-import { isStringEmpty } from "@bodynarf/utils";
 
 /**
  * Save new comment to database
@@ -24,10 +25,10 @@ export const deleteComment = (commentId: string): Promise<void> => {
 /**
  * Increment appearance count for specified comment
  * @param commentId Identifier of comment
- * @returns Promise with empty result
+ * @returns Promise with identifier of retraction token
  */
-export const increment = (commentId: string): Promise<void> => {
-    return post(`api/comments/increment`, commentId);
+export const increment = (commentId: string): Promise<string> => {
+    return post<string>(`api/comments/increment`, commentId);
 };
 
 /**
@@ -71,4 +72,19 @@ export const search = (comments: Array<Comment>, search: string): Array<Comment>
             message.toLowerCase().includes(loweredSearchPattern)
             || commentWithLinkToRule.toLowerCase().includes(loweredSearchPattern)
         );
+};
+
+/**
+ * Perform a merge of two comments
+ * @param sourceId Identifier of source comment
+ * @param targetId Identifier of target comment
+ * @param valuesToUpdate Map with updated values
+ * @returns Promise with no result
+ */
+export const merge = async (sourceId: string, targetId: string, valuesToUpdate: Map<keyof Comment, string>): Promise<void> => {
+    return post(`api/comments/merge`, {
+        "sourceCommentId": sourceId,
+        "targetCommentId": targetId,
+        "newTargetValues": Object.fromEntries(valuesToUpdate.entries())
+    });
 };

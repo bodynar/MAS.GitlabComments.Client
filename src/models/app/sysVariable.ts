@@ -17,4 +17,7 @@ export interface SysVariable {
 
     /** Raw value */
     value: string;
+
+    /** Caption for action that could be performed with variable */
+    actionCaption: string;
 }

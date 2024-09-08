@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 
 import { connect } from "react-redux";
 
@@ -17,9 +17,10 @@ import Notificator from "../components/notificator";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import AppContent from "../components/content";
+import LoaderWrap from "../components/loadingWrap";
 
-interface AppProps {
-    /** 
+type AppProps = {
+    /**
      * Is app currently loading something important.
      * If so - covers content with loading gif block
     */
@@ -32,17 +33,17 @@ interface AppProps {
     readOnlyMode?: boolean;
 
     /** Is app in dark mode */
-    isDarkMode?: boolean;
+    isDarkMode: boolean;
 
     /** Read readonly mode value and save it in store */
     getReadOnlyMode: () => void;
-}
+};
 
 /** Root app component */
-function App({
+const App: FC<AppProps> = ({
     isLoading, isDarkMode, readOnlyMode,
     setTabIsFocused, getReadOnlyMode,
-}: AppProps): JSX.Element {
+}) => {
     const onFocus = useCallback(() => setTabIsFocused(true), [setTabIsFocused]);
     const onBlur = useCallback(() => setTabIsFocused(false), [setTabIsFocused]);
 
@@ -65,32 +66,37 @@ function App({
 
     const className = getClassName([
         "app",
-        (isDarkMode ?? false) ? "app--dark" : "",
+        isDarkMode ? "app--dark" : "",
         isLoading ? "app--loading" : "",
     ]);
 
     return (
         <main className={className}>
-            <Navbar className="app__navbar" />
-            <ModalBox />
-            <Notificator />
-            <section className="app__content container">
-                <AppContent
-                    isReadOnly={readOnlyMode === true}
-                    isLoading={isLoading}
-                />
-            </section>
-            <Footer className="app__footer" />
+            <LoaderWrap
+                loading={isLoading}
+            >
+                <section className="app__container">
+                    <Navbar className="app__navbar" />
+                    <Notificator />
+                    <ModalBox />
+                    <section className="app__content container">
+                        <AppContent
+                            isReadOnly={readOnlyMode === true}
+                        />
+                    </section>
+                    <Footer className="app__footer" />
+                </section>
+            </LoaderWrap >
         </main>
     );
-}
+};
 
 export default connect(
     ({ app }: CompositeAppState) => ({
         readOnlyMode: app.readOnlyMode,
-        isDarkMode: app.isDarkMode,
+        isDarkMode: app.isDarkMode ?? false,
         isLoading: app.loading,
-    }),
+    }) as Pick<AppProps, "readOnlyMode" | "isDarkMode" | "isLoading">,
     {
         setTabIsFocused: setTabIsFocused,
         getReadOnlyMode: getReadOnlyMode,

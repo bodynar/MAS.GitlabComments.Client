@@ -18,6 +18,11 @@
                 background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0id2hpdGUiIGNsYXNzPSJiaSBiaS1jYWxlbmRhciIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICA8cGF0aCBkPSJNMy41IDBhLjUuNSAwIDAgMSAuNS41VjFoOFYuNWEuNS41IDAgMCAxIDEgMFYxaDFhMiAyIDAgMCAxIDIgMnYxMWEyIDIgMCAwIDEtMiAySDJhMiAyIDAgMCAxLTItMlYzYTIgMiAwIDAgMSAyLTJoMVYuNWEuNS41IDAgMCAxIC41LS41ek0xIDR2MTBhMSAxIDAgMCAwIDEgMWgxMmExIDEgMCAwIDAgMS0xVjRIMXoiLz4KPC9zdmc+");
             }
         }
+
+        [disabled] {
+            color: variables.$color-dark-input-disabled-color;
+            background-color: variables.$color-dark-input-disabled-background;
+        }
     }
 
     .title,
@@ -62,10 +67,14 @@
             }
             &.is-ghost {
                 color: variables.$color-dark-ghost;
-                
+
                 &:hover {
                     color: variables.$color-dark-ghost-hover;
                 }
+            }
+
+            &.is-light {
+                color: variables.$color-white;
             }
         }
         &.is-default {
@@ -86,7 +95,7 @@
             color: variables.$color-white;
 
             &:hover {
-                border-color: variables.$color-white
+                border-color: variables.$color-white;
             }
 
             &--default span {
@@ -174,5 +183,17 @@
                 }
             }
         }
+    }
+
+    .box {
+        background-color: variables.$color-dark-input-background;
+        color: variables.$color-white;
+    }
+
+    strong {
+        color: inherit;
+    }
+    code {
+        background-color: rgb(30 30 30 / 75%);
     }
 }

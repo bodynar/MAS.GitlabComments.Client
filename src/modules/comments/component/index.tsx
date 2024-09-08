@@ -11,11 +11,17 @@ import { Comment as CommentModel } from "@app/models/comments";
 import { search } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
-import { CommentModuleInitState, getAllCommentsAsync, setSearchQuery, showInformationAsync, addCommentAsync, deleteCommentAsync, incrementAsync, updateCommentAsync } from "@app/redux/comments";
+import {
+    CommentModuleInitState, setSearchQuery,
+    getAllCommentsAsync, showInformationAsync, addCommentAsync,
+    deleteCommentAsync, incrementAsync, updateCommentAsync,
+    initCommentsModuleAsync,
+} from "@app/redux/comments";
 
 import { useDebounceHandler, useQueryParam } from "@app/hooks";
 
 import CommentTable from "../components/table";
+import Retract from "../components/retract";
 
 /** Comments module component props */
 interface CommentsProps {
@@ -36,6 +42,9 @@ interface CommentsProps {
 
     /** Add comment in modal box */
     addComment: () => void;
+
+    /** Get all data for initializing module */
+    initModule: () => Promise<void>;
 
     /** Get all comments */
     getComments: () => Promise<void>;
@@ -61,6 +70,7 @@ function Comments({
     loading,
     comments, searchQuery,
     state, readOnlyMode,
+    initModule,
     setSearchQuery, getComments, addComment,
     updateComment, increment, showDescription, deleteComment
 }: CommentsProps): JSX.Element {
@@ -96,9 +106,9 @@ function Comments({
 
     useEffect(() => {
         if (state === "init") {
-            getComments();
+            initModule();
         }
-    }, [getComments, state]);
+    }, [initModule, state]);
 
     useEffect(() => {
         if (isNullOrEmpty(searchQuery) && !isNullOrEmpty(searchQueryParam)) {
@@ -164,6 +174,8 @@ function Comments({
                 showDescription={showDescription}
                 deleteComment={deleteComment}
             />
+
+            <Retract />
         </section>
     );
 }
@@ -183,5 +195,6 @@ export default connect(
         showDescription: showInformationAsync,
         deleteComment: deleteCommentAsync,
         setSearchQuery: setSearchQuery,
+        initModule: initCommentsModuleAsync,
     }
 )(Comments);

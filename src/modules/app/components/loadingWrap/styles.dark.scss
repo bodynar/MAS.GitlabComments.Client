@@ -1,0 +1,13 @@
+@use "src/shared/styles/variables.scss";
+
+.app--dark {
+    .app-loading-cover {
+        &__image {
+            background-color: rgba(variables.$color-black, 0.75);
+        }
+
+        &__content[data-disabled="true"] {
+            opacity: unset !important;
+        }
+    }
+}

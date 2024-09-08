@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 
-import { EditCommentModel, Comment } from "@app/models/comments";
+import { EditCommentModel, Comment, RetractionToken } from "@app/models/comments";
 import { CommentModuleInitState } from "@app/redux/comments";
 
 /** Save loaded comments into state */
@@ -35,3 +35,37 @@ export const setIncompleteCount = createAction<number>("mas.gc/comments/setIncom
 
 /** Set flag representing possibility of updating comments table */
 export const setCanUpdateTable = createAction<boolean>("mas.gc/comments/setCanUpdateTable");
+
+// #region Retraction tokens
+
+/**
+ * Save new retraction token
+ * @param arg0 Pair: [comment identifier, token identifier]
+ */
+export const saveRetractionToken = createAction<[string, string]>("mas.gc/comments/saveRetractionToken");
+
+/**
+ * Retract increment operation
+ * @param arg0 Token identifier
+ */
+export const retract = createAction<string>("mas.gc/comments/retract");
+
+/**
+ * Retract increment operation for several tokens
+ * @param arg0 Token identifiers
+ */
+export const batchRetract = createAction<Array<string>>("mas.gc/comments/batchRetract");
+
+/**
+ * Save retraction tokens
+ * @param arg0 Active retraction tokens
+ */
+export const setTokens = createAction<Array<RetractionToken>>("mas.gc/comments/setTokens");
+
+/**
+ * Block specific token to interact with
+ * @param arg0 Token identifier
+ */
+export const blockToken = createAction<string>("mas.gc/comments/blockToken");
+
+// #endregion

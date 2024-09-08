@@ -1,6 +1,6 @@
 import { SysVariable } from "@app/models/app";
 
-import { get } from "@app/utils";
+import { get, post } from "@app/utils";
 
 /**
  * Read all system variables
@@ -13,4 +13,12 @@ export const loadSysVariables = async (): Promise<Array<SysVariable>> => {
         ...x,
         value: x["rawValue"]
     }));
+};
+
+/**
+ * Perform an operation with specific system variable
+ * @param variableCode System variable code
+ */
+export const performVariableAction = async (variableCode: string): Promise<void> => {
+    await post(`api/app/executeOnVariable`, variableCode);
 };

@@ -8,7 +8,7 @@
 			"ESNext"
 		],
 		"allowJs": false,
-		"skipLibCheck": false,
+		"skipLibCheck": true,
 		"esModuleInterop": false,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
@@ -49,10 +49,6 @@
 			],
 			"@app/modules/*": [
 				"src/modules/*"
-			],
-			"@app/components/*": [
-				"src/shared/components/*",
-				"src/shared/components/primitives/*"
 			],
 			"@app/constants": [
 				"src/shared/constants"

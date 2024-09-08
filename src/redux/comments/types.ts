@@ -1,4 +1,4 @@
-import { Comment } from "@app/models/comments";
+import { Comment, ExtendedRetractionToken } from "@app/models/comments";
 
 /** Comments module state */
 export type CommentModuleInitState =
@@ -13,6 +13,9 @@ export interface CommentsState {
 
     /** Loaded comments */
     comments: Array<Comment>;
+
+    /** Retraction tokens */
+    retractionTokens: Array<ExtendedRetractionToken>;
 
     /** Current search query */
     searchQuery: string;

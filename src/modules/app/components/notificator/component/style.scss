@@ -2,8 +2,8 @@
 
 .app-notificator {
     margin: 0.5rem;
-    position: absolute;
-    z-index: 100;
+    position: fixed;
+    z-index: 2;
     right: 1.5rem;
     top: 3.5rem;
 
