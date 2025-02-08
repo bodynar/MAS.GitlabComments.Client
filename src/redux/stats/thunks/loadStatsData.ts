@@ -7,7 +7,7 @@ import { read } from "@app/core/stats";
 
 import { CompositeAppState } from "@app/redux";
 import { setData, setLoaded } from "@app/redux/stats";
-import { setIsLoadingState } from "@app/redux/app";
+import { registerHttpRequest } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 
 /**
@@ -15,31 +15,32 @@ import { getNotifications } from "@app/redux/notificator";
  * @param filter Values to filter stats data
  * @returns Redux action to fetch stats data and update stats module state
  */
-export const loadStatsData = (filter: StatsFilter): ThunkAction<void, CompositeAppState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>
-    ): void => {
-        dispatch(setIsLoadingState(true));
+export const loadStatsData = (filter: StatsFilter): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
+    async (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
         dispatch(setLoaded(false));
 
+        const [_, onRequestCompleted] = registerHttpRequest(dispatch);
         const [, showError] = getNotifications(dispatch);
 
-        read(filter)
-            .then((rawData: Array<any>) => {
-                dispatch(
-                    setData(
-                        rawData.map(x => ({
+        try {
+            const rawData: Array<any> = await read(filter);
+
+            dispatch(
+                setData(
+                    rawData
+                        .map(x => ({
                             ...x,
                             text: x["commentText"],
                         }) as StatsRecord)
-                            .sort(({ count }, y) => y.count - count)
-                    )
-                );
+                        .sort(({ count }, y) => y.count - count)
+                )
+            );
 
-                dispatch(setIsLoadingState(false));
-                dispatch(setLoaded(true));
-            })
-            .catch(error => {
-                dispatch(setLoaded());
-                showError(error);
-            });
+            dispatch(setLoaded(true));
+        } catch (error) {
+            dispatch(setLoaded());
+            showError(error as Error | string);
+        }
+
+        onRequestCompleted();
     };

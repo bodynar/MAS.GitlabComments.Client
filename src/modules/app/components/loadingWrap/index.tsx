@@ -10,7 +10,7 @@ type LoaderWrapProps = {
     /** Is app currently in loading mode */
     loading: boolean;
 
-    /** Wrapped contentА */
+    /** Wrapped content */
     children: ReactNode;
 };
 

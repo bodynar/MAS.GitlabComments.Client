@@ -1,9 +1,12 @@
 import { createAction } from "@reduxjs/toolkit";
 
-import { SysVariable } from "@app/models/app";
+import { HttpRequest, SysVariable } from "@app/models/app";
 
-/** Set app loading state flag */
-export const setIsLoadingState = createAction<boolean>("mas.gc/setAppIsLoading");
+/** Append http request to queue */
+export const appendRequest = createAction<HttpRequest>("mas.gc/appendHttpRequest");
+
+/** Remove specific http request from queue */
+export const removeRequest = createAction<string>("mas.gc/removeHttpRequest");
 
 /** Set tab is focused */
 export const setTabIsFocused = createAction<boolean>("mas.gc/setTabIsFocused");

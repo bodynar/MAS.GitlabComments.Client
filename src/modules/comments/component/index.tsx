@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { FC, useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { isNullOrEmpty } from "@bodynarf/utils";
@@ -13,7 +13,7 @@ import { search } from "@app/core/comments";
 import { CompositeAppState } from "@app/redux";
 import {
     CommentModuleInitState, setSearchQuery,
-    getAllCommentsAsync, showInformationAsync, addCommentAsync,
+    getAllCommentsAsync, showInformationAsync, displayAddCommentModal,
     deleteCommentAsync, incrementAsync, updateCommentAsync,
     initCommentsModuleAsync,
 } from "@app/redux/comments";
@@ -22,9 +22,10 @@ import { useDebounceHandler, useQueryParam } from "@app/hooks";
 
 import CommentTable from "../components/table";
 import Retract from "../components/retract";
+import AddComment from "../components/addComment";
 
 /** Comments module component props */
-interface CommentsProps {
+type CommentsProps = {
     /** Is application in loading state */
     loading: boolean;
 
@@ -39,6 +40,9 @@ interface CommentsProps {
 
     /** Current search query */
     searchQuery: string;
+
+    /** Comment to highlight */
+    highlightCommentId?: string;
 
     /** Add comment in modal box */
     addComment: () => void;
@@ -63,26 +67,25 @@ interface CommentsProps {
 
     /** Save current search query */
     setSearchQuery: (searchQuery: string) => void;
-}
+};
 
 /** Comments module main component */
-function Comments({
+const Comments: FC<CommentsProps> = ({
     loading,
-    comments, searchQuery,
+    comments, searchQuery, highlightCommentId,
     state, readOnlyMode,
     initModule,
     setSearchQuery, getComments, addComment,
-    updateComment, increment, showDescription, deleteComment
-}: CommentsProps): JSX.Element {
+    updateComment, increment, showDescription, deleteComment,
+}) => {
     const searchQueryParam = useQueryParam("q") ?? "";
     const navigate = useNavigate();
-    const location = useLocation();
-
-    const highlightedCommentId = location.hash.length > 0 ? location.hash.substring(1) : "";
 
     const [displayedComments, setDisplayedComments] = useState<Array<CommentModel>>(
         comments.filter(x =>
-            x.message.toLowerCase().includes((searchQuery || searchQueryParam).toLocaleLowerCase())
+            x.message.toLowerCase().includes(
+                (searchQuery || searchQueryParam).toLocaleLowerCase()
+            )
         )
     );
 
@@ -93,14 +96,14 @@ function Comments({
 
             setDisplayedComments(filteredComments);
 
-            if (searchPattern.length >= 3) {
+            if (searchPattern.length >= 2) {
                 params.append("q", searchPattern);
             }
 
-            navigate({ search: params.toString(), hash: location.hash, });
+            navigate({ search: params.toString() });
 
             setSearchQuery(searchPattern);
-        }, [navigate, location.hash, setSearchQuery, comments]);
+        }, [navigate, setSearchQuery, comments]);
 
     const [debounce, onReloadClick] = useDebounceHandler(getComments, 3);
 
@@ -145,40 +148,44 @@ function Comments({
                     searchType="byTyping"
                     defaultValue={searchQuery}
                     caption="Search comment.."
+                    autoFocus={state !== "init" && !loading}
                 />
-                {searchQuery.length < 3 &&
+                {searchQuery.length < 2 &&
                     <span className="help has-text-grey is-italic">
-                        Search will be performed when there are at least 3 characters
+                        Search will be performed when there are at least 2 characters
                     </span>
                 }
             </div>
             {state !== "init" &&
-                <Button
-                    type="default"
-                    caption="Reload"
-                    className="mb-2"
-                    isLoading={loading}
-                    disabled={!debounce}
-                    onClick={onReloadClick}
-                    size={ElementSize.Small}
-                    icon={{ name: "arrow-clockwise" }}
-                />
-            }
-            <CommentTable
-                displayedComments={displayedComments}
-                highlightedCommentId={highlightedCommentId}
-                noCommentsMessage={noCommentsMessage}
-                readOnlyMode={readOnlyMode ?? false}
-                updateComment={updateComment}
-                increment={increment}
-                showDescription={showDescription}
-                deleteComment={deleteComment}
-            />
+                <>
+                    <Button
+                        type="default"
+                        caption="Reload"
+                        className="mb-2"
+                        isLoading={loading}
+                        disabled={!debounce}
+                        onClick={onReloadClick}
+                        size={ElementSize.Small}
+                        icon={{ name: "arrow-clockwise" }}
+                    />
+                    <CommentTable
+                        increment={increment}
+                        updateComment={updateComment}
+                        deleteComment={deleteComment}
+                        showDescription={showDescription}
+                        readOnlyMode={readOnlyMode ?? false}
+                        displayedComments={displayedComments}
+                        noCommentsMessage={noCommentsMessage}
+                        highlightCommentId={highlightCommentId}
+                    />
 
-            <Retract />
+                    <Retract />
+                    <AddComment />
+                </>
+            }
         </section>
     );
-}
+};
 
 /** Comments module main component */
 export default connect(
@@ -188,7 +195,7 @@ export default connect(
         loading: app.loading,
     }),
     {
-        addComment: addCommentAsync,
+        addComment: displayAddCommentModal,
         getComments: getAllCommentsAsync,
         updateComment: updateCommentAsync,
         increment: incrementAsync,

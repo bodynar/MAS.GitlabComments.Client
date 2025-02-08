@@ -1,11 +1,10 @@
 import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
-import { Comment } from "@app/models/comments";
 import { getAllComments } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
+import { registerHttpRequest } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { setComments, setModuleState } from "@app/redux/comments/actions";
 
@@ -14,25 +13,23 @@ import { setComments, setModuleState } from "@app/redux/comments/actions";
  * @returns Get all comments function that can be called with redux dispatcher
  */
 export const getAllCommentsAsync = (): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
-    (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
-        dispatch(setIsLoadingState(true));
+    async (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
+        const [_, onRequestCompleted] = registerHttpRequest(dispatch);
 
         const [, showError] = getNotifications(dispatch);
 
-        return getAllComments()
-            .then((comments: Array<Comment>) => {
-                dispatch(
-                    setComments(
-                        comments.map(x => ({ ...x, number: x.number ?? "" }))
-                    )
-                );
+        try {
+            const comments = await getAllComments();
 
-                dispatch(setIsLoadingState(false));
-                dispatch(setModuleState("idle"));
-            })
-            .catch(error => {
-                dispatch(setModuleState("idle"));
+            dispatch(
+                setComments(
+                    comments.map(x => ({ ...x, number: x.number ?? "" }))
+                )
+            );
+        } catch (error) {
+            showError(error as Error | string);
+        }
 
-                showError(error);
-            });
+        onRequestCompleted();
+        dispatch(setModuleState("idle"));
     };

@@ -7,11 +7,12 @@ import { Comment, ExtendedRetractionToken, RetractionToken } from "@app/models/c
 import { CommentsState, setModuleState } from "@app/redux/comments";
 import {
     addComment, deleteComment, increment, updateComment,
-    setComments, setSearchQuery, setIncompleteCount,
-    blockComment, unblockComment, setCanUpdateTable,
+    setComments, setSearchQuery,
+    blockComment, unblockComment,
     saveRetractionToken, retract, batchRetract,
     setTokens,
     blockToken,
+    setHighlightedComment,
 } from "./actions";
 
 /** Initial comment module state */
@@ -20,7 +21,6 @@ const initialState: CommentsState = {
     comments: [],
     retractionTokens: [],
     searchQuery: "",
-    canUpdateTable: true,
 };
 
 /** App container module reducer */
@@ -35,12 +35,6 @@ export const reducer = createReducer(initialState,
             })
             .addCase(setComments, (state, { payload }) => {
                 state.comments = payload;
-            })
-            .addCase(setIncompleteCount, (state, { payload }) => {
-                state.incompleteCommentsCount = payload;
-            })
-            .addCase(setCanUpdateTable, (state, { payload }) => {
-                state.canUpdateTable = payload;
             })
             .addCase(blockComment, (state, { payload }) => {
                 const specifiedComment: Comment | undefined =
@@ -138,7 +132,7 @@ export const reducer = createReducer(initialState,
                 }
 
                 existedRecords
-                    .groupBy<RetractionToken>('commentId')
+                    .groupBy<RetractionToken>("commentId")
                     .forEach(({ key, items }) => {
                         const specifiedComment: Comment | undefined =
                             state.comments.find(({ id }) => id === key);
@@ -186,6 +180,9 @@ export const reducer = createReducer(initialState,
                 }
 
                 token.blocked = true;
+            })
+            .addCase(setHighlightedComment, (state, { payload }) => {
+                state.highlightCommentId = payload;
             })
             ;
     }

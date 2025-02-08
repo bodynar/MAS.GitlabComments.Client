@@ -1,0 +1,10 @@
+[role="stats-module"] {
+    .comments-table {
+        grid-template-columns: 0.1fr 0.15fr 0.15fr 1.5fr 0.25fr;
+        grid-template-areas: "position appearance number content actions";
+
+        &__position {
+            grid-area: position;
+        }
+    }
+}

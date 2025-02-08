@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 
-import { isNullOrUndefined } from "@bodynarf/utils";
+import { isNullish, Optional } from "@bodynarf/utils";
 
 import { SelectableItem } from "@bodynarf/react.components";
 import Dropdown from "@bodynarf/react.components/components/dropdown";
@@ -8,10 +8,31 @@ import Date from "@bodynarf/react.components/components/primitives/date";
 import Button from "@bodynarf/react.components/components/button";
 
 import { DateRange, StatsFilter } from "@app/models/stats";
+import { getDates } from "@app/core/stats";
 
-import { dateRangeOptions, dateRangeOptionsMap, getDateRange, isButtonDisabled, isDateValid } from "@app/core/stats";
+/** Map of date range options key - selectable item */
+const dateRangeOptionsMap = new Map(
+    Object.entries(DateRange)
+        .splice(1)
+        .map(([key, value], i) => [
+            value,
+            {
+                id: i.toString(),
+                displayValue: value,
+                value: key
+            } as SelectableItem
+        ])
+);
 
-interface StatsFiltersProps {
+/** Array of date range options as dropdown items */
+const dateRangeOptions = [...dateRangeOptionsMap.values()];
+
+const dateRangeKeyToValueMap = new Map(
+    Array.from(dateRangeOptionsMap.values())
+        .map((x: SelectableItem) => [x.value, x])
+);
+
+type StatsFiltersProps = {
     /** Current stats module filter */
     filter: StatsFilter;
 
@@ -26,35 +47,46 @@ interface StatsFiltersProps {
 
     /** Set is stats data loaded */
     setIsLoaded: (loaded?: boolean) => void;
-}
+};
 
 /** Stats module filter component */
-const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, setIsLoaded }: StatsFiltersProps): JSX.Element => {
+const StatsFilters: FC<StatsFiltersProps> = ({
+    filter,
+    loaded = false,
+    setStatsFilter,
+    onApplyFiltersClick,
+    setIsLoaded
+}) => {
     const preSelected = filter.type === DateRange.None
         ? undefined
         : dateRangeOptionsMap.get(filter.type)
         ;
 
-    const [filterRange, setRange] = useState<SelectableItem | undefined>(preSelected);
-    const [isManualDateValid, setManualDateValid] = useState<boolean>(isDateValid(filter.leftDate, filter.rightDate));
-    const [isFilterButtonDisabled, setFilterButtonDisabled] = useState<boolean>(isButtonDisabled(filter));
+    const [filterRange, setRange] = useState<Optional<SelectableItem>>(preSelected);
+    const [isManualDateValid, setManualDateValid] = useState<boolean>(
+        isDateValid(filter.leftDate, filter.rightDate)
+    );
+    const [isFilterButtonDisabled, setFilterButtonDisabled] = useState<boolean>(
+        isButtonDisabled(filter)
+    );
 
     const onRangeSelect = useCallback((selectedItem?: SelectableItem) => {
         setRange(selectedItem);
 
-        if (loaded === true) {
+        if (loaded) {
             setIsLoaded(undefined);
         }
 
         setManualDateValid(true);
 
-        const type = isNullOrUndefined(selectedItem)
+        const type = isNullish(selectedItem)
             ? DateRange.None
-            : DateRange[selectedItem!.displayValue as keyof typeof DateRange];
+            : selectedItem.displayValue as DateRange;
 
-        setFilterButtonDisabled(isNullOrUndefined(selectedItem) || type === DateRange.Manual);
+        setFilterButtonDisabled(
+            isNullish(selectedItem) || type === DateRange.Manual
+        );
         setStatsFilter({ type });
-
     }, [setStatsFilter, setIsLoaded, loaded]);
 
     const onDateChange = useCallback(
@@ -68,13 +100,13 @@ const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, set
                 setIsLoaded(undefined);
             }
 
-            if (isNullOrUndefined(value)) {
+            if (isNullish(value)) {
                 setFilterButtonDisabled(true);
                 setManualDateValid(true);
                 return;
             }
 
-            if (isNullOrUndefined(rightDate)) {
+            if (isNullish(rightDate)) {
                 return;
             }
 
@@ -104,7 +136,7 @@ const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, set
                     {dateRange}
                 </span>
             </div>
-            {filterRange?.value === DateRange.Manual &&
+            {filterRange?.displayValue === DateRange.Manual &&
                 <>
                     <div className="columns">
                         <div className="column">
@@ -140,3 +172,61 @@ const StatsFilters = ({ filter, loaded, setStatsFilter, onApplyFiltersClick, set
 };
 
 export default StatsFilters;
+
+/**
+ * Check first date less than second date
+ * @param leftDate First date to compare
+ * @param rightDate Second date to compare
+ * @returns false if first date is greater than second date; otherwise - true
+ */
+const isDateValid = (leftDate?: Date, rightDate?: Date): boolean => {
+    if (isNullish(leftDate) || isNullish(rightDate)) {
+        return true;
+    }
+
+    return leftDate!.getTime() < rightDate!.getTime();
+};
+
+/**
+ * Check accessibility for "Apply filters" button
+ * @param filter Stats module current filter
+ * @returns true if "Apply filters" button should be disabled; otherwise - true
+ */
+const isButtonDisabled = (filter: StatsFilter): boolean => {
+    if (filter.type === DateRange.None) {
+        return true;
+    }
+
+    if (filter.type === DateRange.Manual) {
+        if (isNullish(filter.leftDate) || isNullish(filter.rightDate)) {
+            return true;
+        }
+
+        return !isDateValid(filter.leftDate, filter.rightDate);
+    }
+
+    return false;
+};
+
+/**
+ * Get formatted date range string
+ * @param filterRange Selected date range
+ * @returns Formatted date range string
+ */
+const getDateRange = (filterRange?: SelectableItem): string => {
+    if (isNullish(filterRange)) {
+        return "";
+    }
+
+    const { value } = filterRange!;
+
+    const enumValue = dateRangeKeyToValueMap.get(value)!.displayValue as DateRange;
+
+    if (enumValue == DateRange.Manual) {
+        return "";
+    }
+
+    const [leftDate, rightDate] = getDates(enumValue);
+
+    return `(${leftDate.format("DD.MM.yyyy")} - ${rightDate.format("DD.MM.yyyy")})`;
+};

@@ -6,7 +6,7 @@ import { getAllComments, merge } from "@app/core/comments";
 
 import { CompositeAppState } from "@app/redux";
 import { getNotifications } from "@app/redux/notificator";
-import { setIsLoadingState } from "@app/redux/app";
+import { registerHttpRequest } from "@app/redux/app";
 import { setComments, setModuleState } from "@app/redux/comments";
 
 /**
@@ -18,7 +18,7 @@ import { setComments, setModuleState } from "@app/redux/comments";
  */
 export const mergeAsync = (sourceId: string, targetId: string, valuesToUpdate: Map<keyof Comment, string>): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
     async (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
-        dispatch(setIsLoadingState(true));
+        const [_, onRequestCompleted] = registerHttpRequest(dispatch);
 
         const [showSuccess, showError] = getNotifications(dispatch);
 
@@ -27,9 +27,12 @@ export const mergeAsync = (sourceId: string, targetId: string, valuesToUpdate: M
             const comments = await getAllComments();
             dispatch(setComments(comments));
         } catch (error) {
-            showError(error as Error ?? error as string, true, false);
+            showError(error as Error ?? error as string, true);
         }
 
-        showSuccess("Comments were merged successfully", false, true);
+        showSuccess("Comments were merged successfully", false);
+
+        onRequestCompleted();
+
         dispatch(setModuleState("idle"));
     };

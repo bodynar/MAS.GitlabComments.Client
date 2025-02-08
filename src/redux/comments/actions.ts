@@ -1,5 +1,7 @@
 import { createAction } from "@reduxjs/toolkit";
 
+import { Optional } from "@bodynarf/utils";
+
 import { EditCommentModel, Comment, RetractionToken } from "@app/models/comments";
 import { CommentModuleInitState } from "@app/redux/comments";
 
@@ -29,12 +31,6 @@ export const blockComment = createAction<string>("mas.gc/comments/blockComment")
 
 /** Unblock comment actions */
 export const unblockComment = createAction<string>("mas.gc/comments/unblockComment");
-
-/** Set current incomplete comments count */
-export const setIncompleteCount = createAction<number>("mas.gc/comments/setIncompleteCount");
-
-/** Set flag representing possibility of updating comments table */
-export const setCanUpdateTable = createAction<boolean>("mas.gc/comments/setCanUpdateTable");
 
 // #region Retraction tokens
 
@@ -69,3 +65,9 @@ export const setTokens = createAction<Array<RetractionToken>>("mas.gc/comments/s
 export const blockToken = createAction<string>("mas.gc/comments/blockToken");
 
 // #endregion
+
+/**
+ * Save comment identifier to highlight
+ * @param arg0 Comment identifier
+ */
+export const setHighlightedComment = createAction<Optional<string>>("mas.gc/comments/setHighlightedComment");

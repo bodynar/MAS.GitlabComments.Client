@@ -2,7 +2,7 @@ import { Action } from "@reduxjs/toolkit";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
+import { registerHttpRequest } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { setComments, setModuleState, setTokens } from "@app/redux/comments/actions";
 import { getAllComments, getAllTokens } from "@app/core/comments";
@@ -13,9 +13,9 @@ import { getAllComments, getAllTokens } from "@app/core/comments";
  */
 export const initCommentsModuleAsync = (): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
     async (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
-        dispatch(setIsLoadingState(true));
-
         const [, showError] = getNotifications(dispatch);
+
+        const [_, onRequestCompleted] = registerHttpRequest(dispatch);
 
         try {
             const comments = await getAllComments();
@@ -23,11 +23,10 @@ export const initCommentsModuleAsync = (): ThunkAction<Promise<void>, CompositeA
 
             const tokens = await getAllTokens();
             dispatch(setTokens(tokens));
-
-            dispatch(setIsLoadingState(false));
         } catch (error) {
-            showError(error as string ?? error as Error);
+            showError(error as string ?? error as Error, false);
         }
 
+        onRequestCompleted();
         dispatch(setModuleState("idle"));
     };

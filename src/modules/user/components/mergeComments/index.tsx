@@ -109,17 +109,17 @@ const MergeCommentsComponent: FC<MergeCommentsComponentProps> = ({
     );
 
     const onTargetMessageUpdate = useCallback(
-        (value?: string) => targetValueMap.set('message', value ?? ""),
+        (value?: string) => targetValueMap.set("message", value ?? ""),
         []
     );
 
     const onTargetLinkToRuleUpdate = useCallback(
-        (value?: string) => targetValueMap.set('commentWithLinkToRule', value ?? ""),
+        (value?: string) => targetValueMap.set("commentWithLinkToRule", value ?? ""),
         []
     );
 
     const onTargetDescriptionUpdate = useCallback(
-        (value?: string) => targetValueMap.set('description', value ?? ""),
+        (value?: string) => targetValueMap.set("description", value ?? ""),
         []
     );
 

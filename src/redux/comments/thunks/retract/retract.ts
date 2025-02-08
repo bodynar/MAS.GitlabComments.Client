@@ -36,8 +36,8 @@ export const retractAsync = (tokenId: string): ThunkAction<Promise<void>, Compos
             dispatch(retractAction(tokenId));
             dispatch(unblockComment(token.commentId));
 
-            showSuccess(`Comment ${comment.number} appearance count was updated successfully`, false, true);
+            showSuccess(`Comment ${comment.number} appearance count was updated successfully`, false);
         } catch (error) {
-            showError(error as string | Error, true, true);
+            showError(error as string | Error, true);
         }
     };

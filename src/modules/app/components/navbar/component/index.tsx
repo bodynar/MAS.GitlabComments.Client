@@ -37,7 +37,7 @@ export default function Navbar({
             aria-label="main navigation"
         >
             <NavbarBrand />
-            <div className="navbar-menu" >
+            <div className="navbar-menu">
                 <div className="navbar-start">
                     {menuItems
                         .sort((x, y) => x.order - y.order)

@@ -12,13 +12,19 @@
 
         transition: variables.$transition-duration variables.$transition-function;
         transition-property: color, background-color;
+        scroll-behavior: smooth;
     }
 
     &__navbar {
         max-height: 3.25rem;
+        z-index: 2;
     }
     &__content {
         width: 90%;
+
+        @media screen and (max-width: 1440px) {
+            max-width: 960px !important;
+        }
     }
     &__footer {
         height: 6.25rem;

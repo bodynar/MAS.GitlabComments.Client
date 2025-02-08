@@ -4,7 +4,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { loadSysVariables } from "@app/core/app";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState, setVariables } from "@app/redux/app";
+import { registerHttpRequest, setVariables } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 
 /**
@@ -13,7 +13,7 @@ import { getNotifications } from "@app/redux/notificator";
  */
 export const loadSysVariablesAsync = (): ThunkAction<Promise<void>, CompositeAppState, unknown, Action> =>
     async (dispatch: ThunkDispatch<CompositeAppState, unknown, Action>): Promise<void> => {
-        dispatch(setIsLoadingState(true));
+        const [_, onRequestCompleted] = registerHttpRequest(dispatch);
 
         try {
             const variables = await loadSysVariables();
@@ -25,5 +25,6 @@ export const loadSysVariablesAsync = (): ThunkAction<Promise<void>, CompositeApp
 
             showError(error as Error | string, true);
         }
-        dispatch(setIsLoadingState(false));
+
+        onRequestCompleted();
     };

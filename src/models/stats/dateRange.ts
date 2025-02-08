@@ -5,14 +5,23 @@
 export enum DateRange {
     None = "",
 
-    /** Last week */
-    Week = "Last week",
+    /** Previous week */
+    PreviousWeek = "Previous week",
 
-    /** Last month */
-    Month = "Last month",
+    /** Previous month */
+    PreviousMonth = "Previous month",
 
-    /** Last year */
-    Year = "Last year",
+    /** Previous year */
+    PreviousYear = "Previous year",
+
+    /** Current week */
+    CurrentWeek = "Current week",
+
+    /** Current month */
+    CurrentMonth = "Current month",
+
+    /** Current year */
+    CurrentYear = "Current year",
 
     /** Manual date selecting */
     Manual = "Custom",

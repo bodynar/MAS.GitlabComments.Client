@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { isStringEmpty } from "@bodynarf/utils";
@@ -8,18 +9,19 @@ import { Comment as CommentModel } from "@app/models/comments";
 
 import Comment from "../comment";
 
-interface CommentTableProps {
+/** Props of `CommentTable` */
+type CommentTableProps = {
     /** Current visible comments */
     displayedComments: Array<CommentModel>;
-
-    /** Comments which should be highlighted after render */
-    highlightedCommentId: string;
 
     /** Is app in read only mode */
     readOnlyMode: boolean;
 
     /** Current "no-items" message */
     noCommentsMessage: string;
+
+    /** Comment to highlight */
+    highlightCommentId?: string;
 
     /** Update specified comment in modal box */
     updateComment: (commentId: string) => void;
@@ -32,16 +34,16 @@ interface CommentTableProps {
 
     /** Delete comment by it"s identifier */
     deleteComment: (commentId: string) => void;
-}
+};
 
 /** Comments list component */
-const CommentTable = ({
+const CommentTable: FC<CommentTableProps> = ({
     displayedComments,
-    highlightedCommentId,
+    highlightCommentId,
     readOnlyMode,
     updateComment, increment, showDescription, deleteComment,
     noCommentsMessage,
-}: CommentTableProps): JSX.Element => {
+}) => {
     if (displayedComments.length === 0) {
         const displayMessage: string = isStringEmpty(noCommentsMessage)
             ? "No items"
@@ -82,13 +84,14 @@ const CommentTable = ({
                     >
                         <Comment
                             key={comment.id}
+
                             comment={comment}
-                            shouldBeScrolledTo={highlightedCommentId === comment.id}
-                            isReadOnlyMode={readOnlyMode ?? false}
-                            updateComment={updateComment}
                             increment={increment}
-                            showDescription={showDescription}
+                            updateComment={updateComment}
                             deleteComment={deleteComment}
+                            showDescription={showDescription}
+                            isReadOnlyMode={readOnlyMode ?? false}
+                            shouldBeScrolledTo={highlightCommentId === comment.id}
                         />
                     </CSSTransition>
                 )}

@@ -1,0 +1,21 @@
+section.lookalike-comments {
+    margin-bottom: 0.75rem;
+
+    ul {
+        border: 1px solid hsl(0, 0%, 86%);
+        border-radius: 4px;
+
+        padding: calc(0.5em - 1px) calc(0.75em - 1px);
+
+        max-height: 15vh;
+        overflow-y: auto;
+
+        li .is-comment-link {
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

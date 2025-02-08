@@ -16,9 +16,8 @@ export interface NotificatorState {
  * Function that can display notification
  * @param message Message to display
  * @param important Should message stay on screen until manual user close action
- * @param removeLoadingState Should app loading state be removed
  */
-type ShowNotificationFn<TMessage> = (message: TMessage, important?: boolean, removeLoadingState?: boolean) => void;
+type ShowNotificationFn<TMessage> = (message: TMessage, important?: boolean) => void;
 
 /** Success notification show function type */
 export type ShowSimpleMessageFn = ShowNotificationFn<string>;

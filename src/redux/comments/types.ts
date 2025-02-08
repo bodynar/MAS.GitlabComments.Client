@@ -20,9 +20,6 @@ export interface CommentsState {
     /** Current search query */
     searchQuery: string;
 
-    /** Amount of incomplete comments */
-    incompleteCommentsCount?: number;
-
-    /** Update comments table definition access flag */
-    canUpdateTable: boolean;
+    /** Comment to highlight */
+    highlightCommentId?: string;
 }

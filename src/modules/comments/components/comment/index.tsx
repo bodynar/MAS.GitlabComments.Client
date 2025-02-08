@@ -1,7 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, FC } from "react";
 import { connect } from "react-redux";
 
-import { emptyFn, getClassName, isNullOrEmpty } from "@bodynarf/utils";
+import { emptyFn, getClassName, isNullish, isNullOrEmpty } from "@bodynarf/utils";
 import { ElementSize } from "@bodynarf/react.components";
 import Button from "@bodynarf/react.components/components/button";
 
@@ -9,9 +9,11 @@ import "@app/styles/comments/comment.scss";
 import "./style.scss";
 
 import { Comment as CommentModel } from "@app/models/comments";
+import { COMMENT_HIGHLIGHT_TIMEOUT } from "@app/constants";
 import { displayWarn } from "@app/redux/notificator";
+import { setHighlightedComment } from "@app/redux/comments";
 
-export interface CommentProps {
+type CommentProps = {
     /** Is comment should be scrolled into view after render */
     shouldBeScrolledTo: boolean;
 
@@ -35,14 +37,17 @@ export interface CommentProps {
 
     /** Display warn message */
     warn: (message: string, important: boolean) => void;
-}
+
+    /** Clear current comment highlight */
+    removeHighlight: () => void;
+};
 
 /** Comment component */
-const Comment = ({
+const Comment: FC<CommentProps> = ({
     shouldBeScrolledTo, isReadOnlyMode, comment,
     increment, showDescription, updateComment, deleteComment,
-    warn,
-}: CommentProps): JSX.Element => {
+    warn, removeHighlight,
+}) => {
     const onShowDescriptionClick = useCallback(() => showDescription(comment.id), [comment.id, showDescription]);
     const onUpdateCommentClick = useCallback(() => updateComment(comment.id), [comment.id, updateComment]);
     const onDeleteCommentClick = useCallback(() => deleteComment(comment.id), [comment.id, deleteComment]);
@@ -63,37 +68,32 @@ const Comment = ({
         setTippyVisible(true);
     }, [comment.commentWithLinkToRule, comment.id, comment.message, increment, warn]);
 
-    const [highlighted, setHighlighted] = useState(false);
-
     const className = getClassName([
         "app-comment",
         "app-comment-item",
         "comments-table",
         "my-2",
         "p-3",
-        highlighted ? "app-comment--highlighted" : ""
+        shouldBeScrolledTo ? "app-comment--highlighted" : ""
     ]);
 
     useEffect(() => {
-        if (shouldBeScrolledTo) { // todo: rework
-            const element = document.getElementById(comment.id);
-
-            if (element) {
-                element.scrollIntoView();
-
-                setHighlighted(true);
-
-                const timer = setTimeout(() => {
-                    setHighlighted(false);
-                }, 5 * 1000);
-
-                return () => clearTimeout(timer);
-            }
+        if (!shouldBeScrolledTo) {
+            return emptyFn;
         }
 
-        return emptyFn;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        const element = document.getElementById(comment.id);
+
+        if (isNullish(element)) {
+            return emptyFn;
+        }
+
+        element.scrollIntoView();
+
+        const timer = setTimeout(removeHighlight, COMMENT_HIGHLIGHT_TIMEOUT);
+
+        return () => clearTimeout(timer);
+    }, [comment.id, removeHighlight, shouldBeScrolledTo]);
 
     useEffect(() => {
         if (tippyVisible) {
@@ -190,5 +190,6 @@ export default connect(
     null,
     {
         warn: displayWarn,
+        removeHighlight: setHighlightedComment,
     }
 )(Comment);

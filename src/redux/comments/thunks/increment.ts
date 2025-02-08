@@ -24,12 +24,12 @@ export const incrementAsync = (commentId: string): ThunkAction<Promise<void>, Co
             const retractionToken = await increment(commentId);
             const comment = getState().comments.comments.filter(({ id }) => id === commentId).pop()!;
 
-            showSuccess(`Comment ${comment.number} appearance count was updated successfully`, false, true);
+            showSuccess(`Comment ${comment.number} appearance count was updated successfully`, false);
 
             dispatch(incrementAction(commentId));
             dispatch(unblockComment(commentId));
             dispatch(saveRetractionToken([commentId, retractionToken]));
         } catch (error) {
-            showError(error as string | Error, true, true);
+            showError(error as string | Error, true);
         }
     };

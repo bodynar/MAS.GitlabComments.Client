@@ -55,7 +55,7 @@ export const getLengthValidator = (maxLength: number, minLength: number = 0): Fo
 
 /**
  * Get required value validator function
- * @returns 
+ * @returns Validator function
  */
 const getRequiredValidator = (): FormItemValidator => {
     return (value: string): string | undefined => {

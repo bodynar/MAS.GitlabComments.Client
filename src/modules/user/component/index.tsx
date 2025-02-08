@@ -3,8 +3,8 @@ import { useCallback, useState } from "react";
 import Tabs, { TabItem } from "@bodynarf/react.components/components/tabs";
 
 import VariablesList from "../components/variables";
-import CommentsManagePanel from "../components/comments";
 import MergeCommentsComponent from "../components/mergeComments";
+import MigrationModule from "../components/migration";
 
 /**
  * @constant
@@ -16,13 +16,13 @@ const tabs: Array<TabItem> = [
         caption: "Merge comments",
     },
     {
-        id: "manage-comments",
-        caption: "Comments manage",
-    },
-    {
         id: "sysVars",
         caption: "Variables",
-    }
+    },
+    {
+        id: "migration",
+        caption: "Migration",
+    },
 ];
 
 /**
@@ -31,8 +31,8 @@ const tabs: Array<TabItem> = [
  */
 const tabContentMap = new Map<string, JSX.Element>([
     ["merge-comments", <MergeCommentsComponent key="merge-comments" />],
-    ["manage-comments", <CommentsManagePanel key="comments" />],
     ["sysVars", <VariablesList key="sysVars" />],
+    ["migration", <MigrationModule key="migration" />],
 ]);
 
 /** User module main component */

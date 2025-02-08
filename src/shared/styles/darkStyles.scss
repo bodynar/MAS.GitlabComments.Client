@@ -88,6 +88,42 @@
         }
     }
 
+    .file {
+        &.is-success .file-cta {
+            background-color: variables.$color-dark-success;
+            &:hover {
+                background-color: variables.$color-dark-success-hover;
+            }
+        }
+        &.is-danger .file-cta {
+            background-color: variables.$color-dark-danger;
+            &:hover {
+                background-color: variables.$color-dark-danger-hover;
+            }
+        }
+        &.is-info .file-cta {
+            background-color: variables.$color-dark-info;
+
+            &:hover {
+                background-color: variables.$color-dark-info-hover;
+            }
+        }
+        &.is-warning .file-cta {
+            background-color: variables.$color-dark-warn;
+
+            &:hover {
+                background-color: variables.$color-dark-warn-hover;
+            }
+        }
+        &.is-primary .file-cta {
+            background-color: variables.$color-dark-primary;
+
+            &:hover {
+                background-color: variables.$color-dark-primary-hover;
+            }
+        }
+    }
+
     .bbr-dropdown {
         &__label {
             background-color: variables.$color-dark-input-background;

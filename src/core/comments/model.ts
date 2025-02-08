@@ -48,10 +48,12 @@ export const updateComment = (comment: EditCommentModel, commentId: string): Pro
 export const getAllComments = async (): Promise<Array<Comment>> => {
     const comments = await get<Array<Comment>>(`/api/comments/getAll`);
 
-    return comments.map(x => ({
-        ...x,
-        blocked: false,
-    }));
+    return comments
+        .map(x => ({
+            ...x,
+            blocked: false,
+        }))
+        .sort((x, y) => y.appearanceCount - x.appearanceCount);
 };
 
 /**
@@ -61,7 +63,7 @@ export const getAllComments = async (): Promise<Array<Comment>> => {
  * @returns Subarray of comments
  */
 export const search = (comments: Array<Comment>, search: string): Array<Comment> => {
-    if (isStringEmpty(search) || search.length < 3) {
+    if (isStringEmpty(search) || search.length < 2) {
         return comments;
     }
 

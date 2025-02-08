@@ -2,32 +2,6 @@
 
 .app--dark {
     .app-modal .modal-card {
-        border: 1px solid variables.$color-dark-info;
-        border-radius: variables.$border-radius;
-
-        .modal-card-head,
-        .modal-card-foot {
-            background-color: variables.$color-dark-background;
-        }
-
-        .modal-card-title,
-        .label {
-            color: variables.$color-white;
-        }
-
-        .modal-card-head button[aria-label="close"] {
-            background-color: variables.$color-white;
-
-            &::before, &::after {
-                background-color: variables.$color-black;
-            }
-        }
-
-        .modal-card-body {
-            background-color: variables.$color-dark-input-background;
-            color: variables.$color-white;
-        }
-
         .field {
             input,
             textarea {

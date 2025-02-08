@@ -5,14 +5,15 @@
     scroll-margin-top: 15rem;
 
     &--highlighted {
+        border-color: rgba(variables.$color-info, 0.75);
+
         animation-name: highlighted;
         animation-duration: 1.5s;
-        animation-iteration-count: 3;
+        animation-iteration-count: infinite;
     }
 
     @keyframes highlighted {
         50% {
-            border-color: rgb(variables.$color-info, 0.75);
             background-color: rgb(variables.$color-info, 0.15);
         }
     }

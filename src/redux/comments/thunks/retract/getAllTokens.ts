@@ -20,6 +20,6 @@ export const getAllTokensAsync = (): ThunkAction<Promise<void>, CompositeAppStat
             const tokens = await getAllTokens();
             dispatch(setTokens(tokens));
         } catch (error) {
-            showError(error as string | Error, true, true);
+            showError(error as string | Error, true);
         }
     };

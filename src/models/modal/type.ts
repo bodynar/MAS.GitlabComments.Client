@@ -8,4 +8,7 @@ export enum ModalType {
 
     /** Display modal with confirm message and 2 optional buttons */
     Confirm = "confirm",
+
+    /** Custom modal, used via modal key */
+    Custom = "custom",
 }

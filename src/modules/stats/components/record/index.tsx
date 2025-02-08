@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ElementSize } from "@bodynarf/react.components";
@@ -8,15 +8,19 @@ import "@app/styles/comments/comment.scss";
 
 import { StatsRecord } from "@app/models/stats";
 
-interface StatsRecordProps extends StatsRecord {
+type StatsRecordProps = StatsRecord & {
+    /** Position in list */
+    position: number;
+
     /** Show comment description */
     showDescription: (commentId: string) => void;
-}
+};
 
-const StatsRecordComponent = ({
+const StatsRecordComponent: FC<StatsRecordProps> = ({
+    position,
     commentId, text: commentText, count, number,
     showDescription,
-}: StatsRecordProps): JSX.Element => {
+}) => {
     const navigate = useNavigate();
 
     const onShowClick = useCallback(() => {
@@ -31,6 +35,9 @@ const StatsRecordComponent = ({
 
     return (
         <div className="app-comment-item comments-table my-2 p-3">
+            <span className="comments-table__position">
+                {position}
+            </span>
             <span className="comments-table__appearance">
                 +{count}
             </span>
@@ -57,7 +64,7 @@ const StatsRecordComponent = ({
                     />
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

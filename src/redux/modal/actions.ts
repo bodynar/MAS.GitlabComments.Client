@@ -6,7 +6,7 @@ import { ModalParams } from "@app/models/modal";
  * @constant
  * Open modal redux store action type
  */
-export const open = createAction<ModalParams>("mas.gc/modal/open");
+export const open = createAction<string | ModalParams>("mas.gc/modal/open");
 
 /**
  * @constant

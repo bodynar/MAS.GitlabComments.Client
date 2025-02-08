@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 
-import { isNullOrUndefined } from "@bodynarf/utils";
-import Button from "@bodynarf/react.components/components/button";
+import { isNullish, isNullOrUndefined } from "@bodynarf/utils";
+import { ButtonProps } from "@bodynarf/react.components/components/button";
 
 import "./style.dark.scss";
 
@@ -11,10 +11,12 @@ import { getButtonCaptions, getInitIsSaveButtonDisabled, validateModalParams } f
 
 import { CompositeAppState } from "@app/redux";
 import { closeModal } from "@app/redux/modal";
+import ModalWrapper from "@app/modal";
 
 import ModalBody from "../components/body";
 
-interface ModalBoxProps {
+/** Props type of `ModalBox` */
+type ModalBoxProps = {
     /** Is modal currently shown */
     isOpen: boolean;
 
@@ -23,16 +25,23 @@ interface ModalBoxProps {
 
     /** Close modal handler */
     closeModal: (closeModalData: ModalCloseData, modalCallback?: ModalCallback) => void;
-}
+};
 
-/** 
+/** Types of modal which can be handled by current component */
+const handledTypes = [
+    ModalType.Info,
+    ModalType.Form,
+    ModalType.Confirm,
+];
+
+/**
  * Modal window component
  * @throws Modal params is invalid
  */
-const ModalBox = ({
+const ModalBox: FC<ModalBoxProps> = ({
     isOpen, params,
     closeModal
-}: ModalBoxProps): JSX.Element => {
+}) => {
     const validationError =
         isOpen && !isNullOrUndefined(params)
             ? validateModalParams(params!)
@@ -61,10 +70,12 @@ const ModalBox = ({
     }, [isOpen, params]);
 
     useEffect(() => {
-        if (isOpen) {
-            const initIsSaveButtonDisabled: boolean = getInitIsSaveButtonDisabled(params!);
-            setSaveButtonDisabled(initIsSaveButtonDisabled);
+        if (!isOpen) {
+            return;
         }
+
+        const initIsSaveButtonDisabled: boolean = getInitIsSaveButtonDisabled(params!);
+        setSaveButtonDisabled(initIsSaveButtonDisabled);
     }, [isOpen, params]);
 
     useEffect(() => {
@@ -102,57 +113,51 @@ const ModalBox = ({
         return <></>;
     }
 
-    const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(params!);
+    const parametersValues = params!;
+
+    const { saveBtnCaption, cancelBtnCaption } = getButtonCaptions(parametersValues);
+
+    const actions: Array<ButtonProps> = [
+        !isSaveButtonVisible
+            ? undefined
+            : {
+                type: "success",
+                caption: saveBtnCaption,
+                onClick: onSaveClick,
+                disabled: isSaveButtonDisabled,
+            } as ButtonProps,
+        {
+            type: "default",
+            caption: cancelBtnCaption,
+            onClick: onCloseClick,
+        } as ButtonProps
+    ]
+        .filter(x => !isNullish(x))
+        .map(x => x as ButtonProps);
 
     return (
-        <div className="app-modal modal is-active">
-            <div className="modal-background"></div>
-            <div className="modal-card">
-                <header className="modal-card-head">
-                    <p className="modal-card-title">{params!.title}</p>
-                    <button
-                        className="delete"
-                        aria-label="close"
-                        onClick={onCloseClick}
-                    ></button>
-                </header>
-                <section className="modal-card-body">
-                    <ModalBody
-                        {...params!}
-                        setSaveButtonDisabled={setSaveButtonDisabled}
-                        formValues={formData}
-                        updateFormValues={setFormData}
-                    />
-                </section>
-                <footer className="modal-card-foot">
-                    {isSaveButtonVisible
-                        &&
-                        <Button
-                            key="modal-success-btn"
-                            type="success"
-                            caption={saveBtnCaption}
-                            onClick={onSaveClick}
-                            disabled={isSaveButtonDisabled}
-                        />
-                    }
-                    <Button
-                        type="default"
-                        caption={cancelBtnCaption}
-                        onClick={onCloseClick}
-                    />
-                </footer>
-            </div>
-        </div>
+        <ModalWrapper
+            title={parametersValues.title}
+            onCloseClick={onCloseClick}
+            actions={actions}
+        >
+            <ModalBody
+                {...parametersValues}
+                setSaveButtonDisabled={setSaveButtonDisabled}
+                formValues={formData}
+                updateFormValues={setFormData}
+            />
+        </ModalWrapper>
     );
 };
 
-/** 
+/**
  * Modal window component
  * @throws Modal params is invalid
  */
 export default connect(
     ({ modal }: CompositeAppState) => ({
-        isOpen: modal.isOpen,
+        isOpen: modal.isOpen && handledTypes.includes(modal.modalParams?.modalType ?? ModalType.Custom),
         params: modal.modalParams
     }),
     { closeModal: closeModal }

@@ -4,7 +4,6 @@ import { ThunkDispatch } from "redux-thunk";
 import { getSuccessNotification } from "@app/core/notification";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
 import { ShowSimpleMessageFn, addNotification } from "@app/redux/notificator";
 
 /**
@@ -15,7 +14,7 @@ import { ShowSimpleMessageFn, addNotification } from "@app/redux/notificator";
 export const getDisplaySuccessFn = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
 ): ShowSimpleMessageFn => {
-    return (message: string, important?: boolean, removeLoadingState?: boolean) => {
+    return (message: string, important?: boolean) => {
         const isImportant = important ?? false;
 
         dispatch(
@@ -23,9 +22,5 @@ export const getDisplaySuccessFn = (
                 [getSuccessNotification(message, isImportant)]
             )
         );
-
-        if (removeLoadingState ?? true) {
-            dispatch(setIsLoadingState(false));
-        }
     };
 };

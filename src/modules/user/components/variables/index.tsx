@@ -120,7 +120,7 @@ const VariableRow: FC<VariableRowProps> = ({
             key={item.code}
             className={isNullish(item.actionCaption) ? undefined : "has-action"}
         >
-            <td>#{position.toLocaleString('en-US', { minimumIntegerDigits: 2 })}</td>
+            <td>#{position.toLocaleString("en-US", { minimumIntegerDigits: 2 })}</td>
             <td>{item.caption}</td>
             <td className="is-italic">{item.code}</td>
             <td>{item.type}</td>

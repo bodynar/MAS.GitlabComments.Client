@@ -1,6 +1,6 @@
-import { isNullOrUndefined } from "@bodynarf/utils";
+import { isNullOrEmpty, isNullOrUndefined } from "@bodynarf/utils";
 
-import { EditCommentModel } from "@app/models/comments";
+import { Comment, EditCommentModel } from "@app/models/comments";
 import { ModalFormItem, ModalFormItemType, ModalParams, ModalType } from "@app/models/modal";
 
 import { getLengthValidator } from "@app/core/modal";
@@ -111,4 +111,81 @@ export const getViewModalConfig = (comment: EditCommentModel): ModalParams => {
                     })),
         },
     };
+};
+
+/** Url href regEx */
+const urlRegex = /(https?:\/\/|www\.)\S+/gi;
+
+/**
+ * Filter comments which lookalike specified data
+ * @param comments Source comments
+ * @param editModel Comment model
+ * @returns Comments that are lookalike
+ */
+export const getCommentsThatLookalike = (
+    comments: Array<Comment>,
+    { message, commentWithLinkToRule }: EditCommentModel
+): Array<Comment> => {
+    if (isNullOrEmpty(message) && isNullOrEmpty(commentWithLinkToRule)) {
+        return [];
+    }
+
+    if (message?.length < 2 && commentWithLinkToRule?.length < 2) {
+        return [];
+    }
+
+    const characters = message?.length + commentWithLinkToRule?.length;
+
+    if (characters < 4) {
+        return [];
+    }
+
+    const trimmedComment = message
+        ?.replace(/\s{2,}/g, " ").trim().toLowerCase()
+        ?? "";
+
+    const commentWithLinkWithoutHref = commentWithLinkToRule
+        ?.replace(urlRegex, "").replace(/\s{2,}/g, " ").trim().toLowerCase()
+        ?? "";
+
+    const isLinkToRuleEmpty = isNullOrEmpty(commentWithLinkToRule);
+    const isMessageEmpty = isNullOrEmpty(message);
+
+    return comments
+        .filter(comment => {
+            if (!isMessageEmpty
+                && comment.message
+                    .replace(/\s{2,}/g, " ")
+                    .trim()
+                    .toLowerCase()
+                    .includes(trimmedComment)
+            ) {
+                return true;
+            }
+
+            if (!isLinkToRuleEmpty
+                && comment.commentWithLinkToRule
+                    ?.replace(urlRegex, "")
+                    .replace(/\s{2,}/g, " ")
+                    .trim()
+                    .toLowerCase()
+                    .includes(commentWithLinkWithoutHref)
+            ) {
+                return true;
+            }
+
+            return false;
+        })
+        .sort((x, y) => y.appearanceCount - x.appearanceCount)
+        .map(x => ({
+            ...x,
+            commentWithLinkToRule: isNullOrEmpty(x.commentWithLinkToRule)
+                ? x.commentWithLinkToRule
+                : x.commentWithLinkToRule.includes("http")
+                    ? x.commentWithLinkToRule.substring(
+                        0,
+                        x.commentWithLinkToRule.indexOf("http") - 1
+                    )
+                    : x.commentWithLinkToRule
+        }));
 };

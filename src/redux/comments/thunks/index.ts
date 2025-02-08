@@ -1,4 +1,3 @@
-export * from "./temp";
 export * from "./retract";
 
 export * from "./addComment";

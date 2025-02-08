@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 
 import { connect } from "react-redux";
 
@@ -11,7 +11,7 @@ import { showInformationAsync } from "@app/redux/comments";
 import StatsFilters from "../components/filter";
 import StatsTableComponent from "../components/table";
 
-interface StatsProps {
+type StatsProps = {
     /** Fetched statistics data for specified date range */
     data: Array<StatsRecord>;
 
@@ -32,18 +32,18 @@ interface StatsProps {
 
     /** Set is stats data loaded */
     setIsLoaded: (loaded?: boolean) => void;
-}
+};
 
 /** Statistics module main component */
-const Stats = ({
-    data, filter, loaded,
+const Stats: FC<StatsProps> = ({
+    data, filter, loaded = false,
     setStatsFilter, loadStatsData,
     showDescription, setIsLoaded
-}: StatsProps): JSX.Element => {
+}) => {
     const onApplyFiltersClick = useCallback(() => loadStatsData(filter), [filter, loadStatsData]);
 
     return (
-        <section className="app-stats">
+        <section className="app-stats" role="stats-module">
             <div className="block">
                 <h3 className="title is-3">
                     Stats
@@ -59,10 +59,9 @@ const Stats = ({
                 loaded={loaded}
                 setIsLoaded={setIsLoaded}
             />
-            {loaded === true &&
+            {loaded &&
                 <StatsTableComponent
                     data={data}
-                    filter={filter}
                     showDescription={showDescription}
                 />
             }

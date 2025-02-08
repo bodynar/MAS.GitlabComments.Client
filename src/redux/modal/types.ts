@@ -5,6 +5,9 @@ export interface ModalState {
     /** Is modal box displaying */
     isOpen: boolean;
 
-    /** Last modal box params */
+    /** Modal box params for current default modal */
     modalParams?: ModalParams;
+
+    /** Key of custom modal which is displayed */
+    customModalKey?: string;
 }

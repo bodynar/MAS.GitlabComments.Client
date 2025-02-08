@@ -4,7 +4,6 @@ import { Action } from "@reduxjs/toolkit";
 import { getErrorNotification } from "@app/core/notification";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
 import { ShowErrorFn, addNotification } from "@app/redux/notificator";
 
 /**
@@ -15,7 +14,7 @@ import { ShowErrorFn, addNotification } from "@app/redux/notificator";
 export const getDisplayErrorFn = (
     dispatch: ThunkDispatch<CompositeAppState, unknown, Action>,
 ): ShowErrorFn => {
-    return (error: Error | string, important?: boolean, removeLoadingState?: boolean) => {
+    return (error: Error | string, important?: boolean) => {
         const errorMessage = (error as Error)?.message ?? (error as string);
 
         console.error(errorMessage);
@@ -27,9 +26,5 @@ export const getDisplayErrorFn = (
                 [getErrorNotification(errorMessage, isImportant)]
             )
         );
-
-        if (removeLoadingState ?? true) {
-            dispatch(setIsLoadingState(false));
-        }
     };
 };

@@ -8,7 +8,7 @@ import { deleteComment } from "@app/core/comments";
 import { ModalType } from "@app/models/modal";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState } from "@app/redux/app";
+import { registerHttpRequest } from "@app/redux/app";
 import { getNotifications, } from "@app/redux/notificator";
 import { deleteComment as deleteCommentAction } from "@app/redux/comments";
 import { open } from "@app/redux/modal";
@@ -38,13 +38,15 @@ export const deleteCommentAsync = (commentId: string): ThunkAction<void, Composi
                 message: `Are you sure want to delete comment ${comment!.number}?`,
                 callback: {
                     saveCallback: (): void => {
-                        dispatch(setIsLoadingState(true));
+                        const [_, onRequestCompleted] = registerHttpRequest(dispatch);
 
                         deleteComment(commentId)
                             .then(() => {
                                 success(`Comment ${comment!.number} successfully deleted`);
+
                                 dispatch(deleteCommentAction(commentId));
-                                dispatch(setIsLoadingState(false));
+
+                                onRequestCompleted();
                             })
                             .catch(error);
                     },

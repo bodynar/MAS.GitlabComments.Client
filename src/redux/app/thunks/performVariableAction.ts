@@ -7,7 +7,7 @@ import { loadSysVariables, performVariableAction } from "@app/core/app";
 import { ModalType } from "@app/models/modal";
 
 import { CompositeAppState } from "@app/redux";
-import { setIsLoadingState, setVariables } from "@app/redux/app";
+import { registerHttpRequest, setVariables } from "@app/redux/app";
 import { getNotifications } from "@app/redux/notificator";
 import { open } from "@app/redux/modal";
 
@@ -31,18 +31,21 @@ export const performVariableActionAsync = (variableCode: string): ThunkAction<Pr
         }
 
         const onConfirmClick = async () => {
+            const [_, onRequestCompleted] = registerHttpRequest(dispatch);
+
             try {
-                dispatch(setIsLoadingState(true));
 
                 await performVariableAction(variableCode);
 
                 const variables = await loadSysVariables();
 
                 dispatch(setVariables(variables));
-                showSuccess(`Action "${concreteVariable.actionCaption}" has been successfully performed with system variable "${variableCode}"`, false, true);
+                showSuccess(`Action "${concreteVariable.actionCaption}" has been successfully performed with system variable "${variableCode}"`, false);
             } catch (error) {
                 showError(error as Error | string, true);
             }
+
+            onRequestCompleted();
         };
 
         dispatch(
@@ -52,8 +55,6 @@ export const performVariableActionAsync = (variableCode: string): ThunkAction<Pr
                 message: `Are you sure want to perform action "${concreteVariable.actionCaption}" with variable "${variableCode}"?`,
                 callback: {
                     saveCallback: (): void => {
-                        dispatch(setIsLoadingState(true));
-
                         onConfirmClick();
                     },
                 }

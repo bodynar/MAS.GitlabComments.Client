@@ -1,7 +1,7 @@
 @use "../variables.scss";
 
 .app-comment-item {
-    min-height: 4.125rem;;
+    min-height: 4.125rem;
     border: 1px solid rgba(variables.$color-black, 0.25);
     border-radius: variables.$border-radius;
 
@@ -27,5 +27,9 @@
             border-color: variables.$color-dark-ghost-hover;
             background-color: rgba(variables.$color-dark-ghost-hover, 0.05);
         }
+    }
+
+    .app-comment--highlighted {
+        border-color: rgba(variables.$color-dark-ghost-hover, 0.75);
     }
 }

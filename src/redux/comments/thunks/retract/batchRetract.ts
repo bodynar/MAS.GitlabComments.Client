@@ -8,7 +8,7 @@ import { batchRetract } from "@app/core/comments";
 import { CompositeAppState } from "@app/redux";
 import { getNotifications } from "@app/redux/notificator";
 import { open } from "@app/redux/modal";
-import { setIsLoadingState } from "@app/redux/app";
+import { registerHttpRequest } from "@app/redux/app";
 import { batchRetract as batchRetractAction } from "@app/redux/comments";
 
 /**
@@ -23,6 +23,8 @@ export const batchRetractAsync = (): ThunkAction<Promise<void>, CompositeAppStat
         const [showSuccess, showError] = getNotifications(dispatch);
 
         const onConfirmClick = async () => {
+            const [_, onRequestCompleted] = registerHttpRequest(dispatch);
+
             try {
                 const result = await batchRetract(tokens.map(({ id }) => id));
 
@@ -53,8 +55,10 @@ export const batchRetractAsync = (): ThunkAction<Promise<void>, CompositeAppStat
                     );
                 }
             } catch (error) {
-                showError(error as string | Error, true, true);
+                showError(error as string | Error, true);
             }
+
+            onRequestCompleted();
         };
 
         dispatch(
@@ -64,8 +68,6 @@ export const batchRetractAsync = (): ThunkAction<Promise<void>, CompositeAppStat
                 message: `Are you sure want to retract all ${tokens.length} tokens?`,
                 callback: {
                     saveCallback: (): void => {
-                        dispatch(setIsLoadingState(true));
-
                         onConfirmClick();
                     },
                 }
